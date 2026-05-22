@@ -55,8 +55,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSectionChange }) => {
           <div className="hide-scroll" style={{
             display: 'flex',
             gap: '10px',
-            flexWrap: isMobile ? 'wrap' : 'nowrap',
-            overflowX: isMobile ? 'visible' : 'auto',
+            flexWrap: 'nowrap',
+            overflowX: 'auto',
             padding: '4px 4px 12px 4px',
             margin: '0 -4px', // offset the padding so it visually aligns
           }}>
