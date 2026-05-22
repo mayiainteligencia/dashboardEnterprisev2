@@ -125,7 +125,7 @@ export const DecisionRoom: React.FC = () => {
                     <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '3px', background: `linear-gradient(90deg, transparent, ${colores.primario}, transparent)` }} />
                     <p style={{ fontSize: '14px', fontWeight: '800', color: textMain, margin: '0 0 4px 0' }}>{a.nombre}</p>
                     <p style={{ fontSize: '11px', color: textMuted, margin: '0 0 12px 0' }}>{a.rol}</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: `${colores.exito}15`, padding: '6px 10px', borderRadius: '8px', display: 'inline-flex' }}>
+                    <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: `${colores.exito}15`, padding: '6px 10px', borderRadius: '8px' }}>
                       <TrendingUp size={12} color={colores.exito} />
                       <span style={{ fontSize: '12px', fontWeight: '800', color: colores.exito }}>{a.stat}</span>
                     </div>
