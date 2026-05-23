@@ -1,14 +1,15 @@
 import React from 'react';
-import { 
-  LayoutDashboard,
-  Server,
-  ShieldAlert,
-  HardDrive,
-  Database,
-  BrainCircuit,
+import {
+  Compass,
   Activity,
-  ShoppingBag,
-  Users
+  Database,
+  Cloud,
+  Monitor,
+  ShieldCheck,
+  HardDriveDownload,
+  Sparkles,
+  TrendingUp,
+  ListChecks,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -18,26 +19,27 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
-  { id: 'centroOperacion', nombre: 'Centro de Operación', icono: Server },
-  { id: 'seguridadSOC', nombre: 'Seguridad y SOC IA', icono: ShieldAlert },
-  { id: 'continuidadDRP', nombre: 'Continuidad y DRP', icono: HardDrive },
-  { id: 'mapaDatos', nombre: 'Mapa de Datos', icono: Database },
-  { id: 'valorDatoIA', nombre: 'Valor del Dato y IA', icono: BrainCircuit },
+  { id: 'valueExplorer',       nombre: 'Value Explorer',          icono: Compass },
+  { id: 'explorerDiagnostico', nombre: 'Diagnóstico Empresa',     icono: Activity },
+  { id: 'explorerValorDato',   nombre: 'Valor del Dato',          icono: Database },
+  { id: 'explorerNube',        nombre: 'Nube, IaaS y FLAI',       icono: Cloud },
+  { id: 'explorerNOC',         nombre: 'NOC y Operación',         icono: Monitor },
+  { id: 'explorerSOC',         nombre: 'SOC IA y Ciberseguridad', icono: ShieldCheck },
+  { id: 'explorerDRP',         nombre: 'DRP y Continuidad',       icono: HardDriveDownload },
+  { id: 'explorerAIFactory',   nombre: 'AI Factory',              icono: Sparkles },
+  { id: 'explorerROI',         nombre: 'ROI y Business Case',     icono: TrendingUp },
 ];
 
 const extraSections = [
-  { id: 'decisionRoom', nombre: 'Decision Room', icono: Activity },
-  { id: 'marketplace', nombre: 'Marketplace Servicios', icono: ShoppingBag },
-  { id: 'acompanamiento', nombre: 'Acompañamiento Experto', icono: Users },
+  { id: 'explorerWizard', nombre: 'Iniciar Diagnóstico', icono: ListChecks },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { empresa, colores } = brandingConfig;
 
   return (
-    <div 
-      style={{ 
+    <div
+      style={{
         width: '240px',
         height: '100vh',
         backgroundColor: colores.fondoSecundario,
@@ -46,9 +48,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       }}
     >
       {/* Logo */}
-      <div style={{ 
-        height: '72px', 
-        padding: '0 24px', 
+      <div style={{
+        height: '72px',
+        padding: '0 24px',
         flexShrink: 0,
         backgroundColor: '#0e1b2b',
         display: 'flex',
@@ -56,8 +58,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         borderBottom: `1px solid ${colores.borde}`
       }}>
         <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-          <img 
-            src={empresa.logo} 
+          <img
+            src={empresa.logo}
             alt={empresa.nombre}
             style={{
               height: '44px',
@@ -72,25 +74,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </div>
       </div>
 
-      {/* Label DEPARTAMENTOS */}
-      <div style={{ padding: '0 16px 8px 16px' }}>
-        <span style={{ 
-          fontSize: '11px', 
-          fontWeight: '600', 
-          textTransform: 'uppercase', 
+      {/* Label */}
+      <div style={{ padding: '16px 16px 8px 16px' }}>
+        <span style={{
+          fontSize: '11px',
+          fontWeight: '600',
+          textTransform: 'uppercase',
           letterSpacing: '0.05em',
-          color: colores.textoOscuro 
+          color: colores.textoOscuro
         }}>
-          DEPARTAMENTOS
+          MÓDULOS
         </span>
       </div>
 
       {/* Menú Principal */}
-      <nav style={{ flex: '0 0 auto', padding: '0 12px', overflow: 'auto' }}>
+      <nav style={{ flex: 1, padding: '0 12px', overflow: 'auto' }}>
         {menuItems.map((item) => {
           const Icon = item.icono;
           const isActive = activeSection === item.id;
-          
+
           return (
             <button
               key={item.id}
@@ -100,7 +102,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
-                padding: '12px 16px',
+                padding: '10px 14px',
                 borderRadius: '12px',
                 marginBottom: '4px',
                 backgroundColor: isActive ? colores.primario : 'transparent',
@@ -116,10 +118,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <div 
+              <div
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
                   backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoTerciario,
                   display: 'flex',
@@ -128,9 +130,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                   flexShrink: 0,
                 }}
               >
-                <Icon size={18} />
+                <Icon size={16} />
               </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
+              <span style={{ fontSize: '13px', fontWeight: '500', textAlign: 'left' }}>
                 {item.nombre}
               </span>
             </button>
@@ -138,12 +140,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         })}
       </nav>
 
-      {/* Footer buttons - Secciones Extra */}
+      {/* Footer */}
       <div style={{ padding: '12px', borderTop: `1px solid ${colores.borde}`, flexShrink: 0 }}>
         {extraSections.map((section) => {
           const Icon = section.icono;
           const isActive = activeSection === section.id;
-          
+
           return (
             <button
               key={section.id}
@@ -155,39 +157,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 gap: '12px',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                marginBottom: '8px',
-                backgroundColor: isActive ? colores.primario : colores.fondoTerciario,
-                color: isActive ? '#FFFFFF' : colores.textoMedio,
+                marginBottom: '4px',
+                background: isActive ? colores.primario : colores.gradientePrimario,
+                color: '#FFFFFF',
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                position: 'relative',
-              }}
-              onMouseEnter={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = colores.fondoPrincipal;
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-                }
               }}
             >
-              <div 
+              <div
                 style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '32px',
+                  height: '32px',
                   borderRadius: '50%',
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoPrincipal,
+                  backgroundColor: 'rgba(255,255,255,0.2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <Icon size={18} />
+                <Icon size={16} />
               </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'left' }}>
+              <span style={{ fontSize: '13px', fontWeight: '600', flex: 1, textAlign: 'left' }}>
                 {section.nombre}
               </span>
             </button>

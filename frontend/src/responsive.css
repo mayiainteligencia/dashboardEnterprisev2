@@ -1,8 +1,8 @@
 /*
  * responsive.css
- * Overrides que hacen que Dashboard y Analíticos sean legibles en móvil/tablet.
- * Importa este archivo en main.tsx o App.tsx:
- *   import './responsive.css';
+ * Overrides responsive para Value Explorer (Hero, KPIs, grilla de 8 tarjetas,
+ * módulos y wizard). El layout principal ya usa isMobile/isTablet por JS;
+ * aquí solo afinamos casos puntuales que no se pueden cubrir con JS.
  */
 
 /* ─── Variables de breakpoint ─── */
@@ -21,37 +21,21 @@
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
 
-  /* Dashboard: grilla de 12 columnas → 2 columnas */
-  .dashboard-grid-12 {
-    grid-template-columns: 1fr 1fr !important;
+  /* Hero: stack vertical (texto arriba, KPIs abajo con scroll) */
+  .explorer-hero {
+    flex-direction: column !important;
+    align-items: flex-start !important;
   }
 
-  /* Columnas span-4 → ocupa 1 columna */
-  [style*="gridColumn: 'span 4'"],
-  [style*="grid-column: span 4"] {
-    grid-column: span 1 !important;
+  /* KPIs del hero: scroll horizontal sin cortar */
+  .explorer-hero-kpis {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
-  /* Columnas span-8 → ocupa 2 columnas */
-  [style*="gridColumn: 'span 8'"],
-  [style*="grid-column: span 8"] {
-    grid-column: span 2 !important;
-  }
-
-  /* Clusters span 2 filas → 1 fila */
-  [style*="gridRow: '1 / 3'"],
-  [style*="grid-row: 1 / 3"] {
-    grid-row: auto !important;
-    grid-column: span 2 !important;
-  }
-
-  /* Analíticos: cards de 6 columnas → 3 columnas */
-  [style*="gridTemplateColumns: 'repeat(6, 1fr)'"],
-  [style*="grid-template-columns: repeat(6, 1fr)"] {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-
-  /* Padding general reducido */
+  /* Padding general reducido en contenedores con padding 32px */
   [style*="padding: '32px'"] {
     padding: 16px !important;
   }
@@ -64,44 +48,65 @@
 }
 
 /* ──────────────────────────────────────────────────────────────
-   MOBILE  (< 640px)
+   GRILLA DE 8 TARJETAS DEL INICIO — 4x2 siempre que sea posible
+   para que el usuario escanee rápido sin scroll largo
+────────────────────────────────────────────────────────────── */
+
+/* Tablet: mantiene 4 columnas */
+@media (max-width: 1023px) and (min-width: 481px) {
+  .explorer-cards-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  .explorer-card {
+    min-height: 220px !important;
+    padding: 14px !important;
+  }
+  .explorer-card h3 {
+    font-size: 13px !important;
+  }
+  .explorer-card p {
+    font-size: 10.5px !important;
+  }
+}
+
+/* Móvil pequeño: 2 columnas (4 filas) → sigue siendo escaneable */
+@media (max-width: 480px) {
+  .explorer-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+  .explorer-card {
+    min-height: 200px !important;
+    padding: 12px !important;
+    border-radius: 16px !important;
+  }
+  .explorer-card h3 {
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+  }
+  .explorer-card p {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   MOBILE  (< 640px)  — resto de overrides
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 639px) {
 
-  /* Dashboard: todo en 1 columna */
-  [style*="gridTemplateColumns"],
-  [style*="grid-template-columns"] {
+  /* Grilla 2 columnas (módulos internos) → 1 columna */
+  [style*="gridTemplateColumns: '1.4fr 1fr'"],
+  [style*="gridTemplateColumns: '1.2fr 1fr'"],
+  [style*="gridTemplateColumns: '1.3fr 1fr'"],
+  [style*="gridTemplateColumns: '1.1fr 1fr'"],
+  [style*="gridTemplateColumns: '1fr 1fr'"] {
     grid-template-columns: 1fr !important;
   }
 
-  /* Cualquier span → 1 columna */
-  [style*="gridColumn"],
-  [style*="grid-column"] {
-    grid-column: span 1 !important;
-  }
-
-  /* Filas compuestas → auto */
-  [style*="gridRow"],
-  [style*="grid-row"] {
-    grid-row: auto !important;
-  }
-
-  /* Analíticos: cards de 6 → 2 columnas */
-  [style*="gridTemplateColumns: 'repeat(6, 1fr)'"],
-  [style*="grid-template-columns: repeat(6, 1fr)"] {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-
-  /* Header de Analíticos: stack vertical */
-  [style*="justifyContent: 'space-between'"][style*="alignItems: 'flex-end'"] {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    gap: 12px !important;
-  }
-
-  /* Indicadores globales: scroll horizontal */
-  [style*="display: 'flex'"][style*="gap: '8px'"] > div {
-    flex-shrink: 0;
+  /* Hero título más chico */
+  h1[style*="fontSize: '34px'"] {
+    font-size: 24px !important;
   }
 
   /* Padding mínimo en móvil */
@@ -115,31 +120,21 @@
     padding-right: 12px !important;
   }
 
-  /* Fuentes: ligeramente reducidas */
-  h2[style*="fontSize: '22px'"] {
-    font-size: 18px !important;
+  /* Modales: ancho cómodo */
+  [style*="maxWidth: '480px'"],
+  [style*="maxWidth: '600px'"],
+  [style*="maxWidth: '540px'"] {
+    max-width: calc(100vw - 24px) !important;
   }
 
-  /* Cards del dashboard: min-height reducido */
+  /* Tablas de módulos: scroll horizontal */
+  table {
+    min-width: 480px;
+  }
+
+  /* Min-height 100vh → quitar para no exceder pantalla en móvil con barras */
   [style*="minHeight: '100vh'"] {
     min-height: unset !important;
-  }
-
-  /* Video en móvil: altura fija legible */
-  video {
-    min-height: 120px;
-    max-height: 200px;
-  }
-
-  /* Notificaciones: ancho completo */
-  [style*="width: '370px'"] {
-    width: calc(100vw - 32px) !important;
-    right: 0 !important;
-  }
-
-  /* Chat IA: ancho completo */
-  [style*="maxWidth: '540px'"] {
-    max-width: 100% !important;
   }
 }
 
@@ -147,7 +142,6 @@
    Scroll horizontal suave para filas con contenido ancho
 ────────────────────────────────────────────────────────────── */
 @media (max-width: 1023px) {
-  /* Permite scroll horizontal en secciones que necesiten ancho mínimo */
   .scroll-x-mobile {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;

@@ -1,71 +1,77 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ResponsiveLayout } from './components/ResponsiveLayout';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-import { Dashboard } from './components/Dashboard';
 
-import { CentroOperacion } from './components/departamentos/CentroOperacion';
-import { SeguridadSOC } from './components/departamentos/SeguridadSOC';
-import { ContinuidadDRP } from './components/departamentos/ContinuidadDRP';
-import { MapaDatos } from './components/departamentos/MapaDatos';
-import { ValorDatoIA } from './components/departamentos/ValorDatoIA';
-import { DecisionRoom } from './components/departamentos/DecisionRoom';
-import { MarketplaceServicios } from './components/departamentos/MarketplaceServicios';
-import { AcompanamientoExperto } from './components/departamentos/AcompanamientoExperto';
+import { ExplorerProvider } from './components/valueExplorer/ExplorerContext';
+import { ValueExplorerHome } from './components/valueExplorer/ValueExplorerHome';
+import { ExplorerWizard } from './components/valueExplorer/ExplorerWizard';
+import { ModuloDiagnostico } from './components/valueExplorer/modulos/ModuloDiagnostico';
+import { ModuloValorDato } from './components/valueExplorer/modulos/ModuloValorDato';
+import { ModuloNube } from './components/valueExplorer/modulos/ModuloNube';
+import { ModuloNOC } from './components/valueExplorer/modulos/ModuloNOC';
+import { ModuloSOC } from './components/valueExplorer/modulos/ModuloSOC';
+import { ModuloDRP } from './components/valueExplorer/modulos/ModuloDRP';
+import { ModuloAIFactory } from './components/valueExplorer/modulos/ModuloAIFactory';
+import { ModuloROI } from './components/valueExplorer/modulos/ModuloROI';
 
 import { brandingConfig } from './config/branding';
 import './responsive.css';
 
 function App() {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState('valueExplorer');
   const { colores } = brandingConfig;
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard:       'Dashboard EdgeNet',
-      centroOperacion: 'Centro de Operación',
-      seguridadSOC:    'Seguridad y SOC IA',
-      continuidadDRP:  'Continuidad y DRP',
-      mapaDatos:       'Mapa de Datos',
-      valorDatoIA:     'Valor del Dato y IA',
-      decisionRoom:    'Decision Room',
-      marketplace:     'Marketplace de Servicios',
-      acompanamiento:  'Acompañamiento Experto',
+      valueExplorer:        'EdgeNet AI Value Explorer',
+      explorerWizard:       'Diagnóstico Inteligente EdgeNet',
+      explorerDiagnostico:  'Diagnóstico Inteligente de Empresa',
+      explorerValorDato:    'Valor Estratégico del Dato',
+      explorerNube:         'Nube, IaaS y FLAI',
+      explorerNOC:          'NOC y Operación Inteligente',
+      explorerSOC:          'SOC IA y Ciberseguridad',
+      explorerDRP:          'DRP, Backup y Continuidad',
+      explorerAIFactory:    'AI Factory y Agentes para Negocio',
+      explorerROI:          'ROI, Business Case y Ruta Ejecutiva',
     };
-    return titulos[activeSection] || 'EdgeNet AI Value';
+    return titulos[activeSection] || 'EdgeNet AI Value Explorer';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':       return <Dashboard onSectionChange={setActiveSection} />;
-      case 'centroOperacion': return <CentroOperacion />;
-      case 'seguridadSOC':    return <SeguridadSOC />;
-      case 'continuidadDRP':  return <ContinuidadDRP />;
-      case 'mapaDatos':       return <MapaDatos />;
-      case 'valorDatoIA':     return <ValorDatoIA />;
-      case 'decisionRoom':    return <DecisionRoom />;
-      case 'marketplace':     return <MarketplaceServicios />;
-      case 'acompanamiento':  return <AcompanamientoExperto />;
-      default:                return <Dashboard onSectionChange={setActiveSection} />;
+      case 'valueExplorer':       return <ValueExplorerHome onSectionChange={setActiveSection} />;
+      case 'explorerWizard':      return <ExplorerWizard onSectionChange={setActiveSection} />;
+      case 'explorerDiagnostico': return <ModuloDiagnostico onSectionChange={setActiveSection} />;
+      case 'explorerValorDato':   return <ModuloValorDato onSectionChange={setActiveSection} />;
+      case 'explorerNube':        return <ModuloNube onSectionChange={setActiveSection} />;
+      case 'explorerNOC':         return <ModuloNOC onSectionChange={setActiveSection} />;
+      case 'explorerSOC':         return <ModuloSOC onSectionChange={setActiveSection} />;
+      case 'explorerDRP':         return <ModuloDRP onSectionChange={setActiveSection} />;
+      case 'explorerAIFactory':   return <ModuloAIFactory onSectionChange={setActiveSection} />;
+      case 'explorerROI':         return <ModuloROI onSectionChange={setActiveSection} />;
+      default:                    return <ValueExplorerHome onSectionChange={setActiveSection} />;
     }
   };
 
   return (
-    <ResponsiveLayout
-      activeSection={activeSection}
-      onSectionChange={setActiveSection}
-      header={<Header title={getTitulo()} />}
-      sidebar={
-        <Sidebar
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
-      }
-    >
-      <div style={{ flex: 1, overflow: 'auto', backgroundColor: activeSection === 'decisionRoom' ? '#0B0F19' : colores.fondoPrincipal }}>
-        {renderContent()}
-      </div>
-    </ResponsiveLayout>
+    <ExplorerProvider>
+      <ResponsiveLayout
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        header={<Header title={getTitulo()} />}
+        sidebar={
+          <Sidebar
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
+        }
+      >
+        <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
+          {renderContent()}
+        </div>
+      </ResponsiveLayout>
+    </ExplorerProvider>
   );
 }
 
