@@ -1,77 +1,103 @@
-import { useState } from 'react';
-import { ResponsiveLayout } from './components/ResponsiveLayout';
+import React, { useState } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-
-import { ExplorerProvider } from './components/valueExplorer/ExplorerContext';
-import { ValueExplorerHome } from './components/valueExplorer/ValueExplorerHome';
-import { ExplorerWizard } from './components/valueExplorer/ExplorerWizard';
-import { ModuloDiagnostico } from './components/valueExplorer/modulos/ModuloDiagnostico';
-import { ModuloValorDato } from './components/valueExplorer/modulos/ModuloValorDato';
-import { ModuloNube } from './components/valueExplorer/modulos/ModuloNube';
-import { ModuloNOC } from './components/valueExplorer/modulos/ModuloNOC';
-import { ModuloSOC } from './components/valueExplorer/modulos/ModuloSOC';
-import { ModuloDRP } from './components/valueExplorer/modulos/ModuloDRP';
-import { ModuloAIFactory } from './components/valueExplorer/modulos/ModuloAIFactory';
-import { ModuloROI } from './components/valueExplorer/modulos/ModuloROI';
-
+import { Dashboard } from './components/Dashboard';
+import { RecursosHumanos } from './components/departamentos/RecursosHumanos';
+import { FinanzasContabilidad } from './components/departamentos/FinanzasContabilidad';
+import { Operaciones } from './components/departamentos/Operaciones';
+import { VentasMarketing } from './components/departamentos/VentasMarketing';
+import { TecnologiasInformacion } from './components/departamentos/TecnologiasInformacion';
+import { Administracion } from './components/departamentos/Administracion';
+import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
+import { Playground } from './components/departamentos/Playground';
+import { Academia } from './components/departamentos/Academia';
+import { SidebarR } from './components/sideBarR';
 import { brandingConfig } from './config/branding';
-import './responsive.css';
 
 function App() {
-  const [activeSection, setActiveSection] = useState('valueExplorer');
+  const [activeSection, setActiveSection] = useState('dashboard');
+  const [onClose] = useState();
   const { colores } = brandingConfig;
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      valueExplorer:        'EdgeNet AI Value Explorer',
-      explorerWizard:       'Diagnóstico Inteligente EdgeNet',
-      explorerDiagnostico:  'Diagnóstico Inteligente de Empresa',
-      explorerValorDato:    'Valor Estratégico del Dato',
-      explorerNube:         'Nube, IaaS y FLAI',
-      explorerNOC:          'NOC y Operación Inteligente',
-      explorerSOC:          'SOC IA y Ciberseguridad',
-      explorerDRP:          'DRP, Backup y Continuidad',
-      explorerAIFactory:    'AI Factory y Agentes para Negocio',
-      explorerROI:          'ROI, Business Case y Ruta Ejecutiva',
+      dashboard: 'Dashboard General',
+      rh: 'Recursos Humanos',
+      finanzas: 'Finanzas y Contabilidad',
+      operaciones: 'Operaciones',
+      ventas: 'Ventas y Marketing',
+      ti: 'Tecnologías de la Información',
+      administracion: 'Administración',
+      ciberseguridad: 'CiberSeguridad',
+      playground: 'Playground',
+      academia: 'Academia',
     };
-    return titulos[activeSection] || 'EdgeNet AI Value Explorer';
+    return titulos[activeSection] || 'Dashboard';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'valueExplorer':       return <ValueExplorerHome onSectionChange={setActiveSection} />;
-      case 'explorerWizard':      return <ExplorerWizard onSectionChange={setActiveSection} />;
-      case 'explorerDiagnostico': return <ModuloDiagnostico onSectionChange={setActiveSection} />;
-      case 'explorerValorDato':   return <ModuloValorDato onSectionChange={setActiveSection} />;
-      case 'explorerNube':        return <ModuloNube onSectionChange={setActiveSection} />;
-      case 'explorerNOC':         return <ModuloNOC onSectionChange={setActiveSection} />;
-      case 'explorerSOC':         return <ModuloSOC onSectionChange={setActiveSection} />;
-      case 'explorerDRP':         return <ModuloDRP onSectionChange={setActiveSection} />;
-      case 'explorerAIFactory':   return <ModuloAIFactory onSectionChange={setActiveSection} />;
-      case 'explorerROI':         return <ModuloROI onSectionChange={setActiveSection} />;
-      default:                    return <ValueExplorerHome onSectionChange={setActiveSection} />;
+      case 'dashboard':
+        return <Dashboard />;
+      case 'rh':
+        return <RecursosHumanos />;
+      case 'finanzas':
+        return <FinanzasContabilidad />;
+      case 'operaciones':
+        return <Operaciones />;
+      case 'ventas':
+        return <VentasMarketing />;
+      case 'ti':
+        return <TecnologiasInformacion />;
+      case 'administracion':
+        return <Administracion />;
+      case 'ciberseguridad':
+        return <Ciberseguridad />;
+      case 'playground':
+        return <Playground />;
+      case 'academia':
+        return <Academia />;
+      default:
+        return <Dashboard />;
     }
   };
 
   return (
-    <ExplorerProvider>
-      <ResponsiveLayout
-        activeSection={activeSection}
-        onSectionChange={setActiveSection}
-        header={<Header title={getTitulo()} />}
-        sidebar={
-          <Sidebar
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
-          />
-        }
-      >
-        <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
+    <div 
+      style={{ 
+        display: 'flex',
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+        backgroundColor: colores.fondoPrincipal
+      }}
+    >
+      {/* SIDEBAR */}
+      <div style={{ width: '240px', flexShrink: 0 }}>
+        <Sidebar 
+          activeSection={activeSection} 
+          onSectionChange={setActiveSection} 
+        />
+      </div>
+      
+      {/* CONTENIDO */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        {/* Header */}
+        <Header title={getTitulo()} />
+        
+        {/* Main content */}
+        <div style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
           {renderContent()}
         </div>
-      </ResponsiveLayout>
-    </ExplorerProvider>
+      </div>
+
+      <div>
+        <SidebarR
+          onClose={onClose}
+        />
+      </div>
+
+    </div>
   );
 }
 

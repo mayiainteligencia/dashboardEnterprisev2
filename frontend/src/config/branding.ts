@@ -1,52 +1,52 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "EdgeNET",
-    eslogan: "",
-    logo: "/assets/logosNativos/edgenetLogo.png",
+    nombre: "Renault",
+    eslogan: "Passion for life",
+    logo: "/assets/logosEmpresas/renault-logo.svg",
   },
   
   colores: {
-    // Colores MABE Oficiales - TEMA CLARO CON COLORES SÓLIDOS
-    primario: "#1c4260",           // Azul turquesa MABE
-    primarioOscuro: "#1c4260",     // Azul turquesa oscuro
-    primarioClaro: "#B3E5F0",      // Azul claro SÓLIDO
+    // Colores Renault Minimalistas (Nouvel'R) - Dominancia de negros, grises y blanco, con detalles amarillos
+    primario: "#000000",           // Negro puro (para botones principales, sidebar activo)
+    primarioOscuro: "#1A1A1A",     // Negro suavizado
+    primarioClaro: "#333333",      // Gris muy oscuro
     
-    secundario: "#F5F7FA",         // Gris claro
-    acento: "#F27405",             // Naranja MABE
-    acentoOscuro: "#D66304",       // Naranja oscuro
+    secundario: "#F4F4F4",         // Gris claro para fondos secundarios
+    acento: "#FFCC00",             // Amarillo Renault (solo para detalles y badges)
+    acentoOscuro: "#E6B800",       // Amarillo oscuro
     
     peligro: "#EF4444",            
     advertencia: "#F59E0B",        
     exito: "#10B981",              
     
-    // Fondos - COLORES SÓLIDOS
+    // Fondos - muy limpios, blancos y grises
     fondoPrincipal: "#FFFFFF",     // Blanco puro
-    fondoSecundario: "#F8FAFB",    // Gris muy claro
-    fondoTerciario: "#E8EDF2",     // Gris claro SÓLIDO
+    fondoSecundario: "#FAFAFA",    // Gris casi blanco (ultra limpio)
+    fondoTerciario: "#F0F0F0",     // Gris claro para tarjetas o elementos inactivos
     fondoClaro: "#FFFFFF",         
     
-    // Textos - ✅ CORREGIDOS PARA TEMA CLARO CON BUEN CONTRASTE
-    textoClaro: "#1A202C",         // Negro/gris oscuro (texto principal - WCAG AAA)
-    textoMedio: "#4A5568",         // Gris medio (WCAG AAA)
-    textoOscuro: "#718096",        // Gris claro (textos secundarios)
-    textoEnOscuro: "#FFFFFF",      // Blanco (para fondos oscuros)
+    // Textos
+    textoClaro: "#000000",         // Negro absoluto para alto contraste
+    textoMedio: "#555555",         // Gris medio para texto secundario
+    textoOscuro: "#888888",        // Gris claro para notas o placeholders
+    textoEnOscuro: "#FFFFFF",      // Blanco puro sobre fondos negros
     
-    // Bordes - COLORES SÓLIDOS
-    borde: "#CBD5E0",              // Gris claro SÓLIDO
-    bordeHover: "#5CB8D1",         // Azul claro SÓLIDO
+    // Bordes
+    borde: "#E5E5E5",              // Gris muy sutil para bordes
+    bordeHover: "#000000",         // Bordes negros al hacer hover (minimalista)
     
-    // Gradientes
-    gradientePrimario: "linear-gradient(135deg, #008CAE 0%, #3BA5C9 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #F27405 0%, #FF8C1A 100%)",
-    gradienteAcento: "linear-gradient(135deg, #B3E5F0 0%, #FFFFFF 100%)",
+    // Gradientes - Eliminamos gradientes pesados para mantener el minimalismo
+    gradientePrimario: "linear-gradient(135deg, #111111 0%, #000000 100%)",
+    gradienteSecundario: "linear-gradient(135deg, #F9F9F9 0%, #F0F0F0 100%)",
+    gradienteAcento: "linear-gradient(135deg, #FFCC00 0%, #FFD633 100%)",
     
-    // Glass effects - COLOR SÓLIDO
-    fondoGlass: "#E6F7FB",         // Azul muy claro SÓLIDO
+    // Glass effect
+    fondoGlass: "rgba(255, 255, 255, 0.8)", // Clean glass
     
-    // Sombras
-    sombra: "0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)",
-    sombraMedia: "0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05)",
-    sombraGrande: "0 10px 15px rgba(0, 0, 0, 0.08), 0 4px 6px rgba(0, 0, 0, 0.05)",
+    // Sombras (más sutiles y elegantes)
+    sombra: "0 2px 8px rgba(0, 0, 0, 0.04)",
+    sombraMedia: "0 8px 16px rgba(0, 0, 0, 0.06)",
+    sombraGrande: "0 16px 32px rgba(0, 0, 0, 0.08)",
   },
   
   metricas: {

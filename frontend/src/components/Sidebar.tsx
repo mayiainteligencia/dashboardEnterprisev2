@@ -1,16 +1,17 @@
 import React from 'react';
-import {
-  Compass,
-  Activity,
-  Database,
-  Cloud,
-  Monitor,
-  ShieldCheck,
-  HardDriveDownload,
-  Sparkles,
+import { 
+  LayoutDashboard,
+  Users,
+  DollarSign,
+  Package,
   TrendingUp,
-  ListChecks,
-} from 'lucide-react';
+  Cpu,
+  Building2,
+  Shield,
+  GraduationCap,
+  Code2,
+} from 'lucide-react'; 
+
 import { brandingConfig } from '../config/branding';
 
 interface SidebarProps {
@@ -19,80 +20,115 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { id: 'valueExplorer',       nombre: 'Value Explorer',          icono: Compass },
-  { id: 'explorerDiagnostico', nombre: 'Diagnóstico Empresa',     icono: Activity },
-  { id: 'explorerValorDato',   nombre: 'Valor del Dato',          icono: Database },
-  { id: 'explorerNube',        nombre: 'Nube, IaaS y FLAI',       icono: Cloud },
-  { id: 'explorerNOC',         nombre: 'NOC y Operación',         icono: Monitor },
-  { id: 'explorerSOC',         nombre: 'SOC IA y Ciberseguridad', icono: ShieldCheck },
-  { id: 'explorerDRP',         nombre: 'DRP y Continuidad',       icono: HardDriveDownload },
-  { id: 'explorerAIFactory',   nombre: 'AI Factory',              icono: Sparkles },
-  { id: 'explorerROI',         nombre: 'ROI y Business Case',     icono: TrendingUp },
+  { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
+  { id: 'rh', nombre: 'Recursos Humanos', icono: Users },
+  { id: 'finanzas', nombre: 'Finanzas y Contabilidad', icono: DollarSign },
+  { id: 'operaciones', nombre: 'Operaciones', icono: Package },
+  { id: 'ventas', nombre: 'Ventas y Marketing', icono: TrendingUp },
+  { id: 'ti', nombre: 'Tecnologías de la Información', icono: Cpu },
+  { id: 'administracion', nombre: 'Administración', icono: Building2 },
+  { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp },
 ];
 
 const extraSections = [
-  { id: 'explorerWizard', nombre: 'Iniciar Diagnóstico', icono: ListChecks },
+  { id: 'ciberseguridad', nombre: 'CiberSeguridad', icono: Shield },
+  { id: 'playground', nombre: 'Playground', icono: Code2 },
+  { id: 'academia', nombre: 'Academia', icono: GraduationCap },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { empresa, colores } = brandingConfig;
 
   return (
-    <div
-      style={{
+    <div 
+      style={{ 
         width: '240px',
         height: '100vh',
         backgroundColor: colores.fondoSecundario,
         display: 'flex',
         flexDirection: 'column',
+        overflow: 'hidden', // evita que el contenedor crezca más allá del viewport
       }}
     >
       {/* Logo */}
-      <div style={{
-        height: '72px',
-        padding: '0 24px',
-        flexShrink: 0,
-        backgroundColor: '#0e1b2b',
-        display: 'flex',
-        alignItems: 'center',
-        borderBottom: `1px solid ${colores.borde}`
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-          <img
-            src={empresa.logo}
-            alt={empresa.nombre}
-            style={{
-              height: '44px',
-              width: 'auto',
-              objectFit: 'contain',
+      <div style={{ padding: '24px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div 
+            style={{ 
+              width: '48px',
+              height: '48px',
+              borderRadius: '12px',
+              background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 0%)`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              overflow: 'hidden',
+              flexShrink: 0,
             }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-            }}
-          />
+          >
+            <img 
+              src="/assets/logosEmpresas/renault-logo.svg"
+              alt={empresa.nombre}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                padding: '4px',
+              }}
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const container = target.parentElement;
+                if (container) {
+                  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                  svg.setAttribute('width', '24');
+                  svg.setAttribute('height', '24');
+                  svg.setAttribute('viewBox', '0 0 24 24');
+                  svg.setAttribute('fill', 'none');
+                  
+                  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                  path.setAttribute('d', 'M7 7L17 17M7 17L17 7');
+                  path.setAttribute('stroke', 'white');
+                  path.setAttribute('stroke-width', '2.5');
+                  path.setAttribute('stroke-linecap', 'round');
+                  
+                  svg.appendChild(path);
+                  container.appendChild(svg);
+                }
+              }}
+            />
+          </div>
+          <span style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro }}>
+            {empresa.nombre}
+          </span>
         </div>
       </div>
 
-      {/* Label */}
-      <div style={{ padding: '16px 16px 8px 16px' }}>
-        <span style={{
-          fontSize: '11px',
-          fontWeight: '600',
-          textTransform: 'uppercase',
+      {/* Label DEPARTAMENTOS */}
+      <div style={{ padding: '0 16px 8px 16px', flexShrink: 0 }}>
+        <span style={{ 
+          fontSize: '11px', 
+          fontWeight: '600', 
+          textTransform: 'uppercase', 
           letterSpacing: '0.05em',
-          color: colores.textoOscuro
+          color: colores.textoOscuro,
         }}>
-          MÓDULOS
+          DEPARTAMENTOS
         </span>
       </div>
 
-      {/* Menú Principal */}
-      <nav style={{ flex: 1, padding: '0 12px', overflow: 'auto' }}>
+      {/* Menú Principal — scrolleable */}
+      <nav style={{ 
+        flex: '1 1 0',   // ocupa el espacio disponible entre header y footer
+        minHeight: 0,     // crítico: permite que flex shrink active el scroll
+        overflowY: 'auto',
+        padding: '0 12px',
+      }}>
         {menuItems.map((item) => {
           const Icon = item.icono;
           const isActive = activeSection === item.id;
-
+          
           return (
             <button
               key={item.id}
@@ -102,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
-                padding: '10px 14px',
+                padding: '12px 16px',
                 borderRadius: '12px',
                 marginBottom: '4px',
                 backgroundColor: isActive ? colores.primario : 'transparent',
@@ -118,10 +154,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <div
+              <div 
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
                   backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoTerciario,
                   display: 'flex',
@@ -130,9 +166,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                   flexShrink: 0,
                 }}
               >
-                <Icon size={16} />
+                <Icon size={18} />
               </div>
-              <span style={{ fontSize: '13px', fontWeight: '500', textAlign: 'left' }}>
+              <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
                 {item.nombre}
               </span>
             </button>
@@ -140,12 +176,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         })}
       </nav>
 
-      {/* Footer */}
-      <div style={{ padding: '12px', borderTop: `1px solid ${colores.borde}`, flexShrink: 0 }}>
+      {/* Footer buttons — siempre visible al fondo */}
+      <div style={{ 
+        padding: '12px', 
+        borderTop: `1px solid ${colores.borde}`, 
+        flexShrink: 0,  // nunca se comprime
+      }}>
         {extraSections.map((section) => {
           const Icon = section.icono;
           const isActive = activeSection === section.id;
-
+          
           return (
             <button
               key={section.id}
@@ -157,28 +197,40 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 gap: '12px',
                 padding: '12px 16px',
                 borderRadius: '12px',
-                marginBottom: '4px',
-                background: isActive ? colores.primario : colores.gradientePrimario,
-                color: '#FFFFFF',
+                marginBottom: '8px',
+                backgroundColor: isActive ? colores.primario : colores.fondoTerciario,
+                color: isActive ? '#FFFFFF' : colores.textoMedio,
                 border: 'none',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
+                position: 'relative',
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = colores.fondoPrincipal;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) {
+                  e.currentTarget.style.backgroundColor = colores.fondoTerciario;
+                }
               }}
             >
-              <div
+              <div 
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(255,255,255,0.2)',
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoPrincipal,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  flexShrink: 0,
                 }}
               >
-                <Icon size={16} />
+                <Icon size={18} />
               </div>
-              <span style={{ fontSize: '13px', fontWeight: '600', flex: 1, textAlign: 'left' }}>
+              <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'left' }}>
                 {section.nombre}
               </span>
             </button>

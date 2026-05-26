@@ -24,8 +24,3 @@ dist-ssr
 *.sw?
 
 backend/.env
-
-
-node_modules/
-**/node_modules/
-.claude/
