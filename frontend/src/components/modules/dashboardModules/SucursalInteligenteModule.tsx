@@ -55,11 +55,11 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
   }, [apiEndpoint]);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.load();
-      if (cameraEnabled) {
-        videoRef.current.play();
-      }
+    const v = videoRef.current;
+    if (!v) return;
+    v.load();
+    if (cameraEnabled) {
+      v.play().catch(() => {});
     }
   }, [selectedSucursal]);
 
@@ -115,7 +115,7 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
       if (cameraEnabled) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play();
+        videoRef.current.play().catch(() => {});
       }
     }
   };
@@ -321,7 +321,12 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
             loop
             playsInline
             style={videoStyle}
-            onError={(e) => { console.error('Error cargando video:', e); }}
+            onError={(e) => {
+              const err = e.currentTarget.error;
+              if (err && err.code !== MediaError.MEDIA_ERR_ABORTED) {
+                console.error('Error cargando video:', err.code, err.message);
+              }
+            }}
           >
             <source src={`/assets/sucursalInteligente${selectedSucursal}.mp4`} type="video/mp4" />
             Tu navegador no soporta video HTML5.
