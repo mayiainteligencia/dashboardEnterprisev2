@@ -54,12 +54,17 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
     }
   }, [apiEndpoint]);
 
+  const isFirstRender = useRef(true);
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     const v = videoRef.current;
     if (!v) return;
     v.load();
     if (cameraEnabled) {
-      v.play().catch(() => {});
+      v.play().catch((err) => console.warn('play failed:', err));
     }
   }, [selectedSucursal]);
 
@@ -314,12 +319,14 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
             style={videoStyle}
           />
         ) : (
-          <video 
+          <video
             ref={videoRef}
-            autoPlay 
-            muted 
+            key={selectedSucursal}
+            autoPlay
+            muted
             loop
             playsInline
+            preload="auto"
             style={videoStyle}
             onError={(e) => {
               const err = e.currentTarget.error;

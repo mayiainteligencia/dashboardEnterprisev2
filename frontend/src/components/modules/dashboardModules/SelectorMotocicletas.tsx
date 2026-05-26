@@ -174,6 +174,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         onTimeUpdate={() => { const v = videoRef.current; if (v && v.duration) setProgress((v.currentTime / v.duration) * 100); }}
         onEnded={handleEnded}
         onLoadedData={() => setIsLoaded(true)}
+        onCanPlay={() => setIsLoaded(true)}
+        onLoadedMetadata={() => setIsLoaded(true)}
         style={{
           width: '100%',
           height: '100%',
