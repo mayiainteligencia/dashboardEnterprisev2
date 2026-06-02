@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ResponsiveLayout } from './components/ResponsiveLayout';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
@@ -11,93 +12,69 @@ import { Administracion } from './components/departamentos/Administracion';
 import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Playground } from './components/departamentos/Playground';
 import { Academia } from './components/departamentos/Academia';
-import { SidebarR } from './components/sideBarR';
+
+import { MonitorMedios } from './components/MonitorMedios';
 import { brandingConfig } from './config/branding';
+
+
+import './responsive.css';
 
 function App() {
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [onClose] = useState();
   const { colores } = brandingConfig;
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard: 'Dashboard General',
-      rh: 'Recursos Humanos',
-      finanzas: 'Finanzas y Contabilidad',
-      operaciones: 'Operaciones',
-      ventas: 'Ventas y Marketing',
-      ti: 'Tecnologías de la Información',
+      dashboard:      'Dashboard General',
+      rh:             'Recursos Humanos',
+      finanzas:       'Finanzas y Contabilidad',
+      operaciones:    'Operaciones',
+      ventas:         'Ventas y Marketing',
+      ti:             'Tecnologías de la Información',
       administracion: 'Administración',
       ciberseguridad: 'CiberSeguridad',
-      playground: 'Playground',
-      academia: 'Academia',
+      playground:     'Playground',
+      academia:       'Academia',
+
+      monitor: 'Monitor de Medios',
     };
     return titulos[activeSection] || 'Dashboard';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'rh':
-        return <RecursosHumanos />;
-      case 'finanzas':
-        return <FinanzasContabilidad />;
-      case 'operaciones':
-        return <Operaciones />;
-      case 'ventas':
-        return <VentasMarketing />;
-      case 'ti':
-        return <TecnologiasInformacion />;
-      case 'administracion':
-        return <Administracion />;
-      case 'ciberseguridad':
-        return <Ciberseguridad />;
-      case 'playground':
-        return <Playground />;
-      case 'academia':
-        return <Academia />;
-      default:
-        return <Dashboard />;
+      case 'dashboard':      return <Dashboard onSectionChange={setActiveSection} />;
+      case 'rh':             return <RecursosHumanos />;
+      case 'finanzas':       return <FinanzasContabilidad />;
+      case 'operaciones':    return <Operaciones />;
+      case 'ventas':         return <VentasMarketing />;
+      case 'ti':             return <TecnologiasInformacion />;
+      case 'administracion': return <Administracion />;
+      case 'ciberseguridad': return <Ciberseguridad />;
+      case 'playground':     return <Playground />;
+      case 'academia':       return <Academia />;
+
+      case 'monitor': return <MonitorMedios />;
+      default:               return <Dashboard onSectionChange={setActiveSection} />;
     }
   };
 
   return (
-    <div 
-      style={{ 
-        display: 'flex',
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: colores.fondoPrincipal
-      }}
+    <ResponsiveLayout
+      activeSection={activeSection}
+      onSectionChange={setActiveSection}
+      header={<Header title={getTitulo()} />}
+      sidebar={
+        <Sidebar
+          activeSection={activeSection}
+          onSectionChange={setActiveSection}
+        />
+      }
     >
-      {/* SIDEBAR */}
-      <div style={{ width: '240px', flexShrink: 0 }}>
-        <Sidebar 
-          activeSection={activeSection} 
-          onSectionChange={setActiveSection} 
-        />
+      <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
+        {renderContent()}
       </div>
-      
-      {/* CONTENIDO */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-        {/* Header */}
-        <Header title={getTitulo()} />
-        
-        {/* Main content */}
-        <div style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
-          {renderContent()}
-        </div>
-      </div>
-
-      <div>
-        <SidebarR
-          onClose={onClose}
-        />
-      </div>
-
-    </div>
+    </ResponsiveLayout>
   );
 }
 

@@ -1,428 +1,295 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { TrendingUp, Sparkles, Calendar } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Radio, TrendingUp } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
+const { colores } = brandingConfig;
+
+interface Testigo {
+  emisora_nombre: string;
+  timestamp: string;
+}
+
+interface PuntoTiempo {
+  hora: string;
+  [emisora: string]: number | string;
+}
+
 export const ProductivityChart: React.FC = () => {
-  const { colores } = brandingConfig;
-  const chartRef = useRef<HTMLDivElement>(null);
-  const [selectedPeriod, setSelectedPeriod] = useState<'monthly' | 'yearly'>('monthly');
+  const [datos, setDatos] = useState<PuntoTiempo[]>([]);
+  const [emisoras, setEmisoras] = useState<string[]>([]);
+  const [total, setTotal] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const [tooltip, setTooltip] = useState<{ x: number; y: number; contenido: string } | null>(null);
 
-  const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-  const sinIAData = [65, 68, 70, 72, 71, 73, 74, 75, 76, 78, 77, 79];
-  const conIAData = [65, 70, 78, 85, 92, 98, 105, 112, 118, 125, 130, 138];
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
-  const maxValue = 150;
-  const incremento = Math.round(((conIAData[conIAData.length - 1] - sinIAData[sinIAData.length - 1]) / sinIAData[sinIAData.length - 1]) * 100);
+  useEffect(() => {
+    fetch('/api/monitor/testigos')
+      .then(r => r.json())
+      .then(data => {
+        const testigos: Testigo[] = data.testigos || [];
+        setTotal(testigos.length);
 
-  // Punto destacado (último mes)
-  const highlightIndex = conIAData.length - 1;
-  const highlightValue = conIAData[highlightIndex];
+        if (testigos.length === 0) return;
+
+        // Agrupar por hora y emisora
+        const emisorasSet = new Set<string>();
+        const porHora: Record<string, Record<string, number>> = {};
+
+        testigos.forEach(t => {
+          const fecha = new Date(t.timestamp);
+          const hora = `${fecha.getHours().toString().padStart(2, '0')}:00`;
+          const nombre = t.emisora_nombre || 'Sin nombre';
+          emisorasSet.add(nombre);
+          if (!porHora[hora]) porHora[hora] = {};
+          porHora[hora][nombre] = (porHora[hora][nombre] || 0) + 1;
+        });
+
+        const emisorasArr = Array.from(emisorasSet);
+        setEmisoras(emisorasArr);
+
+        // Llenar horas vacías
+        const horasOrdenadas = Object.keys(porHora).sort();
+        const puntos: PuntoTiempo[] = horasOrdenadas.map(hora => {
+          const punto: PuntoTiempo = { hora };
+          emisorasArr.forEach(e => { punto[e] = porHora[hora][e] || 0; });
+          return punto;
+        });
+
+        setDatos(puntos);
+      })
+      .catch(() => {});
+
+    const interval = setInterval(() => {
+      fetch('/api/monitor/testigos')
+        .then(r => r.json())
+        .then(data => {
+          const testigos: Testigo[] = data.testigos || [];
+          setTotal(testigos.length);
+          if (testigos.length === 0) return;
+          const emisorasSet = new Set<string>();
+          const porHora: Record<string, Record<string, number>> = {};
+          testigos.forEach(t => {
+            const fecha = new Date(t.timestamp);
+            const hora = `${fecha.getHours().toString().padStart(2, '0')}:00`;
+            const nombre = t.emisora_nombre || 'Sin nombre';
+            emisorasSet.add(nombre);
+            if (!porHora[hora]) porHora[hora] = {};
+            porHora[hora][nombre] = (porHora[hora][nombre] || 0) + 1;
+          });
+          const emisorasArr = Array.from(emisorasSet);
+          setEmisoras(emisorasArr);
+          const horasOrdenadas = Object.keys(porHora).sort();
+          const puntos: PuntoTiempo[] = horasOrdenadas.map(hora => {
+            const punto: PuntoTiempo = { hora };
+            emisorasArr.forEach(e => { punto[e] = porHora[hora][e] || 0; });
+            return punto;
+          });
+          setDatos(puntos);
+        }).catch(() => {});
+    }, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Paleta de colores para líneas
+  const COLORES_LINEA = ['#0A0A0A', '#6B7280', '#D4D4D4', '#1A1A1A', '#9CA3AF'];
+
+  const chartH = isMobile ? 200 : 280;
+  const paddingL = 40;
+  const paddingB = 30;
+  const W = 1000;
+  const H = chartH;
+
+  const maxVal = datos.length > 0
+    ? Math.max(...datos.flatMap(p => emisoras.map(e => Number(p[e] || 0))), 1)
+    : 1;
+
+  const getX = (i: number) => datos.length < 2 ? W / 2 : (i / (datos.length - 1)) * W;
+  const getY = (val: number) => H - paddingB - ((val / maxVal) * (H - paddingB - 20));
 
   return (
-    <div
-      ref={chartRef}
-      style={{
-        background: `linear-gradient(135deg, ${colores.fondoSecundario}dd 0%, ${colores.fondoTerciario}dd 100%)`,
-        backdropFilter: 'blur(20px)',
-        borderRadius: '20px',
-        padding: '28px',
-        border: `1px solid ${colores.borde}40`,
-        position: 'relative',
-        overflow: 'hidden',
-      }}
-    >
-      {/* Glow decorativo de fondo */}
-      <div
-        style={{
-          position: 'absolute',
-          top: '-30%',
-          right: '-15%',
-          width: '400px',
-          height: '400px',
-          background: `radial-gradient(circle, ${colores.primario}15 0%, transparent 70%)`,
-          filter: 'blur(80px)',
-          pointerEvents: 'none',
-        }}
-      />
+    <div style={{
+      background: colores.fondoClaro, borderRadius: 20,
+      padding: isMobile ? 16 : 28,
+      border: `1px solid ${colores.borde}`,
+      boxShadow: colores.sombraMedia,
+      position: 'relative', overflow: 'hidden',
+    }}>
 
-      {/* Header con controles */}
-      <div style={{ marginBottom: '32px', position: 'relative', zIndex: 1 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div
-              style={{
-                width: '44px',
-                height: '44px',
-                borderRadius: '12px',
-                background: `linear-gradient(135deg, ${colores.primario}20 0%, ${colores.acento}20 100%)`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <TrendingUp size={22} color={colores.primario} strokeWidth={2.5} />
-            </div>
-            <div>
-              <h3
-                style={{
-                  fontSize: '20px',
-                  fontWeight: '700',
-                  color: colores.textoClaro,
-                  margin: 0,
-                  lineHeight: 1,
-                }}
-              >
-                Impacto de IA en Productividad
-              </h3>
-              <p
-                style={{
-                  fontSize: '13px',
-                  color: colores.textoMedio,
-                  margin: '4px 0 0 0',
-                }}
-              >
-                Comparativa de rendimiento mensual
-              </p>
-            </div>
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div style={{
+            width: 44, height: 44, borderRadius: 12,
+            background: colores.fondoSecundario,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <TrendingUp size={22} color={colores.textoClaro} />
           </div>
-
-          {/* Selector de período */}
-          <div
-            style={{
-              display: 'flex',
-              gap: '8px',
-              background: colores.fondoTerciario,
-              padding: '4px',
-              borderRadius: '12px',
-              border: `1px solid ${colores.borde}`,
-            }}
-          >
-            {(['monthly', 'yearly'] as const).map((period) => (
-              <button
-                key={period}
-                onClick={() => setSelectedPeriod(period)}
-                style={{
-                  padding: '8px 16px',
-                  borderRadius: '8px',
-                  border: 'none',
-                  background: selectedPeriod === period ? `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 100%)` : 'transparent',
-                  color: selectedPeriod === period ? 'white' : colores.textoMedio,
-                  fontSize: '13px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-              >
-                {period === 'monthly' ? 'Mensual' : 'Anual'}
-              </button>
-            ))}
+          <div>
+            <h3 style={{ fontSize: isMobile ? 15 : 18, fontWeight: 700, color: colores.textoClaro, margin: 0 }}>
+              Actividad por Emisora
+            </h3>
+            <p style={{ fontSize: 13, color: colores.textoOscuro, margin: '4px 0 0' }}>
+              Detecciones por hora del día
+            </p>
           </div>
         </div>
 
-        {/* Badge de incremento destacado */}
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 14px',
-            borderRadius: '10px',
-            background: `${colores.exito}15`,
-            border: `1px solid ${colores.exito}30`,
-          }}
-        >
-          <Sparkles size={16} color={colores.exito} />
-          <span
-            style={{
-              fontSize: '15px',
-              fontWeight: '700',
-              color: colores.exito,
-            }}
-          >
-            +{incremento}% mejora
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: 6,
+          background: colores.fondoSecundario, borderRadius: 10,
+          padding: '8px 14px',
+        }}>
+          <Radio size={14} color={colores.textoOscuro} />
+          <span style={{ fontSize: 13, fontWeight: 700, color: colores.textoClaro }}>
+            {total}
+          </span>
+          <span style={{ fontSize: 12, color: colores.textoOscuro }}>
+            detecciones
           </span>
         </div>
       </div>
 
-      {/* Área de gráfica */}
-      <div style={{ position: 'relative', height: '320px', marginBottom: '24px' }}>
-        {/* Grid horizontal */}
-        {[0, 50, 100, 150].map((value, idx) => (
-          <div
-            key={value}
-            style={{
-              position: 'absolute',
-              left: '50px',
-              right: 0,
-              bottom: `${(value / maxValue) * 100}%`,
-              height: '1px',
-              background: idx === 0 ? 'transparent' : `${colores.borde}30`,
-              display: 'flex',
-              alignItems: 'center',
-            }}
+      {/* Gráfica */}
+      {datos.length === 0 ? (
+        <div style={{
+          height: chartH, display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', gap: 12,
+        }}>
+          <Radio size={40} color={colores.textoOscuro} strokeWidth={1} />
+          <p style={{ fontSize: 14, color: colores.textoOscuro, margin: 0 }}>
+            Sin datos aún — inicia una sesión de monitoreo
+          </p>
+        </div>
+      ) : (
+        <div style={{ position: 'relative' }}>
+          <svg
+            ref={svgRef}
+            width="100%"
+            height={chartH}
+            viewBox={`0 0 ${W + paddingL} ${H}`}
+            preserveAspectRatio="none"
+            style={{ display: 'block' }}
+            onMouseLeave={() => setTooltip(null)}
           >
-            <span
-              style={{
-                position: 'absolute',
-                left: '-50px',
-                fontSize: '11px',
-                color: colores.textoOscuro,
-                fontWeight: '500',
-                width: '40px',
-                textAlign: 'right',
-              }}
-            >
-              {value}%
-            </span>
-          </div>
-        ))}
+            <defs>
+              {emisoras.map((e, i) => (
+                <linearGradient key={e} id={`area-${i}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor={COLORES_LINEA[i % COLORES_LINEA.length]} stopOpacity="0.15" />
+                  <stop offset="100%" stopColor={COLORES_LINEA[i % COLORES_LINEA.length]} stopOpacity="0.01" />
+                </linearGradient>
+              ))}
+            </defs>
 
-        {/* SVG Chart */}
-        <svg
-          width="100%"
-          height="320"
-          style={{ position: 'absolute', top: 0, left: '50px' }}
-          viewBox="0 0 1000 320"
-          preserveAspectRatio="none"
-        >
-          <defs>
-            {/* Gradiente para línea Con IA */}
-            <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor={colores.primario} stopOpacity="1" />
-              <stop offset="100%" stopColor={colores.acento} stopOpacity="1" />
-            </linearGradient>
+            {/* Líneas de guía horizontales */}
+            {[0, 25, 50, 75, 100].map(pct => {
+              const y = H - paddingB - ((pct / 100) * (H - paddingB - 20));
+              const val = Math.round((pct / 100) * maxVal);
+              return (
+                <g key={pct}>
+                  <line x1={paddingL} y1={y} x2={W + paddingL} y2={y}
+                    stroke={colores.borde} strokeWidth="1" strokeDasharray="4,4" opacity="0.5" />
+                  <text x={paddingL - 6} y={y + 4} textAnchor="end"
+                    fontSize="11" fill={colores.textoOscuro}>{val}</text>
+                </g>
+              );
+            })}
 
-            {/* Gradiente para área bajo línea */}
-            <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor={colores.primario} stopOpacity="0.25" />
-              <stop offset="100%" stopColor={colores.primario} stopOpacity="0.02" />
-            </linearGradient>
+            {/* Áreas y líneas por emisora */}
+            {emisoras.map((e, i) => {
+              const color = COLORES_LINEA[i % COLORES_LINEA.length];
+              const pts = datos.map((p, idx) => ({
+                x: getX(idx) + paddingL,
+                y: getY(Number(p[e] || 0)),
+              }));
 
-            {/* Filtro glow */}
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-              <feMerge>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="coloredBlur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
+              const areaPath = `M ${pts[0].x},${H - paddingB} `
+                + pts.map(p => `L ${p.x},${p.y}`).join(' ')
+                + ` L ${pts[pts.length - 1].x},${H - paddingB} Z`;
 
-            {/* Gradiente para punto destacado */}
-            <radialGradient id="highlightGlow">
-              <stop offset="0%" stopColor={colores.primario} stopOpacity="0.8" />
-              <stop offset="100%" stopColor={colores.primario} stopOpacity="0" />
-            </radialGradient>
-          </defs>
+              const linePath = pts.map((p, idx) =>
+                `${idx === 0 ? 'M' : 'L'} ${p.x},${p.y}`
+              ).join(' ');
 
-          {/* Área bajo curva Con IA */}
-          <path
-            d={`
-              M 0,320
-              ${conIAData.map((value, index) => {
-                const x = (index / (meses.length - 1)) * 1000;
-                const y = 320 - (value / maxValue) * 320;
-                return `L ${x},${y}`;
-              }).join(' ')}
-              L 1000,320
-              Z
-            `}
-            fill="url(#areaGradient)"
-          />
-
-          {/* Línea Sin IA (punteada) */}
-          <path
-            d={sinIAData.map((value, index) => {
-              const x = (index / (meses.length - 1)) * 1000;
-              const y = 320 - (value / maxValue) * 320;
-              return `${index === 0 ? 'M' : 'L'} ${x},${y}`;
-            }).join(' ')}
-            stroke={colores.textoOscuro}
-            strokeWidth="2"
-            strokeDasharray="6,4"
-            fill="none"
-            strokeLinecap="round"
-          />
-
-          {/* Línea Con IA (gradiente brillante) */}
-          <path
-            d={conIAData.map((value, index) => {
-              const x = (index / (meses.length - 1)) * 1000;
-              const y = 320 - (value / maxValue) * 320;
-              return `${index === 0 ? 'M' : 'L'} ${x},${y}`;
-            }).join(' ')}
-            stroke="url(#lineGradient)"
-            strokeWidth="4"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            filter="url(#glow)"
-          />
-
-          {/* Puntos en Sin IA */}
-          {sinIAData.map((value, index) => {
-            const x = (index / (meses.length - 1)) * 1000;
-            const y = 320 - (value / maxValue) * 320;
-            return (
-              <circle
-                key={`sin-${index}`}
-                cx={x}
-                cy={y}
-                r="4"
-                fill={colores.fondoSecundario}
-                stroke={colores.textoOscuro}
-                strokeWidth="2"
-              />
-            );
-          })}
-
-          {/* Puntos en Con IA */}
-          {conIAData.map((value, index) => {
-            const x = (index / (meses.length - 1)) * 1000;
-            const y = 320 - (value / maxValue) * 320;
-            const isHighlight = index === highlightIndex;
-
-            return (
-              <g key={`con-${index}`}>
-                {isHighlight && (
-                  <>
-                    {/* Círculo pulsante grande */}
+              return (
+                <g key={e}>
+                  <path d={areaPath} fill={`url(#area-${i})`} />
+                  <path d={linePath} stroke={color} strokeWidth="2.5"
+                    fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                  {pts.map((p, idx) => (
                     <circle
-                      cx={x}
-                      cy={y}
-                      r="16"
-                      fill="url(#highlightGlow)"
-                    >
-                      <animate
-                        attributeName="r"
-                        values="16;24;16"
-                        dur="2s"
-                        repeatCount="indefinite"
-                      />
-                      <animate
-                        attributeName="opacity"
-                        values="0.6;0;0.6"
-                        dur="2s"
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-                  </>
-                )}
-                
-                {/* Punto principal */}
-                <circle
-                  cx={x}
-                  cy={y}
-                  r={isHighlight ? "8" : "6"}
-                  fill={colores.primario}
-                  stroke="white"
-                  strokeWidth={isHighlight ? "3" : "2"}
-                  filter={isHighlight ? "url(#glow)" : "none"}
-                />
-              </g>
-            );
-          })}
+                      key={idx} cx={p.x} cy={p.y} r="4"
+                      fill={color} stroke="white" strokeWidth="2"
+                      style={{ cursor: 'pointer' }}
+                      onMouseEnter={() => setTooltip({
+                        x: p.x, y: p.y,
+                        contenido: `${e}\n${datos[idx].hora}: ${datos[idx][e]} detecciones`
+                      })}
+                    />
+                  ))}
+                </g>
+              );
+            })}
 
-          {/* Etiqueta del punto destacado */}
-          {(() => {
-            const x = (highlightIndex / (meses.length - 1)) * 1000;
-            const y = 320 - (highlightValue / maxValue) * 320;
-            return (
-              <g>
-                {/* Tooltip background */}
-                <rect
-                  x={x - 35}
-                  y={y - 45}
-                  width="70"
-                  height="32"
-                  rx="8"
-                  fill={colores.primario}
-                  filter="url(#glow)"
-                />
-                {/* Valor */}
-                <text
-                  x={x}
-                  y={y - 24}
-                  textAnchor="middle"
-                  fontSize="16"
-                  fontWeight="700"
-                  fill="white"
-                >
-                  {highlightValue}%
-                </text>
-              </g>
-            );
-          })()}
-        </svg>
-      </div>
-
-      {/* Leyenda de meses */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          paddingLeft: '50px',
-          paddingTop: '16px',
-          borderTop: `1px solid ${colores.borde}30`,
-          marginBottom: '20px',
-        }}
-      >
-        {meses.map((mes, index) => (
-          <span
-            key={mes}
-            style={{
-              fontSize: '11px',
-              color: index === highlightIndex ? colores.primario : colores.textoMedio,
-              fontWeight: index === highlightIndex ? '700' : '500',
-            }}
-          >
-            {mes}
-          </span>
-        ))}
-      </div>
-
-      {/* Leyendas */}
-      <div
-        style={{
-          display: 'flex',
-          gap: '32px',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div
-            style={{
-              width: '40px',
-              height: '4px',
-              background: `linear-gradient(90deg, ${colores.primario}, ${colores.acento})`,
-              borderRadius: '2px',
-              boxShadow: `0 0 8px ${colores.primario}40`,
-            }}
-          />
-          <span style={{ fontSize: '13px', color: colores.textoClaro, fontWeight: '600' }}>
-            Con IA
-          </span>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <svg width="40" height="4">
-            <line
-              x1="0"
-              y1="2"
-              x2="40"
-              y2="2"
-              stroke={colores.textoOscuro}
-              strokeWidth="2"
-              strokeDasharray="6,4"
-              strokeLinecap="round"
-            />
+            {/* Eje X — horas */}
+            {datos.map((p, i) => (
+              <text key={i}
+                x={getX(i) + paddingL} y={H - 8}
+                textAnchor="middle" fontSize="11" fill={colores.textoOscuro}
+              >
+                {p.hora}
+              </text>
+            ))}
           </svg>
-          <span style={{ fontSize: '13px', color: colores.textoMedio, fontWeight: '500' }}>
-            Sin IA
-          </span>
+
+          {/* Tooltip */}
+          {tooltip && (
+            <div style={{
+              position: 'absolute',
+              left: `${(tooltip.x / (W + paddingL)) * 100}%`,
+              top: tooltip.y - 10,
+              transform: 'translate(-50%, -100%)',
+              background: colores.textoClaro,
+              color: colores.textoEnOscuro,
+              padding: '6px 12px', borderRadius: 8,
+              fontSize: 12, fontWeight: 500,
+              whiteSpace: 'pre', pointerEvents: 'none',
+              boxShadow: colores.sombraMedia,
+              zIndex: 10,
+            }}>
+              {tooltip.contenido}
+            </div>
+          )}
         </div>
-      </div>
+      )}
+
+      {/* Leyenda */}
+      {emisoras.length > 0 && (
+        <div style={{
+          display: 'flex', gap: 20, flexWrap: 'wrap',
+          marginTop: 20, paddingTop: 16,
+          borderTop: `1px solid ${colores.borde}`,
+        }}>
+          {emisoras.map((e, i) => (
+            <div key={e} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{
+                width: 32, height: 3, borderRadius: 999,
+                background: COLORES_LINEA[i % COLORES_LINEA.length],
+              }} />
+              <span style={{ fontSize: 12, color: colores.textoMedio, fontWeight: 500 }}>
+                {e}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

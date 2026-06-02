@@ -1,6 +1,17 @@
 import React from 'react';
 import { 
   LayoutDashboard,
+  TrendingUp,
+  Shield,
+  GraduationCap,
+  Code2,
+  Radio, 
+} from 'lucide-react';
+import { brandingConfig } from '../config/branding';
+
+// Import anterior por si llegase a utilizarse nuevamente
+/* import { 
+  LayoutDashboard,
   Users,
   DollarSign,
   Package,
@@ -10,16 +21,15 @@ import {
   Shield,
   GraduationCap,
   Code2,
-} from 'lucide-react'; 
-
-import { brandingConfig } from '../config/branding';
+} from 'lucide-react'; */
+ 
 
 interface SidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
 }
-
-const menuItems = [
+// Dejamos el menú anterior por si alguna de las secciones o todas las secciones se llegasen a requerir después
+/* const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
   { id: 'rh', nombre: 'Recursos Humanos', icono: Users },
   { id: 'finanzas', nombre: 'Finanzas y Contabilidad', icono: DollarSign },
@@ -27,8 +37,16 @@ const menuItems = [
   { id: 'ventas', nombre: 'Ventas y Marketing', icono: TrendingUp },
   { id: 'ti', nombre: 'Tecnologías de la Información', icono: Cpu },
   { id: 'administracion', nombre: 'Administración', icono: Building2 },
-  { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp },
+  { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp}
 ];
+ */
+
+const menuItems = [
+  { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
+  // { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp},
+  { id: 'monitor', nombre: 'Monitor de Medios', icono: Radio },  // ← NUEVO
+];
+
 
 const extraSections = [
   { id: 'ciberseguridad', nombre: 'CiberSeguridad', icono: Shield },
@@ -47,7 +65,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         backgroundColor: colores.fondoSecundario,
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden', // evita que el contenedor crezca más allá del viewport
       }}
     >
       {/* Logo */}
@@ -64,11 +81,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               justifyContent: 'center',
               boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
               overflow: 'hidden',
-              flexShrink: 0,
             }}
           >
             <img 
-              src="/assets/logosEmpresas/renault-logo.svg"
+              src="/assets/logosEmpresas/susurro.jpg" 
               alt={empresa.nombre}
               style={{
                 width: '100%',
@@ -77,6 +93,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 padding: '4px',
               }}
               onError={(e) => {
+                // Fallback al SVG si la imagen no carga
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 const container = target.parentElement;
@@ -106,25 +123,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       </div>
 
       {/* Label DEPARTAMENTOS */}
-      <div style={{ padding: '0 16px 8px 16px', flexShrink: 0 }}>
+      <div style={{ padding: '0 16px 8px 16px' }}>
         <span style={{ 
           fontSize: '11px', 
           fontWeight: '600', 
           textTransform: 'uppercase', 
           letterSpacing: '0.05em',
-          color: colores.textoOscuro,
+          color: colores.textoOscuro 
         }}>
           DEPARTAMENTOS
         </span>
       </div>
 
-      {/* Menú Principal — scrolleable */}
-      <nav style={{ 
-        flex: '1 1 0',   // ocupa el espacio disponible entre header y footer
-        minHeight: 0,     // crítico: permite que flex shrink active el scroll
-        overflowY: 'auto',
-        padding: '0 12px',
-      }}>
+      {/* Menú Principal */}
+      <nav style={{ flex: '0 0 auto', padding: '0 12px', overflow: 'auto' }}>
         {menuItems.map((item) => {
           const Icon = item.icono;
           const isActive = activeSection === item.id;
@@ -176,12 +188,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         })}
       </nav>
 
-      {/* Footer buttons — siempre visible al fondo */}
-      <div style={{ 
-        padding: '12px', 
-        borderTop: `1px solid ${colores.borde}`, 
-        flexShrink: 0,  // nunca se comprime
-      }}>
+      {/* Footer buttons - Secciones Extra */}
+      <div style={{ padding: '12px', borderTop: `1px solid ${colores.borde}`, flexShrink: 0 }}>
         {extraSections.map((section) => {
           const Icon = section.icono;
           const isActive = activeSection === section.id;
@@ -225,7 +233,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  flexShrink: 0,
                 }}
               >
                 <Icon size={18} />

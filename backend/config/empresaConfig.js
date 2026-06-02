@@ -3,190 +3,190 @@
 
 export const EMPRESA_CONFIG = {
   // Información básica
-  nombre: 'Renault',
-  nombreCompleto: 'Renault México',
-  industria: 'Automotriz y Concesionarias',
-  fundacion: 1899,
+  nombre: 'Farmacias Similares',
+  nombreCompleto: 'Farmacias Similares - Dr. Simi',
+  industria: 'Retail Farmacéutico y Servicios de Salud',
+  fundacion: 1997,
   pais: 'México',
-  slogan: 'Passion for life',
+  slogan: 'Lo mismo pero más barato',
 
   // Descripción corporativa
-  descripcion: 'Marca automotriz líder a nivel mundial, ofreciendo vehículos de vanguardia, desde city cars eléctricos hasta SUVs premium, con un enfoque en la innovación, el diseño y la sostenibilidad.',
+  descripcion: 'Cadena líder en México y América Latina especializada en medicamentos genéricos a precios accesibles, con servicios integrados de consultorios médicos y análisis clínicos.',
 
   // Datos operativos
   operaciones: {
-    sucursales: '70+ agencias en México',
-    mercados: 'México, LATAM y Global',
-    empleados: '5,000+',
+    sucursales: '7,000+ en México y Latinoamérica',
+    mercados: 'México, Chile, Perú, Guatemala, Costa Rica, El Salvador',
+    empleados: '20,000+',
     lineasNegocio: [
-      'Venta de vehículos nuevos (SUVs, City Cars, Eléctricos)',
-      'Venta de vehículos seminuevos',
-      'Servicio de mantenimiento y taller',
-      'Venta de refacciones y accesorios',
-      'Financiamiento automotriz (Renault Servicios Financieros)',
-      'Renault Care - Acompañamiento post-venta',
-      'Renault Connect - Servicios conectados y asistencia inteligente'
+      'Venta de medicamentos genéricos',
+      'Productos de cuidado personal',
+      'Consultorios médicos',
+      'Análisis clínicos',
+      'Servicio a domicilio',
+      'MedikalIA - Acompañamiento emocional 24/7',
+      'Simi Promo - Recomendador inteligente de compras'
     ]
   },
 
   // Marcas del portafolio
   marcas: [
-    'Renault',
-    'Renault E-Tech (Vehículos Eléctricos)',
-    'Renault Servicios Financieros',
-    'Renault PRO+ (Vehículos Comerciales)',
-    'Renault Selection (Seminuevos)',
-    'Renault Care'
+    'Dr. Simi (mascota corporativa)',
+    'Farmacias Similares',
+    'Consultorios Adyacentes',
+    'Análisis Clínicos del Dr. Simi',
+    'MedikalIA - Bienestar emocional para colaboradores',
+    'Simi Promo - Asistente inteligente de compras'
   ],
 
   // Servicios principales
   serviciosPrincipales: [
-    'Venta de autos nuevos y seminuevos',
-    'Pruebas de manejo (Test Drives)',
-    'Mantenimiento preventivo y correctivo',
-    'Venta de accesorios originales',
-    'Cotización y gestión de créditos automotrices',
-    'Asistencia en el camino',
-    'Renault Care - Acompañamiento post-venta',
-    'Renault Connect - Experiencia de usuario conectada'
+    'Venta de medicamentos genéricos',
+    'Productos de belleza y cuidado personal',
+    'Consultas médicas accesibles',
+    'Laboratorio de análisis clínicos',
+    'Entrega a domicilio',
+    'Servicio por WhatsApp',
+    'MedikalIA - Acompañamiento emocional 24/7 para colaboradores',
+    'Simi Promo - Recomendaciones inteligentes de surtido para tiendas'
   ],
 
   // Contactos corporativos
   contacto: {
-    sitioWeb: 'https://www.renault.com.mx',
-    simitel: '800 505 1515',
-    whatsapp: '55 1234 5678',
-    analisisClinicos: 'https://www.renault.com.mx/servicios.html',
-    appEntrega: 'Renault App'
+    sitioWeb: 'https://www.farmaciasdesimilares.com',
+    simitel: '800 911 6666',
+    whatsapp: '55 2595 1595',
+    analisisClinicos: 'https://www.ssdrsimi.com.mx',
+    appEntrega: 'Rappi, sitio web'
   },
 
   // Enfoque estratégico
   enfoqueEstrategico: [
-    'Innovación tecnológica y electrificación',
-    'Diseño y confort',
-    'Sostenibilidad ambiental',
-    'Experiencia de cliente digital y en agencia',
-    'Seguridad vehicular'
+    'Accesibilidad en salud',
+    'Precios económicos',
+    'Cobertura nacional',
+    'Servicio integral (farmacia + consultorio + laboratorio)',
+    'Digitalización y e-commerce'
   ],
 
-  // Servicios MAYIA prioritarios (según industria automotriz)
+  // Servicios MAYIA prioritarios (según industria retail farmacéutica)
   serviciosPrioritarios: {
     ventas: [
-      'Recomendador de Vehículos',
-      'WhatsApp Automatizado (Agendar Prueba de Manejo)',
-      'Analytics de Ventas y Conversión',
-      'Cotizador Inteligente'
+      'Recomendador de Productos',
+      'WhatsApp Automatizado',
+      'Analytics de Ventas',
+      'Compras Personalizadas'
     ],
     operaciones: [
-      'Control de Inventario de Autos y Refacciones',
-      'Análisis de Demanda por Modelo',
-      'Optimización de Taller y Citas de Servicio',
-      'Control de Agencias'
+      'Control de Inventario inteligente',
+      'Análisis de Demanda',
+      'Logística optimizada (entregas a domicilio)',
+      'Control de CEDIS y Sucursales'
     ],
     rh: [
-      'Reclutamiento Inteligente (Asesores de Venta, Técnicos)',
-      'Evaluación de Desempeño Comercial',
-      'Capacitación de personal sobre nuevos modelos'
+      'Reclutamiento Inteligente',
+      'Evaluación de Desempeño',
+      'Capacitación de personal (7,000+ sucursales)'
     ],
     atencionCliente: [
       'Agentes de Atención 24/7',
-      'WhatsApp Automatizado para Estatus de Reparación',
-      'Chatbots especializados en post-venta'
+      'WhatsApp Automatizado',
+      'Chatbots especializados en salud'
     ],
     ti: [
-      'Ciberseguridad de datos de clientes',
-      'Infraestructura Cloud para concesionarias',
-      'Gestión de CRM'
+      'Ciberseguridad (datos médicos sensibles)',
+      'Infraestructura Cloud para sucursales',
+      'Gestión de Bases de Datos de pacientes'
     ],
     administracion: [
-      'Analytics de Negocios y Market Share',
-      'Optimización de Procesos de Agencia',
-      'Control de múltiples agencias'
+      'Analytics de Negocios',
+      'Optimización de Procesos',
+      'Control de múltiples sucursales'
     ]
   },
 
-  // Cursos recomendados (según perfil automotriz)
+  // Cursos recomendados (según perfil retail farmacéutico)
   cursosRecomendados: {
     gerentes: [
-      'IA para Gerentes de Agencia',
-      'Analytics de Ventas',
-      'Optimización de Procesos de Taller',
+      'IA para Gerentes',
+      'Analytics de Negocios',
+      'Optimización de Procesos',
       'Toma de Decisiones Estratégicas'
     ],
     ventas: [
-      'IA para Trabajo Inteligente en Piso de Ventas',
-      'Comunicación Efectiva con Clientes',
+      'IA para Trabajo Inteligente',
+      'Comunicación Efectiva',
       'Fundamentos del Prompting'
     ],
     ti: [
       'Ciberseguridad',
       'Python Fundamentos',
       'SQL Básico',
-      'ML para Propensión de Compra'
+      'ML para Negocios'
     ],
     operaciones: [
-      'Series Temporales (pronósticos de demanda de refacciones)',
-      'Análisis Estadístico de Tiempos de Reparación',
+      'Series Temporales (pronósticos de demanda)',
+      'Análisis Estadístico',
       'Data Wrangling',
       'Tableau Visualización'
     ]
   },
 
-  // Casos de uso específicos de IA para retail automotriz
+  // Casos de uso específicos de IA para retail farmacéutico
   casosDeUsoIA: {
-    inventario: 'Predecir demanda de refacciones y modelos más buscados',
-    recomendacion: 'Sugerir versiones o accesorios basados en el perfil del cliente',
-    atencion: 'Chatbot para agendar citas de servicio o pruebas de manejo',
-    logistica: 'Optimizar la entrega de vehículos nuevos a las agencias',
-    fraude: 'Detectar patrones anómalos en financiamiento',
-    precios: 'Análisis competitivo de precios en tiempo real vs otras marcas'
+    inventario: 'Predecir demanda de medicamentos por temporada (gripe, alergias)',
+    recomendacion: 'Sugerir productos complementarios (vitaminas + suplementos)',
+    atencion: 'Chatbot médico para preguntas frecuentes y agendar consultas',
+    logistica: 'Optimizar rutas de entrega a domicilio',
+    fraude: 'Detectar patrones de compra sospechosos',
+    precios: 'Análisis competitivo de precios en tiempo real'
   },
 
-  // Servicios propios de la plataforma MAYIA activos para Renault
+  // Servicios propios de la plataforma MAYIA activos para Farmacias Similares
   serviciosMayiaActivos: {
     medikalIA: {
-      nombre: 'Renault Assist',
-      nombreAlternativo: 'Renault-Assist',
-      tipo: 'Asistente de Productividad para Asesores',
-      descripcion: 'Agente disponible 24/7 para los asesores de ventas y técnicos. Ofrece apoyo rápido sobre especificaciones de modelos, procesos de crédito y manuales de reparación mediante IA.',
+      nombre: 'MedikalIA',
+      nombreAlternativo: 'Medical IA / Medikal-IA',
+      tipo: 'Bienestar emocional para colaboradores',
+      descripcion: 'Agente de acompañamiento emocional disponible 24/7 para los colaboradores de Farmacias Similares. Ofrece apoyo emocional personalizado mediante inteligencia artificial especializada en bienestar mental y prevención del burnout.',
       beneficios: [
-        'Acceso inmediato a fichas técnicas',
+        'Acompañamiento confidencial',
         'Disponibilidad inmediata 24/7',
-        'Soporte en dudas de financiamiento',
-        'Ayuda rápida en diagnósticos de taller',
-        'Mejora en tiempos de atención al cliente'
+        'Técnicas de bienestar emocional',
+        'Prevención de burnout',
+        'Apoyo especializado en salud mental'
       ],
-      audiencia: 'Asesores de venta y técnicos de servicio',
-      casoDeUso: 'Asesor en piso con cliente que necesita detalles específicos del motor de Koleos',
+      audiencia: 'Colaboradores internos (20,000+ empleados)',
+      casoDeUso: 'Personal de mostrador, supervisores de zona y gerentes con alta carga operativa en las 7,000 sucursales',
       modulo: 'Dashboard MAYIA - columna derecha'
     },
     simiPromo: {
-      nombre: 'Promo Renault',
-      nombreAlternativo: 'Recomendador Renault',
-      tipo: 'Recomendador inteligente de promociones e inventario',
-      descripcion: 'Asistente inteligente diseñado para optimizar las ventas en agencias. Analiza inventario disponible, bonos activos y perfil del cliente para recomendar la mejor oferta.',
+      nombre: 'Simi Promo',
+      nombreAlternativo: 'Recomendador Simi / SimiPromo',
+      tipo: 'Recomendador inteligente de compras para tiendas',
+      descripcion: 'Asistente inteligente de compras diseñado para optimizar el surtido de cada tienda Similares. Analiza tendencias de ventas, stock disponible y promociones activas para recomendar qué conviene pedir hoy.',
       beneficios: [
-        'Recomendaciones de venta cruzada (accesorios, garantías)',
-        'Alertas de bonos y tasas preferenciales',
-        'Gestión inteligente de leads',
-        'Maximiza el margen de venta',
-        'Reduce inventario estancado',
-        'Análisis de tendencias de color y versión'
+        'Recomendaciones de surtido personalizadas por zona geográfica',
+        'Alertas de productos en oferta y con descuento',
+        'Programación inteligente de pedidos a tienda',
+        'Maximiza el ahorro con descuentos Simi',
+        'Reduce faltantes y sobre-stock',
+        'Análisis de tendencias semanales por categoría'
       ],
-      audiencia: 'Gerentes de ventas y asesores comerciales',
-      casoDeUso: 'Recomendar una Duster equipada aprovechando tasa de 9.9% cuando el cliente duda',
+      audiencia: 'Encargados y gerentes de tienda / sucursal',
+      casoDeUso: 'Optimizar pedidos a CEDIS, aprovechar promociones activas, reducir merma por caducidad y garantizar stock de productos de alta rotación',
       modulo: 'Dashboard MAYIA - columna izquierda'
     }
   },
 
   // Métricas clave del negocio
   metricasClave: [
-    'Unidades nuevas vendidas',
-    'Tasa de conversión de leads',
-    'NPS (Satisfacción en Ventas y Servicio)',
-    'Entradas al taller por mes',
-    'Ticket promedio de servicio',
-    'Penetración financiera (%)'
+    'Ticket promedio por venta',
+    'Rotación de inventario de medicamentos',
+    'Tasa de conversión en consultorios',
+    'Tiempo de entrega a domicilio',
+    'NPS (satisfacción del cliente)',
+    'Ventas por sucursal'
   ]
 };
 
@@ -199,9 +199,9 @@ export function getEmpresaInfo(campo) {
 export function getDescripcionContextual() {
   const { nombreCompleto, slogan, fundacion, operaciones } = EMPRESA_CONFIG;
   
-  return `${nombreCompleto} ("${slogan}") es una marca líder fundada en ${fundacion}, 
-con ${operaciones.sucursales} especializadas en innovación automotriz, 
-vehículos modernos y excelente servicio post-venta.`;
+  return `${nombreCompleto} ("${slogan}") es una cadena líder fundada en ${fundacion}, 
+con ${operaciones.sucursales} especializadas en medicamentos genéricos accesibles, 
+consultorios médicos y análisis clínicos.`;
 }
 
 export default EMPRESA_CONFIG;
