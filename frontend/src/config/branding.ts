@@ -1,8 +1,8 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Susurro",
-    eslogan: "powered by Intel",
-    logo: "/assets/logosEmpresas/susurroH.jpg",
+    nombre: "Guardian Digital",
+    eslogan: "",
+    logo: "/assets/logosEmpresas/guardianLogo.png",
   },
 
   colores: {

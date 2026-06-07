@@ -1,11 +1,12 @@
 import React from 'react';
-import { 
+import {
   LayoutDashboard,
-  TrendingUp,
-  Shield,
-  GraduationCap,
-  Code2,
-  Radio, 
+  Scale,
+  Microscope,
+  Vault,
+  Store,
+  Gavel,
+  Globe,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -42,17 +43,17 @@ interface SidebarProps {
  */
 
 const menuItems = [
-  { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
-  // { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp},
-  { id: 'monitor', nombre: 'Monitor de Medios', icono: Radio },  // ← NUEVO
+  { id: 'dashboard', nombre: 'Dashboard Guardian', icono: LayoutDashboard },
+  { id: 'legal', nombre: 'Legal & IP Division', icono: Scale },
+  { id: 'forensics', nombre: 'AI Forensics', icono: Microscope },
+  { id: 'vault', nombre: 'Identity Vault', icono: Vault },
+  { id: 'marketplace', nombre: 'Licensing Marketplace', icono: Store },
+  { id: 'enforcement', nombre: 'Enforcement Engine', icono: Gavel },
+  { id: 'globalAlerts', nombre: 'Global Alerts', icono: Globe },
 ];
 
 
-const extraSections = [
-  { id: 'ciberseguridad', nombre: 'CiberSeguridad', icono: Shield },
-  { id: 'playground', nombre: 'Playground', icono: Code2 },
-  { id: 'academia', nombre: 'Academia', icono: GraduationCap },
-];
+const extraSections: { id: string; nombre: string; icono: typeof LayoutDashboard }[] = [];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { empresa, colores } = brandingConfig;
@@ -84,7 +85,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             }}
           >
             <img 
-              src="/assets/logosEmpresas/susurro.jpg" 
+              src="/assets/logosEmpresas/guardianLogo.png" 
               alt={empresa.nombre}
               style={{
                 width: '100%',

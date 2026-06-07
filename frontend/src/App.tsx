@@ -13,6 +13,14 @@ import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Playground } from './components/departamentos/Playground';
 import { Academia } from './components/departamentos/Academia';
 
+// ── Guardian Digital MX ──────────────────────────────────────────────────────
+import { LegalIP } from './components/departamentos/LegalIP';
+import { AIForensics } from './components/departamentos/AIForensics';
+import { IdentityVault } from './components/departamentos/IdentityVault';
+import { LicensingMarketplace } from './components/departamentos/LicensingMarketplace';
+import { EnforcementEngine } from './components/departamentos/EnforcementEngine';
+import { GlobalAlerts } from './components/departamentos/GlobalAlerts';
+
 import { MonitorMedios } from './components/MonitorMedios';
 import { brandingConfig } from './config/branding';
 
@@ -37,6 +45,13 @@ function App() {
       academia:       'Academia',
 
       monitor: 'Monitor de Medios',
+
+      legal:        'Legal & IP Division',
+      forensics:    'AI Forensics Division',
+      vault:        'Identity Vault',
+      marketplace:  'Licensing Marketplace',
+      enforcement:  'Enforcement Engine',
+      globalAlerts: 'Global Alerts',
     };
     return titulos[activeSection] || 'Dashboard';
   };
@@ -55,6 +70,13 @@ function App() {
       case 'academia':       return <Academia />;
 
       case 'monitor': return <MonitorMedios />;
+
+      case 'legal':          return <LegalIP />;
+      case 'forensics':      return <AIForensics />;
+      case 'vault':          return <IdentityVault />;
+      case 'marketplace':    return <LicensingMarketplace />;
+      case 'enforcement':    return <EnforcementEngine />;
+      case 'globalAlerts':   return <GlobalAlerts />;
       default:               return <Dashboard onSectionChange={setActiveSection} />;
     }
   };

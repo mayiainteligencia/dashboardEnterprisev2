@@ -361,7 +361,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
           >
             <img
-              src="/assets/logosEmpresas/susurro.jpg"
+              src="/assets/logosEmpresas/guardianLogo.png"
               alt="Perfil"
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               onError={e => {
