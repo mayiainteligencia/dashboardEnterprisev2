@@ -114,47 +114,7 @@ export const ValueExplorerHome: React.FC<ValueExplorerHomeProps> = ({ onSectionC
             marginBottom: isMobile ? '16px' : '20px',
           }}
         >
-          <div
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: isMobile ? '20px' : '32px',
-              padding: isMobile ? '12px 22px' : '14px 32px',
-              borderRadius: '18px',
-              background: 'rgba(14, 27, 43, 0.92)',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.18)',
-              border: `1px solid rgba(255,255,255,0.06)`,
-            }}
-          >
-            <img
-              src="/assets/logosNativos/mayiaLogoBlanco.png"
-              alt="MAYIA"
-              style={{
-                height: isMobile ? '24px' : '34px',
-                width: 'auto',
-                objectFit: 'contain',
-                display: 'block',
-              }}
-            />
-            <div
-              style={{
-                width: '1px',
-                height: isMobile ? '20px' : '28px',
-                background: 'rgba(255,255,255,0.18)',
-              }}
-            />
-            <img
-              src="/assets/logosNativos/flai.png"
-              alt="FLAI"
-              style={{
-                height: isMobile ? '24px' : '34px',
-                width: 'auto',
-                objectFit: 'contain',
-                display: 'block',
-              }}
-            />
-          </div>
+
         </div>
 
         {/* HERO + KPIs en una sola fila */}
