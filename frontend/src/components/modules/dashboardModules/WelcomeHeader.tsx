@@ -41,7 +41,7 @@ export const WelcomeHeader: React.FC = () => {
               padding: isMobile ? '2px 7px' : '4px 10px',
             }}>
               <img
-                src="/assets/logosNativos/palabraEdgenet.png"
+                src="/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO.png"
                 alt="EdgeNET"
                 style={{ height: isMobile ? '24px' : '40px', width: 'auto', objectFit: 'contain', display: 'block' }}
               />
@@ -61,7 +61,7 @@ export const WelcomeHeader: React.FC = () => {
         </p>
       </div>
 
-      {/* Logos — derecha en desktop, abajo en mobile */}
+      {/* Logos — derecha en desktop, abajo en mobile
       <div style={{
         display: 'flex',
         flexDirection: isMobile ? 'row' : 'column',
@@ -100,7 +100,7 @@ export const WelcomeHeader: React.FC = () => {
             style={{ height: isMobile ? '22px' : '32px', width: 'auto', objectFit: 'contain', display: 'block' }}
           />
         </div>
-      </div>
+      </div> */}
 
     </div>
   );
