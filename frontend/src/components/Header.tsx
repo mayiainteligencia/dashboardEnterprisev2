@@ -13,6 +13,7 @@ import { brandingConfig } from '../config/branding';
 import { AsistenteIAChat } from './modules/AsistenteIAChat';
 import type { AsistenteIAChatHandle } from './modules/AsistenteIAChat';
 
+
 interface HeaderProps {
   title: string;
 }
