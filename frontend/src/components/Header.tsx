@@ -109,7 +109,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
       <header
         style={{
           height: '72px',
-          backgroundColor: '#0e1b2b',
+          backgroundColor: '#345d90',
           borderBottom: `1px solid ${colores.borde}`,
           display: 'flex',
           alignItems: 'center',

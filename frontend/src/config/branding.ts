@@ -2,13 +2,13 @@ export const brandingConfig = {
   empresa: {
     nombre: "EdgeNET",
     eslogan: "",
-    logo: "/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO.png",
+    logo: "/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO_AZUL.png",
   },
   
   colores: {
     // Colores MABE Oficiales - TEMA CLARO CON COLORES SÓLIDOS
     primario: "#1c4260",           // Azul turquesa MABE
-    primarioOscuro: "#1c4260",     // Azul turquesa oscuro
+    primarioOscuro: "#ffffff",     // Azul turquesa oscuro
     primarioClaro: "#B3E5F0",      // Azul claro SÓLIDO
     
     secundario: "#F5F7FA",         // Gris claro

@@ -41,7 +41,7 @@ export const WelcomeHeader: React.FC = () => {
               padding: isMobile ? '2px 7px' : '4px 10px',
             }}>
               <img
-                src="/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO.png"
+                src="/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO_AZUL.png"
                 alt="EdgeNET"
                 style={{ height: isMobile ? '24px' : '40px', width: 'auto', objectFit: 'contain', display: 'block' }}
               />

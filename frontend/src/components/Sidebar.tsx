@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         height: '72px', 
         padding: '0 24px', 
         flexShrink: 0,
-        backgroundColor: '#0e1b2b',
+        backgroundColor: '#345d90',
         display: 'flex',
         alignItems: 'center',
         borderBottom: `1px solid ${colores.borde}`
