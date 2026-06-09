@@ -60,7 +60,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             src={empresa.logo} 
             alt={empresa.nombre}
             style={{
-              height: '44px',
+              height: '32px',
               width: 'auto',
               objectFit: 'contain',
             }}
