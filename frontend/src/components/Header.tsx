@@ -239,12 +239,18 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
         </div>
 
         {/* ── CENTRO: Logo ── */}
-        <img
-          src={empresa.logo}
-          alt={`${empresa.nombre} logo`}
-          style={{ height: '56px', width: 'auto', objectFit: 'contain', flexShrink: 0 }}
-          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
-        />
+        <div style={{
+          backgroundColor: '#000000', borderRadius: '14px',
+          padding: '4px 16px', display: 'flex', alignItems: 'center',
+          flexShrink: 0, height: '56px', overflow: 'hidden',
+        }}>
+          <img
+            src={empresa.logo}
+            alt={`${empresa.nombre} logo`}
+            style={{ height: '48px', width: 'auto', objectFit: 'contain', transform: 'scale(2.6)' }}
+            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+          />
+        </div>
 
         {/* ── DERECHA: Fecha + Bell + Avatar ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -351,17 +357,17 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           {/* Avatar */}
           <button
             style={{
-              width: '42px', height: '42px', borderRadius: '50%',
-              backgroundColor: '#FFFFFF', border: `2px solid ${colores.borde}`,
+              width: '52px', height: '52px', borderRadius: '50%',
+              backgroundColor: '#000000', border: `2px solid ${colores.borde}`,
               cursor: 'pointer', display: 'flex', alignItems: 'center',
-              justifyContent: 'center', overflow: 'hidden', padding: '2px',
+              justifyContent: 'center', overflow: 'hidden', padding: '4px',
               transition: 'transform 0.2s',
             }}
             onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
           >
             <img
-              src="/assets/logosEmpresas/susurro.jpg"
+              src="/assets/logosNativos/mayiaEscucha.png"
               alt="Perfil"
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               onError={e => {

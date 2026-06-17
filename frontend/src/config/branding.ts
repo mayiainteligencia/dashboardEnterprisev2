@@ -1,12 +1,12 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Susurro",
-    eslogan: "powered by Intel",
-    logo: "/assets/logosEmpresas/susurroH.jpg",
+    nombre: "MAYIA escucha",
+    eslogan: "",
+    logo: "/assets/logosNativos/mayiaEscucha.png",
   },
 
   colores: {
-    primario: "#1A1A1A",           // Negro — elemento primario activo (sidebar activo)
+    primario: "#9ac24f",           // Negro — elemento primario activo (sidebar activo)
     primarioOscuro: "#2D2D2D",     // Negro suave — hover
     primarioClaro: "#F0F0F0",      // Gris claro — superficies claras
 

@@ -69,28 +69,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
     >
       {/* Logo */}
       <div style={{ padding: '24px', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div 
-            style={{ 
-              width: '48px',
-              height: '48px',
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div
+            style={{
+              width: '100%',
+              height: '90px',
               borderRadius: '12px',
-              background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 0%)`,
+              backgroundColor: '#000000',
+              padding: '12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
               overflow: 'hidden',
             }}
           >
             <img 
-              src="/assets/logosEmpresas/susurro.jpg" 
+              src="/assets/logosNativos/mayiaEscucha.png" 
               alt={empresa.nombre}
               style={{
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                padding: '4px',
+                transform: 'scale(2.6)',
               }}
               onError={(e) => {
                 // Fallback al SVG si la imagen no carga
@@ -116,9 +116,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               }}
             />
           </div>
-          <span style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro }}>
-            {empresa.nombre}
-          </span>
         </div>
       </div>
 
