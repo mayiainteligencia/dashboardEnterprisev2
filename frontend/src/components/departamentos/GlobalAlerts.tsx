@@ -51,21 +51,48 @@ export const GlobalAlerts: React.FC = () => {
       {sel && (
         <GuardianModal titulo={`Amenaza — ${sel.ciudad}`} onClose={() => setSel(null)}>
           <div style={{
-            display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 12px',
-            borderRadius: '99px', background: `${sevColor(sel.severidad)}1f`, color: sevColor(sel.severidad),
-            fontSize: '12px', fontWeight: 700, textTransform: 'capitalize', marginBottom: '16px',
+            margin: '0 0 18px', padding: '16px 18px', borderRadius: '14px',
+            background: `linear-gradient(135deg, ${sevColor(sel.severidad)}22, ${sevColor(sel.severidad)}05)`,
+            border: `1px solid ${sevColor(sel.severidad)}40`,
+            display: 'flex', alignItems: 'center', gap: '14px',
           }}>
-            <ShieldAlert size={15} /> Severidad {sel.severidad}
+            <div style={{
+              width: '46px', height: '46px', borderRadius: '12px', flexShrink: 0,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: `${sevColor(sel.severidad)}1f`, color: sevColor(sel.severidad),
+            }}>
+              <ShieldAlert size={24} />
+            </div>
+            <div>
+              <div style={{ fontSize: '11px', letterSpacing: '0.5px', textTransform: 'uppercase', color: colores.textoMedio, fontWeight: 600 }}>
+                Nivel de severidad
+              </div>
+              <div style={{ fontSize: '17px', fontWeight: 800, color: sevColor(sel.severidad), textTransform: 'capitalize' }}>
+                {sel.severidad}
+              </div>
+            </div>
+            <span style={{
+              marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: '6px',
+              fontSize: '11px', fontWeight: 700, color: colores.exito,
+              padding: '5px 10px', borderRadius: '99px', background: `${colores.exito}18`,
+            }}>
+              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: colores.exito }} />
+              Pipeline activo
+            </span>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '10px' }}>
             <Fila icon={<MapPin size={16} color={colores.acento} />} label="Ubicación" valor={`${sel.ciudad} (${sel.lat.toFixed(2)}, ${sel.lng.toFixed(2)})`} />
             <Fila icon={<Activity size={16} color={colores.acento} />} label="Tipo" valor={sel.tipo} />
             <Fila icon={<Radio size={16} color={colores.acento} />} label="Plataforma" valor={sel.plataforma} />
             <Fila icon={<Building2 size={16} color={colores.acento} />} label="Estado" valor={sel.estado} />
           </div>
 
-          <p style={{ marginTop: '16px', fontSize: '13px', color: colores.textoClaro, lineHeight: 1.7 }}>{sel.descripcion}</p>
+          <p style={{
+            marginTop: '16px', marginBottom: 0, fontSize: '13px', color: colores.textoClaro, lineHeight: 1.7,
+            padding: '14px 16px', borderRadius: '12px', background: colores.fondoTerciario,
+            borderLeft: `3px solid ${colores.acento}`,
+          }}>{sel.descripcion}</p>
         </GuardianModal>
       )}
     </div>
@@ -75,10 +102,14 @@ export const GlobalAlerts: React.FC = () => {
 const Fila: React.FC<{ icon: React.ReactNode; label: string; valor: string }> = ({ icon, label, valor }) => {
   const { colores } = brandingConfig;
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '10px', background: colores.fondoTerciario }}>
-      {icon}
-      <span style={{ fontSize: '12px', color: colores.textoMedio, width: '90px' }}>{label}</span>
-      <span style={{ fontSize: '13px', fontWeight: 600, color: colores.textoClaro }}>{valor}</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', borderRadius: '12px', background: colores.fondoTerciario, border: `1px solid ${colores.borde}25` }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '34px', height: '34px', borderRadius: '9px', background: `${colores.acento}14`, flexShrink: 0 }}>
+        {icon}
+      </div>
+      <div style={{ minWidth: 0 }}>
+        <div style={{ fontSize: '11px', color: colores.textoMedio, marginBottom: '2px' }}>{label}</div>
+        <div style={{ fontSize: '13px', fontWeight: 600, color: colores.textoClaro }}>{valor}</div>
+      </div>
     </div>
   );
 };

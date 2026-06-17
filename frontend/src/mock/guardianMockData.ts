@@ -169,6 +169,21 @@ export const hotspotsBase: Omit<HotSpot, 'id'>[] = [
   { lat: 35.68, lng: 139.69, severidad: 'media', ciudad: 'Tokio' },
   { lat: -23.55, lng: -46.63, severidad: 'baja', ciudad: 'São Paulo' },
   { lat: -33.87, lng: 151.21, severidad: 'alta', ciudad: 'Sídney' },
+  { lat: 40.71, lng: -74.01, severidad: 'critica', ciudad: 'Nueva York' },
+  { lat: 48.85, lng: 2.35, severidad: 'media', ciudad: 'París' },
+  { lat: 52.52, lng: 13.40, severidad: 'baja', ciudad: 'Berlín' },
+  { lat: 55.76, lng: 37.62, severidad: 'alta', ciudad: 'Moscú' },
+  { lat: 39.90, lng: 116.40, severidad: 'critica', ciudad: 'Pekín' },
+  { lat: 31.23, lng: 121.47, severidad: 'alta', ciudad: 'Shanghái' },
+  { lat: 1.35, lng: 103.82, severidad: 'media', ciudad: 'Singapur' },
+  { lat: 25.20, lng: 55.27, severidad: 'alta', ciudad: 'Dubái' },
+  { lat: -34.60, lng: -58.38, severidad: 'media', ciudad: 'Buenos Aires' },
+  { lat: 4.71, lng: -74.07, severidad: 'critica', ciudad: 'Bogotá' },
+  { lat: 30.05, lng: 31.24, severidad: 'alta', ciudad: 'El Cairo' },
+  { lat: -26.20, lng: 28.05, severidad: 'media', ciudad: 'Johannesburgo' },
+  { lat: 37.57, lng: 126.98, severidad: 'baja', ciudad: 'Seúl' },
+  { lat: 41.01, lng: 28.98, severidad: 'alta', ciudad: 'Estambul' },
+  { lat: 43.65, lng: -79.38, severidad: 'media', ciudad: 'Toronto' },
 ];
 
 // ── Tendencia 30 días (multi-serie) ───────────────────────────────────────────
