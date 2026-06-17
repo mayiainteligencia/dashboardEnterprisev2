@@ -22,10 +22,10 @@ interface Campaign {
 }
 
 const campañas: Campaign[] = [
-  { id: 1, nombre: 'Hayabusa Legend',     modelo: 'Hayabusa',       estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#C0392B', canales: ['Meta', 'YouTube', 'Display'], fechaFin: '15 Abr' },
-  { id: 2, nombre: 'GSX-R King of Track', modelo: 'GSX-R1000R',     estado: 'activa',     presupuesto: 320000, gastado: 210000, alcance: 980000,  conversiones: 289, roi: 4.2, color: '#003399', canales: ['Google', 'YouTube', 'TikTok'], fechaFin: '22 Abr' },
-  { id: 3, nombre: 'V-Strom Adventure',   modelo: 'V-Strom 1050XT', estado: 'programada', presupuesto: 190000, gastado: 0,      alcance: 0,       conversiones: 0,   roi: 0,   color: '#1D6A40', canales: ['Meta', 'Google', 'Outdoor'],  fechaFin: '01 May' },
-  { id: 4, nombre: 'SV650 Urban Rider',   modelo: 'SV650',          estado: 'completada', presupuesto: 150000, gastado: 148200, alcance: 2100000, conversiones: 614, roi: 5.1, color: '#6B7280', canales: ['Meta', 'TikTok'],             fechaFin: '28 Feb' },
+  { id: 1, nombre: 'Gold Wing Legend',    modelo: 'Gold Wing',      estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#CC0000', canales: ['Meta', 'YouTube', 'Display'], fechaFin: '15 Abr' },
+  { id: 2, nombre: 'CBR1000RR-R Track Day', modelo: 'CBR1000RR-R',  estado: 'activa',     presupuesto: 320000, gastado: 210000, alcance: 980000,  conversiones: 289, roi: 4.2, color: '#003399', canales: ['Google', 'YouTube', 'TikTok'], fechaFin: '22 Abr' },
+  { id: 3, nombre: 'Africa Twin Adventure', modelo: 'Africa Twin',  estado: 'programada', presupuesto: 190000, gastado: 0,      alcance: 0,       conversiones: 0,   roi: 0,   color: '#1D6A40', canales: ['Meta', 'Google', 'Outdoor'],  fechaFin: '01 May' },
+  { id: 4, nombre: 'CB650R Neo Sports',   modelo: 'CB650R',         estado: 'completada', presupuesto: 150000, gastado: 148200, alcance: 2100000, conversiones: 614, roi: 5.1, color: '#6B7280', canales: ['Meta', 'TikTok'],             fechaFin: '28 Feb' },
 ];
 
 const weeklyData = [42, 68, 55, 91, 73, 88, 64, 110, 95, 128, 104, 142];

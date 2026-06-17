@@ -435,7 +435,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           }}
         >
           <img 
-            src="/assets/logosEmpresas/renault-logo.svg"
+            src="/assets/logosEmpresas/honda-logo.svg"
             alt="Perfil"
             style={{
               width: '100%',

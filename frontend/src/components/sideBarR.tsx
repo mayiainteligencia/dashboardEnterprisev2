@@ -19,7 +19,7 @@ interface SidebarRProps {
 interface Section {
   id: string;
   nombre: string;
-  icono: React.ComponentType<{ size?: number; color?: string }>;
+  icono: React.ComponentType<{ size?: number }>;
 }
 
 const { colores } = brandingConfig;

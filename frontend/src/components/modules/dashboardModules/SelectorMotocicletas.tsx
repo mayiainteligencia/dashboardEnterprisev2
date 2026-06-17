@@ -28,57 +28,57 @@ interface Motocicleta {
 const motocicletas: Motocicleta[] = [
   {
     id: 1,
-    nombre: 'Kwid E-Tech',
+    nombre: 'Honda e',
     modelo: 'City Car Eléctrico',
     año: 2024,
     colorAccent: '#10B981',
     colorGlow: 'rgba(16,185,129,0.35)',
     precio: '$22,499',
-    potencia: '65 HP',
-    velocidadMax: '130 km/h',
-    peso: '977 kg',
+    potencia: '154 HP',
+    velocidadMax: '145 km/h',
+    peso: '1510 kg',
     cilindrada: 'Eléctrico',
-    torque: '113 Nm',
+    torque: '315 Nm',
     rating: 4.8,
-    descripcion: 'Eléctrico, ágil y diseñado para conquistar la ciudad.',
+    descripcion: '100% eléctrico, ágil, confiable y diseñado para conquistar la ciudad.',
     badge: '100% Eléctrico',
-    video: '/assets/selectorVehiculos/KwidE.mp4',
+    video: '/assets/selectorVehiculos/honda_e.mp4',
   },
   {
     id: 2,
-    nombre: 'Duster',
+    nombre: 'Honda HR-V',
     modelo: 'SUV Compacta',
     año: 2024,
     colorAccent: '#F59E0B',
     colorGlow: 'rgba(245,158,11,0.35)',
     precio: '$25,999',
-    potencia: '115 HP',
-    velocidadMax: '170 km/h',
-    peso: '1250 kg',
-    cilindrada: '1.6L',
-    torque: '156 Nm',
+    potencia: '119 HP',
+    velocidadMax: '180 km/h',
+    peso: '1280 kg',
+    cilindrada: '1.5L i-VTEC',
+    torque: '145 Nm',
     rating: 4.7,
-    descripcion: 'Diseño robusto y tecnología para llevarte a donde quieras.',
+    descripcion: 'Diseño dinámico, comodidad y tecnología Honda Sensing para llevarte a donde quieras.',
     badge: 'Aventurera',
-    video: '/assets/selectorVehiculos/Duster.mp4',
+    video: '/assets/selectorVehiculos/hr_v.mp4',
   },
   {
     id: 3,
-    nombre: 'Koleos',
-    modelo: 'SUV Premium',
+    nombre: 'Honda CR-V',
+    modelo: 'SUV Premium Híbrida',
     año: 2024,
-    colorAccent: '#1A4FCC',
-    colorGlow: 'rgba(26,79,204,0.35)',
+    colorAccent: '#CC0000',
+    colorGlow: 'rgba(204,0,0,0.35)',
     precio: '$34,299',
-    potencia: '171 HP',
+    potencia: '204 HP',
     velocidadMax: '200 km/h',
-    peso: '1600 kg',
-    cilindrada: '2.5L',
-    torque: '233 Nm',
+    peso: '1680 kg',
+    cilindrada: '2.0L e:HEV',
+    torque: '335 Nm',
     rating: 4.9,
-    descripcion: 'Elegancia, espacio y confort de primera clase.',
-    badge: 'Premium SUV',
-    video: '/assets/selectorVehiculos/Koleos.mp4',
+    descripcion: 'Confort premium, elegancia, espacio inteligente e híbrida e:HEV.',
+    badge: 'Premium e:HEV',
+    video: '/assets/selectorVehiculos/cr_v.mp4',
   },
 ];
 
@@ -174,8 +174,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         onTimeUpdate={() => { const v = videoRef.current; if (v && v.duration) setProgress((v.currentTime / v.duration) * 100); }}
         onEnded={handleEnded}
         onLoadedData={() => setIsLoaded(true)}
-        onCanPlay={() => setIsLoaded(true)}
-        onLoadedMetadata={() => setIsLoaded(true)}
         style={{
           width: '100%',
           height: '100%',
@@ -368,7 +366,7 @@ export const SelectorMotocicletas: React.FC = () => {
               Selector de Vehículos Inteligentes
             </h3>
             <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0 }}>
-              Renault · Línea 2024 · {motocicletas.length} modelos
+              Honda · Línea 2024 · {motocicletas.length} modelos
             </p>
           </div>
         </div>

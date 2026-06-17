@@ -3,40 +3,41 @@
 
 export const EMPRESA_CONFIG = {
   // Información básica
-  nombre: 'Renault',
-  nombreCompleto: 'Renault México',
+  nombre: 'Honda',
+  nombreCompleto: 'Honda México',
   industria: 'Automotriz y Concesionarias',
-  fundacion: 1899,
+  fundacion: 1948,
   pais: 'México',
-  slogan: 'Passion for life',
+  slogan: 'The Power of Dreams',
 
   // Descripción corporativa
-  descripcion: 'Marca automotriz líder a nivel mundial, ofreciendo vehículos de vanguardia, desde city cars eléctricos hasta SUVs premium, con un enfoque en la innovación, el diseño y la sostenibilidad.',
+  descripcion: 'Fabricante de automóviles, motocicletas y equipos de energía de renombre mundial, enfocado en crear movilidad sustentable y tecnologías avanzadas como motores híbridos e:HEV y vehículos eléctricos para cumplir los sueños de las personas.',
 
   // Datos operativos
   operaciones: {
-    sucursales: '70+ agencias en México',
+    sucursales: '125+ agencias en México',
     mercados: 'México, LATAM y Global',
     empleados: '5,000+',
     lineasNegocio: [
-      'Venta de vehículos nuevos (SUVs, City Cars, Eléctricos)',
-      'Venta de vehículos seminuevos',
-      'Servicio de mantenimiento y taller',
-      'Venta de refacciones y accesorios',
-      'Financiamiento automotriz (Renault Servicios Financieros)',
-      'Renault Care - Acompañamiento post-venta',
-      'Renault Connect - Servicios conectados y asistencia inteligente'
+      'Venta de vehículos nuevos (SUVs, Sedanes, Híbridos, Eléctricos)',
+      'Venta de motocicletas (Trabajo, Deportivas, Scooters)',
+      'Venta de vehículos seminuevos certificados',
+      'Servicio de mantenimiento y taller especializado',
+      'Venta de refacciones y accesorios originales',
+      'Financiamiento automotriz (Honda Finance)',
+      'Honda Care - Acompañamiento post-venta',
+      'HondaLink - Servicios conectados y asistencia inteligente'
     ]
   },
 
   // Marcas del portafolio
   marcas: [
-    'Renault',
-    'Renault E-Tech (Vehículos Eléctricos)',
-    'Renault Servicios Financieros',
-    'Renault PRO+ (Vehículos Comerciales)',
-    'Renault Selection (Seminuevos)',
-    'Renault Care'
+    'Honda',
+    'Honda e:HEV (Vehículos Híbridos)',
+    'Honda Finance',
+    'Honda Motos',
+    'Honda Seminuevos Certificados',
+    'Honda Care'
   ],
 
   // Servicios principales
@@ -47,26 +48,26 @@ export const EMPRESA_CONFIG = {
     'Venta de accesorios originales',
     'Cotización y gestión de créditos automotrices',
     'Asistencia en el camino',
-    'Renault Care - Acompañamiento post-venta',
-    'Renault Connect - Experiencia de usuario conectada'
+    'Honda Care - Acompañamiento post-venta',
+    'HondaLink - Experiencia de usuario conectada'
   ],
 
   // Contactos corporativos
   contacto: {
-    sitioWeb: 'https://www.renault.com.mx',
-    simitel: '800 505 1515',
+    sitioWeb: 'https://www.honda.mx',
+    simitel: '800 368 4663',
     whatsapp: '55 1234 5678',
-    analisisClinicos: 'https://www.renault.com.mx/servicios.html',
-    appEntrega: 'Renault App'
+    analisisClinicos: 'https://www.honda.mx/servicio.html',
+    appEntrega: 'HondaLink App'
   },
 
   // Enfoque estratégico
   enfoqueEstrategico: [
-    'Innovación tecnológica y electrificación',
-    'Diseño y confort',
+    'Innovación tecnológica y electrificación (e:HEV y Prologue EV)',
+    'Diseño, confiabilidad y durabilidad',
     'Sostenibilidad ambiental',
-    'Experiencia de cliente digital y en agencia',
-    'Seguridad vehicular'
+    'Experiencia de cliente digital y en concesionaria',
+    'Seguridad vehicular (Honda Sensing)'
   ],
 
   // Servicios MAYIA prioritarios (según industria automotriz)
@@ -142,11 +143,11 @@ export const EMPRESA_CONFIG = {
     precios: 'Análisis competitivo de precios en tiempo real vs otras marcas'
   },
 
-  // Servicios propios de la plataforma MAYIA activos para Renault
+  // Servicios propios de la plataforma MAYIA activos para Honda
   serviciosMayiaActivos: {
     medikalIA: {
-      nombre: 'Renault Assist',
-      nombreAlternativo: 'Renault-Assist',
+      nombre: 'Honda Assist',
+      nombreAlternativo: 'Honda-Assist',
       tipo: 'Asistente de Productividad para Asesores',
       descripcion: 'Agente disponible 24/7 para los asesores de ventas y técnicos. Ofrece apoyo rápido sobre especificaciones de modelos, procesos de crédito y manuales de reparación mediante IA.',
       beneficios: [
@@ -157,12 +158,12 @@ export const EMPRESA_CONFIG = {
         'Mejora en tiempos de atención al cliente'
       ],
       audiencia: 'Asesores de venta y técnicos de servicio',
-      casoDeUso: 'Asesor en piso con cliente que necesita detalles específicos del motor de Koleos',
+      casoDeUso: 'Asesor en piso con cliente que necesita detalles específicos del motor de CR-V',
       modulo: 'Dashboard MAYIA - columna derecha'
     },
     simiPromo: {
-      nombre: 'Promo Renault',
-      nombreAlternativo: 'Recomendador Renault',
+      nombre: 'Promo Honda',
+      nombreAlternativo: 'Recomendador Honda',
       tipo: 'Recomendador inteligente de promociones e inventario',
       descripcion: 'Asistente inteligente diseñado para optimizar las ventas en agencias. Analiza inventario disponible, bonos activos y perfil del cliente para recomendar la mejor oferta.',
       beneficios: [
@@ -174,7 +175,7 @@ export const EMPRESA_CONFIG = {
         'Análisis de tendencias de color y versión'
       ],
       audiencia: 'Gerentes de ventas y asesores comerciales',
-      casoDeUso: 'Recomendar una Duster equipada aprovechando tasa de 9.9% cuando el cliente duda',
+      casoDeUso: 'Recomendar una CR-V equipada aprovechando tasa de 9.9% cuando el cliente duda',
       modulo: 'Dashboard MAYIA - columna izquierda'
     }
   },

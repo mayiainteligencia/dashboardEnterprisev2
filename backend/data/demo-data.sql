@@ -219,11 +219,11 @@ INSERT INTO servicios_corporativos (nombre, titulo_corto, descripcion, posicion,
 ('Inteligencia de Negocios', 'Analytics', 'Inteligencia de negocios con IA. Transforma tus datos en decisiones estratégicas con análisis predictivo avanzado.', 9, 'analytics');
 
 -- ============================================
--- INSERTAR INFORMACIÓN DE MABE
+-- INSERTAR INFORMACIÓN DE HONDA
 -- ============================================
 
 INSERT INTO info_empresa (empresa, descripcion, industria, fundacion, pais, sitio_web) VALUES
-('MABE', 'MABE es una empresa mexicana líder en la fabricación de electrodomésticos con presencia en América Latina. Fundada en 1946, ofrece productos innovadores para cocción, refrigeración, lavado y climatización. Con el eslogan "Cuando tu hogar funciona, funciona todo", MABE se enfoca en mejorar la vida de las familias a través de tecnología de vanguardia, diseño y eficiencia energética. La empresa cuenta con plantas de manufactura en varios países y distribuye sus productos bajo marcas reconocidas como MABE, GE Appliances (en Latinoamérica) y otras alianzas estratégicas.', 'Electrodomésticos y Línea Blanca', 1946, 'México', 'https://www.mabe.com.mx');
+('Honda', 'Honda es una marca global líder en la fabricación de automóviles, motocicletas y equipos de fuerza. Fundada en Japón en 1948 por Soichiro Honda con el eslogan "The Power of Dreams" (El poder de los sueños), destaca por su innovación tecnológica, confiabilidad excepcional y desarrollo sustentable, incluyendo motores de alta eficiencia e:HEV y vehículos eléctricos Prologue EV. En México cuenta con una fuerte presencia desde hace décadas, operando plantas de manufactura en Celaya y El Salto, impulsando la economía nacional.', 'Automotriz y Motocicletas', 1948, 'México', 'https://www.honda.mx');
 
 -- ============================================
 -- TABLAS DEMO ORIGINALES (Mantener para RH, etc)
@@ -286,6 +286,6 @@ CREATE TABLE IF NOT EXISTS tickets_ti (
 
 -- Datos demo
 INSERT INTO empleados (nombre, puesto, departamento, salario, fecha_ingreso, email, telefono, status) VALUES
-('Ana García', 'Gerente de RH', 'Recursos Humanos', 45000.00, '2020-03-15', 'ana.garcia@mabe.com', '555-0101', 'activo'),
-('Carlos López', 'Contador Senior', 'Finanzas', 42000.00, '2019-06-20', 'carlos.lopez@mabe.com', '555-0102', 'activo'),
-('María Rodríguez', 'Jefe de Ventas', 'Ventas', 48000.00, '2021-01-10', 'maria.rodriguez@mabe.com', '555-0103', 'activo');
+('Ana García', 'Gerente de RH', 'Recursos Humanos', 45000.00, '2020-03-15', 'ana.garcia@honda.com.mx', '555-0101', 'activo'),
+('Carlos López', 'Contador Senior', 'Finanzas', 42000.00, '2019-06-20', 'carlos.lopez@honda.com.mx', '555-0102', 'activo'),
+('María Rodríguez', 'Jefe de Ventas', 'Ventas', 48000.00, '2021-01-10', 'maria.rodriguez@honda.com.mx', '555-0103', 'activo');

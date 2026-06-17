@@ -54,17 +54,12 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
     }
   }, [apiEndpoint]);
 
-  const isFirstRender = useRef(true);
   useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return;
-    }
-    const v = videoRef.current;
-    if (!v) return;
-    v.load();
-    if (cameraEnabled) {
-      v.play().catch((err) => console.warn('play failed:', err));
+    if (videoRef.current) {
+      videoRef.current.load();
+      if (cameraEnabled) {
+        videoRef.current.play();
+      }
     }
   }, [selectedSucursal]);
 
@@ -120,7 +115,7 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
       if (cameraEnabled) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play().catch(() => {});
+        videoRef.current.play();
       }
     }
   };
@@ -319,21 +314,14 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
             style={videoStyle}
           />
         ) : (
-          <video
+          <video 
             ref={videoRef}
-            key={selectedSucursal}
-            autoPlay
-            muted
+            autoPlay 
+            muted 
             loop
             playsInline
-            preload="auto"
             style={videoStyle}
-            onError={(e) => {
-              const err = e.currentTarget.error;
-              if (err && err.code !== MediaError.MEDIA_ERR_ABORTED) {
-                console.error('Error cargando video:', err.code, err.message);
-              }
-            }}
+            onError={(e) => { console.error('Error cargando video:', e); }}
           >
             <source src={`/assets/sucursalInteligente${selectedSucursal}.mp4`} type="video/mp4" />
             Tu navegador no soporta video HTML5.

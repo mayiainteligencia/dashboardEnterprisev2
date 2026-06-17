@@ -37,9 +37,9 @@ const redes: RedMetrica[] = [
 ];
 
 const posts: Post[] = [
-  { id: 1, red: 'TikTok',    usuario: '@renault_mx',   contenido: '¡El Kwid E-Tech en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Kwid',   hace: '2h',  color: '#C0392B' },
-  { id: 2, red: 'Instagram', usuario: '@renault_fans_cdmx', contenido: 'Test drive Duster — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Duster', hace: '4h',  color: '#FFCC00' },
-  { id: 3, red: 'X',         usuario: '@auto_journalista', contenido: 'Precio Koleos alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Koleos',    hace: '6h',  color: '#1D6A40' },
+  { id: 1, red: 'TikTok',    usuario: '@hondamexico',   contenido: '¡El Prologue EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Prologue', hace: '2h',  color: '#CC0000' },
+  { id: 2, red: 'Instagram', usuario: '@honda_fans_cdmx', contenido: 'Test drive Civic — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Civic', hace: '4h',  color: '#333333' },
+  { id: 3, red: 'X',         usuario: '@auto_journalista', contenido: 'Precio CR-V alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'CR-V',    hace: '6h',  color: '#666666' },
   { id: 4, red: 'Facebook',  usuario: 'Manejando por México',contenido: 'Problema con el servicio en el distribuidor 😞',  likes: 210,  sentimiento: 'negativo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
 ];
 
