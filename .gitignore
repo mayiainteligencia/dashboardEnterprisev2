@@ -1,0 +1,19 @@
+# dependencias
+node_modules/
+
+# entornos Python
+**/venv/
+**/.venv/
+__pycache__/
+
+# variables de entorno
+.env
+.env.local
+*.env
+
+# sistema
+.DS_Store
+
+# OJO: NO ignorar backend/monitorsol/**/*.pyc
+# Esos .pyc son la UNICA copia de la app del monitor (no hay .py). Ver COMO_CORRER.md
+!backend/monitorsol/**/*.pyc

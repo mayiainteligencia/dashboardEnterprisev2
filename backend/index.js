@@ -7,7 +7,7 @@ import { testConnection } from './config/database.js';
 import { initGeminiClient } from './config/gemini.js';
 import chatRoutes from './routes/chatRoutes.js';
 import departamentosRoutes from './routes/departamentosRoutes.js';
-import monitorRoutes from './routes/monitorRoutes.js';  // ← NUEVO
+// import monitorRoutes from './routes/monitorRoutes.js';  // monitor corre como servicio Python (monitorsol, uvicorn :8001)
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,7 +25,7 @@ app.use(express.json());
 // Routes
 app.use('/api/chat', chatRoutes);
 app.use('/api/departamentos', departamentosRoutes);
-app.use('/api/monitor', monitorRoutes);  // ← NUEVO
+// app.use('/api/monitor', monitorRoutes);  // monitor = servicio Python (monitorsol :8001)
 
 // Health check
 app.get('/health', (req, res) => {
