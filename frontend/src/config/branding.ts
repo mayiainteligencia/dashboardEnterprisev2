@@ -2,7 +2,7 @@ export const brandingConfig = {
   empresa: {
     nombre: "Honda",
     eslogan: "The Power of Dreams",
-    logo: "/assets/logosEmpresas/honda-logo.svg",
+    logo: "/assets/logosEmpresas/hondaLogo.png",
   },
   
   colores: {

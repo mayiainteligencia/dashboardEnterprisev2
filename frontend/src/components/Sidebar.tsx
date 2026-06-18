@@ -27,7 +27,7 @@ const menuItems = [
   { id: 'ventas', nombre: 'Ventas y Marketing', icono: TrendingUp },
   { id: 'ti', nombre: 'Tecnologías de la Información', icono: Cpu },
   { id: 'administracion', nombre: 'Administración', icono: Building2 },
-  { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp },
+  { id: 'comercial', nombre: 'Inteligencia Comercial', icono: TrendingUp },
 ];
 
 const extraSections = [

@@ -10,6 +10,7 @@ import {
   X
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
+import { AlertasHeader } from './comercial/AlertasHeader';
 
 interface HeaderProps {
   title: string;
@@ -199,6 +200,9 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
 
       {/* DERECHA - Notificaciones y Perfil */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        {/* Alertas comerciales */}
+        <AlertasHeader />
+
         {/* Notificaciones con Dropdown */}
         <div ref={dropdownRef} style={{ position: 'relative' }}>
           <button 

@@ -11,6 +11,7 @@ import { Administracion } from './components/departamentos/Administracion';
 import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Playground } from './components/departamentos/Playground';
 import { Academia } from './components/departamentos/Academia';
+import { VistaComercial } from './components/comercial/VistaComercial';
 import { SidebarR } from './components/sideBarR';
 import { brandingConfig } from './config/branding';
 
@@ -28,6 +29,7 @@ function App() {
       ventas: 'Ventas y Marketing',
       ti: 'Tecnologías de la Información',
       administracion: 'Administración',
+      comercial: 'Inteligencia Comercial',
       ciberseguridad: 'CiberSeguridad',
       playground: 'Playground',
       academia: 'Academia',
@@ -51,6 +53,8 @@ function App() {
         return <TecnologiasInformacion />;
       case 'administracion':
         return <Administracion />;
+      case 'comercial':
+        return <VistaComercial />;
       case 'ciberseguridad':
         return <Ciberseguridad />;
       case 'playground':
