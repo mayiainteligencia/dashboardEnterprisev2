@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bell,
   Calendar,
-  ChevronDown,
   AlertTriangle,
   CheckCircle,
   Info,
@@ -11,6 +10,7 @@ import {
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 import { AlertasHeader } from './comercial/AlertasHeader';
+import { AsistenteBuscador } from './AsistenteBuscador';
 
 interface HeaderProps {
   title: string;
@@ -76,9 +76,10 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fecha = new Date();
-  const opciones: Intl.DateTimeFormatOptions = { 
-    day: '2-digit', 
-    month: 'short' 
+  const opciones: Intl.DateTimeFormatOptions = {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric'
   };
   const fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
 
@@ -132,8 +133,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
         flexShrink: 0,
       }}
     >
-      {/* IZQUIERDA - Fecha */}
-      <button
+      {/* IZQUIERDA - Fecha (estática, se actualiza con el día) */}
+      <div
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -141,21 +142,20 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           padding: '10px 16px',
           borderRadius: '12px',
           backgroundColor: colores.fondoTerciario,
-          border: 'none',
-          cursor: 'pointer',
-          transition: 'all 0.2s',
         }}
       >
         <Calendar size={18} style={{ color: colores.textoClaro }} />
-        <span style={{ 
-          fontSize: '14px', 
+        <span style={{
+          fontSize: '14px',
           fontWeight: '500',
-          color: colores.textoClaro 
+          color: colores.textoClaro
         }}>
           {fechaFormateada}
         </span>
-        <ChevronDown size={16} style={{ color: colores.textoMedio }} />
-      </button>
+      </div>
+
+      {/* Asistente IA tipo buscador */}
+      <AsistenteBuscador />
 
       {/* CENTRO - Logo de la empresa */}
       <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '16px' }}>

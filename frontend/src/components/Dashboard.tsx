@@ -3,8 +3,6 @@ import { brandingConfig } from '../config/branding';
 import { WelcomeHeader } from './modules/dashboardModules/WelcomeHeader';
 import { HeroCard } from './modules/dashboardModules/Herocard';
 import { MiniCalendarCard } from './modules/dashboardModules/Minicalendarcard';
-import { SucursalInteligenteModule } from './modules/dashboardModules/SucursalInteligenteModule';
-import { ProductivityChart } from './modules/dashboardModules/Productivitychart';
 import { TopCoursesCard } from './modules/dashboardModules/Topcoursescard';
 import { ExpandableModule } from './modules/dashboardModules/ExpandableModule';
 import { OfertasCard } from './modules/dashboardModules/Ofertascard';
@@ -38,17 +36,14 @@ export const Dashboard: React.FC = () => {
             marginBottom: '24px',
           }}
         >
-          {/* Columna 1: Sucursal Inteligente */}
+          {/* Columna 1: Análisis Predictivo */}
           <div style={{ gridColumn: 'span 4' }}>
-            <ExpandableModule expandDirection="right">
-              <SucursalInteligenteModule />
-            </ExpandableModule>
+            <AnalisisDemanda />
           </div>
 
-          {/* Columna 2: Hero + Calendario (Por ahora solo Hero) */}
+          {/* Columna 2: Hero */}
           <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <HeroCard />
-            {/* El calendario NO va aquí, se moverá al final */}
           </div>
 
           {/* Columna 3: Selector de Motos */}
@@ -56,26 +51,6 @@ export const Dashboard: React.FC = () => {
             <ExpandableModule expandDirection="left">
               <SelectorMotocicletas />
             </ExpandableModule>
-          </div>
-        </div>
-
-        {/* --- FILA 2: Análisis Predictivo + Gráfica de Impacto IA --- */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: '24px',
-            marginBottom: '24px',
-          }}
-        >
-          {/* Columna Izquierda: Análisis Predictivo */}
-          <div style={{ gridColumn: 'span 4' }}>
-            <AnalisisDemanda />
-          </div>
-
-          {/* Columna Derecha: Impacto de IA en Productividad (OCUPA 8 COLUMNAS) */}
-          <div style={{ gridColumn: 'span 8' }}>
-            <ProductivityChart />
           </div>
         </div>
 

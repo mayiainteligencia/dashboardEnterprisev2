@@ -1,16 +1,17 @@
 import React from 'react';
-import { 
+import {
   LayoutDashboard,
-  Users,
-  DollarSign,
-  Package,
   TrendingUp,
-  Cpu,
-  Building2,
-  Shield,
-  GraduationCap,
-  Code2,
-} from 'lucide-react'; 
+  Crown,
+  Target,
+  Megaphone,
+  Users,
+  Package,
+  Repeat,
+  UserPlus,
+  Store,
+  Radar,
+} from 'lucide-react';
 
 import { brandingConfig } from '../config/branding';
 
@@ -21,19 +22,19 @@ interface SidebarProps {
 
 const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
-  { id: 'rh', nombre: 'Recursos Humanos', icono: Users },
-  { id: 'finanzas', nombre: 'Finanzas y Contabilidad', icono: DollarSign },
-  { id: 'operaciones', nombre: 'Operaciones', icono: Package },
-  { id: 'ventas', nombre: 'Ventas y Marketing', icono: TrendingUp },
-  { id: 'ti', nombre: 'Tecnologías de la Información', icono: Cpu },
-  { id: 'administracion', nombre: 'Administración', icono: Building2 },
   { id: 'comercial', nombre: 'Inteligencia Comercial', icono: TrendingUp },
+  { id: 'leads', nombre: 'Leads', icono: UserPlus },
+  { id: 'operacion', nombre: 'Operación', icono: Store },
+  { id: 'influencers', nombre: 'Radar de Influencers', icono: Radar },
 ];
 
-const extraSections = [
-  { id: 'ciberseguridad', nombre: 'CiberSeguridad', icono: Shield },
-  { id: 'playground', nombre: 'Playground', icono: Code2 },
-  { id: 'academia', nombre: 'Academia', icono: GraduationCap },
+const analisisItems = [
+  { id: 'ceo', nombre: 'Vista CEO', icono: Crown },
+  { id: 'scoring', nombre: 'Lead Scoring IA', icono: Target },
+  { id: 'campanias', nombre: 'Campañas', icono: Megaphone },
+  { id: 'vendedores', nombre: 'Vendedores', icono: Users },
+  { id: 'inventario', nombre: 'Inventario', icono: Package },
+  { id: 'conversion', nombre: 'Conversión y Retención', icono: Repeat },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
@@ -119,124 +120,70 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       </div>
 
       {/* Menú Principal — scrolleable */}
-      <nav style={{ 
+      <nav className="no-scrollbar" style={{
         flex: '1 1 0',   // ocupa el espacio disponible entre header y footer
         minHeight: 0,     // crítico: permite que flex shrink active el scroll
         overflowY: 'auto',
         padding: '0 12px',
       }}>
-        {menuItems.map((item) => {
+        {[...menuItems, ...analisisItems].map((item) => {
           const Icon = item.icono;
           const isActive = activeSection === item.id;
-          
+
           return (
-            <button
-              key={item.id}
-              onClick={() => onSectionChange(item.id)}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                borderRadius: '12px',
-                marginBottom: '4px',
-                backgroundColor: isActive ? colores.primario : 'transparent',
-                color: isActive ? '#FFFFFF' : colores.textoMedio,
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                if (!isActive) e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
-              }}
-            >
-              <div 
+            <React.Fragment key={item.id}>
+              {item.id === 'ceo' && (
+                <div style={{ padding: '12px 16px 6px' }}>
+                  <span style={{ fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: colores.textoOscuro }}>
+                    Análisis a Detalle
+                  </span>
+                </div>
+              )}
+              <button
+                onClick={() => onSectionChange(item.id)}
                 style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoTerciario,
+                  width: '100%',
                   display: 'flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
+                  gap: '12px',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  marginBottom: '4px',
+                  backgroundColor: isActive ? colores.primario : 'transparent',
+                  color: isActive ? '#FFFFFF' : colores.textoMedio,
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isActive) e.currentTarget.style.backgroundColor = colores.fondoTerciario;
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
                 }}
               >
-                <Icon size={18} />
-              </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
-                {item.nombre}
-              </span>
-            </button>
+                <div
+                  style={{
+                    width: '36px',
+                    height: '36px',
+                    borderRadius: '50%',
+                    backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoTerciario,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <Icon size={18} />
+                </div>
+                <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
+                  {item.nombre}
+                </span>
+              </button>
+            </React.Fragment>
           );
         })}
       </nav>
-
-      {/* Footer buttons — siempre visible al fondo */}
-      <div style={{ 
-        padding: '12px', 
-        borderTop: `1px solid ${colores.borde}`, 
-        flexShrink: 0,  // nunca se comprime
-      }}>
-        {extraSections.map((section) => {
-          const Icon = section.icono;
-          const isActive = activeSection === section.id;
-          
-          return (
-            <button
-              key={section.id}
-              onClick={() => onSectionChange(section.id)}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '12px',
-                padding: '12px 16px',
-                borderRadius: '12px',
-                marginBottom: '8px',
-                backgroundColor: isActive ? colores.primario : colores.fondoTerciario,
-                color: isActive ? '#FFFFFF' : colores.textoMedio,
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                position: 'relative',
-              }}
-              onMouseEnter={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = colores.fondoPrincipal;
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (!isActive) {
-                  e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-                }
-              }}
-            >
-              <div 
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoPrincipal,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0,
-                }}
-              >
-                <Icon size={18} />
-              </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'left' }}>
-                {section.nombre}
-              </span>
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 };

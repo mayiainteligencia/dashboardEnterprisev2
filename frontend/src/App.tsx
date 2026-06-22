@@ -12,12 +12,17 @@ import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Playground } from './components/departamentos/Playground';
 import { Academia } from './components/departamentos/Academia';
 import { VistaComercial } from './components/comercial/VistaComercial';
-import { SidebarR } from './components/sideBarR';
+import {
+  PaginaCEO, PaginaScoring, PaginaCampanias,
+  PaginaVendedores, PaginaInventario, PaginaConversion,
+} from './components/comercial/paginasPro';
+import { PaginaLeads } from './components/comercial/PaginaLeads';
+import { PaginaOperacion } from './components/comercial/PaginaOperacion';
+import { PaginaInfluencers } from './components/comercial/PaginaInfluencers';
 import { brandingConfig } from './config/branding';
 
 function App() {
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [onClose] = useState();
   const { colores } = brandingConfig;
 
   const getTitulo = () => {
@@ -30,6 +35,15 @@ function App() {
       ti: 'Tecnologías de la Información',
       administracion: 'Administración',
       comercial: 'Inteligencia Comercial',
+      leads: 'Leads',
+      operacion: 'Operación · Piso, Producto y Conversión',
+      influencers: 'Radar de Influencers',
+      ceo: 'Vista CEO',
+      scoring: 'Lead Scoring IA',
+      campanias: 'Campañas',
+      vendedores: 'Vendedores',
+      inventario: 'Inventario Inteligente',
+      conversion: 'Conversión y Retención',
       ciberseguridad: 'CiberSeguridad',
       playground: 'Playground',
       academia: 'Academia',
@@ -55,6 +69,24 @@ function App() {
         return <Administracion />;
       case 'comercial':
         return <VistaComercial />;
+      case 'leads':
+        return <PaginaLeads />;
+      case 'operacion':
+        return <PaginaOperacion />;
+      case 'influencers':
+        return <PaginaInfluencers />;
+      case 'ceo':
+        return <PaginaCEO />;
+      case 'scoring':
+        return <PaginaScoring />;
+      case 'campanias':
+        return <PaginaCampanias />;
+      case 'vendedores':
+        return <PaginaVendedores />;
+      case 'inventario':
+        return <PaginaInventario />;
+      case 'conversion':
+        return <PaginaConversion />;
       case 'ciberseguridad':
         return <Ciberseguridad />;
       case 'playground':
@@ -90,17 +122,10 @@ function App() {
         <Header title={getTitulo()} />
         
         {/* Main content */}
-        <div style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
+        <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
           {renderContent()}
         </div>
       </div>
-
-      <div>
-        <SidebarR
-          onClose={onClose}
-        />
-      </div>
-
     </div>
   );
 }
