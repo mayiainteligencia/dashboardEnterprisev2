@@ -20,7 +20,7 @@ const FunnelInteractivo: React.FC = () => {
   const pctTotal = ((e.n / max) * 100).toFixed(1);
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(220px, 1fr)', gap: '24px', alignItems: 'start' }}>
+    <div className="row2">
       {/* Embudo */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
         {funnel.map((f, i) => {
@@ -171,7 +171,7 @@ const LeadGenInteractivo: React.FC = () => {
 
   return (
     <Bloque icon={Radio} title="Lead Generation" subtitle="Por canal · cambia la métrica">
-      <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '20px', alignItems: 'center' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', alignItems: 'center', justifyItems: 'center' }}>
         {/* Donut */}
         <div style={{ width: '130px', height: '130px', borderRadius: '50%', position: 'relative',
           background: `conic-gradient(${segs.map(s => `${s.color} ${s.start}deg ${s.end}deg`).join(', ')})` }}>
@@ -291,7 +291,7 @@ export const PaginaLeads: React.FC = () => {
       <Bloque icon={Filter} title="Funnel Comercial" subtitle="12 etapas · clic en cualquier etapa">
         <FunnelInteractivo />
       </Bloque>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '24px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
         <AgenciasInteractivo />
         <LeadGenInteractivo />
       </div>

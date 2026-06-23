@@ -34,7 +34,7 @@ export const AlertasHeader: React.FC = () => {
       </button>
 
       {abierto && (
-        <div style={{ position: 'absolute', top: '60px', right: 0, width: '380px', maxHeight: '500px', backgroundColor: colores.fondoSecundario, borderRadius: '16px', border: `1px solid ${colores.borde}`, boxShadow: '0 8px 32px rgba(0,0,0,0.18)', overflow: 'hidden', zIndex: 1000 }}>
+        <div style={{ position: 'absolute', top: '60px', right: 0, width: 'min(380px, calc(100vw - 24px))', maxHeight: '500px', backgroundColor: colores.fondoSecundario, borderRadius: '16px', border: `1px solid ${colores.borde}`, boxShadow: '0 8px 32px rgba(0,0,0,0.18)', overflow: 'hidden', zIndex: 1000 }}>
           <div style={{ padding: '16px 20px', borderBottom: `1px solid ${colores.borde}` }}>
             <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 'bold', color: colores.textoClaro }}>Alertas Comerciales</h3>
             <p style={{ margin: '4px 0 0', fontSize: '12px', color: colores.textoMedio }}>Tiempo real · {criticas} requieren atención</p>

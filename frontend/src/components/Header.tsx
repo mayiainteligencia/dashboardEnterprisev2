@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bell,
   Calendar,
+  Menu,
   AlertTriangle,
   CheckCircle,
   Info,
@@ -14,6 +15,7 @@ import { AsistenteBuscador } from './AsistenteBuscador';
 
 interface HeaderProps {
   title: string;
+  onMenu?: () => void;
 }
 
 interface Notification {
@@ -69,7 +71,7 @@ const notificacionesEstaticas: Notification[] = [
   },
 ];
 
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
   const { colores, empresa } = brandingConfig;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesEstaticas);
@@ -129,19 +131,36 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 32px',
+        padding: '0 clamp(14px, 3vw, 32px)',
+        gap: '12px',
         flexShrink: 0,
       }}
     >
+      {/* Hamburguesa (solo móvil) */}
+      {onMenu && (
+        <button
+          onClick={onMenu}
+          aria-label="Abrir menú"
+          style={{
+            width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
+            backgroundColor: colores.fondoTerciario, border: 'none', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          <Menu size={20} color={colores.textoClaro} />
+        </button>
+      )}
+
       {/* IZQUIERDA - Fecha (estática, se actualiza con el día) */}
       <div
         style={{
-          display: 'flex',
+          display: onMenu ? 'none' : 'flex',
           alignItems: 'center',
           gap: '8px',
           padding: '10px 16px',
           borderRadius: '12px',
           backgroundColor: colores.fondoTerciario,
+          flexShrink: 0,
         }}
       >
         <Calendar size={18} style={{ color: colores.textoClaro }} />
@@ -157,8 +176,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
       {/* Asistente IA tipo buscador */}
       <AsistenteBuscador />
 
-      {/* CENTRO - Logo de la empresa */}
-      <div style={{ textAlign: 'center', display: 'flex', alignItems: 'center', gap: '16px' }}>
+      {/* CENTRO - Logo de la empresa (se oculta en móvil para dar espacio) */}
+      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
         <img 
           src={empresa.logo} 
           alt={`${empresa.nombre} logo`}
@@ -260,7 +279,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                 position: 'absolute',
                 top: '60px',
                 right: '0',
-                width: '380px',
+                width: 'min(380px, calc(100vw - 24px))',
                 maxHeight: '500px',
                 backgroundColor: colores.fondoSecundario,
                 borderRadius: '16px',

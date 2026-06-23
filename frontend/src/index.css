@@ -25,6 +25,19 @@ html, body, #root {
   height: 0;
 }
 
+/* Rejillas de 2 columnas que se apilan en móvil */
+.row2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
+.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
+@media (max-width: 880px) {
+  .row2, .row2-rev { grid-template-columns: 1fr; }
+}
+
+/* Mapa + panel lateral */
+.row-map { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
+@media (max-width: 880px) {
+  .row-map { grid-template-columns: 1fr; }
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

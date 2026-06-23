@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
@@ -21,9 +21,24 @@ import { PaginaOperacion } from './components/comercial/PaginaOperacion';
 import { PaginaInfluencers } from './components/comercial/PaginaInfluencers';
 import { brandingConfig } from './config/branding';
 
+// true cuando el ancho es de móvil/tablet
+function useIsMobile(bp = 900) {
+  const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
+  useEffect(() => {
+    const f = () => setM(window.innerWidth <= bp);
+    window.addEventListener('resize', f);
+    return () => window.removeEventListener('resize', f);
+  }, [bp]);
+  return m;
+}
+
 function App() {
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const isMobile = useIsMobile();
   const { colores } = brandingConfig;
+
+  const selectSection = (s: string) => { setActiveSection(s); setDrawerOpen(false); };
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
@@ -108,21 +123,30 @@ function App() {
         backgroundColor: colores.fondoPrincipal
       }}
     >
-      {/* SIDEBAR */}
-      <div style={{ width: '240px', flexShrink: 0 }}>
-        <Sidebar 
-          activeSection={activeSection} 
-          onSectionChange={setActiveSection} 
-        />
-      </div>
-      
+      {/* SIDEBAR — fijo en escritorio */}
+      {!isMobile && (
+        <div style={{ width: '240px', flexShrink: 0 }}>
+          <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
+        </div>
+      )}
+
+      {/* SIDEBAR — drawer en móvil */}
+      {isMobile && drawerOpen && (
+        <div onClick={() => setDrawerOpen(false)}
+          style={{ position: 'fixed', inset: 0, zIndex: 3000, background: 'rgba(0,0,0,0.45)', display: 'flex' }}>
+          <div onClick={e => e.stopPropagation()} style={{ width: '240px', height: '100%', boxShadow: '0 0 40px rgba(0,0,0,0.3)' }}>
+            <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
+          </div>
+        </div>
+      )}
+
       {/* CONTENIDO */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
         {/* Header */}
-        <Header title={getTitulo()} />
-        
+        <Header title={getTitulo()} onMenu={isMobile ? () => setDrawerOpen(true) : undefined} />
+
         {/* Main content */}
-        <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
+        <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: 'clamp(14px, 3vw, 24px)' }}>
           {renderContent()}
         </div>
       </div>

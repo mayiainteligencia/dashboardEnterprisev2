@@ -307,7 +307,7 @@ export const MapaCalorEstados: React.FC = () => {
       </div>
 
       {/* Layout mapa + sidebar */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 240px', gap: '20px', alignItems: 'start' }}>
+      <div className="row-map">
 
         {/* SVG Mapa */}
         <div style={{ position: 'relative' }}>

@@ -133,7 +133,7 @@ const Financiamiento: React.FC = () => {
 
   return (
     <Bloque icon={CreditCard} title="Financiamiento" subtitle="Simulador de crédito en vivo">
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '20px', alignItems: 'center' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', alignItems: 'center', justifyItems: 'center' }}>
         <div>
           <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
             {modelos.map((m, i) => (
@@ -258,7 +258,7 @@ export const PaginaOperacion: React.FC = () => (
       <HeroKPI i={3} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />
     </>}>
     <Copiloto />
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '24px' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
       <AgenteWA />
       <Postventa />
     </div>

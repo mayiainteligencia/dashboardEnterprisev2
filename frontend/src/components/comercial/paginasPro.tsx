@@ -145,7 +145,7 @@ export const PaginaCEO: React.FC = () => {
         <HeroKPI i={2} label="Leads" value={`${(totalLeads / 1000).toFixed(1)}K`} delta="12.8%" up accent="#2563EB" spark={[8.1, 8.6, 9.0, 9.4, 9.9, totalLeads / 1000]} />
         <HeroKPI i={3} label="Conversión" value={`${conv}%`} delta="1.2 pts" up accent="#7C3AED" spark={[11, 12, 12.4, 13, 13.2, +conv]} />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(260px, 1fr)', gap: '22px' }}>
+      <div className="row2">
         <Reveal delay={120}><Panel title="Ventas vs meta por agencia · clic para resaltar">
           {top.map((a, i) => {
             const pct = Math.round((a.ventas / a.meta) * 100);
@@ -199,7 +199,7 @@ export const PaginaScoring: React.FC = () => {
         <HeroKPI i={2} label="Intención media" value={`${dist.media}`} accent={colores.advertencia} />
         <HeroKPI i={3} label="Intención baja" value={`${dist.baja}`} accent={colores.textoOscuro} />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 1fr) minmax(0, 1.6fr)', gap: '22px' }}>
+      <div className="row2-rev">
         <Reveal delay={120}><Panel title="Prospectos · clic para analizar">
           {scoring.map(s => {
             const on = s.nombre === sel; const c = scoreCol(s.score);
@@ -218,7 +218,7 @@ export const PaginaScoring: React.FC = () => {
           })}
         </Panel></Reveal>
         <Reveal delay={180}><Panel title={`Factores de scoring · ${sc.nombre}`}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
             <Gauge value={sc.score} color={scoreCol(sc.score)} label={`interés ${sc.modelo}`} />
             <div style={{ flex: 1 }}>
               {[
@@ -270,7 +270,7 @@ export const PaginaCampanias: React.FC = () => {
         <HeroKPI i={2} label="ROI promedio" value={`×${roiProm}`} delta="activas" up accent="#2563EB" />
         <HeroKPI i={3} label="Mejor campaña" value={`×${mejor.roi}`} delta={mejor.nombre.split(' ')[0]} up accent="#7C3AED" />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.6fr) minmax(240px, 1fr)', gap: '22px' }}>
+      <div className="row2">
         <Reveal delay={120}><Panel title="ROI por campaña · clic para detalle">
           {campanias.map((c, i) => {
             const on = sel === c.nombre; const det = campaniaDetalle.find(d => d.nombre === c.nombre);
@@ -332,7 +332,7 @@ export const PaginaVendedores: React.FC = () => {
         <HeroKPI i={2} label="Eficiencia prom." value={`${efic}%`} delta="cierre" up accent={colores.exito} />
         <HeroKPI i={3} label="Seg. vencidos" value={`${vencidos}`} delta="atención" accent={colores.peligro} />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.4fr) minmax(260px, 1fr)', gap: '22px' }}>
+      <div className="row2">
         <Reveal delay={120}><Panel title="Ranking por ventas">
           {sorted.map((v, i) => (
             <div key={v.nombre} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px' }}>
@@ -386,7 +386,7 @@ export const PaginaInventario: React.FC = () => {
         <HeroKPI i={2} label="Alertas stock" value={`${alertas}`} delta="revisar" accent={colores.peligro} />
         <HeroKPI i={3} label="Demanda alta" value={`${inventario.filter(i => i.demanda === 'alta').length}`} delta="modelos" up accent={colores.exito} />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.6fr) minmax(240px, 1fr)', gap: '22px' }}>
+      <div className="row2">
         <Reveal delay={120}><Panel>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
             <h3 style={{ fontSize: '14px', fontWeight: 800, color: colores.textoClaro, margin: 0 }}>Días en lote · filtra por demanda</h3>
@@ -449,7 +449,7 @@ export const PaginaConversion: React.FC = () => {
         <HeroKPI i={2} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />
         <HeroKPI i={3} label="NPS" value="74" delta="6 pts" up accent="#2563EB" />
       </>}>
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.5fr) minmax(260px, 1fr)', gap: '22px' }}>
+      <div className="row2">
         <Reveal delay={120}><Panel title="Embudo de conversión · clic en una etapa">
           {conversionFunnel.map((s, i) => {
             const on = i === sel; const w = (s.n / maxF) * 100;

@@ -4,10 +4,8 @@ import { WelcomeHeader } from './modules/dashboardModules/WelcomeHeader';
 import { HeroCard } from './modules/dashboardModules/Herocard';
 import { MiniCalendarCard } from './modules/dashboardModules/Minicalendarcard';
 import { TopCoursesCard } from './modules/dashboardModules/Topcoursescard';
-import { ExpandableModule } from './modules/dashboardModules/ExpandableModule';
 import { OfertasCard } from './modules/dashboardModules/Ofertascard';
 import { AlertasEmpresa } from './modules/dashboardModules/Alertaempresa';
-import { SelectorMotocicletas } from './modules/dashboardModules/SelectorMotocicletas';
 import { CampañasInteligentes } from './modules/dashboardModules/CampaniasInteligentes';
 import { AnalisisDemanda } from './modules/dashboardModules/AnalisisDemanda';
 import { MonitoreoRedesSociales } from './modules/dashboardModules/MonitorRedesSociales';
@@ -20,7 +18,7 @@ export const Dashboard: React.FC = () => {
       style={{
         minHeight: '100vh',
         background: colores.fondoPrincipal,
-        padding: '32px',
+        padding: 'clamp(16px, 4vw, 32px)',
       }}
     >
       <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
@@ -31,26 +29,24 @@ export const Dashboard: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '24px',
             marginBottom: '24px',
           }}
         >
-          {/* Columna 1: Análisis Predictivo */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Análisis Predictivo */}
+          <div>
             <AnalisisDemanda />
           </div>
 
-          {/* Columna 2: Hero */}
-          <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {/* Hero */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <HeroCard />
           </div>
 
-          {/* Columna 3: Selector de Motos */}
-          <div style={{ gridColumn: 'span 4' }}>
-            <ExpandableModule expandDirection="left">
-              <SelectorMotocicletas />
-            </ExpandableModule>
+          {/* Monitoreo de Redes */}
+          <div>
+            <MonitoreoRedesSociales />
           </div>
         </div>
 
@@ -58,23 +54,18 @@ export const Dashboard: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
             gap: '24px',
             marginBottom: '24px',
           }}
         >
-          {/* Columna Izquierda: Monitoreo Redes Sociales */}
-          <div style={{ gridColumn: 'span 4' }}>
-            <MonitoreoRedesSociales />
-          </div>
-
-          {/* Columna Centro: Campañas Inteligentes */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Campañas Inteligentes */}
+          <div>
             <CampañasInteligentes />
           </div>
 
-          {/* Columna Derecha: Alertas de la Empresa */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Alertas de la Empresa */}
+          <div>
             <AlertasEmpresa />
           </div>
         </div>
@@ -83,22 +74,22 @@ export const Dashboard: React.FC = () => {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
             gap: '24px',
           }}
         >
-          {/* Columna Izquierda: Ofertas Especiales */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Ofertas Especiales */}
+          <div>
             <OfertasCard />
           </div>
 
-          {/* Columna Centro: Mini Calendario (recuperado de la Fila 1) */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Mini Calendario */}
+          <div>
             <MiniCalendarCard />
           </div>
 
-          {/* Columna Derecha: Top Cursos (como cierre positivo) */}
-          <div style={{ gridColumn: 'span 4' }}>
+          {/* Top Cursos */}
+          <div>
             <TopCoursesCard />
           </div>
         </div>
