@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Menu, X, LayoutDashboard, TrendingUp, Shield,
-  Code2, GraduationCap, ChevronRight, Radio
+  Code2, GraduationCap, ChevronRight, Radio, BrainCircuit, Vote
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -17,6 +17,8 @@ interface ResponsiveLayoutProps {
 const menuItems = [
   { id: 'dashboard',      nombre: 'Dashboard General', icono: LayoutDashboard },
   { id: 'monitor',     nombre: 'Monitor de Medios',         icono: Radio      },
+  { id: 'monitoria',   nombre: 'Monitor IA',                icono: BrainCircuit },
+  { id: 'electoral',   nombre: 'Inteligencia Electoral',    icono: Vote       },
   { id: 'ciberseguridad', nombre: 'CiberSeguridad',     icono: Shield          },
   { id: 'playground',     nombre: 'Playground',         icono: Code2           },
   { id: 'academia',       nombre: 'Academia',            icono: GraduationCap   },

@@ -5,7 +5,9 @@ import {
   Shield,
   GraduationCap,
   Code2,
-  Radio, 
+  Radio,
+  BrainCircuit,
+  Vote,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -45,6 +47,8 @@ const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
   // { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp},
   { id: 'monitor', nombre: 'Monitor de Medios', icono: Radio },  // ← NUEVO
+  { id: 'monitoria', nombre: 'Monitor IA', icono: BrainCircuit },
+  { id: 'electoral', nombre: 'Inteligencia Electoral', icono: Vote },
 ];
 
 

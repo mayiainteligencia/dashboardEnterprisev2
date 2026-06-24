@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ResponsiveLayout } from './components/ResponsiveLayout';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
-import { RecursosHumanos } from './components/departamentos/RecursosHumanos';
-import { FinanzasContabilidad } from './components/departamentos/FinanzasContabilidad';
-import { Operaciones } from './components/departamentos/Operaciones';
-import { VentasMarketing } from './components/departamentos/VentasMarketing';
-import { TecnologiasInformacion } from './components/departamentos/TecnologiasInformacion';
-import { Administracion } from './components/departamentos/Administracion';
 import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Playground } from './components/departamentos/Playground';
 import { Academia } from './components/departamentos/Academia';
 
 import { MonitorMedios } from './components/MonitorMedios';
+import { MonitorIA } from './components/MonitorIA';
+import { InteligenciaElectoral } from './components/InteligenciaElectoral';
 import { brandingConfig } from './config/branding';
 
 
@@ -26,17 +22,13 @@ function App() {
   const getTitulo = () => {
     const titulos: Record<string, string> = {
       dashboard:      'Dashboard General',
-      rh:             'Recursos Humanos',
-      finanzas:       'Finanzas y Contabilidad',
-      operaciones:    'Operaciones',
-      ventas:         'Ventas y Marketing',
-      ti:             'Tecnologías de la Información',
-      administracion: 'Administración',
       ciberseguridad: 'CiberSeguridad',
       playground:     'Playground',
       academia:       'Academia',
 
       monitor: 'Monitor de Medios',
+      monitoria: 'Monitor IA',
+      electoral: 'Inteligencia Electoral',
     };
     return titulos[activeSection] || 'Dashboard';
   };
@@ -44,17 +36,13 @@ function App() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':      return <Dashboard onSectionChange={setActiveSection} />;
-      case 'rh':             return <RecursosHumanos />;
-      case 'finanzas':       return <FinanzasContabilidad />;
-      case 'operaciones':    return <Operaciones />;
-      case 'ventas':         return <VentasMarketing />;
-      case 'ti':             return <TecnologiasInformacion />;
-      case 'administracion': return <Administracion />;
       case 'ciberseguridad': return <Ciberseguridad />;
       case 'playground':     return <Playground />;
       case 'academia':       return <Academia />;
 
       case 'monitor': return <MonitorMedios />;
+      case 'monitoria': return <MonitorIA />;
+      case 'electoral': return <InteligenciaElectoral />;
       default:               return <Dashboard onSectionChange={setActiveSection} />;
     }
   };
