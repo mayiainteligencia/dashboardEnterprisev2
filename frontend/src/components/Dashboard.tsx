@@ -4,6 +4,9 @@ import {
   ArrowRight, Zap, BarChart3, Sparkles, Mic, X, Send, Utensils, 
   AlertTriangle, CheckCircle, HelpCircle, ChevronRight, MicOff
 } from 'lucide-react';
+import {
+  ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, Tooltip as RechartsTooltip
+} from 'recharts';
 import { brandingConfig } from '../config/branding';
 
 interface DashboardProps {
@@ -45,6 +48,45 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const chatEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const [isMicCardHovered, setIsMicCardHovered] = useState(false);
+
+  // Datos simulados para las gráficas
+  const demandForecastData = [
+    { name: 'Ene', forecast: 18000 },
+    { name: 'Feb', forecast: 19500 },
+    { name: 'Mar', forecast: 21000 },
+    { name: 'Abr', forecast: 20000 },
+    { name: 'May', forecast: 22000 },
+    { name: 'Jun', forecast: 20900 },
+  ];
+
+  const distributorSalesData = [
+    { name: 'Norte', sales: 15 },
+    { name: 'Sur', sales: 11 },
+    { name: 'Centro', sales: 25 },
+    { name: 'Oeste', sales: 8 },
+  ];
+
+  const clientSegmentData = [
+    { name: 'HORECA', value: 45, fill: '#10B981' },
+    { name: 'Panaderías', value: 35, fill: '#1E40AF' },
+    { name: 'Otros', value: 20, fill: '#D31245' },
+  ];
+
+  const priceTrendData = [
+    { name: 'Sem 1', Rich: 98, Comp: 102 },
+    { name: 'Sem 2', Rich: 97, Comp: 101 },
+    { name: 'Sem 3', Rich: 96, Comp: 101 },
+    { name: 'Sem 4', Rich: 95, Comp: 100 },
+  ];
+
+  const sparklineDataMap: Record<string, number[]> = {
+    'SKUs Proyectados': [135, 138, 140, 142, 145, 148],
+    'Distribuidores Activos': [32, 32, 33, 33, 34, 34],
+    'Usuarios Academia': [240, 250, 260, 270, 280, 285],
+    'Clientes Foodservice': [480, 490, 495, 500, 505, 512],
+    'Ticket E-commerce': [2200, 2300, 2250, 2350, 2400, 2450],
+    'Frecuencia Compra': [2.8, 2.7, 2.6, 2.5, 2.4, 2.4]
+  };
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -288,30 +330,54 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Predicción inteligente de demanda basada en estacionalidad de pastelería, festividades regionales y promociones locales.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { n: 'Tres Riches Jarabe 1kg', r: 'Centro', f: '20,900' },
-                { n: 'Whip Topping Base 1kg', r: 'Centro', f: '14,437' },
-              ].map(x => (
-                <div 
-                  key={x.n} 
-                  className="inner-widget-card"
-                  style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    padding: '10px 14px', 
-                    background: '#FFFFFF', 
-                    borderRadius: '12px', 
-                    border: '1px solid var(--border)',
-                    transition: 'all 0.2s ease',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#1E40AF' }}>{x.n}</span>
-                  <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{x.r}</span>
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: '#10B981' }}>{x.f} cjs</span>
-                </div>
-              ))}
+            <div style={{ display: 'flex', gap: '16px', marginTop: '12px', minHeight: '120px', alignItems: 'center' }}>
+              <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[
+                  { n: 'Tres Riches Jarabe 1kg', r: 'Centro', f: '20,900' },
+                  { n: 'Whip Topping Base 1kg', r: 'Centro', f: '14,437' },
+                ].map(x => (
+                  <div 
+                    key={x.n} 
+                    className="inner-widget-card"
+                    style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      padding: '8px 12px', 
+                      background: '#FFFFFF', 
+                      borderRadius: '10px', 
+                      border: '1px solid var(--border)',
+                      transition: 'all 0.2s ease',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#1E40AF' }}>{x.n}</span>
+                      <span style={{ fontSize: '9px', color: 'var(--text-secondary)' }}>{x.r}</span>
+                    </div>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: '#10B981', alignSelf: 'center' }}>{x.f} cjs</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* AreaChart */}
+              <div style={{ flex: 1, height: '100px', position: 'relative' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={demandForecastData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                    <defs>
+                      <linearGradient id="colorForecast" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#1E40AF" stopOpacity={0.4}/>
+                        <stop offset="95%" stopColor="#1E40AF" stopOpacity={0.0}/>
+                      </linearGradient>
+                    </defs>
+                    <RechartsTooltip 
+                      contentStyle={{ backgroundColor: '#0F172A', border: 'none', borderRadius: '8px', padding: '6px 10px' }}
+                      labelStyle={{ color: '#94A3B8', fontSize: '10px', fontWeight: '600' }}
+                      itemStyle={{ color: '#FFFFFF', fontSize: '10px', fontWeight: '700' }}
+                    />
+                    <Area type="monotone" dataKey="forecast" stroke="#1E40AF" strokeWidth={2} fillOpacity={1} fill="url(#colorForecast)" />
+                  </AreaChart>
+                </ResponsiveContainer>
+              </div>
             </div>
           </div>
           <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('demanda')}>
@@ -322,8 +388,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         {/* TARJETA 2: Asistente de Voz MAYIA Glassmorphic Hero (span 4) */}
         <div 
           className="group relative transition-all duration-500"
-          onMouseEnter={() => setIsMicCardHovered(true)}
-          onMouseLeave={() => setIsMicCardHovered(false)}
+          onMouseEnter={(e) => {
+            setIsMicCardHovered(true);
+            e.currentTarget.style.transform = 'translateY(-4px) rotateX(2deg) rotateY(-2deg)';
+            e.currentTarget.style.boxShadow = `0 12px 30px ${colores.primario}22`;
+          }}
+          onMouseLeave={(e) => {
+            setIsMicCardHovered(false);
+            e.currentTarget.style.transform = 'none';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
           style={{
             gridColumn: 'span 4',
             background: `linear-gradient(135deg, ${colores.primario}20 0%, ${colores.secundario}20 100%)`,
@@ -339,6 +413,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             justifyContent: 'center',
             alignItems: 'center',
             textAlign: 'center',
+            cursor: 'pointer',
+            transition: 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.5s',
           }}
         >
           {/* Background Glow */}
@@ -398,6 +474,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <h3 style={{ fontSize: '18px', fontWeight: '700', color: colores.primario, fontFamily: 'Outfit, sans-serif', lineHeight: 1.3, marginBottom: '6px' }}>
               Asistente de Cocina MAYIA
             </h3>
+            
+            {/* Waveform Animation */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px', height: '24px', margin: '6px 0 10px' }}>
+              {[0.4, 0.8, 0.5, 0.9, 0.3, 0.7, 0.4].map((delay, index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: '3px',
+                    height: '20px',
+                    backgroundColor: index % 2 === 0 ? colores.primario : colores.secundario,
+                    borderRadius: '2px',
+                    animation: 'wave-pulse 1.2s infinite ease-in-out',
+                    animationDelay: `${delay}s`,
+                    transformOrigin: 'center',
+                  }}
+                />
+              ))}
+            </div>
+
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 4px 0', maxWidth: '260px' }}>
               Consulta recetas, stock de distribuidores o tendencias por voz.
             </p>
@@ -446,30 +541,48 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Asistente de recetas avanzadas, cálculo de rendimientos y solución técnica a problemas comunes en pastelería.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { name: 'Tres Leches Tradicional', status: 'Publicado', col: '#10B981' },
-                { name: 'Selva Negra Versatié', status: 'Publicado', col: '#10B981' },
-              ].map(x => (
-                <div 
-                  key={x.name} 
-                  className="inner-widget-card"
-                  style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
-                    alignItems: 'center', 
-                    padding: '10px 14px', 
-                    background: '#FFFFFF', 
-                    borderRadius: '12px', 
-                    border: '1px solid var(--border)',
-                    transition: 'all 0.2s ease',
-                    cursor: 'pointer'
+            <div style={{ display: 'flex', gap: '16px', marginTop: '12px', minHeight: '120px', alignItems: 'center' }}>
+              <div style={{ flex: 1.2, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[
+                  { name: 'Tres Leches Tradicional', status: 'Publicado', col: '#10B981' },
+                  { name: 'Selva Negra Versatié', status: 'Publicado', col: '#10B981' },
+                ].map(x => (
+                  <div 
+                    key={x.name} 
+                    className="inner-widget-card"
+                    style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center', 
+                      padding: '8px 12px', 
+                      background: '#FFFFFF', 
+                      borderRadius: '10px', 
+                      border: '1px solid var(--border)',
+                      transition: 'all 0.2s ease',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)' }}>{x.name}</div>
+                    <span style={{ fontSize: '9px', fontWeight: '700', color: x.col }}>{x.status}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Pastry Image */}
+              <div style={{ flex: 0.8, height: '90px', borderRadius: '12px', overflow: 'hidden', border: '1px solid var(--border)', position: 'relative' }}>
+                <img 
+                  src="/assets/pastry.png" 
+                  alt="Recetas Rich" 
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'transform 0.4s ease',
                   }}
-                >
-                  <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)' }}>{x.name}</div>
-                  <span style={{ fontSize: '10px', fontWeight: '700', color: x.col }}>{x.status}</span>
-                </div>
-              ))}
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.15)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                />
+              </div>
             </div>
           </div>
           <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('copilot-chef')}>
@@ -494,6 +607,25 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Monitoreo geográfico de sell-in y frecuencia de recompra para asegurar disponibilidad.
             </p>
+            
+            {/* BarChart */}
+            <div style={{ height: '70px', margin: '8px 0' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={distributorSalesData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                  <RechartsTooltip 
+                    contentStyle={{ backgroundColor: '#0F172A', border: 'none', borderRadius: '8px', padding: '6px 10px' }}
+                    labelStyle={{ color: '#94A3B8', fontSize: '9px', fontWeight: '600' }}
+                    itemStyle={{ color: '#FFFFFF', fontSize: '9px', fontWeight: '700' }}
+                  />
+                  <Bar dataKey="sales" fill="#F59E0B" radius={[3, 3, 0, 0]}>
+                    {distributorSalesData.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={index === 2 ? '#EA580C' : '#F59E0B'} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { name: 'Servipan CDMX', desc: 'Ventas: $1.25M MXN' },
@@ -505,9 +637,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                   style={{ 
                     display: 'flex', 
                     gap: '8px', 
-                    padding: '10px 14px', 
+                    padding: '8px 12px', 
                     background: '#FFFFFF', 
-                    borderRadius: '12px', 
+                    borderRadius: '10px', 
                     border: '1px solid var(--border)',
                     transition: 'all 0.2s ease',
                     cursor: 'pointer'
@@ -543,6 +675,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Herramienta comercial para fuerza de ventas con pitch sugerido y objeciones.
             </p>
+
+            {/* Donut Chart */}
+            <div style={{ height: '70px', margin: '8px 0', display: 'flex', justifyContent: 'center' }}>
+              <div style={{ width: '70px', height: '70px' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <RechartsTooltip 
+                      contentStyle={{ backgroundColor: '#0F172A', border: 'none', borderRadius: '8px', padding: '6px 10px' }}
+                      itemStyle={{ color: '#FFFFFF', fontSize: '9px', fontWeight: '700' }}
+                    />
+                    <Pie
+                      data={clientSegmentData}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={15}
+                      outerRadius={26}
+                      paddingAngle={3}
+                      dataKey="value"
+                    >
+                      {clientSegmentData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.fill} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { e: 'Hotel Camino Real', m: 'Foodservice / HORECA' },
@@ -555,9 +715,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     display: 'flex', 
                     justifyContent: 'space-between', 
                     alignItems: 'center', 
-                    padding: '10px 14px', 
+                    padding: '8px 12px', 
                     background: '#FFFFFF', 
-                    borderRadius: '12px', 
+                    borderRadius: '10px', 
                     border: '1px solid var(--border)',
                     transition: 'all 0.2s ease',
                     cursor: 'pointer'
@@ -591,6 +751,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Monitoreo de precios frente a Dawn y Puratos, además del plan de expansión online.
             </p>
+
+            {/* LineChart */}
+            <div style={{ height: '70px', margin: '8px 0' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={priceTrendData} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                  <RechartsTooltip 
+                    contentStyle={{ backgroundColor: '#0F172A', border: 'none', borderRadius: '8px', padding: '6px 10px' }}
+                    labelStyle={{ color: '#94A3B8', fontSize: '9px', fontWeight: '600' }}
+                    itemStyle={{ color: '#FFFFFF', fontSize: '9px', fontWeight: '700' }}
+                  />
+                  <Line type="monotone" dataKey="Rich" stroke="#D31245" strokeWidth={2} dot={{ r: 2 }} activeDot={{ r: 4 }} />
+                  <Line type="monotone" dataKey="Comp" stroke="#94A3B8" strokeWidth={1.5} strokeDasharray="3 3" dot={{ r: 1 }} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { id: 'Bettercreme vs Dawn', diff: 'Rich -4%' },
@@ -603,9 +779,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     display: 'flex', 
                     justifyContent: 'space-between', 
                     alignItems: 'center', 
-                    padding: '10px 14px', 
+                    padding: '8px 12px', 
                     background: '#FFFFFF', 
-                    borderRadius: '12px', 
+                    borderRadius: '10px', 
                     border: '1px solid var(--border)',
                     transition: 'all 0.2s ease',
                     cursor: 'pointer'
@@ -636,28 +812,79 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               Academia Rich
             </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 12px 0', lineHeight: 1.4 }}>
               Adopción de IA aplicada a ventas foodservice, análisis de inventarios y forecast comercial.
             </p>
+
+            {/* Glowing Circular Progress Ring */}
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', margin: '12px 0', position: 'relative', height: '80px' }}>
+              {/* Floating particles background */}
+              <div style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', overflow: 'hidden' }}>
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      position: 'absolute',
+                      left: `${20 + i * 20}%`,
+                      bottom: '10%',
+                      width: '4px',
+                      height: '4px',
+                      borderRadius: '50%',
+                      backgroundColor: '#EA580C',
+                      animation: 'sparkle-float 2.5s infinite ease-in-out',
+                      animationDelay: `${i * 0.6}s`,
+                    }}
+                  />
+                ))}
+              </div>
+              
+              {/* Circular Gauge */}
+              <div 
+                style={{ 
+                  width: '70px', 
+                  height: '70px', 
+                  borderRadius: '50%', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center', 
+                  position: 'relative',
+                  background: '#FFFFFF',
+                  animation: 'pulse-glow 3s infinite',
+                }}
+              >
+                <svg width="70" height="70" style={{ transform: 'rotate(-90deg)', position: 'absolute' }}>
+                  <circle cx="35" cy="35" r="26" stroke="#F1F5F9" strokeWidth="5" fill="transparent" />
+                  <circle 
+                    cx="35" 
+                    cy="35" 
+                    r="26" 
+                    stroke="#10B981" 
+                    strokeWidth="5" 
+                    fill="transparent" 
+                    strokeDasharray={2 * Math.PI * 26} 
+                    strokeDashoffset={2 * Math.PI * 26 * (1 - 0.88)} 
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <span style={{ fontSize: '14px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>88%</span>
+                  <span style={{ fontSize: '8px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>Avance</span>
+                </div>
+              </div>
+            </div>
+
             <div 
               className="inner-widget-card"
               style={{ 
-                padding: '12px 14px', 
+                padding: '10px 12px', 
                 background: '#FFFFFF', 
-                borderRadius: '12px', 
+                borderRadius: '10px', 
                 border: '1px solid var(--border)',
                 transition: 'all 0.2s ease',
                 cursor: 'pointer'
               }}
             >
-              <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>IA Aplicada a Ventas Foodservice</div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)' }}>
-                <span>Avance General</span>
-                <span style={{ fontWeight: '700', color: '#10B981' }}>88%</span>
-              </div>
-              <div style={{ height: '4px', background: '#F1F5F9', borderRadius: '2px', marginTop: '6px', overflow: 'hidden' }}>
-                <div style={{ height: '100%', background: '#10B981', width: '88%' }} />
-              </div>
+              <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)' }}>IA Aplicada a Ventas Foodservice</div>
             </div>
           </div>
           <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('academia')}>
@@ -775,6 +1002,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                       <span style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{k.val}</span>
                       <span style={{ fontSize: '9px', fontWeight: '700', color: '#10B981' }}>{k.trend}</span>
                     </div>
+                  </div>
+
+                  {/* Sparkline chart on the right side */}
+                  <div style={{ width: '45px', height: '22px', marginLeft: '6px', flexShrink: 0 }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={(sparklineDataMap[k.label] || [1, 2, 3, 4]).map((val, idx) => ({ idx, val }))}>
+                        <Line type="monotone" dataKey="val" stroke={k.col} strokeWidth={1.5} dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
                   </div>
                 </div>
               );
@@ -902,6 +1138,19 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           33% { transform: translate(20px, -15px) rotate(3deg); }
           66% { transform: translate(-10px, 15px) rotate(-3deg); }
         }
+        @keyframes wave-pulse {
+          0%, 100% { transform: scaleY(0.3); }
+          50% { transform: scaleY(1); }
+        }
+        @keyframes sparkle-float {
+          0% { transform: translateY(10px) scale(0); opacity: 0; }
+          50% { opacity: 0.8; }
+          100% { transform: translateY(-40px) scale(1); opacity: 0; }
+        }
+        @keyframes pulse-glow {
+          0%, 100% { box-shadow: 0 0 4px rgba(16, 185, 129, 0.2); }
+          50% { box-shadow: 0 0 14px rgba(16, 185, 129, 0.5); }
+        }
         
         /* Card in card styles */
         .inner-widget-card:hover {
@@ -909,10 +1158,30 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           transform: translateY(-2px);
           box-shadow: 0 6px 16px rgba(211, 18, 69, 0.05);
         }
+        
+        .portfolio-item-card {
+          position: relative;
+        }
+        .portfolio-item-card img {
+          transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
         .portfolio-item-card:hover {
-          transform: translateY(-4px) !important;
+          transform: translateY(-6px) scale(1.02) !important;
           border-color: ${colores.primario} !important;
-          box-shadow: 0 10px 24px rgba(211, 18, 69, 0.08) !important;
+          box-shadow: 0 12px 30px rgba(211, 18, 69, 0.12) !important;
+        }
+        .portfolio-item-card:hover img {
+          transform: scale(1.1) !important;
+        }
+
+        .kpi-metric-item {
+          transition: all 0.25s ease;
+        }
+        .kpi-metric-item svg {
+          transition: transform 0.3s ease;
+        }
+        .kpi-metric-item:hover svg {
+          transform: scale(1.2) rotate(6deg);
         }
         
         /* KPI layout overrides */
