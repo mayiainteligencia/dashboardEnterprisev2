@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   TrendingUp, BookOpen, Users, ShoppingBag, Map, Clock, 
   ArrowRight, Zap, BarChart3, Sparkles, Mic, X, Send, Utensils, 
-  AlertTriangle, CheckCircle, HelpCircle, ChevronRight
+  AlertTriangle, CheckCircle, HelpCircle, ChevronRight, MicOff
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -32,6 +32,7 @@ const products: ProductItem[] = [
 ];
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
+  const { colores, empresa, ia } = brandingConfig;
   const [modalOpen, setModalOpen] = useState(false);
   const [escuchando, setEscuchando] = useState(false);
   const [loadingIA, setLoadingIA] = useState(false);
@@ -43,6 +44,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
+  const [isMicCardHovered, setIsMicCardHovered] = useState(false);
 
   useEffect(() => {
     if (chatEndRef.current) {
@@ -50,7 +52,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
     }
   }, [chatMsgs, escuchando, loadingIA]);
 
-  // Speech Recognition
+  // Speech Recognition Setup
   useEffect(() => {
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (SpeechRecognition && !recognitionRef.current) {
@@ -148,7 +150,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             '¿Cuál es el pronóstico de Tres Riches para el Centro?',
             '¿Cómo soluciono grietas en la Bettercreme?',
             '¿Qué precios tiene Puratos en coberturas?',
-            '¿Cómo va el avance de capacitación en Cuajimalpa?'
+            '¿Cómo va el avance de capacitación en CDMX?'
           ];
           const frase = frases[Math.floor(Math.random() * frases.length)];
           setEscuchando(false);
@@ -216,9 +218,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   ];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '1400px', margin: '0 auto' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '1600px', margin: '0 auto', padding: '16px' }}>
       
-      {/* Welcome Header — Minimalista y cálido, tipo Honda */}
+      {/* Welcome Header — Minimalista y cálido */}
       <div style={{ marginBottom: '8px' }}>
         <h1 style={{
           fontSize: '44px',
@@ -242,21 +244,21 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         </p>
       </div>
 
-      {/* Grid Principal de Módulos (3 Columnas) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+      {/* Grid Principal de Módulos (Rejilla de 12 Columnas) */}
+      <div className="dashboard-grid-12" style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '24px', marginBottom: '24px', alignItems: 'stretch' }}>
         
-        {/* TARJETA 1: Demand Sensing */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 1: Demand Sensing (span 4) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(30,64,175,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <TrendingUp size={20} color="#1E40AF" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(30,64,175,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <TrendingUp size={22} color="#1E40AF" />
               </div>
               <span className="badge badge-blue">
                 Previsión · 148 SKUs
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               Demand Sensing & Forecast
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
@@ -267,7 +269,20 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 { n: 'Tres Riches Jarabe 1kg', r: 'Centro', f: '20,900' },
                 { n: 'Whip Topping Base 1kg', r: 'Centro', f: '14,437' },
               ].map(x => (
-                <div key={x.n} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 10px', background: '#FAFAFA', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div 
+                  key={x.n} 
+                  className="inner-widget-card"
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    padding: '10px 14px', 
+                    background: '#FFFFFF', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
                   <span style={{ fontSize: '12px', fontWeight: '700', color: '#1E40AF' }}>{x.n}</span>
                   <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{x.r}</span>
                   <span style={{ fontSize: '11px', fontWeight: '700', color: '#10B981' }}>{x.f} cjs</span>
@@ -275,75 +290,133 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               ))}
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('demanda')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('demanda')}>
             Ver Previsiones <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 2: Asistente de Voz (Cálido y limpio con contorno, estilo Honda Hero) */}
-        <div style={{
-          background: 'rgba(211,18,69,0.03)',
-          border: '2px solid rgba(211,18,69,0.15)',
-          borderRadius: '12px', padding: '24px',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-          minHeight: '380px', justifyContent: 'space-between',
-          position: 'relative'
-        }}>
-          {/* Flat warm shape inside */}
-          <div style={{
-            width: '80px', height: '80px', borderRadius: '50%',
-            background: 'rgba(211,18,69,0.06)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px',
-          }}>
-            <Utensils size={32} color="#D31245" />
+        {/* TARJETA 2: Asistente de Voz MAYIA Glassmorphic Hero (span 4) */}
+        <div 
+          className="group relative transition-all duration-500"
+          onMouseEnter={() => setIsMicCardHovered(true)}
+          onMouseLeave={() => setIsMicCardHovered(false)}
+          style={{
+            gridColumn: 'span 4',
+            background: `linear-gradient(135deg, ${colores.primario}20 0%, ${colores.secundario}20 100%)`,
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            padding: '24px',
+            border: `2px solid ${colores.primario}30`,
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: '380px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}
+        >
+          {/* Background Glow */}
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+            <div 
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '400px',
+                height: '400px',
+                opacity: isMicCardHovered ? 0.6 : 0,
+                transition: 'opacity 700ms ease-in-out',
+                filter: 'blur(80px)',
+                background: colores.primario,
+                borderRadius: '50%',
+              }}
+            />
           </div>
 
-          <div style={{ margin: '14px 0' }}>
-            <h3 style={{ fontSize: '18px', fontWeight: '700', color: '#D31245', fontFamily: 'Outfit, sans-serif', lineHeight: 1.3, marginBottom: '6px' }}>
+          {/* Animated float shapes */}
+          <div style={{ position: 'absolute', top: '-10%', right: '-10%', width: '200px', height: '200px', background: `radial-gradient(circle, ${colores.primario}25 0%, transparent 70%)`, filter: 'blur(40px)', animation: 'float 6s ease-in-out infinite', pointerEvents: 'none', zIndex: 0 }} />
+          <div style={{ position: 'absolute', bottom: '-10%', left: '-10%', width: '180px', height: '180px', background: `radial-gradient(circle, ${colores.secundario}25 0%, transparent 70%)`, filter: 'blur(40px)', animation: 'float 8s ease-in-out infinite reverse', pointerEvents: 'none', zIndex: 0 }} />
+
+          {/* Graphic Content */}
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            
+            {/* 3D Glassmorphic Cards Stack */}
+            <div style={{ position: 'relative', width: '130px', height: '90px', marginBottom: '16px' }}>
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${i * 4}px`,
+                    top: '0',
+                    width: '100px',
+                    height: '80px',
+                    background: `linear-gradient(135deg, 
+                      ${colores.primario}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 0%, 
+                      ${colores.secundario}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 100%)`,
+                    backdropFilter: 'blur(8px)',
+                    borderRadius: '24px',
+                    border: `1px solid ${colores.primario}${Math.max(40 - i * 5, 10).toString(16).padStart(2, '0')}`,
+                    transform: `perspective(800px) rotateY(${-15 + i * 4}deg) translateZ(${i * 8}px)`,
+                    boxShadow: `0 ${8 + i * 4}px ${20 + i * 8}px rgba(0,0,0,0.15)`,
+                    transition: 'all 0.3s ease',
+                    pointerEvents: 'none',
+                  }}
+                />
+              ))}
+              <div style={{ position: 'absolute', top: '10%', left: '20%', width: '60%', height: '30%', background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%)', borderRadius: '50%', filter: 'blur(16px)', transform: 'perspective(800px) rotateY(-10deg)', pointerEvents: 'none' }} />
+            </div>
+
+            {/* Texts */}
+            <h3 style={{ fontSize: '18px', fontWeight: '700', color: colores.primario, fontFamily: 'Outfit, sans-serif', lineHeight: 1.3, marginBottom: '6px' }}>
               Asistente de Cocina MAYIA
             </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 4px 0' }}>
-              Consulta recetas, stock de distribuidores o tendencias por voz
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 4px 0', maxWidth: '260px' }}>
+              Consulta recetas, stock de distribuidores o tendencias por voz.
             </p>
-            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontStyle: 'italic', margin: 0 }}>
-              Di "MAYIA" al final para enviar tu mensaje
+            <p style={{ fontSize: '11px', color: 'var(--text-muted)', fontStyle: 'italic', margin: '0 0 14px 0' }}>
+              Di "MAYIA" al final para enviar tu consulta.
             </p>
-          </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: 'var(--text-muted)', marginBottom: '10px' }}>
-            <span>Potenciado por</span>
-            <span style={{ fontWeight: '700', color: '#D31245' }}>MAYIA® IA</span>
+            {/* Mic Pulse Button */}
+            <button
+              onClick={() => { setModalOpen(true); iniciarEscucha(); }}
+              style={{
+                width: '46px',
+                height: '46px',
+                borderRadius: '50%',
+                border: `1.5px solid ${colores.primario}40`,
+                background: '#FFFFFF',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 12px rgba(211,18,69,0.12)',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(211, 18, 69, 0.05)'; e.currentTarget.style.transform = 'scale(1.08)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = '#FFFFFF'; e.currentTarget.style.transform = 'scale(1)'; }}
+            >
+              <Mic size={20} color="#D31245" />
+            </button>
           </div>
-
-          {/* Mic Button */}
-          <button
-            onClick={() => { setModalOpen(true); iniciarEscucha(); }}
-            style={{
-              width: '44px', height: '44px', borderRadius: '50%',
-              border: '1.5px solid rgba(211, 18, 69, 0.4)', background: '#FFF',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: '0 2px 6px rgba(211,18,69,0.1)'
-            }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(211, 18, 69, 0.05)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = '#FFF'; e.currentTarget.style.transform = 'scale(1)'; }}
-          >
-            <Mic size={18} color="#D31245" />
-          </button>
         </div>
 
-        {/* TARJETA 3: Chef Copilot */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 3: Chef Copilot & Recetario (span 4) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(211,18,69,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Utensils size={20} color="#D31245" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(211,18,69,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Utensils size={22} color="#D31245" />
               </div>
               <span className="badge badge-purple">
                 Fichas Técnicas
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               Chef Copilot & Recetario
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
@@ -354,41 +427,68 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                 { name: 'Tres Leches Tradicional', status: 'Publicado', col: '#10B981' },
                 { name: 'Selva Negra Versatié', status: 'Publicado', col: '#10B981' },
               ].map(x => (
-                <div key={x.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#FAFAFA', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div 
+                  key={x.name} 
+                  className="inner-widget-card"
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    padding: '10px 14px', 
+                    background: '#FFFFFF', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)' }}>{x.name}</div>
                   <span style={{ fontSize: '10px', fontWeight: '700', color: x.col }}>{x.status}</span>
                 </div>
               ))}
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('copilot-chef')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('copilot-chef')}>
             Consultar Recetario <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 4: Distribuidor 360 */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 4: Distribuidor 360 AI (span 3) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 3', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(245,158,11,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Map size={20} color="#F59E0B" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(245,158,11,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Map size={22} color="#F59E0B" />
               </div>
               <span className="badge badge-amber">
                 Cobertura Nacional
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               Distribuidor 360 AI
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Monitoreo geográfico de sell-in y frecuencia de recompra para asegurar disponibilidad de catálogo en todo el país.
+              Monitoreo geográfico de sell-in y frecuencia de recompra para asegurar disponibilidad.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { name: 'Servipan CDMX', desc: 'Ventas: $1.25M MXN' },
                 { name: 'Insumos del Sureste', desc: 'Frecuencia Crítica (3 sem)' },
               ].map(x => (
-                <div key={x.name} style={{ display: 'flex', gap: '8px', padding: '8px 10px', background: 'rgba(245,158,11,0.03)', borderRadius: '8px', border: '1px solid rgba(245,158,11,0.15)' }}>
+                <div 
+                  key={x.name} 
+                  className="inner-widget-card"
+                  style={{ 
+                    display: 'flex', 
+                    gap: '8px', 
+                    padding: '10px 14px', 
+                    background: '#FFFFFF', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: '11px', color: 'var(--text-primary)', fontWeight: '600' }}>{x.name}</div>
                     <div style={{ fontSize: '9px', color: 'var(--text-muted)' }}>{x.desc}</div>
@@ -397,200 +497,267 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               ))}
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('distribuidores')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('distribuidores')}>
             Ver Distribuidores <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 5: Ventas Foodservice */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 5: Ventas Foodservice (span 3) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 3', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(16,185,129,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Users size={20} color="#10B981" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(16,185,129,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Users size={22} color="#10B981" />
               </div>
               <span className="badge badge-green">
                 B2B · 512 Clientes
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Ventas Foodservice Copilot
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+              Ventas Foodservice
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Herramienta comercial para fuerza de ventas con pitch sugerido y respuestas automáticas a objeciones.
+              Herramienta comercial para fuerza de ventas con pitch sugerido y objeciones.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { e: 'Hotel Camino Real', m: 'Foodservice / HORECA' },
                 { e: 'Panificadora El Rosario', m: 'Distribuidor / Panadería' },
               ].map(x => (
-                <div key={x.e} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#FAFAFA', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{x.e}</span>
-                  <span style={{ fontSize: '10px', fontWeight: '700', color: '#10B981' }}>{x.m}</span>
+                <div 
+                  key={x.e} 
+                  className="inner-widget-card"
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    padding: '10px 14px', 
+                    background: '#FFFFFF', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{x.e}</span>
+                  <span style={{ fontSize: '9px', fontWeight: '700', color: '#10B981' }}>{x.m}</span>
                 </div>
               ))}
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('ventas-b2b')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('ventas-b2b')}>
             Copiloto de Ventas <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 6: E-commerce & Mkt */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 6: E-commerce & Mkt (span 3) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 3', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(239,68,68,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <ShoppingBag size={20} color="#EF4444" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(239,68,68,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <ShoppingBag size={22} color="#EF4444" />
               </div>
               <span className="badge badge-red">
                 Competidores
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               E-commerce & Mkt Intel
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Monitoreo de precios frente a Dawn y Puratos, además del plan de expansión del canal en línea CDMX.
+              Monitoreo de precios frente a Dawn y Puratos, además del plan de expansión online.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               {[
                 { id: 'Bettercreme vs Dawn', diff: 'Rich -4%' },
                 { id: 'Versatié vs Puratos', diff: 'Margen +20%' },
               ].map(x => (
-                <div key={x.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#FAFAFA', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                <div 
+                  key={x.id} 
+                  className="inner-widget-card"
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    padding: '10px 14px', 
+                    background: '#FFFFFF', 
+                    borderRadius: '12px', 
+                    border: '1px solid var(--border)',
+                    transition: 'all 0.2s ease',
+                    cursor: 'pointer'
+                  }}
+                >
                   <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)' }}>{x.id}</span>
                   <span style={{ fontSize: '11px', fontWeight: '700', color: '#EF4444' }}>{x.diff}</span>
                 </div>
               ))}
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('ecommerce-mkt')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('ecommerce-mkt')}>
             Monitorear Precios <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-      </div>
-
-      {/* Galería de Productos Extraídos (Rich's México) */}
-      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '12px', padding: '24px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-          <Utensils size={18} color="#D31245" />
-          <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
-            Portafolio Destacado — Productos Extraídos de richs.com.mx
-          </h3>
-        </div>
-
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '14px' }}>
-          {products.map(p => (
-            <div
-              key={p.nombre}
-              onClick={() => setSelectedProduct(p)}
-              style={{
-                background: '#FAFAFA',
-                border: '1px solid var(--border)',
-                borderRadius: '12px',
-                padding: '12px',
-                textAlign: 'center',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                minHeight: '200px'
-              }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.borderColor = '#D31245'; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
-            >
-              <div style={{ width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FFF', borderRadius: '50%', padding: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.02)', overflow: 'hidden', marginBottom: '10px' }}>
-                <img
-                  src={p.imgUrl}
-                  alt={p.nombre}
-                  style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    img.style.display = 'none';
-                    const parent = img.parentElement;
-                    if (parent) {
-                      const div = document.createElement('div');
-                      div.innerText = '🍰';
-                      div.style.fontSize = '24px';
-                      parent.appendChild(div);
-                    }
-                  }}
-                />
-              </div>
-              <div>
-                <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: 1.2 }}>{p.nombre}</div>
-                <div style={{ fontSize: '9px', color: '#D31245', fontWeight: '700', marginTop: '2px', textTransform: 'uppercase' }}>{p.categoria}</div>
-              </div>
-              <span style={{ fontSize: '9px', color: '#1E40AF', fontWeight: '700', marginTop: '10px', textDecoration: 'underline' }}>Detalles Ficha &rarr;</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Fila 3: Academia (1 col) + KPIs generales (2 cols) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px', alignItems: 'stretch' }}>
-        
-        {/* TARJETA 7: Academia Rich */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        {/* TARJETA 7: Academia Rich (span 3) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 3', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
           <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(20,184,166,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <BookOpen size={20} color="#10B981" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+              <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(234,88,12,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <BookOpen size={22} color="#EA580C" />
               </div>
-              <span className="badge badge-green">
-                Cursos · 285 Vendedores
+              <span className="badge badge-teal">
+                Capacitación B2B
               </span>
             </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
               Academia Rich
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Adopción de IA aplicada a ventas foodservice, análisis de inventarios y forecast comercial para distribuidores.
+              Adopción de IA aplicada a ventas foodservice, análisis de inventarios y forecast comercial.
             </p>
-            <div style={{ padding: '8px 10px', background: '#FAFAFA', borderRadius: '8px', border: '1px solid var(--border)' }}>
-              <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)' }}>IA Aplicada a Ventas Foodservice</div>
-              <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Avance General: 88%</div>
+            <div 
+              className="inner-widget-card"
+              style={{ 
+                padding: '12px 14px', 
+                background: '#FFFFFF', 
+                borderRadius: '12px', 
+                border: '1px solid var(--border)',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)', marginBottom: '4px' }}>IA Aplicada a Ventas Foodservice</div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: 'var(--text-muted)' }}>
+                <span>Avance General</span>
+                <span style={{ fontWeight: '700', color: '#10B981' }}>88%</span>
+              </div>
+              <div style={{ height: '4px', background: '#F1F5F9', borderRadius: '2px', marginTop: '6px', overflow: 'hidden' }}>
+                <div style={{ height: '100%', background: '#10B981', width: '88%' }} />
+              </div>
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('academia')}>
+          <button className="btn-secondary" style={{ marginTop: '20px', justifyContent: 'center', borderRadius: '12px', padding: '11px' }} onClick={() => onNavigate?.('academia')}>
             Ir a Academia <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* KPIs Condensados */}
-        <div className="pharb-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-              <BarChart3 size={16} color="var(--text-secondary)" />
-              <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
-                Métricas de Operación y Suministro
-              </span>
+        {/* Portafolio Destacado (span 12) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 12', padding: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(211,18,69,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Utensils size={16} color="#D31245" />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-              {kpis.map(k => {
-                const Icon = k.icon;
-                return (
-                  <div key={k.label} className="metric-card" style={{ padding: '12px 14px', background: '#FAFAFA', border: '1px solid var(--border)', borderRadius: '8px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${k.col}15`, border: `1px solid ${k.col}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Icon size={16} color={k.col} />
-                    </div>
-                    <div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', lineHeight: 1.1 }}>{k.label}</div>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '2px' }}>
-                        <span style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{k.val}</span>
-                        <span style={{ fontSize: '9px', fontWeight: '700', color: '#10B981' }}>{k.trend}</span>
-                      </div>
+            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: 0 }}>
+              Portafolio Destacado — Productos Extraídos de richs.com.mx
+            </h3>
+          </div>
+
+          <div className="portfolio-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
+            {products.map(p => (
+              <div
+                key={p.nombre}
+                onClick={() => setSelectedProduct(p)}
+                style={{
+                  background: '#FFFFFF',
+                  border: '1px solid var(--border)',
+                  borderRadius: '16px',
+                  padding: '16px',
+                  textAlign: 'center',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  minHeight: '220px'
+                }}
+                className="portfolio-item-card"
+              >
+                <div style={{ width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FAFAFA', borderRadius: '50%', padding: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.01)', overflow: 'hidden', marginBottom: '12px' }}>
+                  <img
+                    src={p.imgUrl}
+                    alt={p.nombre}
+                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      img.style.display = 'none';
+                      const parent = img.parentElement;
+                      if (parent) {
+                        const div = document.createElement('div');
+                        div.innerText = '🍰';
+                        div.style.fontSize = '24px';
+                        parent.appendChild(div);
+                      }
+                    }}
+                  />
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: 1.2 }}>{p.nombre}</div>
+                  <div style={{ fontSize: '9px', color: '#D31245', fontWeight: '700', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{p.categoria}</div>
+                </div>
+                <span style={{ fontSize: '9px', color: '#1E40AF', fontWeight: '700', marginTop: '14px', textDecoration: 'underline' }}>Detalles Ficha &rarr;</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* KPIs de Operación y Suministro (span 12) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 12', padding: '24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
+            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(71,85,105,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <BarChart3 size={16} color="#475569" />
+            </div>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
+              Métricas de Operación y Suministro
+            </span>
+          </div>
+
+          <div className="kpi-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
+            {kpis.map(k => {
+              const Icon = k.icon;
+              return (
+                <div 
+                  key={k.label} 
+                  style={{ 
+                    padding: '10px 12px', 
+                    background: '#FFFFFF', 
+                    border: '1px solid var(--border)', 
+                    borderRadius: '14px', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    gap: '8px',
+                    transition: 'all 0.25s ease',
+                    cursor: 'pointer',
+                    minWidth: 0, // Permite encoger textos correctamente
+                  }}
+                  className="kpi-metric-item"
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = k.col;
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = `0 6px 14px ${k.col}10`;
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = 'var(--border)';
+                    e.currentTarget.style.transform = 'none';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${k.col}12`, border: `1px solid ${k.col}22`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <Icon size={16} color={k.col} />
+                  </div>
+                  <div style={{ minWidth: 0, flex: 1 }}>
+                    <div style={{ fontSize: '11px', color: 'var(--text-secondary)', fontWeight: '600', lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{k.label}</div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px', marginTop: '4px', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '15px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{k.val}</span>
+                      <span style={{ fontSize: '9px', fontWeight: '700', color: '#10B981' }}>{k.trend}</span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px', fontSize: '11px', color: 'var(--text-muted)', borderTop: '1px solid var(--border)', paddingTop: '12px' }}>
+
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', fontSize: '11px', color: 'var(--text-muted)', borderTop: '1px solid var(--border)', paddingTop: '16px' }}>
             <span>Última sincronización con servidores: hace 1 minuto</span>
             <span>MAYIA AI Food Engine v2.4.2</span>
           </div>
@@ -600,12 +767,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
       {/* Product Detail Modal */}
       {selectedProduct && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.4)', backdropFilter: 'blur(3px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 3000 }}>
-          <div style={{ width: '90%', maxWidth: '420px', background: '#FFF', borderRadius: '12px', padding: '24px', border: '1px solid var(--border)', boxShadow: '0 4px 16px rgba(0,0,0,0.08)' }}>
+        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 3000 }}>
+          <div style={{ width: '90%', maxWidth: '420px', background: '#FFFFFF', borderRadius: '24px', padding: '24px', border: '1px solid var(--border)', boxShadow: '0 20px 48px rgba(0,0,0,0.12)', animation: 'scaleIn 0.25s ease' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
               <div>
                 <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{selectedProduct.nombre}</h3>
-                <span style={{ fontSize: '10px', color: '#D31245', fontWeight: '700', textTransform: 'uppercase' }}>{selectedProduct.categoria}</span>
+                <span style={{ fontSize: '10px', color: '#D31245', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{selectedProduct.categoria}</span>
               </div>
               <button onClick={() => setSelectedProduct(null)} style={{ background: '#F1F5F9', border: 'none', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
                 <X size={14} color="var(--text-secondary)" />
@@ -623,7 +790,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             <button
               onClick={() => { setSelectedProduct(null); onNavigate?.('copilot-chef'); }}
               className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center', background: '#D31245', borderColor: '#D31245', borderRadius: '8px', padding: '10px' }}
+              style={{ width: '100%', justifyContent: 'center', background: '#D31245', borderColor: '#D31245', borderRadius: '12px', padding: '12px', fontSize: '13px', fontWeight: '600' }}
             >
               Ver Recetas & Soluciones Técnicas
             </button>
@@ -633,16 +800,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
       {/* Modal del Asistente de Voz */}
       {modalOpen && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2500 }}>
-          <div style={{ width: '90%', maxWidth: '520px', height: '70vh', maxHeight: '600px', backgroundColor: 'var(--bg-card)', borderRadius: '12px', boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(6px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2500 }}>
+          <div style={{ width: '90%', maxWidth: '520px', height: '70vh', maxHeight: '600px', backgroundColor: '#FFFFFF', borderRadius: '24px', boxShadow: '0 24px 60px rgba(0, 0, 0, 0.15)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'scaleIn 0.25s ease' }}>
             {/* Modal Header */}
-            <div style={{ padding: '16px 20px', background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ padding: '18px 24px', background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Mic size={18} color="white" />
                 </div>
                 <div>
-                  <div style={{ fontWeight: '700', color: 'white', fontSize: '15px', fontFamily: 'Outfit, sans-serif' }}>Asesor de Voz MAYIA</div>
+                  <div style={{ fontWeight: '700', color: 'white', fontSize: '15px', fontFamily: 'Outfit, sans-serif' }}>Asesor de Voz {ia.nombre}</div>
                   <div style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.8)' }}>{escuchando ? 'Escuchando...' : loadingIA ? 'Procesando...' : 'Conectado'}</div>
                 </div>
               </div>
@@ -659,7 +826,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
                     <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)', color: 'white', fontSize: '11px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>AI</div>
                   )}
                   <div>
-                    <div style={{ backgroundColor: msg.role === 'user' ? '#D31245' : 'var(--bg-card)', color: msg.role === 'user' ? 'white' : 'var(--text-primary)', padding: '12px 16px', borderRadius: msg.role === 'user' ? '12px 12px 4px 12px' : '12px 12px 12px 4px', fontSize: '13px', lineHeight: 1.5, border: msg.role === 'user' ? 'none' : '1px solid var(--border)' }}>
+                    <div style={{ backgroundColor: msg.role === 'user' ? '#D31245' : '#FFFFFF', color: msg.role === 'user' ? 'white' : 'var(--text-primary)', padding: '12px 16px', borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px', fontSize: '13px', lineHeight: 1.5, border: msg.role === 'user' ? 'none' : '1px solid var(--border)' }}>
                       {msg.content}
                     </div>
                     <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', textAlign: msg.role === 'user' ? 'right' : 'left' }}>{msg.time}</div>
@@ -669,7 +836,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               {loadingIA && (
                 <div style={{ display: 'flex', gap: '10px', alignSelf: 'flex-start' }}>
                   <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>AI</div>
-                  <div style={{ backgroundColor: 'var(--bg-card)', padding: '12px 16px', borderRadius: '12px 12px 12px 4px', border: '1px solid var(--border)' }}>
+                  <div style={{ backgroundColor: '#FFFFFF', padding: '12px 16px', borderRadius: '16px 16px 16px 4px', border: '1px solid var(--border)' }}>
                     <span className="dot" style={{ animationDelay: '0s' }}>.</span><span className="dot" style={{ animationDelay: '0.2s' }}>.</span><span className="dot" style={{ animationDelay: '0.4s' }}>.</span>
                   </div>
                 </div>
@@ -684,12 +851,12 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </div>
 
             {/* Chat Footer */}
-            <div style={{ padding: '16px 20px', backgroundColor: 'var(--bg-card)', borderTop: '1px solid var(--border)', display: 'flex', gap: '10px', alignItems: 'center' }}>
+            <div style={{ padding: '16px 20px', backgroundColor: '#FFFFFF', borderTop: '1px solid var(--border)', display: 'flex', gap: '10px', alignItems: 'center' }}>
               <button onClick={iniciarEscucha} disabled={escuchando || loadingIA} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', background: escuchando ? 'linear-gradient(135deg, #EF4444, #F59E0B)' : 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Mic size={18} />
               </button>
-              <input value={mensaje} onChange={e => setMensaje(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarMensaje(mensaje)} placeholder={escuchando ? 'Escuchando...' : 'Escribe tu consulta...'} disabled={escuchando || loadingIA} style={{ flex: 1, padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)', backgroundColor: '#FAFAFA', outline: 'none', fontSize: '13px' }} />
-              <button onClick={() => enviarMensaje(mensaje)} disabled={escuchando || loadingIA || !mensaje.trim()} className="btn-primary" style={{ padding: '10px', background: '#D31245', borderColor: '#D31245', borderRadius: '8px' }}><Send size={15} /></button>
+              <input value={mensaje} onChange={e => setMensaje(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarMensaje(mensaje)} placeholder={escuchando ? 'Escuchando...' : 'Escribe tu consulta...'} disabled={escuchando || loadingIA} style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--border)', backgroundColor: '#FAFAFA', outline: 'none', fontSize: '13px' }} />
+              <button onClick={() => enviarMensaje(mensaje)} disabled={escuchando || loadingIA || !mensaje.trim()} className="btn-primary" style={{ padding: '10px', background: '#D31245', borderColor: '#D31245', borderRadius: '10px' }}><Send size={15} /></button>
             </div>
           </div>
         </div>
@@ -704,8 +871,37 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
       <style>{`
         .dot { animation: bounce 1.4s infinite ease-in-out; display: inline-block; font-size: 16px; font-weight: bold; }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) rotate(0deg); }
+          33% { transform: translate(20px, -15px) rotate(3deg); }
+          66% { transform: translate(-10px, 15px) rotate(-3deg); }
+        }
+        
+        /* Card in card styles */
+        .inner-widget-card:hover {
+          border-color: ${colores.primario} !important;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(211, 18, 69, 0.05);
+        }
+        .portfolio-item-card:hover {
+          transform: translateY(-4px) !important;
+          border-color: ${colores.primario} !important;
+          box-shadow: 0 10px 24px rgba(211, 18, 69, 0.08) !important;
+        }
+        
+        /* KPI layout overrides */
+        @media (max-width: 1200px) {
+          .kpi-grid {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .kpi-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
       `}</style>
 
     </div>
