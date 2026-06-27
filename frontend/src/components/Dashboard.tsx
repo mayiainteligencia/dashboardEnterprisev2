@@ -238,6 +238,29 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             Panel de control unificado y acceso a todos los módulos científicos de Pharbiois.
           </div>
         </div>
+
+        {/* Logo de MAYIA en fondo medio negro */}
+        <div style={{
+          background: 'rgba(15, 23, 42, 0.85)',
+          padding: '10px 18px',
+          borderRadius: '14px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          flexShrink: 0,
+        }}>
+          <img
+            src="/assets/logosNativos/mayiaLogoBlanco.png"
+            alt="MAYIA"
+            style={{
+              height: '32px',
+              width: 'auto',
+              objectFit: 'contain',
+            }}
+          />
+        </div>
       </div>
 
       {/* Grid Principal de Módulos (3 Columnas) */}
