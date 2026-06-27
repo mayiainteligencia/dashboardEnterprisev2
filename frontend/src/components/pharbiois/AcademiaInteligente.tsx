@@ -103,7 +103,7 @@ export const AcademiaInteligente: React.FC = () => {
           { label: 'Alumnos activos', val: '384', icon: Users, color: '#14B8A6', sub: '+28 este mes' },
           { label: 'Cursos activos', val: '18', icon: BookOpen, color: '#0EA5E9', sub: '3 próximos' },
           { label: 'Certificados emitidos', val: '247', icon: Award, color: '#7C3AED', sub: '+12 este mes' },
-          { label: 'Ingresos academia', val: '$284K', icon: TrendingUp, color: '#10B981', sub: 'MXN este mes' },
+          { label: 'Progreso promedio', val: '74.2%', icon: TrendingUp, color: '#10B981', sub: '+1.5% este mes' },
         ].map(k => {
           const Icon = k.icon;
           return (
@@ -193,7 +193,6 @@ export const AcademiaInteligente: React.FC = () => {
                       <span style={{ fontSize: '11px', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '3px' }}><Clock size={11}/>{curso.duracion}</span>
                       <span style={{ fontSize: '11px', color: '#F59E0B', display: 'flex', alignItems: 'center', gap: '3px' }}><Star size={11}/>{curso.rating}</span>
                     </div>
-                    <span style={{ fontSize: '13px', fontWeight: '800', color: 'var(--text-primary)' }}>${curso.precio.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -249,7 +248,7 @@ export const AcademiaInteligente: React.FC = () => {
               { label: 'Categoría más popular', val: 'Drug Discovery con IA', sub: '92 alumnos activos', color: '#7C3AED' },
               { label: 'Mejor rating', val: 'Drug Discovery con IA', sub: '4.9 ★ · 47 completados', color: '#10B981' },
               { label: 'Tasa de finalización', val: '61%', sub: 'Promedio general de cursos', color: '#0EA5E9' },
-              { label: 'Ticket promedio', val: '$6,200', sub: 'MXN por alumno', color: '#F59E0B' },
+              { label: 'Tiempo de estudio prom.', val: '28 hrs', sub: 'Por alumno inscrito', color: '#F59E0B' },
             ].map(s => (
               <div key={s.label} style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '14px', padding: '18px', boxShadow: '0 2px 10px rgba(0,0,0,0.02)' }}>
                 <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '6px' }}>{s.label}</div>
