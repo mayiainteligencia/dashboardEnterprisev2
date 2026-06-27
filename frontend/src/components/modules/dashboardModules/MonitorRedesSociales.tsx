@@ -37,9 +37,9 @@ const redes: RedMetrica[] = [
 ];
 
 const posts: Post[] = [
-  { id: 1, red: 'TikTok',    usuario: '@hondamexico',   contenido: '¡El Prologue EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Prologue', hace: '2h',  color: '#CC0000' },
-  { id: 2, red: 'Instagram', usuario: '@honda_fans_cdmx', contenido: 'Test drive Civic — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Civic', hace: '4h',  color: '#333333' },
-  { id: 3, red: 'X',         usuario: '@auto_journalista', contenido: 'Precio CR-V alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'CR-V',    hace: '6h',  color: '#666666' },
+  { id: 1, red: 'TikTok',    usuario: '@mayiacars',   contenido: '¡El Voltae EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Voltae', hace: '2h',  color: '#CC0000' },
+  { id: 2, red: 'Instagram', usuario: '@mayia_fans_cdmx', contenido: 'Test drive Lumio — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Lumio', hace: '4h',  color: '#333333' },
+  { id: 3, red: 'X',         usuario: '@auto_journalista', contenido: 'Precio Nexora alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Nexora',    hace: '6h',  color: '#666666' },
   { id: 4, red: 'Facebook',  usuario: 'Manejando por México',contenido: 'Problema con el servicio en el distribuidor 😞',  likes: 210,  sentimiento: 'negativo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
 ];
 

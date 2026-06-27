@@ -4,7 +4,6 @@ import { WelcomeHeader } from './modules/dashboardModules/WelcomeHeader';
 import { HeroCard } from './modules/dashboardModules/Herocard';
 import { MiniCalendarCard } from './modules/dashboardModules/Minicalendarcard';
 import { TopCoursesCard } from './modules/dashboardModules/Topcoursescard';
-import { OfertasCard } from './modules/dashboardModules/Ofertascard';
 import { AlertasEmpresa } from './modules/dashboardModules/Alertaempresa';
 import { CampañasInteligentes } from './modules/dashboardModules/CampaniasInteligentes';
 import { AnalisisDemanda } from './modules/dashboardModules/AnalisisDemanda';
@@ -70,7 +69,7 @@ export const Dashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* --- FILA 4: Ofertas Especiales y Calendario (el "remate" visual) --- */}
+        {/* --- FILA 4: Calendario y Top Cursos (el "remate" visual) --- */}
         <div
           style={{
             display: 'grid',
@@ -78,11 +77,6 @@ export const Dashboard: React.FC = () => {
             gap: '24px',
           }}
         >
-          {/* Ofertas Especiales */}
-          <div>
-            <OfertasCard />
-          </div>
-
           {/* Mini Calendario */}
           <div>
             <MiniCalendarCard />

@@ -116,8 +116,8 @@ const AgenteWA: React.FC = () => {
 
 // ── 3 · Financiamiento: simulador de crédito ─────────────────────────────────────
 const modelos = [
-  { nombre: 'CR-V', precio: 720000 }, { nombre: 'Civic', precio: 550000 },
-  { nombre: 'HR-V', precio: 480000 }, { nombre: 'Accord', precio: 850000 }, { nombre: 'City', precio: 380000 },
+  { nombre: 'Nexora', precio: 720000 }, { nombre: 'Lumio', precio: 550000 },
+  { nombre: 'Kestra', precio: 480000 }, { nombre: 'Avenar', precio: 850000 }, { nombre: 'Celix', precio: 380000 },
 ];
 const Financiamiento: React.FC = () => {
   const [mi, setMi] = useState(0);

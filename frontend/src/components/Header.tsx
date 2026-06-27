@@ -458,7 +458,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
           }}
         >
           <img 
-            src="/assets/logosEmpresas/honda-logo.svg"
+            src="/assets/logosNativos/salesLogo.png"
             alt="Perfil"
             style={{
               width: '100%',

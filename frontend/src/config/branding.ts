@@ -1,18 +1,18 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Honda",
-    eslogan: "The Power of Dreams",
-    logo: "/assets/logosEmpresas/hondaLogo.png",
+    nombre: "Sales Command Center",
+    eslogan: "Agencia de Autos",
+    logo: "/assets/logosNativos/salesLogo.png",
   },
-  
+
   colores: {
-    // Colores Honda - Dominancia de rojo, negro y gris, sobre fondos limpios blancos
-    primario: "#CC0000",           // Rojo Honda (para botones principales, sidebar activo)
+    // Paleta: dominancia de rojo, negro y gris, sobre fondos limpios blancos
+    primario: "#CC0000",           // Rojo (para botones principales, sidebar activo)
     primarioOscuro: "#990000",     // Rojo oscuro
     primarioClaro: "#FF3333",      // Rojo claro
-    
+
     secundario: "#F4F4F4",         // Gris claro para fondos secundarios
-    acento: "#CC0000",             // Rojo Honda (para detalles y badges)
+    acento: "#CC0000",             // Rojo (para detalles y badges)
     acentoOscuro: "#990000",       // Rojo oscuro
     
     peligro: "#EF4444",            

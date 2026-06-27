@@ -41,17 +41,17 @@ export const canales = [
 ];
 
 export const scoring = [
-  { nombre: 'María G.',   modelo: 'CR-V',   score: 92, intencion: 'alta' },
-  { nombre: 'Luis R.',    modelo: 'Civic',  score: 81, intencion: 'alta' },
-  { nombre: 'Ana P.',     modelo: 'HR-V',   score: 67, intencion: 'media' },
-  { nombre: 'Jorge M.',   modelo: 'Accord', score: 54, intencion: 'media' },
-  { nombre: 'Sofía T.',   modelo: 'City',   score: 38, intencion: 'baja' },
+  { nombre: 'María G.',   modelo: 'Nexora',   score: 92, intencion: 'alta' },
+  { nombre: 'Luis R.',    modelo: 'Lumio',  score: 81, intencion: 'alta' },
+  { nombre: 'Ana P.',     modelo: 'Kestra',   score: 67, intencion: 'media' },
+  { nombre: 'Jorge M.',   modelo: 'Avenar', score: 54, intencion: 'media' },
+  { nombre: 'Sofía T.',   modelo: 'Celix',   score: 38, intencion: 'baja' },
 ];
 
 export const campanias = [
-  { nombre: 'Gold Wing Legend',  inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
-  { nombre: 'CBR1000RR Track',   inv: 210, ventas: 38, roi: 3.8, estado: 'Activa' },
-  { nombre: 'Africa Twin Adv.',  inv: 0,   ventas: 0,  roi: 0,   estado: 'Programada' },
+  { nombre: 'Auron Legend',  inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
+  { nombre: 'Velox Track',   inv: 210, ventas: 38, roi: 3.8, estado: 'Activa' },
+  { nombre: 'Trekar Adv.',  inv: 0,   ventas: 0,  roi: 0,   estado: 'Programada' },
   { nombre: 'CB650R Neo Sports', inv: 148, ventas: 51, roi: 5.1, estado: 'Completada' },
 ];
 
@@ -64,26 +64,26 @@ export const vendedores = [
 ];
 
 export const inventario = [
-  { modelo: 'CR-V',   stock: 34, dias: 22, demanda: 'alta' },
-  { modelo: 'Civic',  stock: 41, dias: 38, demanda: 'media' },
-  { modelo: 'HR-V',   stock: 18, dias: 12, demanda: 'alta' },
-  { modelo: 'Accord', stock: 27, dias: 64, demanda: 'baja' },
-  { modelo: 'City',   stock: 52, dias: 47, demanda: 'media' },
+  { modelo: 'Nexora',   stock: 34, dias: 22, demanda: 'alta' },
+  { modelo: 'Lumio',  stock: 41, dias: 38, demanda: 'media' },
+  { modelo: 'Kestra',   stock: 18, dias: 12, demanda: 'alta' },
+  { modelo: 'Avenar', stock: 27, dias: 64, demanda: 'baja' },
+  { modelo: 'Celix',   stock: 52, dias: 47, demanda: 'media' },
 ];
 
 export const acciones = [
   { vendedor: 'Carlos V.', accion: 'Llamar a María G. — crédito pre-aprobado', prioridad: 'alta' },
-  { vendedor: 'Diana L.',  accion: 'Agendar prueba de manejo CR-V a Luis R.',   prioridad: 'alta' },
+  { vendedor: 'Diana L.',  accion: 'Agendar prueba de manejo Nexora a Luis R.',   prioridad: 'alta' },
   { vendedor: 'Raúl S.',   accion: '5 seguimientos vencidos — contactar hoy',   prioridad: 'media' },
-  { vendedor: 'Paola M.',  accion: 'Enviar cotización HR-V a Ana P.',           prioridad: 'media' },
+  { vendedor: 'Paola M.',  accion: 'Enviar cotización Kestra a Ana P.',           prioridad: 'media' },
 ];
 
 export const alertas = [
   { txt: 'Santa Fe: conversión 9.7% bajo meta', tipo: 'rojo', hace: '5 min',
     detalle: 'La agencia Santa Fe acumula 88 ventas vs meta de 140 (63%). La conversión cayó a 9.7% (promedio de la red: 13.6%). Principales causas detectadas: 14 cotizaciones sin seguimiento y 3 vendedores con seguimientos vencidos.',
     accion: 'Reasignar leads de alta intención y activar copiloto comercial en la agencia.' },
-  { txt: 'HR-V: stock crítico (12 días en lote)', tipo: 'amarillo', hace: '20 min',
-    detalle: 'El modelo HR-V tiene solo 18 unidades con rotación de 12 días en lote y demanda alta. Al ritmo actual se agota en ~9 días, antes del próximo reabasto programado.',
+  { txt: 'Kestra: stock crítico (12 días en lote)', tipo: 'amarillo', hace: '20 min',
+    detalle: 'El modelo Kestra tiene solo 18 unidades con rotación de 12 días en lote y demanda alta. Al ritmo actual se agota en ~9 días, antes del próximo reabasto programado.',
     accion: 'Solicitar traspaso entre agencias o adelantar pedido a planta.' },
   { txt: 'WhatsApp: 18 leads sin atender', tipo: 'amarillo', hace: '40 min',
     detalle: 'El agente IA calificó 18 leads que llevan >2h sin respuesta humana. 6 son de intención alta (score >80). Riesgo de fuga estimado: 32%.',
@@ -121,9 +121,9 @@ export const scoringFactores: Record<string, { presupuesto: number; urgencia: nu
 
 // desglose de campañas
 export const campaniaDetalle = [
-  { nombre: 'Gold Wing Legend',  alcance: 920000, conv: 42, cpa: 4452, canal: 'Facebook Ads' },
-  { nombre: 'CBR1000RR Track',   alcance: 780000, conv: 38, cpa: 5526, canal: 'Google Ads' },
-  { nombre: 'Africa Twin Adv.',  alcance: 0,      conv: 0,  cpa: 0,    canal: 'TikTok' },
+  { nombre: 'Auron Legend',  alcance: 920000, conv: 42, cpa: 4452, canal: 'Facebook Ads' },
+  { nombre: 'Velox Track',   alcance: 780000, conv: 38, cpa: 5526, canal: 'Google Ads' },
+  { nombre: 'Trekar Adv.',  alcance: 0,      conv: 0,  cpa: 0,    canal: 'TikTok' },
   { nombre: 'CB650R Neo Sports', alcance: 640000, conv: 51, cpa: 2902, canal: 'WhatsApp' },
 ];
 

@@ -5,7 +5,7 @@ import { brandingConfig } from '../../config/branding';
 import { Modal } from './ui';
 import { Shell, Panel, HeroKPI, Reveal, GrowBar, badgeLive, colores, tnum } from './paginasPro';
 
-const marca = brandingConfig.empresa.nombre;          // se ajusta solo con branding.ts (Honda, Suzuki, …)
+const marca = brandingConfig.empresa.nombre;          // se ajusta solo con branding.ts (se toma de empresa.nombre)
 const b = marca.toLowerCase().replace(/\s+/g, '');
 
 // plataformas que "rastrea" el scraper
