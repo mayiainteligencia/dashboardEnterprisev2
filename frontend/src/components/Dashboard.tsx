@@ -4,6 +4,7 @@ import {
   TrendingUp, TrendingDown, Dna, AlertTriangle, CheckCircle,
   Clock, ArrowRight, Zap, BarChart3, Sparkles, Mic, X, Send,
 } from 'lucide-react';
+import { brandingConfig } from '../config/branding';
 
 interface DashboardProps {
   onNavigate?: (section: string) => void;
@@ -25,7 +26,9 @@ const kpis = [
 ];
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
+  const { colores } = brandingConfig;
   const [modalOpen, setModalOpen] = useState(false);
+  const [isVoiceCardHovered, setIsVoiceCardHovered] = useState(false);
   const [escuchando, setEscuchando] = useState(false);
   const [loadingIA, setLoadingIA] = useState(false);
   const [mensaje, setMensaje] = useState('');
@@ -301,55 +304,194 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* TARJETA 2: Plataforma de Voz (ESTILO IMAGEN CORAL/ROJO - EN EL CENTRO) */}
-        <div style={{
-          background: 'linear-gradient(180deg, #F05252 0%, #C81E1E 100%)',
-          borderRadius: '24px', padding: '24px',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-          boxShadow: '0 10px 30px rgba(200, 30, 30, 0.12)',
-          minHeight: '380px', justifyContent: 'space-between',
-        }}>
-          {/* Botón 3D superior rojo */}
-          <div style={{
-            width: '100px', height: '70px', borderRadius: '24px',
-            background: 'linear-gradient(135deg, #FF6B6B 0%, #D32F2F 100%)',
-            boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.3), 0 8px 20px rgba(0,0,0,0.3)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '10px',
-          }}>
-            <Dna size={32} color="#FFF" style={{ opacity: 0.95 }} />
-          </div>
-
-          <div style={{ margin: '20px 0' }}>
-            <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#FFF', fontFamily: 'Outfit, sans-serif', lineHeight: 1.3, marginBottom: '10px' }}>
-              Plataforma Inteligente Para Pharbiois
-            </h3>
-            <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.85)', margin: '0 0 4px 0' }}>
-              Pulsa para comunicarte con tu asesor IA por voz
-            </p>
-            <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.85)', fontStyle: 'italic', margin: 0 }}>
-              Di "MAYIA" al final para enviar tu mensaje
-            </p>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px', color: 'rgba(255,255,255,0.7)', marginBottom: '10px' }}>
-            <span>Potenciado por</span>
-            <span style={{ fontWeight: '700', color: '#FFF' }}>MAYIA®</span>
-          </div>
-
-          {/* Botón de micrófono redondo */}
-          <button
-            onClick={() => { setModalOpen(true); iniciarEscucha(); }}
-            style={{
-              width: '46px', height: '46px', borderRadius: '50%',
-              border: '1.5px solid rgba(255, 255, 255, 0.4)', background: 'transparent',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer',
-              transition: 'all 0.2s',
+        {/* TARJETA 2: Plataforma de Voz (ESTILO GLASSMORPHIC - EN EL CENTRO) */}
+        <div 
+          onMouseEnter={() => setIsVoiceCardHovered(true)}
+          onMouseLeave={() => setIsVoiceCardHovered(false)}
+          style={{
+            background: `linear-gradient(135deg, ${colores.primario}15 0%, ${colores.secundario}15 100%)`,
+            backdropFilter: 'blur(20px)',
+            borderRadius: '24px',
+            padding: '24px',
+            border: `2px solid ${colores.primario}30`,
+            position: 'relative',
+            overflow: 'hidden',
+            minHeight: '380px',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            textAlign: 'center',
+            boxShadow: colores.sombraAzul,
+            transition: 'all 0.3s ease',
+          }}
+        >
+          {/* Resplandor de fondo */}
+          <div 
+            style={{ 
+              position: 'absolute',
+              inset: 0,
+              pointerEvents: 'none',
+              zIndex: 0,
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)'; e.currentTarget.style.transform = 'scale(1.05)'; }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.transform = 'scale(1)'; }}
           >
-            <Mic size={18} color="#FFF" />
-          </button>
+            <div 
+              style={{
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '600px',
+                height: '600px',
+                opacity: isVoiceCardHovered ? 0.7 : 0.3,
+                transition: 'opacity 700ms ease-in-out',
+                filter: 'blur(100px)',
+                background: `radial-gradient(circle, ${colores.primario}30 0%, ${colores.secundario}20 70%, transparent 100%)`,
+                borderRadius: '50%',
+              }}
+            />
+          </div>
+
+          {/* Animated gradient blobs */}
+          <div
+            style={{
+              position: 'absolute',
+              top: '-20%',
+              right: '-10%',
+              width: '250px',
+              height: '250px',
+              background: `radial-gradient(circle, ${colores.primario}25 0%, transparent 70%)`,
+              filter: 'blur(40px)',
+              animation: 'float 6s ease-in-out infinite',
+              pointerEvents: 'none',
+              zIndex: 0,
+            }}
+          />
+          <div
+            style={{
+              position: 'absolute',
+              bottom: '-20%',
+              left: '-10%',
+              width: '220px',
+              height: '220px',
+              background: `radial-gradient(circle, ${colores.secundario}25 0%, transparent 70%)`,
+              filter: 'blur(40px)',
+              animation: 'float 8s ease-in-out infinite reverse',
+              pointerEvents: 'none',
+              zIndex: 0,
+            }}
+          />
+
+          {/* Contenido principal con z-index más alto */}
+          <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', justifyContent: 'space-between', width: '100%' }}>
+            
+            {/* 3D Glassmorphic shape */}
+            <div
+              style={{
+                position: 'relative',
+                width: '160px',
+                height: '110px',
+                marginTop: '10px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {[...Array(5)].map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    position: 'absolute',
+                    left: `${20 + i * 5}px`,
+                    top: '5px',
+                    width: '110px',
+                    height: '90px',
+                    background: `linear-gradient(135deg, 
+                      ${colores.primario}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 0%, 
+                      ${colores.secundario}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 100%)`,
+                    backdropFilter: 'blur(10px)',
+                    borderRadius: '28px',
+                    border: `1px solid ${colores.primario}${Math.max(40 - i * 5, 10).toString(16).padStart(2, '0')}`,
+                    transform: `perspective(800px) rotateY(${-15 + i * 4}deg) translateZ(${i * 10}px)`,
+                    boxShadow: `0 ${8 + i * 4}px ${24 + i * 8}px rgba(0,0,0,0.15)`,
+                    transition: 'all 0.3s ease',
+                    pointerEvents: 'none',
+                  }}
+                />
+              ))}
+
+              {/* DNA Icon floating on top */}
+              <div style={{
+                position: 'absolute',
+                zIndex: 15,
+                transform: 'translateZ(50px)',
+                filter: `drop-shadow(0 6px 12px ${colores.primario}40)`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                animation: 'float 4s ease-in-out infinite',
+              }}>
+                <Dna size={36} color={colores.primario} />
+              </div>
+            </div>
+
+            <div style={{ margin: '15px 0' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '800', color: colores.textoClaro, fontFamily: 'Outfit, sans-serif', lineHeight: 1.3, marginBottom: '8px' }}>
+                Plataforma Inteligente Para Pharbiois
+              </h3>
+              <p style={{ fontSize: '12px', color: colores.textoMedio, margin: '0 0 4px 0' }}>
+                Pulsa para comunicarte con tu asesor IA por voz
+              </p>
+              <p style={{ fontSize: '11px', color: colores.textoOscuro, fontStyle: 'italic', margin: 0 }}>
+                Di "MAYIA" al final para enviar tu mensaje
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: colores.textoMedio, marginBottom: '12px' }}>
+              <span>Potenciado por</span>
+              <img
+                src="/assets/logosNativos/mayiaLogoBlanco.png"
+                alt="MAYIA"
+                style={{
+                  height: '14px',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  filter: 'brightness(0) opacity(0.8)',
+                }}
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = document.createElement('span');
+                  fallback.textContent = 'MAYIA®';
+                  fallback.style.fontWeight = '700';
+                  fallback.style.color = colores.primario;
+                  target.parentElement?.appendChild(fallback);
+                }}
+              />
+            </div>
+
+            {/* Botón de micrófono redondo */}
+            <button
+              onClick={() => { setModalOpen(true); iniciarEscucha(); }}
+              style={{
+                width: '46px',
+                height: '46px',
+                borderRadius: '50%',
+                border: `1.5px solid ${colores.primario}40`,
+                background: 'transparent',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+                zIndex: 20,
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}15`; e.currentTarget.style.borderColor = colores.primario; e.currentTarget.style.transform = 'scale(1.05)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = `${colores.primario}40`; e.currentTarget.style.transform = 'scale(1)'; }}
+            >
+              <Mic size={18} color={colores.primario} />
+            </button>
+          </div>
         </div>
 
         {/* TARJETA 3: Scientific Report Copilot */}
@@ -565,7 +707,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2500, animation: 'fadeIn 0.25s ease' }}>
           <div style={{ width: '90%', maxWidth: '520px', height: '70vh', maxHeight: '600px', backgroundColor: 'var(--bg-card)', borderRadius: '24px', boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column', overflow: 'hidden', animation: 'scaleIn 0.25s ease' }}>
             {/* Modal Header */}
-            <div style={{ padding: '16px 20px', background: 'linear-gradient(135deg, #F05252 0%, #C81E1E 100%)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ padding: '16px 20px', background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.acento} 100%)`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: 'rgba(255, 255, 255, 0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Mic size={18} color="white" />
@@ -585,10 +727,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               {chatMsgs.map((msg, i) => (
                 <div key={i} style={{ display: 'flex', gap: '10px', alignSelf: msg.role === 'user' ? 'flex-end' : 'flex-start', maxWidth: '80%' }}>
                   {msg.role === 'assistant' && (
-                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #F05252 0%, #C81E1E 100%)', color: 'white', fontSize: '11px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>AI</div>
+                    <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.acento} 100%)`, color: 'white', fontSize: '11px', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>AI</div>
                   )}
                   <div>
-                    <div style={{ backgroundColor: msg.role === 'user' ? '#C81E1E' : 'var(--bg-card)', color: msg.role === 'user' ? 'white' : 'var(--text-primary)', padding: '12px 16px', borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px', fontSize: '13px', lineHeight: 1.5, border: msg.role === 'user' ? 'none' : '1px solid var(--border)' }}>
+                    <div style={{ backgroundColor: msg.role === 'user' ? colores.primario : 'var(--bg-card)', color: msg.role === 'user' ? 'white' : 'var(--text-primary)', padding: '12px 16px', borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px', fontSize: '13px', lineHeight: 1.5, border: msg.role === 'user' ? 'none' : '1px solid var(--border)' }}>
                       {msg.content}
                     </div>
                     <div style={{ fontSize: '10px', color: 'var(--text-muted)', marginTop: '4px', textAlign: msg.role === 'user' ? 'right' : 'left' }}>{msg.time}</div>
@@ -597,16 +739,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               ))}
               {loadingIA && (
                 <div style={{ display: 'flex', gap: '10px', alignSelf: 'flex-start' }}>
-                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #F05252 0%, #C81E1E 100%)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>AI</div>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.acento} 100%)`, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>AI</div>
                   <div style={{ backgroundColor: 'var(--bg-card)', padding: '12px 16px', borderRadius: '18px 18px 18px 4px', border: '1px solid var(--border)' }}>
                     <span className="dot" style={{ animationDelay: '0s' }}>.</span><span className="dot" style={{ animationDelay: '0.2s' }}>.</span><span className="dot" style={{ animationDelay: '0.4s' }}>.</span>
                   </div>
                 </div>
               )}
               {escuchando && (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '16px', background: 'rgba(240, 82, 82, 0.05)', border: '1px solid rgba(240, 82, 82, 0.15)', borderRadius: '12px', width: '90%', margin: '10px auto' }}>
-                  <Mic size={20} color="#C81E1E" style={{ animation: 'pulse 1.5s infinite' }} />
-                  <span style={{ fontSize: '11px', color: '#C81E1E', fontWeight: '600' }}>Escuchando... Di "MAYIA" para finalizar.</span>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px', padding: '16px', background: `${colores.primario}10`, border: `1px solid ${colores.primario}30`, borderRadius: '12px', width: '90%', margin: '10px auto' }}>
+                  <Mic size={20} color={colores.primario} style={{ animation: 'pulse 1.5s infinite' }} />
+                  <span style={{ fontSize: '11px', color: colores.primario, fontWeight: '600' }}>Escuchando... Di "MAYIA" para finalizar.</span>
                 </div>
               )}
               <div ref={chatEndRef} />
@@ -614,7 +756,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
             {/* Chat Footer */}
             <div style={{ padding: '16px 20px', backgroundColor: 'var(--bg-card)', borderTop: '1px solid var(--border)', display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <button onClick={iniciarEscucha} disabled={escuchando || loadingIA} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', background: escuchando ? 'linear-gradient(135deg, #EF4444, #F59E0B)' : 'linear-gradient(135deg, #F05252 0%, #C81E1E 100%)', color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <button onClick={iniciarEscucha} disabled={escuchando || loadingIA} style={{ width: '40px', height: '40px', borderRadius: '50%', border: 'none', background: escuchando ? `linear-gradient(135deg, ${colores.peligro}, ${colores.advertencia})` : `linear-gradient(135deg, ${colores.primario} 0%, ${colores.acento} 100%)`, color: 'white', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Mic size={18} />
               </button>
               <input value={mensaje} onChange={e => setMensaje(e.target.value)} onKeyDown={e => e.key === 'Enter' && enviarMensaje(mensaje)} placeholder={escuchando ? 'Escuchando...' : 'Escribe tu consulta...'} disabled={escuchando || loadingIA} style={{ flex: 1, padding: '10px 14px', borderRadius: '10px', border: '1px solid var(--border)', backgroundColor: '#F8FAFC', outline: 'none', fontSize: '13px' }} />
@@ -635,6 +777,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-8px) rotate(2deg); }
+        }
       `}</style>
 
     </div>
