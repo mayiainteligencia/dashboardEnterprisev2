@@ -5,6 +5,24 @@ import {
   Clock, ArrowRight, Zap, BarChart3, Sparkles, Mic, X, Send,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
+import {
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  BarChart,
+  Bar,
+  Cell,
+  PieChart,
+  Pie,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  Radar,
+} from 'recharts';
 
 interface DashboardProps {
   onNavigate?: (section: string) => void;
@@ -15,6 +33,41 @@ interface ChatMsg {
   content: string;
   time: string;
 }
+
+const pipelineData = [
+  { name: 'PB-1203', afinidad: 9.1, admet: 8.5 },
+  { name: 'PB-0892', afinidad: 8.5, admet: 7.9 },
+  { name: 'PB-0451', afinidad: 7.8, admet: 9.2 },
+  { name: 'PB-2847', afinidad: 8.2, admet: 6.8 },
+  { name: 'PB-1190', afinidad: 9.5, admet: 8.1 },
+];
+
+const reportesData = [
+  { name: 'Completos', value: 14, color: '#10B981' },
+  { name: 'Borrador', value: 5, color: '#64748B' },
+  { name: 'Revisión', value: 3, color: '#F59E0B' },
+];
+
+const regulacionData = [
+  { subject: 'ICH M7', valor: 95 },
+  { subject: 'FDA OTC', valor: 88 },
+  { subject: 'COFEPRIS', valor: 92 },
+  { subject: 'EMA ADMET', valor: 85 },
+  { subject: 'Estabilidad', valor: 90 },
+];
+
+const prospeccionData = [
+  { name: 'Trim 1', valor: 120 },
+  { name: 'Trim 2', valor: 210 },
+  { name: 'Trim 3', valor: 290 },
+  { name: 'Trim 4', valor: 420 },
+];
+
+const patentesData = [
+  { year: '22', activas: 3, pendientes: 2 },
+  { year: '23', activas: 5, pendientes: 3 },
+  { year: '24', activas: 8, pendientes: 4 },
+];
 
 const kpis = [
   { label: 'Moléculas Pipeline', val: '47', trend: '+8%', up: true, col: '#7C3AED', icon: Atom },
@@ -266,11 +319,22 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         </div>
       </div>
 
-      {/* Grid Principal de Módulos (3 Columnas) */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+      {/* Panel Principal Asimétrico de Módulos (Grilla de 12 Columnas) */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)', gap: '24px' }}>
         
-        {/* TARJETA 1: Drug Discovery Pipeline */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 1: Pipeline de Descubrimiento de Fármacos (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(124,58,237,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -281,31 +345,35 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               </span>
             </div>
             <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Drug Discovery Pipeline
+              Pipeline de Descubrimiento
             </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Diseño, síntesis y validación in silico de compuestos químicos mediante predicciones de afinidad y score ADMET.
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 10px 0', lineHeight: 1.4 }}>
+              Diseño, síntesis y validación in silico de compuestos químicos mediante predicciones de afinidad.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { n: 'PB-1203', t: 'EGFR Kinase', s: 0.91 },
-                { n: 'PB-0892', t: 'MCL-1 BH3', s: 0.85 },
-              ].map(x => (
-                <div key={x.n} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '12px', fontWeight: '700', color: '#0EA5E9', fontFamily: 'JetBrains Mono, monospace' }}>{x.n}</span>
-                  <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>{x.t}</span>
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: '#10B981' }}>{x.s.toFixed(2)}</span>
-                </div>
-              ))}
+
+            {/* Gráfico de barras de afinidad */}
+            <div style={{ height: '110px', background: '#F8FAFC', borderRadius: '12px', padding: '10px 8px 0 0', border: '1px solid var(--border)', marginBottom: '8px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={pipelineData} margin={{ top: 5, right: 0, left: -25, bottom: 0 }}>
+                  <XAxis dataKey="name" tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ fontSize: 9, borderRadius: 8 }} />
+                  <Bar dataKey="afinidad" radius={[3, 3, 0, 0]}>
+                    {pipelineData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={index % 2 === 0 ? colores.primario : colores.acento} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('pipeline')}>
+          <button className="btn-secondary" style={{ marginTop: '4px', justifyContent: 'center' }} onClick={() => onNavigate?.('pipeline')}>
             Acceder al Pipeline <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 2: Plataforma de Voz (ESTILO GLASSMORPHIC - EN EL CENTRO) */}
-        <div 
+        {/* TARJETA 2: Plataforma de Voz - CENTRADA EN LA PRIMERA FILA (span 4) */}
+        <div className="grid-card"
           onMouseEnter={() => setIsVoiceCardHovered(true)}
           onMouseLeave={() => setIsVoiceCardHovered(false)}
           style={{
@@ -324,6 +392,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             textAlign: 'center',
             boxShadow: colores.sombraAzul,
             transition: 'all 0.3s ease',
+            gridColumn: 'span 4',
           }}
         >
           {/* Resplandor de fondo */}
@@ -494,152 +563,122 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </div>
         </div>
 
-        {/* TARJETA 3: Scientific Report Copilot */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 3: Copiloto de Reportes Científicos (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(14,165,233,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <FileText size={20} color="#0EA5E9" />
               </div>
               <span style={{ fontSize: '11px', color: '#0EA5E9', fontWeight: '700', background: 'rgba(14,165,233,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
-                Borradores · 5 templates
+                Borradores · 5 Plantillas
               </span>
             </div>
             <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Scientific Report Copilot
+              Copiloto de Reportes Científicos
             </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 14px 0', lineHeight: 1.4 }}>
               Asistente inteligente para la redacción y exportación automatizada de reportes toxicológicos y expedientes científicos.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { name: 'Reporte ADMET — PB-1203', st: 'Enviado', c: '#10B981' },
-                { name: 'Dossier Patente — Scaffold BZ-8', st: 'Borrador', c: '#64748B' },
-              ].map(x => (
-                <div key={x.name} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{x.name}</div>
-                  <span style={{ fontSize: '10px', fontWeight: '700', color: x.c, marginLeft: '8px' }}>{x.st}</span>
-                </div>
-              ))}
+
+            {/* Gráfico circular de estado de reportes */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', height: '90px', background: '#F8FAFC', borderRadius: '12px', padding: '8px', border: '1px solid var(--border)', marginBottom: '8px' }}>
+              <div style={{ width: '50%', height: '100%' }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie data={reportesData} cx="50%" cy="50%" innerRadius={18} outerRadius={32} paddingAngle={3} dataKey="value">
+                      {reportesData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+              <div style={{ width: '50%', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                {reportesData.map(x => (
+                  <div key={x.name} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '10px' }}>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: x.color, display: 'inline-block' }} />
+                    <span style={{ fontWeight: '600', color: 'var(--text-primary)' }}>{x.value}</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>{x.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('reportes')}>
+          <button className="btn-secondary" style={{ marginTop: '8px', justifyContent: 'center' }} onClick={() => onNavigate?.('reportes')}>
             Redactar Reportes <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 4: Regulatory Intelligence */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
+        {/* TARJETA 4: Inteligencia Regulatoria Biofarmacéutica (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(239,68,68,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <AlertTriangle size={20} color="#EF4444" />
               </div>
               <span style={{ fontSize: '11px', color: '#EF4444', fontWeight: '700', background: 'rgba(239,68,68,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
-                ICH M7 · 2 críticas
+                ICH M7 · 2 Críticas
               </span>
             </div>
             <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Regulatory Intelligence Agent
+              Inteligencia Regulatoria
             </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 12px 0', lineHeight: 1.4 }}>
               Cumplimiento normativo automatizado frente a las agencias regulatorias FDA, EMA y normativas locales COFEPRIS.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { name: 'Nitrosamina NDMA detectada', mol: 'PB-2847' },
-                { name: 'Falta estudio estabilidad', mol: 'PB-1203' },
-              ].map(x => (
-                <div key={x.name} style={{ display: 'flex', gap: '8px', padding: '8px 10px', background: 'rgba(239,68,68,0.03)', borderRadius: '8px', border: '1px solid rgba(239,68,68,0.15)' }}>
-                  <AlertTriangle size={12} color="#EF4444" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '11px', color: 'var(--text-primary)', fontWeight: '600', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{x.name}</div>
-                    <div style={{ fontSize: '9px', color: 'var(--text-muted)' }}>Molécula: {x.mol}</div>
-                  </div>
-                </div>
-              ))}
+
+            {/* Radar Chart de regulaciones */}
+            <div style={{ height: '90px', background: '#F8FAFC', borderRadius: '12px', padding: '6px', border: '1px solid var(--border)', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart cx="50%" cy="50%" outerRadius="75%" data={regulacionData}>
+                  <PolarGrid stroke="#E2E8F0" />
+                  <PolarAngleAxis dataKey="subject" tick={{ fontSize: 7, fill: 'var(--text-secondary)' }} />
+                  <Radar name="Valor" dataKey="valor" stroke={colores.primario} fill={colores.primario} fillOpacity={0.2} />
+                </RadarChart>
+              </ResponsiveContainer>
             </div>
           </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('regulatorio')}>
+          <button className="btn-secondary" style={{ marginTop: '8px', justifyContent: 'center' }} onClick={() => onNavigate?.('regulatorio')}>
             Monitorear Regulaciones <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* TARJETA 5: Prospección Pharma */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(16,185,129,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Users size={20} color="#10B981" />
-              </div>
-              <span style={{ fontSize: '11px', color: '#10B981', fontWeight: '700', background: 'rgba(16,185,129,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
-                Comercial · 31 Leads
-              </span>
-            </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Prospección Pharma & Biotech
-            </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Seguimiento del pipeline comercial B2B para el licenciamiento de moléculas y servicios científicos de I+D.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { e: 'Laboratorios Mérida', m: '$420K MXN' },
-                { e: 'Biotech Innovations MX', m: '$280K MXN' },
-              ].map(x => (
-                <div key={x.e} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flex: 1 }}>{x.e}</span>
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: '#10B981' }}>{x.m}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('prospeccion')}>
-            Ver Pipeline Comercial <ArrowRight size={13} style={{ marginLeft: '4px' }} />
-          </button>
-        </div>
-
-        {/* TARJETA 6: Patent & IP Agent */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '380px' }}>
-          <div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(245,158,11,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Shield size={20} color="#F59E0B" />
-              </div>
-              <span style={{ fontSize: '11px', color: '#F59E0B', fontWeight: '700', background: 'rgba(245,158,11,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
-                Patentes · 8 Activas
-              </span>
-            </div>
-            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Patent & IP Agent
-            </h3>
-            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
-              Gestión e investigación de propiedad intelectual y estado del arte para proteger las innovaciones de Pharbiois.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              {[
-                { id: 'PCT/MX2023/001284', mol: 'PB-0147' },
-                { id: 'PCT/MX2024/000847', mol: 'PB-0892' },
-              ].map(x => (
-                <div key={x.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 10px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border)' }}>
-                  <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--text-primary)', fontFamily: 'JetBrains Mono, monospace' }}>{x.id}</span>
-                  <span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>{x.mol}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('patentes')}>
-            Gestionar IP <ArrowRight size={13} style={{ marginLeft: '4px' }} />
-          </button>
-        </div>
-
-      </div>
-
-      {/* Fila 3: Academia (1 col) + KPIs generales condensados (2 cols) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '20px', alignItems: 'stretch' }}>
-        
-        {/* TARJETA 7: Academia Inteligente */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        {/* TARJETA 7: Academia Científica Inteligente (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
               <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(20,184,166,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -650,41 +689,162 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
               </span>
             </div>
             <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
-              Academia Inteligente
+              Academia Científica Inteligente
             </h3>
             <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
               Capacitación científica y diplomados especializados en toxicoinformática y drug discovery con IA.
             </p>
-            <div style={{ padding: '8px 10px', background: '#F8FAFC', borderRadius: '8px', border: '1px solid var(--border)' }}>
-              <div style={{ fontSize: '12px', fontWeight: '600', color: 'var(--text-primary)' }}>Drug Discovery con IA</div>
-              <div style={{ fontSize: '10px', color: 'var(--text-muted)' }}>Progreso del diplomado: 78%</div>
+
+            {/* Barra de progreso de la academia */}
+            <div style={{ padding: '12px 14px', background: '#F8FAFC', borderRadius: '12px', border: '1px solid var(--border)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: '700', color: 'var(--text-primary)', marginBottom: '6px' }}>
+                <span>Progreso Diplomado</span>
+                <span style={{ color: colores.secundario }}>78%</span>
+              </div>
+              <div style={{ width: '100%', height: '8px', borderRadius: '4px', background: '#E2E8F0', overflow: 'hidden' }}>
+                <div style={{ width: '78%', height: '100%', background: `linear-gradient(90deg, ${colores.secundario} 0%, ${colores.primario} 100%)`, borderRadius: '4px' }} />
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '9px', color: 'var(--text-muted)', marginTop: '8px' }}>
+                <span>92 Certificados</span>
+                <span>4 Clases en Curso</span>
+              </div>
             </div>
           </div>
           <button className="btn-secondary" style={{ marginTop: '16px', justifyContent: 'center' }} onClick={() => onNavigate?.('academia')}>
-            Ir a Academia <ArrowRight size={13} style={{ marginLeft: '4px' }} />
+            Ir a la Academia <ArrowRight size={13} style={{ marginLeft: '4px' }} />
           </button>
         </div>
 
-        {/* KPIs Condensados (Al pie del dashboard) */}
-        <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', borderRadius: '24px', padding: '22px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        {/* TARJETA 5: Prospección Comercial y Licenciamiento (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(16,185,129,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Users size={20} color="#10B981" />
+              </div>
+              <span style={{ fontSize: '11px', color: '#10B981', fontWeight: '700', background: 'rgba(16,185,129,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
+                Comercial · 31 Leads
+              </span>
+            </div>
+            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+              Prospección y Licenciamiento
+            </h3>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
+              Seguimiento del pipeline comercial B2B para el licenciamiento de moléculas y servicios científicos de I+D.
+            </p>
+
+            {/* Gráfico de línea/área de adquisición de leads comerciales */}
+            <div style={{ height: '90px', background: '#F8FAFC', borderRadius: '12px', padding: '4px 8px 0 0', border: '1px solid var(--border)', marginBottom: '8px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={prospeccionData} margin={{ top: 10, right: 0, left: -25, bottom: 0 }}>
+                  <XAxis dataKey="name" tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8 }} />
+                  <defs>
+                    <linearGradient id="colorValor" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.25}/>
+                      <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <Area type="monotone" dataKey="valor" stroke="#10B981" strokeWidth={2} fillOpacity={1} fill="url(#colorValor)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <button className="btn-secondary" style={{ marginTop: '8px', justifyContent: 'center' }} onClick={() => onNavigate?.('prospeccion')}>
+            Ver Pipeline Comercial <ArrowRight size={13} style={{ marginLeft: '4px' }} />
+          </button>
+        </div>
+
+        {/* TARJETA 6: Patentes y Propiedad Intelectual (span 4) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          minHeight: '380px',
+          boxShadow: colores.sombra,
+          gridColumn: 'span 4',
+        }}>
+          <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: 'rgba(245,158,11,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Shield size={20} color="#F59E0B" />
+              </div>
+              <span style={{ fontSize: '11px', color: '#F59E0B', fontWeight: '700', background: 'rgba(245,158,11,0.1)', padding: '3px 8px', borderRadius: '8px' }}>
+                Patentes · 8 Activas
+              </span>
+            </div>
+            <h3 style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '0 0 6px 0' }}>
+              Patentes y Propiedad Intelectual
+            </h3>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
+              Gestión e investigación de propiedad intelectual y estado del arte para proteger las innovaciones de Pharbiois.
+            </p>
+
+            {/* Gráfico de barras de patentes */}
+            <div style={{ height: '90px', background: '#F8FAFC', borderRadius: '12px', padding: '6px 8px 0 0', border: '1px solid var(--border)', marginBottom: '8px' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={patentesData} margin={{ top: 5, right: 0, left: -25, bottom: 0 }}>
+                  <XAxis dataKey="year" tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 8, fill: 'var(--text-secondary)' }} axisLine={false} tickLine={false} />
+                  <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8 }} />
+                  <Bar dataKey="activas" name="Activas" fill={colores.secundario} radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="pendientes" name="Pendientes" fill={colores.acento} radius={[3, 3, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          <button className="btn-secondary" style={{ marginTop: '8px', justifyContent: 'center' }} onClick={() => onNavigate?.('patentes')}>
+            Ver Patentes e IP <ArrowRight size={13} style={{ marginLeft: '4px' }} />
+          </button>
+        </div>
+
+        {/* KPIs Condensados (Al pie del dashboard - span 8) */}
+        <div className="grid-card" style={{
+          background: 'var(--bg-card)',
+          border: '1px solid var(--border)',
+          borderRadius: '24px',
+          padding: '22px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          gridColumn: 'span 8',
+          boxShadow: colores.sombra,
+          minHeight: '380px',
+        }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
               <BarChart3 size={16} color="#475569" />
-              <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
-                Métricas Clave de Operaciones
+              <span style={{ fontSize: '14px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
+                Métricas Clave de Operaciones Científicas
               </span>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
               {kpis.map(k => {
                 const Icon = k.icon;
                 return (
-                  <div key={k.label} style={{ padding: '12px 14px', background: '#F8FAFC', border: '1px solid var(--border)', borderRadius: '14px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: `${k.col}15`, border: `1px solid ${k.col}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <div key={k.label} style={{ padding: '12px 14px', background: '#F8FAFC', border: '1px solid var(--border)', borderRadius: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '34px', height: '34px', borderRadius: '10px', background: `${k.col}15`, border: `1px solid ${k.col}33`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                       <Icon size={16} color={k.col} />
                     </div>
                     <div>
-                      <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', lineHeight: 1.1 }}>{k.label}</div>
-                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '2px' }}>
+                      <div style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '600', lineHeight: 1.1 }}>{k.label}</div>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '3px' }}>
                         <span style={{ fontSize: '16px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{k.val}</span>
                         <span style={{ fontSize: '9px', fontWeight: '700', color: k.up ? '#10B981' : '#EF4444' }}>{k.trend}</span>
                       </div>
@@ -780,6 +940,16 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(-8px) rotate(2deg); }
+        }
+        @media (max-width: 1024px) {
+          .grid-card {
+            grid-column: span 12 !important;
+            flex-direction: column !important;
+            min-height: auto !important;
+          }
+          .grid-card > div {
+            width: 100% !important;
+          }
         }
       `}</style>
 
