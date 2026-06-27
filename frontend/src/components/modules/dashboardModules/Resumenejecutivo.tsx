@@ -145,9 +145,9 @@ export const ResumenEjecutivo: React.FC = () => {
       >
         <MetricCard
           icon={Users}
-          label="Empleados Activos"
-          value={metricas.moleculasActivas}
-          change="+8.2%"
+          label="SKUs Proyectados"
+          value={metricas.skuForecasted}
+          change="+12.0%"
           changeType="positive"
         />
 

@@ -30,52 +30,52 @@ interface Notification {
   leida: boolean;
 }
 
-const notificacionesPharbiois: Notification[] = [
+const notificacionesRichs: Notification[] = [
   {
     id: 1,
     tipo: 'urgente',
-    titulo: 'Alerta ADMET: Molécula PB-2847',
-    mensaje: 'Score de toxicidad hepática supera el umbral aceptable (>0.7). Revisión requerida.',
+    titulo: 'Alerta Demanda: Whip Topping CDMX',
+    mensaje: 'El pronóstico de demanda en Zona Centro para Julio supera el stock proyectado en 15%.',
     tiempo: 'Hace 8 min',
     leida: false,
   },
   {
     id: 2,
     tipo: 'alerta',
-    titulo: 'Cumplimiento ICH M7: Impureza detectada',
-    mensaje: 'Se identificó impureza tipo nitrosamina en lote LAB-094. Acción correctiva pendiente.',
+    titulo: 'Distribuidor 360: Servipan Guadalajara',
+    mensaje: 'Se detectó baja cobertura en catálogo de bases de pan para pastel. Revisar promoción.',
     tiempo: 'Hace 32 min',
     leida: false,
   },
   {
     id: 3,
     tipo: 'exito',
-    titulo: 'Molécula PB-1203 → Candidata',
-    mensaje: 'La molécula superó evaluación preclínica in silico. Lista para siguiente fase.',
+    titulo: 'Chef Copilot: Receta Autorizada',
+    mensaje: 'Se publicó y validó con éxito el rendimiento de la receta "Tres Leches Moka Festivo".',
     tiempo: 'Hace 2 horas',
     leida: false,
   },
   {
     id: 4,
     tipo: 'info',
-    titulo: 'Nuevo alumno en Diplomado ADMET',
-    mensaje: '3 nuevos alumnos registrados en Toxicoinformática Avanzada.',
+    titulo: 'E-commerce CDMX: Pedidos en alza',
+    mensaje: 'Se detectó un incremento de recompra del 12% en pasteles terminados esta semana.',
     tiempo: 'Hace 3 horas',
     leida: true,
   },
   {
     id: 5,
     tipo: 'exito',
-    titulo: 'Patente PCT/MX2024/000847 — Aprobada',
-    mensaje: 'La solicitud de patente para el scaffold benzimidazólico fue aceptada para examen.',
+    titulo: 'Academia Rich: Cursos completados',
+    mensaje: '24 vendedores de foodservice de Cuajimalpa acreditaron el módulo de Data Selling.',
     tiempo: 'Hace 5 horas',
     leida: true,
   },
   {
     id: 6,
     tipo: 'info',
-    titulo: 'Reporte generado: Cliente Farmacias Torres',
-    mensaje: 'El reporte técnico de docking molecular fue generado y enviado al cliente.',
+    titulo: 'Competidor Alert: Precios Puratos',
+    mensaje: 'Puratos México ajustó precios en cobertura de chocolate (-5%). Analizando impacto.',
     tiempo: 'Hace 6 horas',
     leida: true,
   },
@@ -84,7 +84,7 @@ const notificacionesPharbiois: Notification[] = [
 export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
   const { colores, empresa, ia } = brandingConfig;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesPharbiois);
+  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesRichs);
   const [buscadorAbierto, setBuscadorAbierto] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 

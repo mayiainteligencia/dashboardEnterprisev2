@@ -1,15 +1,15 @@
 import React from 'react';
 import {
   LayoutDashboard,
-  Atom,
-  FileText,
+  TrendingUp,
+  Utensils,
   BookOpen,
   Users,
-  Shield,
-  FlaskConical,
+  Map,
+  ShoppingBag,
   ChevronRight,
-  Dna,
-  Microscope,
+  Sparkles,
+  Store,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -23,53 +23,53 @@ const mainItems = [
     id: 'dashboard',
     nombre: 'Command Center',
     icono: LayoutDashboard,
-    color: '#0EA5E9',
+    color: '#D31245',
     description: 'Vista ejecutiva',
   },
 ];
 
 const modulosItems = [
   {
-    id: 'pipeline',
-    nombre: 'Drug Discovery',
-    icono: Atom,
-    color: '#7C3AED',
-    description: 'Moléculas & I+D',
+    id: 'demanda',
+    nombre: 'Demand Sensing',
+    icono: TrendingUp,
+    color: '#1E40AF',
+    description: 'Forecast regional & SKU',
   },
   {
-    id: 'reportes',
-    nombre: 'Report Copilot',
-    icono: FileText,
-    color: '#0EA5E9',
-    description: 'Reportes científicos',
+    id: 'copilot-chef',
+    nombre: 'Chef Copilot',
+    icono: Utensils,
+    color: '#D31245',
+    description: 'Recetario y rendimiento',
   },
   {
     id: 'academia',
-    nombre: 'Academia IA',
+    nombre: 'Academia Rich',
     icono: BookOpen,
-    color: '#14B8A6',
-    description: 'Cursos & diplomados',
+    color: '#EA580C',
+    description: 'Capacitación IA B2B',
   },
   {
-    id: 'prospeccion',
-    nombre: 'Prospección Pharma',
+    id: 'ventas-b2b',
+    nombre: 'Ventas Foodservice',
     icono: Users,
     color: '#10B981',
-    description: 'Leads B2B',
+    description: 'Simulador & Objeciones',
   },
   {
-    id: 'patentes',
-    nombre: 'Patent & IP Agent',
-    icono: Shield,
+    id: 'distribuidores',
+    nombre: 'Distribuidor 360',
+    icono: Map,
     color: '#F59E0B',
-    description: 'Propiedad intelectual',
+    description: 'Cobertura y frecuencia',
   },
   {
-    id: 'regulatorio',
-    nombre: 'Regulatory Intel.',
-    icono: FlaskConical,
+    id: 'ecommerce-mkt',
+    nombre: 'E-commerce & Mkt',
+    icono: ShoppingBag,
     color: '#EF4444',
-    description: 'ICH · COFEPRIS · ADMET',
+    description: 'Precios & Competencia',
   },
 ];
 
@@ -106,9 +106,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.backgroundColor = 'rgba(14,165,233,0.05)';
+            e.currentTarget.style.backgroundColor = 'rgba(211,18,69,0.05)';
             e.currentTarget.style.color = '#0F172A';
-            e.currentTarget.style.borderColor = 'rgba(14,165,233,0.2)';
+            e.currentTarget.style.borderColor = 'rgba(211,18,69,0.2)';
           }
         }}
         onMouseLeave={(e) => {
@@ -191,7 +191,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       <div style={{
         position: 'absolute',
         inset: 0,
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(14,165,233,0.04) 1px, transparent 0)',
+        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(211,18,69,0.02) 1px, transparent 0)',
         backgroundSize: '24px 24px',
         pointerEvents: 'none',
       }} />
@@ -204,25 +204,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             width: '44px',
             height: '44px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #0EA5E9 0%, #7C3AED 100%)',
+            background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            boxShadow: '0 4px 16px rgba(14,165,233,0.3)',
+            boxShadow: '0 4px 16px rgba(211,18,69,0.2)',
             overflow: 'hidden',
           }}>
             <img
               src={empresa.logoUrl}
               alt={empresa.nombre}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }}
+              style={{ width: '90%', height: 'auto', objectFit: 'contain' }}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 const parent = target.parentElement;
                 if (parent) {
                   const icon = document.createElement('div');
-                  icon.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>`;
+                  icon.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`;
                   parent.appendChild(icon);
                 }
               }}
@@ -233,8 +233,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             <div style={{ fontSize: '15px', fontWeight: '800', color: '#0F172A', fontFamily: 'Outfit, sans-serif', lineHeight: 1.1 }}>
               {empresa.nombre}
             </div>
-            <div style={{ fontSize: '10px', color: '#0EA5E9', fontWeight: '600', marginTop: '2px', letterSpacing: '0.04em' }}>
-              × MAYIA
+            <div style={{ fontSize: '10px', color: '#D31245', fontWeight: '600', marginTop: '2px', letterSpacing: '0.04em' }}>
+              × MAYIA IA
             </div>
           </div>
         </div>
@@ -243,16 +243,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         <div style={{
           marginTop: '12px',
           padding: '6px 10px',
-          background: 'rgba(14,165,233,0.05)',
-          border: '1px solid rgba(14,165,233,0.15)',
+          background: 'rgba(211,18,69,0.05)',
+          border: '1px solid rgba(211,18,69,0.15)',
           borderRadius: '8px',
           display: 'flex',
           alignItems: 'center',
           gap: '6px',
         }}>
-          <Dna size={11} color="#0D9488" />
-          <span style={{ fontSize: '10px', color: '#0F766E', fontWeight: '600', letterSpacing: '0.04em' }}>
-            AI BIOPHARMA COMMAND CENTER
+          <Sparkles size={11} color="#D31245" />
+          <span style={{ fontSize: '9px', color: '#A30E33', fontWeight: '700', letterSpacing: '0.04em' }}>
+            COMMAND CENTER EMPRESARIAL
           </span>
         </div>
       </div>
@@ -312,13 +312,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           }} />
           <div>
             <div style={{ fontSize: '11px', color: '#475569', fontWeight: '500' }}>
-              MAYIA Scientific
+              MAYIA Food Intel
             </div>
             <div style={{ fontSize: '10px', color: '#10B981' }}>
-              Sistema activo
+              Operación Activa
             </div>
           </div>
-          <Microscope size={14} color="#94A3B8" style={{ marginLeft: 'auto' }} />
+          <Store size={14} color="#94A3B8" style={{ marginLeft: 'auto' }} />
         </div>
       </div>
     </div>

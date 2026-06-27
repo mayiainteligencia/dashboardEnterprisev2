@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
-import { DrugDiscoveryPipeline } from './components/pharbiois/DrugDiscoveryPipeline';
-import { ScientificReportCopilot } from './components/pharbiois/ScientificReportCopilot';
-import { AcademiaInteligente } from './components/pharbiois/AcademiaInteligente';
-import { ProspeccionPharma } from './components/pharbiois/ProspeccionPharma';
-import { PatentIPAgent } from './components/pharbiois/PatentIPAgent';
-import { RegulatoryIntelligence } from './components/pharbiois/RegulatoryIntelligence';
+import { RichDemandSensing } from './components/richs/RichDemandSensing';
+import { ChefTechnicalCopilot } from './components/richs/ChefTechnicalCopilot';
+import { AcademiaRichMayia } from './components/richs/AcademiaRichMayia';
+import { CopilotoVentasFoodservice } from './components/richs/CopilotoVentasFoodservice';
+import { Distribuidor360AI } from './components/richs/Distribuidor360AI';
+import { EcommerceMarketIntelligence } from './components/richs/EcommerceMarketIntelligence';
 
 function useIsMobile(bp = 900) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
@@ -28,27 +28,27 @@ function App() {
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard:   'AI BioPharma Command Center',
-      pipeline:    'Drug Discovery Pipeline',
-      reportes:    'Scientific Report Copilot',
-      academia:    'Academia Inteligente',
-      prospeccion: 'Prospección Pharma/Biotech',
-      patentes:    'Patent & IP Intelligence',
-      regulatorio: 'Regulatory Intelligence Agent',
+      dashboard:       'Rich’s México AI Command Center',
+      demanda:         'Demand Intelligence',
+      'copilot-chef':  'Chef Copilot',
+      academia:        'Academia Rich',
+      'ventas-b2b':    'Ventas Foodservice',
+      distribuidores:  'Distribuidor 360 AI',
+      'ecommerce-mkt': 'E-commerce & Market Intelligence',
     };
-    return titulos[activeSection] || 'Pharbiois Dashboard';
+    return titulos[activeSection] || 'Rich’s México Dashboard';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':   return <Dashboard onNavigate={selectSection} />;
-      case 'pipeline':    return <DrugDiscoveryPipeline />;
-      case 'reportes':    return <ScientificReportCopilot />;
-      case 'academia':    return <AcademiaInteligente />;
-      case 'prospeccion': return <ProspeccionPharma />;
-      case 'patentes':    return <PatentIPAgent />;
-      case 'regulatorio': return <RegulatoryIntelligence />;
-      default:            return <Dashboard onNavigate={selectSection} />;
+      case 'dashboard':       return <Dashboard onNavigate={selectSection} />;
+      case 'demanda':         return <RichDemandSensing />;
+      case 'copilot-chef':    return <ChefTechnicalCopilot />;
+      case 'academia':        return <AcademiaRichMayia />;
+      case 'ventas-b2b':      return <CopilotoVentasFoodservice />;
+      case 'distribuidores':  return <Distribuidor360AI />;
+      case 'ecommerce-mkt':   return <EcommerceMarketIntelligence />;
+      default:                return <Dashboard onNavigate={selectSection} />;
     }
   };
 
