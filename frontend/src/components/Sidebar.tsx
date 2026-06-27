@@ -238,23 +238,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             </div>
           </div>
         </div>
-
-        {/* Platform badge */}
-        <div style={{
-          marginTop: '12px',
-          padding: '6px 10px',
-          background: 'rgba(14,165,233,0.05)',
-          border: '1px solid rgba(14,165,233,0.15)',
-          borderRadius: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-        }}>
-          <Dna size={11} color="#0D9488" />
-          <span style={{ fontSize: '10px', color: '#0F766E', fontWeight: '600', letterSpacing: '0.04em' }}>
-            AI BIOPHARMA COMMAND CENTER
-          </span>
-        </div>
       </div>
 
       {/* Navigation */}
