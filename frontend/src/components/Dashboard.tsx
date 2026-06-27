@@ -221,27 +221,51 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', maxWidth: '1600px', margin: '0 auto', padding: '16px' }}>
       
       {/* Welcome Header — Minimalista y cálido */}
-      <div style={{ marginBottom: '8px' }}>
-        <h1 style={{
-          fontSize: '44px',
-          fontWeight: '300',
-          color: 'var(--text-primary)',
-          marginBottom: '6px',
-          letterSpacing: '-1px',
-          fontFamily: 'Outfit, sans-serif'
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', gap: '16px' }}>
+        <div>
+          <h1 style={{
+            fontSize: '44px',
+            fontWeight: '300',
+            color: 'var(--text-primary)',
+            marginBottom: '6px',
+            letterSpacing: '-1px',
+            fontFamily: 'Outfit, sans-serif'
+          }}>
+            Hola, <span style={{ fontWeight: '700', color: '#D31245' }}>Rich's México!</span>
+          </h1>
+          <p style={{
+            fontSize: '28px',
+            fontWeight: '300',
+            color: 'var(--text-secondary)',
+            margin: 0,
+            letterSpacing: '-0.5px',
+            fontFamily: 'Outfit, sans-serif'
+          }}>
+            ¿Qué deseas resolver hoy?
+          </p>
+        </div>
+        
+        {/* Contenedor del Logo MAYiA */}
+        <div style={{
+          background: 'rgba(0, 0, 0, 0.7)',
+          padding: '10px 20px',
+          borderRadius: '12px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
         }}>
-          Hola, <span style={{ fontWeight: '700', color: '#D31245' }}>Rich's México!</span>
-        </h1>
-        <p style={{
-          fontSize: '28px',
-          fontWeight: '300',
-          color: 'var(--text-secondary)',
-          margin: 0,
-          letterSpacing: '-0.5px',
-          fontFamily: 'Outfit, sans-serif'
-        }}>
-          ¿Qué deseas resolver hoy?
-        </p>
+          <img 
+            src="/assets/logosNativos/mayiaLogoBlanco.png" 
+            alt="MAYIA" 
+            style={{ 
+              height: '36px', 
+              width: 'auto', 
+              objectFit: 'contain' 
+            }} 
+          />
+        </div>
       </div>
 
       {/* Grid Principal de Módulos (Rejilla de 12 Columnas) */}
