@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import {
   Vote, Scale, Activity, TrendingUp, Radio, MessageSquare, Flame,
   ArrowUpRight, ArrowDownRight, Smile, Meh, Frown, Share2, Trophy, Landmark,
+  FileText, Network, Mic2, MapPin,
 } from 'lucide-react';
 import {
   ResponsiveContainer, AreaChart, Area, LineChart, Line, BarChart, Bar,
   PieChart, Pie, Cell, XAxis, YAxis, Tooltip, Legend, CartesianGrid,
 } from 'recharts';
 import { brandingConfig } from '../config/branding';
+import { estadosPaths } from '../data/mexicoPaths';
 
 const { colores } = brandingConfig;
 const V = colores.primario; // verde MAYIA
@@ -103,6 +105,44 @@ const SENT_META = {
   neg: { label: 'Negativo', color: colores.peligro, Icon: Frown },
 } as const;
 
+// Sentimiento por estación y por programa de radio
+const SENT_ESTACION = [
+  { nombre: 'MVS Radio 102.5', pos: 44, neu: 38, neg: 18 },
+  { nombre: 'Radio Fórmula 104.1', pos: 36, neu: 40, neg: 24 },
+  { nombre: 'La Octava 89.9', pos: 30, neu: 39, neg: 31 },
+  { nombre: 'Imagen 90.5', pos: 41, neu: 36, neg: 23 },
+];
+const SENT_PROGRAMA = [
+  { nombre: 'Primera Emisión', pos: 47, neu: 33, neg: 20 },
+  { nombre: 'Panel Político', pos: 29, neu: 38, neg: 33 },
+  { nombre: 'Mesa de Análisis', pos: 38, neu: 42, neg: 20 },
+  { nombre: 'Noticiero Nocturno', pos: 34, neu: 40, neg: 26 },
+];
+
+// Mapa de narrativa (red temas ↔ actores)
+const NARR_NODOS = [
+  { id: 'Seguridad', x: 200, y: 55, tipo: 'tema' },
+  { id: 'Reforma judicial', x: 200, y: 120, tipo: 'tema' },
+  { id: 'Economía', x: 200, y: 185, tipo: 'tema' },
+  { id: 'Morena', x: 60, y: 50, tipo: 'actor', color: '#9B2247' },
+  { id: 'PAN', x: 340, y: 50, tipo: 'actor', color: '#0047AB' },
+  { id: 'PRI', x: 60, y: 190, tipo: 'actor', color: '#006847' },
+  { id: 'MC', x: 340, y: 190, tipo: 'actor', color: '#F58025' },
+];
+const NARR_LINKS: [string, string][] = [
+  ['Morena', 'Seguridad'], ['Morena', 'Economía'], ['PAN', 'Seguridad'],
+  ['PAN', 'Reforma judicial'], ['PRI', 'Reforma judicial'], ['PRI', 'Economía'],
+  ['MC', 'Economía'], ['MC', 'Seguridad'],
+];
+
+// Mapa de México · intensidad de menciones políticas por estado (0-100), por id de estadosPaths
+const MENCIONES_ESTADO: Record<string, number> = {
+  MX_AG: 33, MX_BC: 38, MX_BS: 22, MX_CM: 24, MX_CS: 58, MX_CH: 52, MX_CO: 41, MX_CL: 21,
+  MX_DF: 100, MX_DG: 31, MX_GT: 61, MX_GR: 51, MX_HG: 39, MX_JA: 79, MX_EM: 92, MX_MI: 54,
+  MX_MO: 35, MX_NA: 26, MX_NL: 88, MX_OA: 57, MX_PU: 63, MX_QT: 48, MX_QR: 37, MX_SL: 44,
+  MX_SI: 47, MX_SO: 45, MX_TB: 43, MX_TM: 49, MX_TL: 27, MX_VE: 66, MX_YU: 46, MX_ZA: 28,
+};
+
 // ───────────────────────── HELPERS ─────────────────────────
 
 const Badge: React.FC<{ texto: string; color: string; pulse?: boolean }> = ({ texto, color, pulse }) => (
@@ -175,6 +215,15 @@ export const InteligenciaElectoral: React.FC = () => {
     { Icon: Radio, label: 'Estaciones en cobertura', value: '42', delta: 4 },
   ];
 
+  const generarReporte = () => {
+    const el = document.createElement('div');
+    el.textContent = '📄 Generando reporte semanal electoral… ✓';
+    el.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9999;background:${colores.textoClaro};color:${colores.textoEnOscuro};padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:${colores.sombraGrande}`;
+    document.body.appendChild(el);
+    setTimeout(() => { el.style.opacity = '0'; el.style.transition = 'opacity .4s'; }, 1800);
+    setTimeout(() => el.remove(), 2300);
+  };
+
   return (
     <div style={{ minHeight: '100vh', padding: isMobile ? 16 : 32, background: colores.fondoPrincipal }}>
       <style>{`
@@ -204,6 +253,13 @@ export const InteligenciaElectoral: React.FC = () => {
               Análisis en tiempo real del discurso electoral en radio y su correlación con la conversación digital rumbo a las elecciones de México 2027.
             </p>
           </div>
+          <button onClick={generarReporte} style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8, cursor: 'pointer',
+            fontSize: 13, fontWeight: 700, padding: '11px 18px', borderRadius: 12, alignSelf: 'center',
+            border: 'none', background: colores.textoClaro, color: colores.textoEnOscuro, boxShadow: colores.sombra,
+          }}>
+            <FileText size={16} color={colores.textoEnOscuro} /> Reporte semanal
+          </button>
         </div>
 
         {/* KPIs */}
@@ -319,6 +375,16 @@ export const InteligenciaElectoral: React.FC = () => {
           </Panel>
         </div>
 
+        {/* FILA 2b: Sentimiento por estación y por programa */}
+        <div style={{ display: 'grid', gridTemplateColumns: col(2), gap: 16, marginBottom: 16 }}>
+          <Panel icon={Radio} titulo="Sentimiento por estación" sub="Tono del discurso por emisora">
+            <SentList items={SENT_ESTACION} />
+          </Panel>
+          <Panel icon={Mic2} titulo="Sentimiento por programa" sub="Tono del discurso por programa">
+            <SentList items={SENT_PROGRAMA} />
+          </Panel>
+        </div>
+
         {/* FILA 3: Narrativas emergentes + Correlación radio/redes */}
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1.3fr', gap: 16, marginBottom: 16 }}>
           <Panel icon={Flame} titulo="Narrativas emergentes" sub="NLP · cambios en la agenda">
@@ -375,6 +441,108 @@ export const InteligenciaElectoral: React.FC = () => {
             </ResponsiveContainer>
           </Panel>
         </div>
+
+        {/* FILA 5: Mapa de narrativa + Mapa geográfico */}
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: 16, marginTop: 16 }}>
+          <Panel icon={Network} titulo="Mapa de narrativa" sub="Red de actores ↔ temas del discurso">
+            <MapaNarrativa />
+          </Panel>
+          <Panel icon={MapPin} titulo="Mapa de México" sub="Intensidad de menciones por estado">
+            <MapaMexico isMobile={isMobile} />
+          </Panel>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ── Sentimiento (lista de barras apiladas reutilizable) ──
+const SentList: React.FC<{ items: { nombre: string; pos: number; neu: number; neg: number }[] }> = ({ items }) => (
+  <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+    {items.map((s, i) => (
+      <div key={i}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
+          <span style={{ fontSize: 12, color: TXT, fontWeight: 600 }}>{s.nombre}</span>
+          <span style={{ fontSize: 11, color: MUT }}>{s.pos}% pos</span>
+        </div>
+        <div style={{ display: 'flex', height: 12, borderRadius: 999, overflow: 'hidden' }}>
+          <div style={{ width: `${s.pos}%`, background: colores.exito }} title={`Positivo ${s.pos}%`} />
+          <div style={{ width: `${s.neu}%`, background: colores.fondoTerciario }} title={`Neutral ${s.neu}%`} />
+          <div style={{ width: `${s.neg}%`, background: colores.peligro }} title={`Negativo ${s.neg}%`} />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+// ── Mapa de narrativa (SVG network) ──
+const MapaNarrativa: React.FC = () => {
+  const pos = (id: string) => NARR_NODOS.find(n => n.id === id)!;
+  return (
+    <svg viewBox="0 0 400 240" style={{ width: '100%', height: 'auto' }}>
+      {NARR_LINKS.map(([a, b], i) => {
+        const A = pos(a), B = pos(b);
+        return <line key={i} x1={A.x} y1={A.y} x2={B.x} y2={B.y} stroke={colores.borde} strokeWidth={1.5} />;
+      })}
+      {NARR_NODOS.map((n, i) => {
+        const tema = n.tipo === 'tema';
+        const fill = tema ? V : (n.color ?? V);
+        const r = tema ? 8 : 14;
+        return (
+          <g key={i}>
+            <circle cx={n.x} cy={n.y} r={r} fill={fill} fillOpacity={tema ? 1 : 0.9} />
+            <text x={n.x} y={n.y - (tema ? 14 : 22)} textAnchor="middle"
+              fontSize={tema ? 11 : 12} fontWeight={tema ? 600 : 800}
+              fill={colores.textoClaro}>{n.id}</text>
+          </g>
+        );
+      })}
+    </svg>
+  );
+};
+
+// ── Mapa de México · choropleth con SVG real (geometría de mexicoPaths) ──
+const tonoVerde = (v: number) => `rgba(154,194,79,${(0.12 + (v / 100) * 0.88).toFixed(2)})`;
+const MapaMexico: React.FC<{ isMobile: boolean }> = () => {
+  const [hover, setHover] = useState<{ x: number; y: number; id: string } | null>(null);
+  const nombre = (id: string) => estadosPaths.find(e => e.id === id)?.label ?? id;
+
+  return (
+    <div style={{ position: 'relative' }}>
+      {hover && (
+        <div style={{
+          position: 'absolute', left: hover.x + 12, top: hover.y - 10, zIndex: 10, pointerEvents: 'none',
+          background: colores.textoClaro, color: colores.textoEnOscuro, padding: '5px 10px',
+          borderRadius: 8, fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap', boxShadow: colores.sombraMedia,
+        }}>
+          {nombre(hover.id)} · {MENCIONES_ESTADO[hover.id] ?? 0} menciones
+        </div>
+      )}
+      <svg viewBox="0 0 959 593" style={{ width: '100%', height: 'auto' }}
+        onMouseLeave={() => setHover(null)}>
+        {estadosPaths.map(e => {
+          const v = MENCIONES_ESTADO[e.id] ?? 0;
+          const activo = hover?.id === e.id;
+          return (
+            <path
+              key={e.id}
+              d={e.path}
+              fill={activo ? V : tonoVerde(v)}
+              stroke={colores.fondoClaro}
+              strokeWidth={activo ? 1.4 : 0.7}
+              style={{ cursor: 'pointer', transition: 'fill .15s' }}
+              onMouseMove={ev => {
+                const r = (ev.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect();
+                setHover({ x: ev.clientX - r.left, y: ev.clientY - r.top, id: e.id });
+              }}
+            />
+          );
+        })}
+      </svg>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+        <span style={{ fontSize: 10, color: MUT }}>Menos</span>
+        <div style={{ flex: 1, height: 8, borderRadius: 999, background: `linear-gradient(90deg, ${tonoVerde(5)}, ${tonoVerde(100)})` }} />
+        <span style={{ fontSize: 10, color: MUT }}>Más menciones</span>
       </div>
     </div>
   );

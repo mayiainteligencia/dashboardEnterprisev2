@@ -9,6 +9,7 @@ import {
   Tooltip, RadialBarChart, RadialBar,
 } from 'recharts';
 import { brandingConfig } from '../config/branding';
+import { ModuloDetalleModal } from './MonitorIADetalles';
 
 const { colores } = brandingConfig;
 
@@ -316,15 +317,18 @@ const MiniViz: React.FC<{ viz: Viz; id: number }> = ({ viz, id }) => {
   );
 };
 
-const ModuloCard: React.FC<{ m: Modulo; i: number }> = ({ m, i }) => {
+const ModuloCard: React.FC<{ m: Modulo; i: number; onOpen: (num: number) => void }> = ({ m, i, onOpen }) => {
   const Icon = m.icon;
   return (
-    <div className="mia-card" style={{
-      background: colores.fondoClaro, borderRadius: 20, padding: 20,
-      border: `1px solid ${colores.borde}`, boxShadow: colores.sombra,
-      display: 'flex', flexDirection: 'column', gap: 14,
-      animationDelay: `${i * 0.05}s`,
-    }}>
+    <div className="mia-card" role="button" tabIndex={0}
+      onClick={() => onOpen(m.num)}
+      onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpen(m.num); } }}
+      style={{
+        background: colores.fondoClaro, borderRadius: 20, padding: 20, cursor: 'pointer',
+        border: `1px solid ${colores.borde}`, boxShadow: colores.sombra,
+        display: 'flex', flexDirection: 'column', gap: 14,
+        animationDelay: `${i * 0.05}s`,
+      }}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <div style={{
@@ -373,7 +377,7 @@ const ModuloCard: React.FC<{ m: Modulo; i: number }> = ({ m, i }) => {
         <span style={{ fontSize: 10, color: colores.textoOscuro, display: 'flex', alignItems: 'center', gap: 4 }}>
           <CircleDot size={11} color={colores.primario} /> Desarrollo · {m.semanas}
         </span>
-        <span style={{ fontSize: 10, fontWeight: 700, color: colores.textoMedio }}>Módulo MVS</span>
+        <span className="mia-vermas" style={{ fontSize: 11, fontWeight: 800, color: colores.primario }}>Ver detalle →</span>
       </div>
     </div>
   );
@@ -383,6 +387,7 @@ const ModuloCard: React.FC<{ m: Modulo; i: number }> = ({ m, i }) => {
 
 export const MonitorIA: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const [openNum, setOpenNum] = useState<number | null>(null);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
     check();
@@ -405,7 +410,10 @@ export const MonitorIA: React.FC = () => {
         @keyframes mia-grow { from { width: 0; } }
         .mia-card { animation: mia-fadeup .5s ease both; }
         .mia-card:hover { box-shadow: ${colores.sombraGrande}; transform: translateY(-3px); }
+        .mia-card:hover .mia-vermas { letter-spacing: .03em; }
+        .mia-card:focus-visible { outline: 2px solid ${colores.primario}; outline-offset: 2px; }
         .mia-card { transition: transform .2s ease, box-shadow .2s ease; }
+        @keyframes mia-modal { from { opacity: 0; transform: translateY(18px) scale(.98); } to { opacity: 1; transform: none; } }
         .mia-pulse { animation: mia-pulse 1.4s ease-in-out infinite; }
         .mia-grow { animation: mia-grow 1s ease both; }
       `}</style>
@@ -463,9 +471,12 @@ export const MonitorIA: React.FC = () => {
           gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(340px, 1fr))',
           gap: 20, marginBottom: 32,
         }}>
-          {MODULOS.map((m, i) => <ModuloCard key={m.num} m={m} i={i} />)}
+          {MODULOS.map((m, i) => <ModuloCard key={m.num} m={m} i={i} onOpen={setOpenNum} />)}
         </div>
       </div>
+
+      {/* DETALLE EN MODAL AL HACER CLIC */}
+      <ModuloDetalleModal num={openNum} onClose={() => setOpenNum(null)} />
     </div>
   );
 };

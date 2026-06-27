@@ -5,12 +5,14 @@
 ## Cambios — rama `monitoria`
 
 1. **Limpieza**: se eliminaron 26 archivos de código muerto (departamentos sin menú, `sideBarR`, módulos huérfanos, `types/`, `utils/calendarUtils`, `config/alertasConfig`).
-2. **Nueva sección Monitor IA** (`src/components/MonitorIA.tsx`): dashboard de presentación con los 10 módulos adicionales de MVS como "cuadritos" (KPIs + mini-charts recharts). Datos dummy, sin precios.
-3. **Nueva sección Inteligencia Electoral** (`src/components/InteligenciaElectoral.tsx`): desglose del anexo electoral 2027 (share of voice, sentimiento, narrativas, correlación radio/redes, ranking). El panel *Monitoreo de discurso político* funciona como Monitor de Medios, con chips de partidos predefinidos (Morena, PAN, PRI, MC, PVEM, PT) que filtran el feed en vivo.
+2. **Nueva sección Monitor IA** (`src/components/MonitorIA.tsx`): dashboard de presentación con los 10 módulos adicionales de MVS como "cuadritos" (KPIs + mini-charts recharts). Cada cuadrito es **clickeable** y abre su **detalle en modal** (`src/components/MonitorIADetalles.tsx`): feed comercial, clips con play/descarga, tabla competitiva, roadmap, log de sync, etc. Datos dummy, sin precios.
+3. **Nueva sección Inteligencia Electoral** (`src/components/InteligenciaElectoral.tsx`): desglose del anexo electoral 2027 — share of voice, sentimiento (por candidato, estación y programa), narrativas, correlación radio/redes, ranking, **mapa de narrativa**, **mapa de México** (choropleth con SVG real de `src/data/mexicoPaths.ts`) y botón de reporte semanal. El panel *Monitoreo de discurso político* funciona como Monitor de Medios, con chips de partidos predefinidos (Morena, PAN, PRI, MC, PVEM, PT) que filtran el feed en vivo.
 
 Menú actual: **Dashboard General · Monitor de Medios · Monitor IA · Inteligencia Electoral** (+ Ciberseguridad, Playground, Academia).
 
-Monitor IA e Inteligencia Electoral usan datos **dummy**; la lógica y datos reales se conectan después.
+Monitor IA e Inteligencia Electoral usan datos **dummy**; la lógica y datos reales se conectan después. **Monitor de Medios sí es funcional** (radio en vivo / WebSocket) — no modificar sin pedir.
+
+> Informe técnico completo: [`CLAUDE.md`](./CLAUDE.md).
 
 ```bash
 npm install
