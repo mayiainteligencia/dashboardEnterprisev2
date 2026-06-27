@@ -238,12 +238,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             Panel de control unificado y acceso a todos los módulos científicos de Pharbiois.
           </div>
         </div>
-        <button 
-          onClick={() => { setModalOpen(true); triggerToast('Asistente de Voz MAYIA activo'); }}
-          className="btn-primary" style={{ padding: '10px 18px', gap: '8px', flexShrink: 0 }}
-        >
-          <Mic size={15} /> Asistente de Voz
-        </button>
       </div>
 
       {/* Grid Principal de Módulos (3 Columnas) */}
