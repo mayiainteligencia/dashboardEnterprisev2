@@ -1,0 +1,85 @@
+/*
+ * responsive.css
+ * Adaptación de grillas y paddings para móviles y tabletas.
+ */
+
+:root {
+  --bp-mobile:  640px;
+  --bp-tablet:  1024px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TABLET  (640px – 1023px)
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  /* Grilla del Dashboard: de 12 columnas a 2 columnas */
+  .dashboard-grid-12 {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Forzar que spans de 3 y 4 columnas ocupen 1 de las 2 columnas */
+  [style*="gridColumn: 'span 4'"],
+  [style*="grid-column: span 4"],
+  [style*="gridColumn: 'span 3'"],
+  [style*="grid-column: span 3"] {
+    grid-column: span 1 !important;
+  }
+
+  /* Elementos span 12 ocupan todo el ancho (2 columnas) */
+  [style*="gridColumn: 'span 12'"],
+  [style*="grid-column: span 12"] {
+    grid-column: span 2 !important;
+  }
+
+  /* Padding general reducido */
+  [style*="padding: '32px'"] {
+    padding: 16px !important;
+  }
+  
+  [style*="padding: '24px'"] {
+    padding: 16px !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   MOBILE  (< 640px)
+   ────────────────────────────────────────────────────────────── */
+@media (max-width: 639px) {
+  /* Grilla del Dashboard: todo en 1 columna */
+  .dashboard-grid-12 {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* Cualquier span de columna se convierte en span 1 */
+  [style*="gridColumn"],
+  [style*="grid-column"] {
+    grid-column: span 1 !important;
+  }
+
+  /* Portafolio: grilla de 5 columnas a 2 columnas o 1 columna */
+  .portfolio-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  /* Padding mínimo en móvil */
+  [style*="padding: '32px'"] {
+    padding: 12px !important;
+  }
+  [style*="padding: '24px'"] {
+    padding: 12px !important;
+  }
+
+  /* Ajustar tamaño del título de bienvenida */
+  h1[style*="fontSize: '44px'"] {
+    font-size: 28px !important;
+  }
+  p[style*="fontSize: '28px'"] {
+    font-size: 18px !important;
+  }
+}
