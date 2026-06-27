@@ -21,7 +21,7 @@ interface SidebarProps {
 const mainItems = [
   {
     id: 'dashboard',
-    nombre: 'Command Center',
+    nombre: 'Dashboard General',
     icono: LayoutDashboard,
     color: '#D31245',
     description: 'Vista ejecutiva',
@@ -87,58 +87,51 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          gap: '10px',
-          padding: '10px 14px',
+          gap: '12px',
+          padding: '12px 16px',
           borderRadius: '12px',
-          marginBottom: '2px',
+          marginBottom: '4px',
           backgroundColor: isActive ? item.color : 'transparent',
-          border: isActive
-            ? `1px solid ${item.color}`
-            : '1px solid transparent',
-          color: isActive ? '#FFFFFF' : '#475569',
+          border: 'none',
+          color: isActive ? '#FFFFFF' : colores.textoMedio,
           cursor: 'pointer',
           transition: 'all 0.2s',
           textAlign: 'left',
-          position: 'relative',
-          overflow: 'hidden',
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.backgroundColor = '#F1F5F9';
-            e.currentTarget.style.color = '#0F172A';
-            e.currentTarget.style.borderColor = '#E2E8F0';
+            e.currentTarget.style.backgroundColor = colores.fondoCuaternario;
+            e.currentTarget.style.color = colores.textoClaro;
           }
         }}
         onMouseLeave={(e) => {
           if (!isActive) {
             e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = '#475569';
-            e.currentTarget.style.borderColor = 'transparent';
+            e.currentTarget.style.color = colores.textoMedio;
           }
         }}
       >
         {/* Icon */}
         <div style={{
-          width: '34px',
-          height: '34px',
-          borderRadius: '10px',
-          background: isActive ? 'rgba(255, 255, 255, 0.2)' : '#F1F5F9',
+          width: '36px',
+          height: '36px',
+          borderRadius: '50%',
+          background: isActive ? 'rgba(255, 255, 255, 0.2)' : colores.fondoCuaternario,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
-          border: isActive ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid #E2E8F0',
           transition: 'all 0.2s',
         }}>
-          <Icon size={16} color={isActive ? '#FFFFFF' : '#475569'} />
+          <Icon size={18} color={isActive ? '#FFFFFF' : colores.textoMedio} />
         </div>
 
         {/* Text */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
           <div style={{
-            fontSize: '13px',
+            fontSize: '14px',
             fontWeight: isActive ? '600' : '500',
-            color: isActive ? '#FFFFFF' : '#475569',
+            color: isActive ? '#FFFFFF' : colores.textoClaro,
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -147,18 +140,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           </div>
           <div style={{
             fontSize: '10px',
-            color: isActive ? 'rgba(255, 255, 255, 0.8)' : '#64748B',
+            color: isActive ? 'rgba(255, 255, 255, 0.7)' : colores.textoMedio,
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            marginTop: '2px',
           }}>
             {item.description}
           </div>
         </div>
-
-        {isActive && (
-          <ChevronRight size={14} color="#FFFFFF" style={{ flexShrink: 0 }} />
-        )}
       </button>
     );
   };
@@ -167,42 +157,30 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
     <div style={{
       width: '240px',
       height: '100vh',
-      background: 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)',
+      backgroundColor: colores.fondoSecundario,
       display: 'flex',
       flexDirection: 'column',
-      overflow: 'hidden',
-      borderRight: '1px solid #E2E8F0',
-      position: 'relative',
     }}>
-      {/* Subtle grid pattern overlay */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(211,18,69,0.02) 1px, transparent 0)',
-        backgroundSize: '24px 24px',
-        pointerEvents: 'none',
-      }} />
-
       {/* Logo */}
-      <div style={{ padding: '20px 16px 16px', flexShrink: 0, position: 'relative' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+      <div style={{ padding: '24px 16px 16px', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {/* Logo container */}
           <div style={{
-            width: '44px',
-            height: '44px',
+            width: '48px',
+            height: '48px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #1E40AF 0%, #D31245 100%)',
+            background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 0%)`,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            boxShadow: '0 4px 16px rgba(211,18,69,0.2)',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
             overflow: 'hidden',
           }}>
             <img
               src={empresa.logoUrl}
               alt={empresa.nombre}
-              style={{ width: '90%', height: 'auto', objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '4px' }}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
@@ -217,30 +195,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           </div>
 
           <div>
-            <div style={{ fontSize: '15px', fontWeight: '800', color: '#0F172A', fontFamily: 'Outfit, sans-serif', lineHeight: 1.1 }}>
+            <div style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro, fontFamily: 'Outfit, sans-serif', lineHeight: 1.1 }}>
               {empresa.nombre}
             </div>
-            <div style={{ fontSize: '10px', color: '#D31245', fontWeight: '600', marginTop: '2px', letterSpacing: '0.04em' }}>
+            <div style={{ fontSize: '10px', color: colores.primario, fontWeight: '600', marginTop: '2px', letterSpacing: '0.04em' }}>
               × MAYIA IA
             </div>
           </div>
-        </div>
-
-        {/* Platform badge */}
-        <div style={{
-          marginTop: '12px',
-          padding: '6px 10px',
-          background: 'rgba(211,18,69,0.05)',
-          border: '1px solid rgba(211,18,69,0.15)',
-          borderRadius: '8px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-        }}>
-          <Sparkles size={11} color="#D31245" />
-          <span style={{ fontSize: '9px', color: '#A30E33', fontWeight: '700', letterSpacing: '0.04em' }}>
-            COMMAND CENTER EMPRESARIAL
-          </span>
         </div>
       </div>
 
@@ -249,17 +210,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         flex: '1 1 0',
         minHeight: 0,
         overflowY: 'auto',
-        padding: '0 10px',
-        position: 'relative',
+        padding: '0 12px',
       }}>
         {/* Overview Section */}
-        <div style={{ padding: '4px 8px 6px', marginBottom: '4px' }}>
+        <div style={{ padding: '0 16px 8px 16px', marginBottom: '4px' }}>
           <span style={{
-            fontSize: '10px',
-            fontWeight: '700',
+            fontSize: '11px',
+            fontWeight: '600',
             textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#334155',
+            letterSpacing: '0.05em',
+            color: colores.textoOscuro,
           }}>
             General
           </span>
@@ -267,13 +227,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         {mainItems.map((item) => renderItem(item, activeSection === item.id))}
 
         {/* Modules Section */}
-        <div style={{ padding: '16px 8px 6px', marginBottom: '4px' }}>
+        <div style={{ padding: '16px 16px 8px 16px', marginBottom: '4px' }}>
           <span style={{
-            fontSize: '10px',
-            fontWeight: '700',
+            fontSize: '11px',
+            fontWeight: '600',
             textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#334155',
+            letterSpacing: '0.05em',
+            color: colores.textoOscuro,
           }}>
             Módulos IA
           </span>
@@ -285,7 +245,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       <div style={{
         padding: '12px 16px 16px',
         flexShrink: 0,
-        borderTop: '1px solid #E2E8F0',
+        borderTop: '1px solid ' + colores.borde,
         position: 'relative',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -293,19 +253,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             width: '8px',
             height: '8px',
             borderRadius: '50%',
-            background: '#10B981',
+            background: colores.exito,
             boxShadow: '0 0 6px rgba(16,185,129,0.6)',
             animation: 'pulse-glow 2s infinite',
           }} />
           <div>
-            <div style={{ fontSize: '11px', color: '#475569', fontWeight: '500' }}>
+            <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '500' }}>
               MAYIA Food Intel
             </div>
-            <div style={{ fontSize: '10px', color: '#10B981' }}>
+            <div style={{ fontSize: '10px', color: colores.exito }}>
               Operación Activa
             </div>
           </div>
-          <Store size={14} color="#94A3B8" style={{ marginLeft: 'auto' }} />
+          <Store size={14} color={colores.textoOscuro} style={{ marginLeft: 'auto' }} />
         </div>
       </div>
     </div>
