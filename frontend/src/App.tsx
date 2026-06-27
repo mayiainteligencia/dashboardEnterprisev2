@@ -2,26 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
-import { RecursosHumanos } from './components/departamentos/RecursosHumanos';
-import { FinanzasContabilidad } from './components/departamentos/FinanzasContabilidad';
-import { Operaciones } from './components/departamentos/Operaciones';
-import { VentasMarketing } from './components/departamentos/VentasMarketing';
-import { TecnologiasInformacion } from './components/departamentos/TecnologiasInformacion';
-import { Administracion } from './components/departamentos/Administracion';
-import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
-import { Playground } from './components/departamentos/Playground';
-import { Academia } from './components/departamentos/Academia';
-import { VistaComercial } from './components/comercial/VistaComercial';
-import {
-  PaginaCEO, PaginaScoring, PaginaCampanias,
-  PaginaVendedores, PaginaInventario, PaginaConversion,
-} from './components/comercial/paginasPro';
-import { PaginaLeads } from './components/comercial/PaginaLeads';
-import { PaginaOperacion } from './components/comercial/PaginaOperacion';
-import { PaginaInfluencers } from './components/comercial/PaginaInfluencers';
-import { brandingConfig } from './config/branding';
+import { DrugDiscoveryPipeline } from './components/pharbiois/DrugDiscoveryPipeline';
+import { ScientificReportCopilot } from './components/pharbiois/ScientificReportCopilot';
+import { AcademiaInteligente } from './components/pharbiois/AcademiaInteligente';
+import { ProspeccionPharma } from './components/pharbiois/ProspeccionPharma';
+import { PatentIPAgent } from './components/pharbiois/PatentIPAgent';
+import { RegulatoryIntelligence } from './components/pharbiois/RegulatoryIntelligence';
 
-// true cuando el ancho es de móvil/tablet
 function useIsMobile(bp = 900) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
   useEffect(() => {
@@ -36,117 +23,77 @@ function App() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { colores } = brandingConfig;
 
   const selectSection = (s: string) => { setActiveSection(s); setDrawerOpen(false); };
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard: 'Dashboard General',
-      rh: 'Recursos Humanos',
-      finanzas: 'Finanzas y Contabilidad',
-      operaciones: 'Operaciones',
-      ventas: 'Ventas y Marketing',
-      ti: 'Tecnologías de la Información',
-      administracion: 'Administración',
-      comercial: 'Inteligencia Comercial',
-      leads: 'Leads',
-      operacion: 'Operación · Piso, Producto y Conversión',
-      influencers: 'Radar de Influencers',
-      ceo: 'Vista CEO',
-      scoring: 'Lead Scoring IA',
-      campanias: 'Campañas',
-      vendedores: 'Vendedores',
-      inventario: 'Inventario Inteligente',
-      conversion: 'Conversión y Retención',
-      ciberseguridad: 'CiberSeguridad',
-      playground: 'Playground',
-      academia: 'Academia',
+      dashboard:   'AI BioPharma Command Center',
+      pipeline:    'Drug Discovery Pipeline',
+      reportes:    'Scientific Report Copilot',
+      academia:    'Academia Inteligente',
+      prospeccion: 'Prospección Pharma/Biotech',
+      patentes:    'Patent & IP Intelligence',
+      regulatorio: 'Regulatory Intelligence Agent',
     };
-    return titulos[activeSection] || 'Dashboard';
+    return titulos[activeSection] || 'Pharbiois Dashboard';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'rh':
-        return <RecursosHumanos />;
-      case 'finanzas':
-        return <FinanzasContabilidad />;
-      case 'operaciones':
-        return <Operaciones />;
-      case 'ventas':
-        return <VentasMarketing />;
-      case 'ti':
-        return <TecnologiasInformacion />;
-      case 'administracion':
-        return <Administracion />;
-      case 'comercial':
-        return <VistaComercial />;
-      case 'leads':
-        return <PaginaLeads />;
-      case 'operacion':
-        return <PaginaOperacion />;
-      case 'influencers':
-        return <PaginaInfluencers />;
-      case 'ceo':
-        return <PaginaCEO />;
-      case 'scoring':
-        return <PaginaScoring />;
-      case 'campanias':
-        return <PaginaCampanias />;
-      case 'vendedores':
-        return <PaginaVendedores />;
-      case 'inventario':
-        return <PaginaInventario />;
-      case 'conversion':
-        return <PaginaConversion />;
-      case 'ciberseguridad':
-        return <Ciberseguridad />;
-      case 'playground':
-        return <Playground />;
-      case 'academia':
-        return <Academia />;
-      default:
-        return <Dashboard />;
+      case 'dashboard':   return <Dashboard onNavigate={selectSection} />;
+      case 'pipeline':    return <DrugDiscoveryPipeline />;
+      case 'reportes':    return <ScientificReportCopilot />;
+      case 'academia':    return <AcademiaInteligente />;
+      case 'prospeccion': return <ProspeccionPharma />;
+      case 'patentes':    return <PatentIPAgent />;
+      case 'regulatorio': return <RegulatoryIntelligence />;
+      default:            return <Dashboard onNavigate={selectSection} />;
     }
   };
 
   return (
-    <div 
-      style={{ 
-        display: 'flex',
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: colores.fondoPrincipal
-      }}
-    >
-      {/* SIDEBAR — fijo en escritorio */}
+    <div style={{
+      display: 'flex',
+      width: '100vw',
+      height: '100vh',
+      overflow: 'hidden',
+      backgroundColor: 'var(--bg-primary)',
+    }}>
+      {/* SIDEBAR — fixed desktop */}
       {!isMobile && (
         <div style={{ width: '240px', flexShrink: 0 }}>
           <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
         </div>
       )}
 
-      {/* SIDEBAR — drawer en móvil */}
+      {/* SIDEBAR — mobile drawer */}
       {isMobile && drawerOpen && (
-        <div onClick={() => setDrawerOpen(false)}
-          style={{ position: 'fixed', inset: 0, zIndex: 3000, background: 'rgba(0,0,0,0.45)', display: 'flex' }}>
-          <div onClick={e => e.stopPropagation()} style={{ width: '240px', height: '100%', boxShadow: '0 0 40px rgba(0,0,0,0.3)' }}>
+        <div
+          onClick={() => setDrawerOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 3000,
+            background: 'rgba(255, 255, 255, 0.7)',
+            backdropFilter: 'blur(6px)',
+            display: 'flex',
+          }}
+        >
+          <div onClick={(e) => e.stopPropagation()}
+            style={{ width: '240px', height: '100%', boxShadow: '0 4px 30px rgba(0,0,0,0.05)' }}>
             <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
           </div>
         </div>
       )}
 
-      {/* CONTENIDO */}
+      {/* CONTENT */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Header */}
         <Header title={getTitulo()} onMenu={isMobile ? () => setDrawerOpen(true) : undefined} />
 
-        {/* Main content */}
-        <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: 'clamp(14px, 3vw, 24px)' }}>
+        <div className="no-scrollbar" style={{
+          flex: 1,
+          overflow: 'auto',
+          padding: 'clamp(12px, 2.5vw, 22px)',
+        }}>
           {renderContent()}
         </div>
       </div>
