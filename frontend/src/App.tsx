@@ -8,6 +8,7 @@ import { AcademiaRichMayia } from './components/richs/AcademiaRichMayia';
 import { CopilotoVentasFoodservice } from './components/richs/CopilotoVentasFoodservice';
 import { Distribuidor360AI } from './components/richs/Distribuidor360AI';
 import { EcommerceMarketIntelligence } from './components/richs/EcommerceMarketIntelligence';
+import './responsive.css';
 
 function useIsMobile(bp = 900) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
