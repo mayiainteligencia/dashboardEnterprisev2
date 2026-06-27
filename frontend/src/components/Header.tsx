@@ -1,16 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
+import {
   Bell,
-  Calendar,
   Menu,
+  X,
   AlertTriangle,
   CheckCircle,
   Info,
-  TrendingUp,
-  X
+  Atom,
+  Search,
+  ChevronDown,
+  Dna,
+  Microscope,
+  Clock,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { AlertasHeader } from './comercial/AlertasHeader';
 import { AsistenteBuscador } from './AsistenteBuscador';
 
 interface HeaderProps {
@@ -27,460 +30,368 @@ interface Notification {
   leida: boolean;
 }
 
-// Notificaciones estáticas de ejemplo
-const notificacionesEstaticas: Notification[] = [
+const notificacionesPharbiois: Notification[] = [
   {
     id: 1,
-    tipo: 'alerta',
-    titulo: 'Mal comentario en red social',
-    mensaje: 'Se detectaron malos comentarios en Facebook',
-    tiempo: 'Hace 5 min',
+    tipo: 'urgente',
+    titulo: 'Alerta ADMET: Molécula PB-2847',
+    mensaje: 'Score de toxicidad hepática supera el umbral aceptable (>0.7). Revisión requerida.',
+    tiempo: 'Hace 8 min',
     leida: false,
   },
   {
     id: 2,
-    tipo: 'urgente',
-    titulo: 'Desabasto de modelo 34-12aw',
-    mensaje: 'En la sucursal 12 hay un desabasto del modelo 34-12aw',
-    tiempo: 'Hace 15 min',
+    tipo: 'alerta',
+    titulo: 'Cumplimiento ICH M7: Impureza detectada',
+    mensaje: 'Se identificó impureza tipo nitrosamina en lote LAB-094. Acción correctiva pendiente.',
+    tiempo: 'Hace 32 min',
     leida: false,
   },
   {
     id: 3,
     tipo: 'exito',
-    titulo: '50 personas activas en el selector',
-    mensaje: 'Realizar intervención humana',
-    tiempo: 'Hace 1 hora',
-    leida: true,
+    titulo: 'Molécula PB-1203 → Candidata',
+    mensaje: 'La molécula superó evaluación preclínica in silico. Lista para siguiente fase.',
+    tiempo: 'Hace 2 horas',
+    leida: false,
   },
   {
     id: 4,
     tipo: 'info',
-    titulo: 'Lumel: Nueva Sesión',
-    mensaje: 'Un empleado solicitó apoyo psicológico',
-    tiempo: 'Hace 2 horas',
+    titulo: 'Nuevo alumno en Diplomado ADMET',
+    mensaje: '3 nuevos alumnos registrados en Toxicoinformática Avanzada.',
+    tiempo: 'Hace 3 horas',
     leida: true,
   },
   {
     id: 5,
     tipo: 'exito',
-    titulo: 'Ventas: Meta Alcanzada',
-    mensaje: 'El equipo de ventas superó la meta mensual en un 15%',
-    tiempo: 'Hace 3 horas',
+    titulo: 'Patente PCT/MX2024/000847 — Aprobada',
+    mensaje: 'La solicitud de patente para el scaffold benzimidazólico fue aceptada para examen.',
+    tiempo: 'Hace 5 horas',
+    leida: true,
+  },
+  {
+    id: 6,
+    tipo: 'info',
+    titulo: 'Reporte generado: Cliente Farmacias Torres',
+    mensaje: 'El reporte técnico de docking molecular fue generado y enviado al cliente.',
+    tiempo: 'Hace 6 horas',
     leida: true,
   },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
-  const { colores, empresa } = brandingConfig;
+  const { colores, empresa, ia } = brandingConfig;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesEstaticas);
+  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesPharbiois);
+  const [buscadorAbierto, setBuscadorAbierto] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fecha = new Date();
-  const opciones: Intl.DateTimeFormatOptions = {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric'
+  const opcionesFecha: Intl.DateTimeFormatOptions = {
+    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
   };
-  const fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
+  const fechaFormateada = fecha.toLocaleDateString('es-MX', opcionesFecha);
 
-  // Cerrar dropdown al hacer clic fuera
+  const sinLeer = notificaciones.filter((n) => !n.leida).length;
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setNotificacionesAbiertas(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const notificacionesNoLeidas = notificaciones.filter(n => !n.leida).length;
-
-  const getIconoPorTipo = (tipo: Notification['tipo']) => {
+  const iconoNotificacion = (tipo: Notification['tipo']) => {
     switch (tipo) {
-      case 'alerta':
-        return <AlertTriangle size={18} color="#F59E0B" />;
-      case 'exito':
-        return <CheckCircle size={18} color="#10B981" />;
-      case 'urgente':
-        return <AlertTriangle size={18} color="#EF4444" />;
-      case 'info':
-        return <Info size={18} color="#3B82F6" />;
+      case 'urgente': return <AlertTriangle size={14} color="#EF4444" />;
+      case 'alerta':  return <AlertTriangle size={14} color="#F59E0B" />;
+      case 'exito':   return <CheckCircle size={14} color="#10B981" />;
+      case 'info':    return <Info size={14} color="#0EA5E9" />;
     }
   };
 
-  const marcarComoLeida = (id: number) => {
-    setNotificaciones(notificaciones.map(n => 
-      n.id === id ? { ...n, leida: true } : n
-    ));
+  const colorNotificacion = (tipo: Notification['tipo']) => {
+    const map = {
+      urgente: { bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.25)' },
+      alerta:  { bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.25)' },
+      exito:   { bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.25)' },
+      info:    { bg: 'rgba(14,165,233,0.12)', border: 'rgba(14,165,233,0.25)' },
+    };
+    return map[tipo];
   };
 
-  const marcarTodasComoLeidas = () => {
-    setNotificaciones(notificaciones.map(n => ({ ...n, leida: true })));
+  const marcarTodas = () => {
+    setNotificaciones((prev) => prev.map((n) => ({ ...n, leida: true })));
   };
 
   return (
-    <header 
-      style={{ 
-        height: '80px',
-        backgroundColor: colores.fondoSecundario,
-        borderBottom: `1px solid ${colores.borde}`,
+    <>
+      <header style={{
+        height: '64px',
+        background: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(12px)',
+        borderBottom: '1px solid #E2E8F0',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 clamp(14px, 3vw, 32px)',
+        padding: '0 20px',
         gap: '12px',
         flexShrink: 0,
-      }}
-    >
-      {/* Hamburguesa (solo móvil) */}
-      {onMenu && (
+        position: 'relative',
+        zIndex: 100,
+      }}>
+        {/* Mobile menu */}
+        {onMenu && (
+          <button
+            id="header-mobile-menu-btn"
+            onClick={onMenu}
+            style={{
+              width: '36px', height: '36px', borderRadius: '10px',
+              background: '#F1F5F9', border: '1px solid #E2E8F0',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#475569', cursor: 'pointer', flexShrink: 0,
+            }}
+          >
+            <Menu size={18} />
+          </button>
+        )}
+
+        {/* Page title */}
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <Dna size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
+            <h1 style={{
+              fontSize: '16px',
+              fontWeight: '700',
+              color: '#0F172A',
+              fontFamily: 'Outfit, sans-serif',
+              margin: 0,
+            }}>
+              {title}
+            </h1>
+          </div>
+          <div style={{ fontSize: '11px', color: '#475569', marginTop: '1px', textTransform: 'capitalize' }}>
+            {fechaFormateada}
+          </div>
+        </div>
+
+        {/* Search */}
         <button
-          onClick={onMenu}
-          aria-label="Abrir menú"
+          id="header-search-btn"
+          onClick={() => setBuscadorAbierto(true)}
           style={{
-            width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
-            backgroundColor: colores.fondoTerciario, border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            display: 'flex', alignItems: 'center', gap: '8px',
+            padding: '8px 14px',
+            background: '#F1F5F9',
+            border: '1px solid #E2E8F0',
+            borderRadius: '10px',
+            color: '#64748B',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            fontSize: '12px',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = '#E2E8F0';
+            e.currentTarget.style.borderColor = '#CBD5E1';
+            e.currentTarget.style.color = '#0F172A';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = '#F1F5F9';
+            e.currentTarget.style.borderColor = '#E2E8F0';
+            e.currentTarget.style.color = '#64748B';
           }}
         >
-          <Menu size={20} color={colores.textoClaro} />
+          <Search size={14} />
+          <span className="hide-mobile">Buscar en el dashboard…</span>
         </button>
-      )}
 
-      {/* IZQUIERDA - Fecha (estática, se actualiza con el día) */}
-      <div
-        style={{
-          display: onMenu ? 'none' : 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '10px 16px',
-          borderRadius: '12px',
-          backgroundColor: colores.fondoTerciario,
-          flexShrink: 0,
-        }}
-      >
-        <Calendar size={18} style={{ color: colores.textoClaro }} />
-        <span style={{
-          fontSize: '14px',
-          fontWeight: '500',
-          color: colores.textoClaro
-        }}>
-          {fechaFormateada}
-        </span>
-      </div>
-
-      {/* Asistente IA tipo buscador */}
-      <AsistenteBuscador />
-
-      {/* CENTRO - Logo de la empresa (se oculta en móvil para dar espacio) */}
-      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
-        <img 
-          src={empresa.logo} 
-          alt={`${empresa.nombre} logo`}
-          style={{
-            height: '48px',
-            width: 'auto',
-            objectFit: 'contain',
-          }}
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
-            const fallback = (e.target as HTMLImageElement).nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'block';
-          }}
-        />
-        
-        <div style={{ display: 'none' }}>
-          <h1 
-            style={{ 
-              fontSize: '28px', 
-              fontWeight: 'bold',
-              background: `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              margin: 0,
-            }}
-          >
-            {empresa.nombre}
-          </h1>
-          <p style={{ 
-            fontSize: '12px',
-            color: colores.textoMedio,
-            margin: '4px 0 0 0',
-          }}>
-            {empresa.eslogan}
-          </p>
+        {/* MAYIA badge */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '6px',
+          padding: '6px 12px',
+          background: 'rgba(124,58,237,0.1)',
+          border: '1px solid rgba(124,58,237,0.25)',
+          borderRadius: '999px',
+          fontSize: '11px',
+          color: '#A78BFA',
+          fontWeight: '600',
+          cursor: 'default',
+        }} className="hide-mobile">
+          <Atom size={12} color="#A78BFA" />
+          {ia.nombre}
+          <div style={{
+            width: '6px', height: '6px',
+            borderRadius: '50%', background: '#10B981',
+            boxShadow: '0 0 6px rgba(16,185,129,0.6)',
+          }} />
         </div>
-      </div>
 
-      {/* DERECHA - Notificaciones y Perfil */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {/* Alertas comerciales */}
-        <AlertasHeader />
-
-        {/* Notificaciones con Dropdown */}
+        {/* Notifications */}
         <div ref={dropdownRef} style={{ position: 'relative' }}>
-          <button 
+          <button
+            id="header-notifications-btn"
             onClick={() => setNotificacionesAbiertas(!notificacionesAbiertas)}
             style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '50%',
-              backgroundColor: colores.fondoTerciario,
-              border: 'none',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              position: 'relative',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              width: '38px', height: '38px', borderRadius: '10px',
+              background: notificacionesAbiertas ? 'rgba(14,165,233,0.1)' : '#F1F5F9',
+              border: `1px solid ${notificacionesAbiertas ? 'rgba(14,165,233,0.3)' : '#E2E8F0'}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              color: '#475569', cursor: 'pointer',
+              position: 'relative', transition: 'all 0.2s',
             }}
           >
-            <Bell size={20} style={{ color: colores.textoClaro }} />
-            {notificacionesNoLeidas > 0 && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  top: '8px',
-                  right: '8px',
-                  minWidth: '18px',
-                  height: '18px',
-                  borderRadius: '10px',
-                  backgroundColor: colores.peligro,
-                  border: `2px solid ${colores.fondoSecundario}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  color: '#FFFFFF',
-                  padding: '0 4px',
-                }}
-              >
-                {notificacionesNoLeidas}
+            <Bell size={17} />
+            {sinLeer > 0 && (
+              <span style={{
+                position: 'absolute', top: '-4px', right: '-4px',
+                width: '18px', height: '18px',
+                background: '#EF4444',
+                borderRadius: '50%',
+                fontSize: '10px', fontWeight: '700', color: '#fff',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: '2px solid #FFFFFF',
+              }}>
+                {sinLeer}
               </span>
             )}
           </button>
 
-          {/* Dropdown de Notificaciones */}
           {notificacionesAbiertas && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '60px',
-                right: '0',
-                width: 'min(380px, calc(100vw - 24px))',
-                maxHeight: '500px',
-                backgroundColor: colores.fondoSecundario,
-                borderRadius: '16px',
-                border: `1px solid ${colores.borde}`,
-                boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                overflow: 'hidden',
-                zIndex: 1000,
-              }}
-            >
-              {/* Header del dropdown */}
-              <div 
-                style={{
-                  padding: '16px 20px',
-                  borderBottom: `1px solid ${colores.borde}`,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
+            <div style={{
+              position: 'absolute', top: '48px', right: 0,
+              width: '360px', maxHeight: '480px',
+              background: '#FFFFFF',
+              border: '1px solid #E2E8F0',
+              borderRadius: '16px',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+              zIndex: 1000,
+              overflow: 'hidden',
+              animation: 'fadeIn 0.2s ease',
+            }}>
+              {/* Header */}
+              <div style={{
+                padding: '16px 18px 12px',
+                borderBottom: '1px solid #E2E8F0',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              }}>
                 <div>
-                  <h3 style={{ 
-                    margin: 0, 
-                    fontSize: '16px', 
-                    fontWeight: 'bold',
-                    color: colores.textoClaro 
-                  }}>
-                    Notificaciones
-                  </h3>
-                  <p style={{ 
-                    margin: '4px 0 0 0', 
-                    fontSize: '12px',
-                    color: colores.textoMedio 
-                  }}>
-                    Tienes {notificacionesNoLeidas} sin leer
-                  </p>
+                  <div style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', fontFamily: 'Outfit, sans-serif' }}>
+                    Alertas Científicas
+                  </div>
+                  {sinLeer > 0 && (
+                    <div style={{ fontSize: '11px', color: '#EF4444', fontWeight: '600', marginTop: '2px' }}>
+                      {sinLeer} sin leer
+                    </div>
+                  )}
                 </div>
-                {notificacionesNoLeidas > 0 && (
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  {sinLeer > 0 && (
+                    <button
+                      onClick={marcarTodas}
+                      style={{
+                        fontSize: '11px', color: '#0EA5E9', fontWeight: '600',
+                        background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px',
+                        borderRadius: '6px',
+                      }}
+                    >
+                      Marcar todas
+                    </button>
+                  )}
                   <button
-                    onClick={marcarTodasComoLeidas}
+                    onClick={() => setNotificacionesAbiertas(false)}
                     style={{
-                      background: 'none',
-                      border: 'none',
-                      color: colores.primario,
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      padding: '4px 8px',
+                      width: '26px', height: '26px', borderRadius: '8px',
+                      background: '#F1F5F9', border: '1px solid #E2E8F0',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      color: '#64748B', cursor: 'pointer',
                     }}
                   >
-                    Marcar todas
+                    <X size={13} />
                   </button>
-                )}
+                </div>
               </div>
 
-              {/* Lista de notificaciones */}
-              <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {notificaciones.map((notif) => (
-                  <div
-                    key={notif.id}
-                    onClick={() => marcarComoLeida(notif.id)}
-                    style={{
-                      padding: '16px 20px',
-                      borderBottom: `1px solid ${colores.borde}`,
-                      backgroundColor: notif.leida ? 'transparent' : colores.fondoTerciario + '40',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = notif.leida 
-                        ? 'transparent' 
-                        : colores.fondoTerciario + '40';
-                    }}
-                  >
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <div style={{ flexShrink: 0, marginTop: '2px' }}>
-                        {getIconoPorTipo(notif.tipo)}
+              {/* Notification list */}
+              <div className="no-scrollbar" style={{ overflowY: 'auto', maxHeight: '380px' }}>
+                {notificaciones.map((n) => {
+                  const { bg, border } = colorNotificacion(n.tipo);
+                  return (
+                    <div
+                      key={n.id}
+                      onClick={() => setNotificaciones((prev) =>
+                        prev.map((item) => item.id === n.id ? { ...item, leida: true } : item)
+                      )}
+                      style={{
+                        padding: '12px 18px',
+                        borderBottom: '1px solid #E2E8F0',
+                        display: 'flex', gap: '10px',
+                        background: n.leida ? 'transparent' : 'rgba(14,165,233,0.02)',
+                        cursor: 'pointer',
+                        transition: 'background 0.15s',
+                      }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#F8FAFC'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = n.leida ? 'transparent' : 'rgba(14,165,233,0.02)'; }}
+                    >
+                      <div style={{
+                        width: '30px', height: '30px', borderRadius: '8px',
+                        background: bg, border: `1px solid ${border}`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        flexShrink: 0, marginTop: '2px',
+                      }}>
+                        {iconoNotificacion(n.tipo)}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '4px' }}>
-                          <h4 style={{
-                            margin: 0,
-                            fontSize: '13px',
-                            fontWeight: notif.leida ? '500' : '700',
-                            color: colores.textoClaro,
-                          }}>
-                            {notif.titulo}
-                          </h4>
-                          {!notif.leida && (
-                            <div 
-                              style={{
-                                width: '8px',
-                                height: '8px',
-                                borderRadius: '50%',
-                                backgroundColor: colores.primario,
-                                flexShrink: 0,
-                                marginLeft: '8px',
-                                marginTop: '4px',
-                              }}
-                            />
-                          )}
+                        <div style={{
+                          fontSize: '12px', fontWeight: n.leida ? '500' : '700',
+                          color: n.leida ? '#64748B' : '#0F172A',
+                          marginBottom: '2px',
+                        }}>
+                          {n.titulo}
                         </div>
-                        <p style={{
-                          margin: '4px 0',
-                          fontSize: '12px',
-                          color: colores.textoMedio,
-                          lineHeight: '1.4',
-                        }}>
-                          {notif.mensaje}
-                        </p>
-                        <span style={{
-                          fontSize: '11px',
-                          color: colores.textoOscuro,
-                        }}>
-                          {notif.tiempo}
-                        </span>
+                        <div style={{ fontSize: '11px', color: '#475569', lineHeight: 1.4 }}>
+                          {n.mensaje}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#475569', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                          <Clock size={9} />
+                          {n.tiempo}
+                        </div>
                       </div>
+                      {!n.leida && (
+                        <div style={{
+                          width: '8px', height: '8px', borderRadius: '50%',
+                          background: '#EF4444', flexShrink: 0, marginTop: '4px',
+                        }} />
+                      )}
                     </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Footer del dropdown */}
-              <div 
-                style={{
-                  padding: '12px 20px',
-                  borderTop: `1px solid ${colores.borde}`,
-                  textAlign: 'center',
-                }}
-              >
-                <button
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: colores.primario,
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    width: '100%',
-                    padding: '8px',
-                  }}
-                >
-                  Ver todas las notificaciones
-                </button>
+                  );
+                })}
               </div>
             </div>
           )}
         </div>
+      </header>
 
-      {/* Perfil */}
-        <button 
-          style={{
-            width: '48px',
-            height: '48px',
-            borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
-            border: 'none',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            transition: 'all 0.2s',
-            overflow: 'hidden',
-            padding: '4px',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
-          }}
-        >
-          <img 
-            src="/assets/logosEmpresas/honda-logo.svg"
-            alt="Perfil"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-            }}
-            onError={(e) => {
-              // Fallback a la letra M si la imagen no carga
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const container = target.parentElement;
-              if (container) {
-                container.style.background = `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`;
-                container.style.fontSize = '18px';
-                container.style.fontWeight = 'bold';
-                container.style.color = '#FFFFFF';
-                container.textContent = 'M';
-              }
-            }}
-          />
-        </button>
-      </div>
-    </header>
+      {/* Search Modal */}
+      {buscadorAbierto && (
+        <div style={{
+          position: 'fixed', inset: 0,
+          background: 'rgba(255, 255, 255, 0.7)',
+          backdropFilter: 'blur(8px)',
+          zIndex: 2000,
+          display: 'flex', alignItems: 'flex-start',
+          justifyContent: 'center',
+          paddingTop: '80px',
+        }} onClick={() => setBuscadorAbierto(false)}>
+          <div onClick={(e) => e.stopPropagation()}
+            style={{ width: '600px', maxWidth: '90vw', animation: 'fadeIn 0.2s ease' }}>
+            <AsistenteBuscador />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
