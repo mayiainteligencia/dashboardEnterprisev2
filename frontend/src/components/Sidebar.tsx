@@ -1,44 +1,22 @@
 import React from 'react';
-import {
-  LayoutDashboard,
-  TrendingUp,
-  Crown,
-  Target,
-  Megaphone,
-  Users,
-  Package,
-  Repeat,
-  UserPlus,
-  Store,
-  Radar,
-} from 'lucide-react';
+import { LayoutDashboard } from 'lucide-react';
 
 import { brandingConfig } from '../config/branding';
+import { modulosPorModo, type Modo } from '../besco/bescoData';
 
 interface SidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
+  modo: Modo;
 }
 
-const menuItems = [
-  { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
-  { id: 'comercial', nombre: 'Inteligencia Comercial', icono: TrendingUp },
-  { id: 'leads', nombre: 'Leads', icono: UserPlus },
-  { id: 'operacion', nombre: 'Operación', icono: Store },
-  { id: 'influencers', nombre: 'Radar de Influencers', icono: Radar },
-];
-
-const analisisItems = [
-  { id: 'ceo', nombre: 'Vista CEO', icono: Crown },
-  { id: 'scoring', nombre: 'Lead Scoring IA', icono: Target },
-  { id: 'campanias', nombre: 'Campañas', icono: Megaphone },
-  { id: 'vendedores', nombre: 'Vendedores', icono: Users },
-  { id: 'inventario', nombre: 'Inventario', icono: Package },
-  { id: 'conversion', nombre: 'Conversión y Retención', icono: Repeat },
-];
-
-export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
-  const { empresa, colores } = brandingConfig;
+export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, modo }) => {
+  const { empresa, colores, temas } = brandingConfig;
+  const tema = modo === 'admin' ? temas.admin : temas.cliente;
+  const items = [
+    { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
+    ...modulosPorModo(modo).map(m => ({ id: m.id, nombre: m.titulo, icono: m.icono })),
+  ];
 
   return (
     <div 
@@ -68,8 +46,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               flexShrink: 0,
             }}
           >
-            <img 
-              src="/assets/logosNativos/salesLogo.png"
+            <img
+              src={empresa.logo}
               alt={empresa.nombre}
               style={{
                 width: '100%',
@@ -106,16 +84,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </div>
       </div>
 
-      {/* Label DEPARTAMENTOS */}
+      {/* Label del modo activo */}
       <div style={{ padding: '0 16px 8px 16px', flexShrink: 0 }}>
-        <span style={{ 
-          fontSize: '11px', 
-          fontWeight: '600', 
-          textTransform: 'uppercase', 
+        <span style={{
+          fontSize: '11px',
+          fontWeight: '600',
+          textTransform: 'uppercase',
           letterSpacing: '0.05em',
-          color: colores.textoOscuro,
+          color: tema.acentoOscuro,
         }}>
-          DEPARTAMENTOS
+          {tema.nombre}
         </span>
       </div>
 
@@ -126,61 +104,53 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         overflowY: 'auto',
         padding: '0 12px',
       }}>
-        {[...menuItems, ...analisisItems].map((item) => {
+        {items.map((item) => {
           const Icon = item.icono;
           const isActive = activeSection === item.id;
 
           return (
-            <React.Fragment key={item.id}>
-              {item.id === 'ceo' && (
-                <div style={{ padding: '12px 16px 6px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: colores.textoOscuro }}>
-                    Análisis a Detalle
-                  </span>
-                </div>
-              )}
-              <button
-                onClick={() => onSectionChange(item.id)}
+            <button
+              key={item.id}
+              onClick={() => onSectionChange(item.id)}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                padding: '12px 16px',
+                borderRadius: '12px',
+                marginBottom: '4px',
+                backgroundColor: isActive ? tema.acento : 'transparent',
+                color: isActive ? tema.sobreAcento : colores.textoMedio,
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = colores.fondoTerciario;
+              }}
+              onMouseLeave={(e) => {
+                if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
+              }}
+            >
+              <div
                 style={{
-                  width: '100%',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : colores.fondoTerciario,
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
-                  padding: '12px 16px',
-                  borderRadius: '12px',
-                  marginBottom: '4px',
-                  backgroundColor: isActive ? colores.primario : 'transparent',
-                  color: isActive ? '#FFFFFF' : colores.textoMedio,
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
+                  justifyContent: 'center',
+                  flexShrink: 0,
                 }}
               >
-                <div
-                  style={{
-                    width: '36px',
-                    height: '36px',
-                    borderRadius: '50%',
-                    backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : colores.fondoTerciario,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
-                  }}
-                >
-                  <Icon size={18} />
-                </div>
-                <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
-                  {item.nombre}
-                </span>
-              </button>
-            </React.Fragment>
+                <Icon size={18} />
+              </div>
+              <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
+                {item.nombre}
+              </span>
+            </button>
           );
         })}
       </nav>

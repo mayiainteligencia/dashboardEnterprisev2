@@ -1,13 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, ArrowUp } from 'lucide-react';
+import { Sparkles, ArrowUp, X } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
+import type { Modo } from '../besco/bescoData';
 
-const { colores, ia } = brandingConfig;
+const { colores, ia, temas } = brandingConfig;
 
 type Msg = { role: 'user' | 'assistant'; content: string };
 
 // Asistente IA con forma de buscador en el header. Al escribir abre un panel desplegable con la conversación.
-export const AsistenteBuscador: React.FC = () => {
+export const AsistenteBuscador: React.FC<{ modo: Modo }> = ({ modo }) => {
+  const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
@@ -17,8 +19,10 @@ export const AsistenteBuscador: React.FC = () => {
 
   useEffect(() => {
     const h = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
     document.addEventListener('mousedown', h);
-    return () => document.removeEventListener('mousedown', h);
+    document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', h); document.removeEventListener('keydown', esc); };
   }, []);
   useEffect(() => { endRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading]);
 
@@ -30,7 +34,7 @@ export const AsistenteBuscador: React.FC = () => {
     try {
       const res = await fetch('/api/chat/message', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mensaje: text, departamento: 'Ventas y Marketing' }),
+        body: JSON.stringify({ mensaje: text, departamento: modo === 'admin' ? 'BESCO Operación' : 'BESCO Inmuebles' }),
       });
       if (!res.ok) throw new Error();
       const data = await res.json();
@@ -43,12 +47,15 @@ export const AsistenteBuscador: React.FC = () => {
   return (
     <div ref={ref} style={{ position: 'relative', flex: 1, maxWidth: '460px' }}>
       {/* Barra buscador */}
-      <div onClick={() => setOpen(true)} style={{
-        display: 'flex', alignItems: 'center', gap: '10px', height: '44px', padding: '0 8px 0 16px',
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: '10px', height: '44px', padding: '0 8px 0 14px',
         borderRadius: '999px', background: colores.fondoTerciario,
-        border: `1px solid ${open ? colores.primario : colores.borde}`, transition: 'border-color .2s',
+        border: `1px solid ${open ? tema.acento : colores.borde}`, transition: 'border-color .2s',
       }}>
-        <Sparkles size={18} color={colores.primario} />
+        <button type="button" onClick={() => setOpen(o => !o)} aria-label={open ? 'Cerrar asistente' : 'Abrir asistente'}
+          style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, display: 'flex', flexShrink: 0 }}>
+          <Sparkles size={18} color={tema.acentoOscuro} />
+        </button>
         <input
           value={input}
           onChange={e => setInput(e.target.value)}
@@ -59,7 +66,7 @@ export const AsistenteBuscador: React.FC = () => {
         />
         <button onClick={send} disabled={loading || !input.trim()} style={{
           width: '32px', height: '32px', borderRadius: '50%', border: 'none', flexShrink: 0,
-          background: input.trim() ? colores.primario : colores.borde, color: '#fff', cursor: input.trim() ? 'pointer' : 'default',
+          background: input.trim() ? tema.acento : colores.borde, color: '#fff', cursor: input.trim() ? 'pointer' : 'default',
           display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .2s',
         }}><ArrowUp size={16} /></button>
       </div>
@@ -72,23 +79,27 @@ export const AsistenteBuscador: React.FC = () => {
           boxShadow: '0 18px 48px rgba(0,0,0,0.18)', overflow: 'hidden', maxHeight: '440px', display: 'flex', flexDirection: 'column',
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 16px', borderBottom: `1px solid ${colores.borde}` }}>
-            <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: `linear-gradient(135deg, ${colores.primario}, ${colores.primarioOscuro})`, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 800 }}>AI</div>
-            <div>
+            <div style={{ width: '30px', height: '30px', borderRadius: '50%', background: `linear-gradient(135deg, ${tema.acento}, ${tema.acentoOscuro})`, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontWeight: 800 }}>AI</div>
+            <div style={{ flex: 1 }}>
               <p style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, margin: 0 }}>{ia.nombre}</p>
-              <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0 }}>Asistente comercial</p>
+              <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0 }}>{modo === 'admin' ? 'Asistente de operación' : 'Asistente de inmuebles'}</p>
             </div>
+            <button type="button" onClick={() => setOpen(false)} aria-label="Cerrar"
+              style={{ border: 'none', background: colores.fondoTerciario, borderRadius: '50%', width: '30px', height: '30px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <X size={16} color={colores.textoMedio} />
+            </button>
           </div>
 
           <div style={{ flex: 1, overflowY: 'auto', padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {messages.length === 0 && !loading && (
               <div style={{ textAlign: 'center', padding: '18px 8px' }}>
-                <Sparkles size={26} color={colores.primario} style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '13px', color: colores.textoMedio, margin: 0 }}>Pregúntame sobre ventas, leads, inventario o campañas.</p>
+                <Sparkles size={26} color={tema.acentoOscuro} style={{ marginBottom: '8px' }} />
+                <p style={{ fontSize: '13px', color: colores.textoMedio, margin: 0 }}>{modo === 'admin' ? 'Pregúntame sobre flota, rutas, SLA o mantenimiento.' : 'Pregúntame sobre inmuebles, CCTV, energía o reportes.'}</p>
               </div>
             )}
             {messages.map((m, i) => (
               <div key={i} style={{ alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start', maxWidth: '82%',
-                background: m.role === 'user' ? colores.primario : colores.fondoTerciario, color: m.role === 'user' ? '#fff' : colores.textoClaro,
+                background: m.role === 'user' ? tema.acento : colores.fondoTerciario, color: m.role === 'user' ? '#fff' : colores.textoClaro,
                 padding: '10px 14px', borderRadius: m.role === 'user' ? '14px 14px 4px 14px' : '14px 14px 14px 4px', fontSize: '13px', lineHeight: 1.5 }}>
                 {m.content}
               </div>

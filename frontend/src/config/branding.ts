@@ -1,23 +1,23 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Sales Command Center",
-    eslogan: "Agencia de Autos",
-    logo: "/assets/logosNativos/salesLogo.png",
+    nombre: "BESCO",
+    eslogan: "Facility Services · Piso Técnico",
+    logo: "/assets/logosNativos/besco.png",
   },
 
   colores: {
-    // Paleta: dominancia de rojo, negro y gris, sobre fondos limpios blancos
-    primario: "#CC0000",           // Rojo (para botones principales, sidebar activo)
-    primarioOscuro: "#990000",     // Rojo oscuro
-    primarioClaro: "#FF3333",      // Rojo claro
+    // Paleta neutral (sin rojo). Los acentos de color viven en `temas` (verde cliente / ámbar admin).
+    primario: "#374151",           // Slate neutro (chrome genérico)
+    primarioOscuro: "#1F2937",     // Slate oscuro
+    primarioClaro: "#6B7280",      // Slate claro
 
     secundario: "#F4F4F4",         // Gris claro para fondos secundarios
-    acento: "#CC0000",             // Rojo (para detalles y badges)
-    acentoOscuro: "#990000",       // Rojo oscuro
-    
-    peligro: "#EF4444",            
-    advertencia: "#F59E0B",        
-    exito: "#10B981",              
+    acento: "#374151",             // Slate neutro
+    acentoOscuro: "#1F2937",       // Slate oscuro
+
+    peligro: "#EA580C",            // Naranja (severidad crítica, sin rojo)
+    advertencia: "#F59E0B",
+    exito: "#10B981",
     
     // Fondos - muy limpios, blancos y grises
     fondoPrincipal: "#FFFFFF",     // Blanco puro
@@ -33,12 +33,12 @@ export const brandingConfig = {
     
     // Bordes
     borde: "#E5E5E5",              // Gris muy sutil para bordes
-    bordeHover: "#CC0000",         // Bordes rojos al hacer hover
-    
-    // Gradientes - Eliminamos gradientes pesados para mantener el minimalismo
-    gradientePrimario: "linear-gradient(135deg, #CC0000 0%, #990000 100%)",
+    bordeHover: "#9CA3AF",         // Borde gris al hacer hover
+
+    // Gradientes neutros
+    gradientePrimario: "linear-gradient(135deg, #374151 0%, #1F2937 100%)",
     gradienteSecundario: "linear-gradient(135deg, #F9F9F9 0%, #F0F0F0 100%)",
-    gradienteAcento: "linear-gradient(135deg, #CC0000 0%, #FF3333 100%)",
+    gradienteAcento: "linear-gradient(135deg, #4B5563 0%, #374151 100%)",
     
     // Glass effect
     fondoGlass: "rgba(255, 255, 255, 0.8)", // Clean glass
@@ -60,7 +60,27 @@ export const brandingConfig = {
     nombre: "MAYIA",
     modelo: "Gemini 3.5 Flash",
     habilitado: true,
-  }
+  },
+
+  // Acentos por modo (toda decisión de color vive aquí)
+  temas: {
+    admin: {
+      nombre: "Operación interna",
+      acento: "#F59E0B",        // amarillo
+      acentoOscuro: "#B45309",
+      acentoSuave: "#FEF3C7",
+      sobreAcento: "#1F2937",   // texto sobre amarillo (contraste AA)
+    },
+    cliente: {
+      nombre: "Edificios inteligentes",
+      acento: "#10B981",        // verde
+      acentoOscuro: "#047857",
+      acentoSuave: "#D1FAE5",
+      sobreAcento: "#FFFFFF",
+    },
+  },
 };
+
+export type TemaBesco = typeof brandingConfig.temas.admin;
 
 export type BrandingConfig = typeof brandingConfig;

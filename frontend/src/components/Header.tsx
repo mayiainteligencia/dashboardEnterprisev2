@@ -1,80 +1,32 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { 
+import {
   Bell,
   Calendar,
   Menu,
   AlertTriangle,
   CheckCircle,
-  Info,
-  TrendingUp,
-  X
+  X,
+  Lock
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 import { AlertasHeader } from './comercial/AlertasHeader';
 import { AsistenteBuscador } from './AsistenteBuscador';
+import { notifsPorModo, colorSeveridad, type Notif, type Modo } from '../besco/bescoData';
 
 interface HeaderProps {
   title: string;
   onMenu?: () => void;
+  modo: Modo;
+  onCliente?: () => void;
+  onAdmin?: () => void;
 }
 
-interface Notification {
-  id: number;
-  tipo: 'alerta' | 'exito' | 'info' | 'urgente';
-  titulo: string;
-  mensaje: string;
-  tiempo: string;
-  leida: boolean;
-}
-
-// Notificaciones estáticas de ejemplo
-const notificacionesEstaticas: Notification[] = [
-  {
-    id: 1,
-    tipo: 'alerta',
-    titulo: 'Mal comentario en red social',
-    mensaje: 'Se detectaron malos comentarios en Facebook',
-    tiempo: 'Hace 5 min',
-    leida: false,
-  },
-  {
-    id: 2,
-    tipo: 'urgente',
-    titulo: 'Desabasto de modelo 34-12aw',
-    mensaje: 'En la sucursal 12 hay un desabasto del modelo 34-12aw',
-    tiempo: 'Hace 15 min',
-    leida: false,
-  },
-  {
-    id: 3,
-    tipo: 'exito',
-    titulo: '50 personas activas en el selector',
-    mensaje: 'Realizar intervención humana',
-    tiempo: 'Hace 1 hora',
-    leida: true,
-  },
-  {
-    id: 4,
-    tipo: 'info',
-    titulo: 'Lumel: Nueva Sesión',
-    mensaje: 'Un empleado solicitó apoyo psicológico',
-    tiempo: 'Hace 2 horas',
-    leida: true,
-  },
-  {
-    id: 5,
-    tipo: 'exito',
-    titulo: 'Ventas: Meta Alcanzada',
-    mensaje: 'El equipo de ventas superó la meta mensual en un 15%',
-    tiempo: 'Hace 3 horas',
-    leida: true,
-  },
-];
-
-export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
-  const { colores, empresa } = brandingConfig;
+export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, onAdmin }) => {
+  const { colores, empresa, temas } = brandingConfig;
+  const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesEstaticas);
+  const [notificaciones, setNotificaciones] = useState<Notif[]>(notifsPorModo[modo]);
+  useEffect(() => { setNotificaciones(notifsPorModo[modo]); }, [modo]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fecha = new Date();
@@ -99,18 +51,10 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
 
   const notificacionesNoLeidas = notificaciones.filter(n => !n.leida).length;
 
-  const getIconoPorTipo = (tipo: Notification['tipo']) => {
-    switch (tipo) {
-      case 'alerta':
-        return <AlertTriangle size={18} color="#F59E0B" />;
-      case 'exito':
-        return <CheckCircle size={18} color="#10B981" />;
-      case 'urgente':
-        return <AlertTriangle size={18} color="#EF4444" />;
-      case 'info':
-        return <Info size={18} color="#3B82F6" />;
-    }
-  };
+  const getIconoPorSeveridad = (s: Notif['severidad']) =>
+    s === 'ok'
+      ? <CheckCircle size={18} color={colorSeveridad.ok} />
+      : <AlertTriangle size={18} color={colorSeveridad[s]} />;
 
   const marcarComoLeida = (id: number) => {
     setNotificaciones(notificaciones.map(n => 
@@ -174,7 +118,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
       </div>
 
       {/* Asistente IA tipo buscador */}
-      <AsistenteBuscador />
+      <AsistenteBuscador modo={modo} />
 
       {/* CENTRO - Logo de la empresa (se oculta en móvil para dar espacio) */}
       <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
@@ -219,8 +163,28 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
 
       {/* DERECHA - Notificaciones y Perfil */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {/* Alertas comerciales */}
-        <AlertasHeader />
+        {/* Toggle Cliente / Admin */}
+        {modo && (
+          <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colores.fondoTerciario, borderRadius: '999px', flexShrink: 0 }}>
+            <button
+              onClick={onCliente}
+              style={{ border: 'none', cursor: 'pointer', padding: '7px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: 600, transition: 'all .2s',
+                background: modo === 'cliente' ? temas.cliente.acento : 'transparent', color: modo === 'cliente' ? temas.cliente.sobreAcento : colores.textoMedio }}
+            >
+              Cliente
+            </button>
+            <button
+              onClick={onAdmin}
+              style={{ border: 'none', cursor: 'pointer', padding: '7px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: 600, transition: 'all .2s', display: 'flex', alignItems: 'center', gap: '5px',
+                background: modo === 'admin' ? temas.admin.acento : 'transparent', color: modo === 'admin' ? temas.admin.sobreAcento : colores.textoMedio }}
+            >
+              <Lock size={12} /> Admin
+            </button>
+          </div>
+        )}
+
+        {/* Alertas de la operación / inmuebles */}
+        <AlertasHeader modo={modo} />
 
         {/* Notificaciones con Dropdown */}
         <div ref={dropdownRef} style={{ position: 'relative' }}>
@@ -322,7 +286,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                     style={{
                       background: 'none',
                       border: 'none',
-                      color: colores.primario,
+                      color: tema.acentoOscuro,
                       fontSize: '12px',
                       fontWeight: '600',
                       cursor: 'pointer',
@@ -358,7 +322,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                   >
                     <div style={{ display: 'flex', gap: '12px' }}>
                       <div style={{ flexShrink: 0, marginTop: '2px' }}>
-                        {getIconoPorTipo(notif.tipo)}
+                        {getIconoPorSeveridad(notif.severidad)}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '4px' }}>
@@ -376,7 +340,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                                 width: '8px',
                                 height: '8px',
                                 borderRadius: '50%',
-                                backgroundColor: colores.primario,
+                                backgroundColor: tema.acento,
                                 flexShrink: 0,
                                 marginLeft: '8px',
                                 marginTop: '4px',
@@ -416,7 +380,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                   style={{
                     background: 'none',
                     border: 'none',
-                    color: colores.primario,
+                    color: tema.acentoOscuro,
                     fontSize: '13px',
                     fontWeight: '600',
                     cursor: 'pointer',
@@ -457,8 +421,8 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
           }}
         >
-          <img 
-            src="/assets/logosNativos/salesLogo.png"
+          <img
+            src={empresa.logo}
             alt="Perfil"
             style={{
               width: '100%',
