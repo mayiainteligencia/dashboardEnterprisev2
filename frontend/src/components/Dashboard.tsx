@@ -288,7 +288,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
             </span>
           </div>
           <div style={{ fontSize: '24px', fontWeight: '800', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>
-            Bienvenido al Command Center
+            Bienvenido Pharbiois ¿Qué monitoreo deseas realizar hoy?
           </div>
           <div style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
             Panel de control unificado y acceso a todos los módulos científicos de Pharbiois.
