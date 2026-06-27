@@ -91,13 +91,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           padding: '10px 14px',
           borderRadius: '12px',
           marginBottom: '2px',
-          backgroundColor: isActive
-            ? `${item.color}15`
-            : 'transparent',
+          backgroundColor: isActive ? item.color : 'transparent',
           border: isActive
-            ? `1px solid ${item.color}33`
+            ? `1px solid ${item.color}`
             : '1px solid transparent',
-          color: isActive ? '#0F172A' : '#475569',
+          color: isActive ? '#FFFFFF' : '#475569',
           cursor: 'pointer',
           transition: 'all 0.2s',
           textAlign: 'left',
@@ -106,9 +104,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.backgroundColor = 'rgba(211,18,69,0.05)';
+            e.currentTarget.style.backgroundColor = '#F1F5F9';
             e.currentTarget.style.color = '#0F172A';
-            e.currentTarget.style.borderColor = 'rgba(211,18,69,0.2)';
+            e.currentTarget.style.borderColor = '#E2E8F0';
           }
         }}
         onMouseLeave={(e) => {
@@ -119,31 +117,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           }
         }}
       >
-        {/* Active indicator */}
-        {isActive && (
-          <div style={{
-            position: 'absolute',
-            left: 0, top: '20%', bottom: '20%',
-            width: '3px',
-            borderRadius: '0 3px 3px 0',
-            background: item.color,
-          }} />
-        )}
-
         {/* Icon */}
         <div style={{
           width: '34px',
           height: '34px',
           borderRadius: '10px',
-          background: isActive ? `${item.color}22` : '#F1F5F9',
+          background: isActive ? 'rgba(255, 255, 255, 0.2)' : '#F1F5F9',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
-          border: isActive ? `1px solid ${item.color}33` : '1px solid #E2E8F0',
+          border: isActive ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid #E2E8F0',
           transition: 'all 0.2s',
         }}>
-          <Icon size={16} color={isActive ? item.color : '#475569'} />
+          <Icon size={16} color={isActive ? '#FFFFFF' : '#475569'} />
         </div>
 
         {/* Text */}
@@ -151,7 +138,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           <div style={{
             fontSize: '13px',
             fontWeight: isActive ? '600' : '500',
-            color: isActive ? '#0F172A' : '#475569',
+            color: isActive ? '#FFFFFF' : '#475569',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -160,7 +147,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           </div>
           <div style={{
             fontSize: '10px',
-            color: isActive ? item.color : '#64748B',
+            color: isActive ? 'rgba(255, 255, 255, 0.8)' : '#64748B',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -170,7 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </div>
 
         {isActive && (
-          <ChevronRight size={14} color={item.color} style={{ flexShrink: 0 }} />
+          <ChevronRight size={14} color="#FFFFFF" style={{ flexShrink: 0 }} />
         )}
       </button>
     );
