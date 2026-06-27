@@ -18,10 +18,10 @@ interface ModeloDemanda {
 }
 
 const modelos: ModeloDemanda[] = [
-  { id: 1, nombre: 'Kwid E-Tech', color: '#003399', demandaActual: 87,  demandaPredicha: 112, stockActual: 34,  tendencia: 28.7, confianza: 94, historial: [54,61,58,72,68,81,87,112], alerta: true  },
-  { id: 2, nombre: 'Duster',      color: '#C0392B', demandaActual: 63,  demandaPredicha: 58,  stockActual: 41,  tendencia: -7.9, confianza: 89, historial: [70,75,68,71,65,67,63,58],  alerta: false },
-  { id: 3, nombre: 'Koleos',      color: '#1D6A40', demandaActual: 142, demandaPredicha: 189, stockActual: 28,  tendencia: 33.1, confianza: 91, historial: [88,95,104,118,127,135,142,189], alerta: true },
-  { id: 4, nombre: 'Oroch',       color: '#6B7280', demandaActual: 210, demandaPredicha: 198, stockActual: 157, tendencia: -5.7, confianza: 96, historial: [195,203,218,225,211,208,210,198], alerta: false },
+  { id: 1, nombre: 'Nexora', color: '#003399', demandaActual: 87,  demandaPredicha: 112, stockActual: 34,  tendencia: 28.7, confianza: 94, historial: [54,61,58,72,68,81,87,112], alerta: true  },
+  { id: 2, nombre: 'Lumio',      color: '#C0392B', demandaActual: 63,  demandaPredicha: 58,  stockActual: 41,  tendencia: -7.9, confianza: 89, historial: [70,75,68,71,65,67,63,58],  alerta: false },
+  { id: 3, nombre: 'Kestra',      color: '#1D6A40', demandaActual: 142, demandaPredicha: 189, stockActual: 28,  tendencia: 33.1, confianza: 91, historial: [88,95,104,118,127,135,142,189], alerta: true },
+  { id: 4, nombre: 'Avenar',       color: '#6B7280', demandaActual: 210, demandaPredicha: 198, stockActual: 157, tendencia: -5.7, confianza: 96, historial: [195,203,218,225,211,208,210,198], alerta: false },
 ];
 
 // ─── Sparkline SVG ────────────────────────────────────────────────────────────
@@ -87,6 +87,13 @@ export const AnalisisDemanda: React.FC = () => {
   const { colores } = brandingConfig;
   const [mounted, setMounted]       = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [sugIdx, setSugIdx]         = useState(0);
+
+  const sugerencias = [
+    "Te recomiendo que incrementes el inventario del modelo Nexora en las próximas 2 semanas, ya que la intención de compra predictiva superará tu stock en un 40%.",
+    "Sugiero lanzar una campaña de financiamiento para Avenar, la demanda está bajando y hay sobrestock.",
+    "Considera reasignar leads de baja intención del modelo Kestra hacia Lumio para equilibrar la rotación."
+  ];
 
   useEffect(() => { const t = setTimeout(() => setMounted(true), 80); return () => clearTimeout(t); }, []);
 
@@ -284,25 +291,45 @@ export const AnalisisDemanda: React.FC = () => {
         })}
       </div>
 
-      {/* ── Footer CTA ── */}
-      <button style={{
-        width: '100%', 
+      {/* ── Footer AI Recommendation ── */}
+      <div style={{
         marginTop: '2px', 
-        padding: '8px',
+        padding: '10px 12px',
         borderRadius: '10px', 
-        border: `1px solid ${colores.borde}`,
-        background: 'transparent', 
-        color: colores.acento,
-        fontSize: '12px', 
-        fontWeight: '600', 
-        cursor: 'pointer', 
-        transition: 'all 0.2s',
-      }}
-        onMouseEnter={e => { e.currentTarget.style.background = `${colores.acento}08`; e.currentTarget.style.borderColor = colores.acento; }}
-        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = colores.borde; }}
-      >
-        Ver reporte completo
-      </button>
+        border: `1px solid ${colores.acento}40`,
+        background: `${colores.acento}10`,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
+      }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+          <div style={{ flexShrink: 0, marginTop: '2px' }}>
+            <AlertTriangle size={14} color={colores.acento} />
+          </div>
+          <p style={{ fontSize: '11px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+            <strong style={{ color: colores.acento }}>MAYIA sugiere:</strong> {sugerencias[sugIdx]}
+          </p>
+        </div>
+        <button
+          onClick={() => setSugIdx(prev => (prev + 1) % sugerencias.length)}
+          style={{
+            alignSelf: 'flex-end',
+            background: 'transparent',
+            border: `1px solid ${colores.acento}60`,
+            color: colores.acento,
+            padding: '3px 8px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = `${colores.acento}20`; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+        >
+          Propónme otra
+        </button>
+      </div>
     </div>
   );
 };

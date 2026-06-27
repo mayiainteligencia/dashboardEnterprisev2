@@ -22,10 +22,10 @@ interface Campaign {
 }
 
 const campañas: Campaign[] = [
-  { id: 1, nombre: 'Auron Legend',    modelo: 'Auron',      estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#CC0000', canales: ['Meta', 'YouTube', 'Display'], fechaFin: '15 Abr' },
-  { id: 2, nombre: 'Velox-R Track Day', modelo: 'Velox-R',  estado: 'activa',     presupuesto: 320000, gastado: 210000, alcance: 980000,  conversiones: 289, roi: 4.2, color: '#003399', canales: ['Google', 'YouTube', 'TikTok'], fechaFin: '22 Abr' },
-  { id: 3, nombre: 'Trekar Adventure', modelo: 'Trekar',  estado: 'programada', presupuesto: 190000, gastado: 0,      alcance: 0,       conversiones: 0,   roi: 0,   color: '#1D6A40', canales: ['Meta', 'Google', 'Outdoor'],  fechaFin: '01 May' },
-  { id: 4, nombre: 'CB650R Neo Sports',   modelo: 'CB650R',         estado: 'completada', presupuesto: 150000, gastado: 148200, alcance: 2100000, conversiones: 614, roi: 5.1, color: '#6B7280', canales: ['Meta', 'TikTok'],             fechaFin: '28 Feb' },
+  { id: 1, nombre: 'MAYIA Legend EV',    modelo: 'Legend EV',      estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#CC0000', canales: ['Social Ads', 'Video Ads', 'Banner Net'], fechaFin: '15 Abr' },
+  { id: 2, nombre: 'Velox-R Track Day', modelo: 'Velox-R',  estado: 'activa',     presupuesto: 320000, gastado: 210000, alcance: 980000,  conversiones: 289, roi: 4.2, color: '#003399', canales: ['Search Ads', 'Video Ads', 'Video Shorts'], fechaFin: '22 Abr' },
+  { id: 3, nombre: 'Trekar Adventure', modelo: 'Trekar',  estado: 'programada', presupuesto: 190000, gastado: 0,      alcance: 0,       conversiones: 0,   roi: 0,   color: '#1D6A40', canales: ['Social Ads', 'Search Ads', 'Billboards'],  fechaFin: '01 May' },
+  { id: 4, nombre: 'MAYIA Neo Sports',   modelo: 'Neo Sports',         estado: 'completada', presupuesto: 150000, gastado: 148200, alcance: 2100000, conversiones: 614, roi: 5.1, color: '#6B7280', canales: ['Social Ads', 'Video Shorts'],             fechaFin: '28 Feb' },
 ];
 
 const weeklyData = [42, 68, 55, 91, 73, 88, 64, 110, 95, 128, 104, 142];
@@ -78,8 +78,15 @@ export const CampañasInteligentes: React.FC = () => {
   const { colores } = brandingConfig;
   const [mounted, setMounted]     = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
-  const [showMenu, setShowMenu]   = useState(false);
+  const [showMenu, setShowMenu]     = useState(false);
+  const [sugIdx, setSugIdx]         = useState(0);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const sugerencias = [
+    "Reasigna el 15% del presupuesto restante de Velox-R Track Day hacia 'Video Shorts' donde estás logrando tu menor costo de adquisición en tiempo real.",
+    "Lanza una campaña flash de retargeting para MAYIA Legend EV, hay 340 leads calificados estancados en el embudo.",
+    "Detén temporalmente la campaña Trekar Adventure y reasigna los fondos a Mensajería IA, el CTR actual está un 25% debajo de tu objetivo."
+  ];
 
   useEffect(() => { const t = setTimeout(() => setMounted(true), 80); return () => clearTimeout(t); }, []);
 
@@ -310,18 +317,45 @@ export const CampañasInteligentes: React.FC = () => {
         })}
       </div>
 
-      {/* ── Footer CTA — igual que todos los demás módulos ── */}
-      <button style={{
-        width: '100%', marginTop: '10px', padding: '10px',
-        borderRadius: '10px', border: `1px solid ${colores.borde}`,
-        background: 'transparent', color: colores.primario,
-        fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s',
-      }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${colores.primario}10`; (e.currentTarget as HTMLElement).style.borderColor = colores.primario; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.borderColor = colores.borde; }}
-      >
-        Ver todas las campañas
-      </button>
+      {/* ── Footer AI Recommendation ── */}
+      <div style={{
+        marginTop: '10px', 
+        padding: '10px 12px',
+        borderRadius: '10px', 
+        border: `1px solid ${colores.primario}40`,
+        background: `${colores.primario}10`,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
+      }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+          <div style={{ flexShrink: 0, marginTop: '2px' }}>
+            <Zap size={14} color={colores.primario} />
+          </div>
+          <p style={{ fontSize: '11px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+            <strong style={{ color: colores.primario }}>MAYIA sugiere:</strong> {sugerencias[sugIdx]}
+          </p>
+        </div>
+        <button
+          onClick={() => setSugIdx(prev => (prev + 1) % sugerencias.length)}
+          style={{
+            alignSelf: 'flex-end',
+            background: 'transparent',
+            border: `1px solid ${colores.primario}60`,
+            color: colores.primario,
+            padding: '3px 8px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+        >
+          Propónme otra
+        </button>
+      </div>
 
       <style>{`
         @keyframes cPing {

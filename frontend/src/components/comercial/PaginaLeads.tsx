@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { UserPlus, Filter, Radio, LineChart, Building2, ChevronRight } from 'lucide-react';
+import { UserPlus, Filter, Radio, LineChart, Building2, ChevronRight, Zap } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 import { StatTile, Semaforo } from './ui';
 import { Shell, HeroKPI, badgeLive } from './paginasPro';
 import { agencias, funnel, canales } from './data';
+import { useLiveFeed } from '../../context/LiveFeedContext';
 
 const { colores } = brandingConfig;
 
@@ -11,10 +12,19 @@ const { colores } = brandingConfig;
 const FunnelInteractivo: React.FC = () => {
   const [sel, setSel] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const { events } = useLiveFeed();
+  
+  // Fake add live leads to top of funnel
+  const liveLeadsCount = events.filter(e => e.type === 'lead').length;
+  
   useEffect(() => { const t = setTimeout(() => setMounted(true), 60); return () => clearTimeout(t); }, []);
-  const max = funnel[0].n;
-  const e = funnel[sel];
-  const prev = sel > 0 ? funnel[sel - 1] : null;
+  
+  const funnelLive = [...funnel];
+  funnelLive[0] = { ...funnelLive[0], n: funnelLive[0].n + liveLeadsCount };
+
+  const max = funnelLive[0].n;
+  const e = funnelLive[sel];
+  const prev = sel > 0 ? funnelLive[sel - 1] : null;
   const convPrev = prev ? Math.round((e.n / prev.n) * 100) : 100;
   const perdidos = prev ? prev.n - e.n : 0;
   const pctTotal = ((e.n / max) * 100).toFixed(1);
@@ -23,7 +33,7 @@ const FunnelInteractivo: React.FC = () => {
     <div className="row2">
       {/* Embudo */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-        {funnel.map((f, i) => {
+        {funnelLive.map((f, i) => {
           const w = mounted ? (f.n / max) * 100 : 0;
           const isSel = i === sel;
           return (
@@ -41,6 +51,11 @@ const FunnelInteractivo: React.FC = () => {
                   minWidth: '64px',
                 }}>
                   <span style={{ fontSize: '13px', fontWeight: 800, color: '#fff' }}>{f.n.toLocaleString()}</span>
+                  {i === 0 && liveLeadsCount > 0 && (
+                    <span style={{ fontSize: '10px', color: '#10B981', background: '#fff', padding: '2px 6px', borderRadius: '10px', fontWeight: 800, animation: 'fadeIn 0.3s' }}>
+                      +{liveLeadsCount} live
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -158,6 +173,7 @@ const LeadGenInteractivo: React.FC = () => {
   const totalLeads = canales.reduce((s, c) => s + c.leads, 0);
   const sorted = useMemo(() => [...canales].sort((a, b) => b[metric] - a[metric]), [metric]);
   const max = Math.max(...canales.map(c => c[metric]));
+
   const fmt = (c: typeof canales[number]) => metric === 'leads' ? c.leads.toLocaleString() : metric === 'cpl' ? `$${c.cpl}` : `×${c.roi}`;
   const labels: Record<Metric, string> = { leads: 'Leads', cpl: 'CPL (menor mejor)', roi: 'ROI' };
 
@@ -226,7 +242,7 @@ const SimuladorInteractivo: React.FC = () => {
   const alcanzable = meta <= base;
 
   return (
-    <Bloque icon={LineChart} title="Predicción y Simulador" subtitle="Mueve la meta y observa el esfuerzo">
+    <Bloque icon={LineChart} title="Predicción y Simulador IA" subtitle="MAYIA proyecta tu cierre de mes. Ajusta la meta.">
       <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '160px', marginBottom: '14px' }}>
         {hist.map((v, i) => (
           <Barra key={i} h={(v / max) * 100} label={['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Hoy'][i]} value={v} color={i === hist.length - 1 ? colores.primario : `${colores.primario}55`} />
@@ -241,9 +257,14 @@ const SimuladorInteractivo: React.FC = () => {
         <StatTile label="Meta simulada" value={`${meta}`} />
         <StatTile label={alcanzable ? 'Holgura' : 'Brecha'} value={`${alcanzable ? '+' : '−'}${Math.abs(meta - base)}`} delta={`${Math.abs(esfuerzo)}% esfuerzo`} deltaUp={alcanzable} />
       </div>
-      <p style={{ fontSize: '12px', margin: '12px 0 0', textAlign: 'center', fontWeight: 700, color: alcanzable ? colores.exito : colores.advertencia }}>
-        {alcanzable ? '✓ Meta alcanzable con la tendencia actual' : `Requiere +${esfuerzo}% de esfuerzo sobre el pronóstico`}
-      </p>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '12px', background: `${colores.primario}10`, borderRadius: '12px', marginTop: '14px' }}>
+        <Zap size={16} color={colores.primario} />
+        <p style={{ fontSize: '12px', margin: 0, fontWeight: 600, color: colores.textoClaro }}>
+          {alcanzable 
+            ? '✓ Meta alcanzable sin modificar el presupuesto. MAYIA recomienda mantener la campaña en WhatsApp.'
+            : `MAYIA sugiere incrementar $${(esfuerzo * 1200).toLocaleString()} MXN en pauta de Facebook Ads para cubrir la brecha del ${esfuerzo}%.`}
+        </p>
+      </div>
     </Bloque>
   );
 };
@@ -258,7 +279,9 @@ const Barra: React.FC<{ h: number; label: string; value: number; color: string; 
 
 // ── Bloque card genérico ─────────────────────────────────────────────────────────
 export const Bloque: React.FC<{ icon: typeof Building2; title: string; subtitle: string; children: React.ReactNode }> = ({ icon: Icon, title, subtitle, children }) => (
-  <div style={{ background: colores.fondoSecundario, borderRadius: '24px', border: `1px solid ${colores.borde}`, padding: '22px', boxShadow: colores.sombra }}>
+  <div style={{ background: colores.fondoSecundario, borderRadius: '24px', border: `1px solid ${colores.borde}`, padding: '22px', boxShadow: colores.sombra, transition: 'transform 0.2s', cursor: 'default' }}
+       onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+       onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '18px' }}>
       <div style={{ width: '42px', height: '42px', borderRadius: '11px', background: `linear-gradient(135deg, ${colores.acento}, ${colores.acentoOscuro})`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
         <Icon size={22} color="#fff" />
@@ -274,21 +297,25 @@ export const Bloque: React.FC<{ icon: typeof Building2; title: string; subtitle:
 
 // ── Página Leads ─────────────────────────────────────────────────────────────────
 export const PaginaLeads: React.FC = () => {
-  const totalLeads = canales.reduce((s, c) => s + c.leads, 0);
-  const ventas = funnel[funnel.length - 3].n; // "Venta"
-  const convTotal = ((ventas / funnel[0].n) * 100).toFixed(1);
-  const cplProm = Math.round(canales.reduce((s, c) => s + c.cpl * c.leads, 0) / totalLeads);
+  const { events } = useLiveFeed();
+  const liveLeadsCount = events.filter(e => e.type === 'lead').length;
+  const liveVentasCount = events.filter(e => e.type === 'venta').length;
+
+  const totalLeads = canales.reduce((s, c) => s + c.leads, 0) + liveLeadsCount;
+  const ventas = funnel[funnel.length - 3].n + liveVentasCount; // "Venta"
+  const convTotal = ((ventas / (funnel[0].n + liveLeadsCount)) * 100).toFixed(1);
+  const cplProm = Math.round(canales.reduce((s, c) => s + c.cpl * c.leads, 0) / (totalLeads - liveLeadsCount));
   const mejorCanal = [...canales].sort((a, b) => b.roi - a.roi)[0];
 
   return (
-    <Shell icon={UserPlus} title="Leads" subtitle="Demanda · embudo · generación · pronóstico" badge={badgeLive}
+    <Shell icon={UserPlus} title="Leads y Adquisición" subtitle="Generación de demanda guiada por IA en tiempo real" badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Leads totales" value={totalLeads.toLocaleString()} delta="12.8%" up accent="#CC0000" spark={[16, 17, 18, 19, 20, totalLeads / 1000]} />
-        <HeroKPI i={1} label="Conversión lead→venta" value={`${convTotal}%`} delta="1.2 pts" up accent="#10B981" spark={[6.8, 7.2, 7.6, 8.1, 8.4, +convTotal]} />
+        <HeroKPI i={0} label="Leads totales" value={totalLeads.toLocaleString()} delta={`${liveLeadsCount} live`} up accent="#CC0000" spark={[16, 17, 18, 19, 20, totalLeads / 1000]} />
+        <HeroKPI i={1} label="Conversión global" value={`${convTotal}%`} delta="en vivo" up accent="#10B981" spark={[6.8, 7.2, 7.6, 8.1, 8.4, +convTotal]} />
         <HeroKPI i={2} label="CPL promedio" value={`$${cplProm}`} delta="−6%" up accent="#2563EB" />
-        <HeroKPI i={3} label="Mejor canal (ROI)" value={mejorCanal.nombre} delta={`×${mejorCanal.roi}`} up accent="#7C3AED" />
+        <HeroKPI i={3} label="Mejor canal" value={mejorCanal.nombre} delta={`ROI ×${mejorCanal.roi}`} up accent="#7C3AED" />
       </>}>
-      <Bloque icon={Filter} title="Funnel Comercial" subtitle="12 etapas · clic en cualquier etapa">
+      <Bloque icon={Filter} title="Funnel Comercial" subtitle="El embudo se actualiza en tiempo real con cada lead">
         <FunnelInteractivo />
       </Bloque>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>

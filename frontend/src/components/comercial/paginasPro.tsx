@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   Crown, Target, Megaphone, Users, Package, Repeat,
-  TrendingUp, Trophy, AlertTriangle, Flame, Snowflake,
+  TrendingUp, Trophy, AlertTriangle, Flame, Snowflake, Send
 } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 import {
   agencias, scoring, scoringFactores, campanias, campaniaDetalle, vendedores,
   vendedorEtapas, inventario, conversionFunnel, retencionCohorte,
 } from './data';
+import { useLiveFeed } from '../../context/LiveFeedContext';
 
 export const colores = brandingConfig.colores;
 export const tnum: React.CSSProperties = { fontVariantNumeric: 'tabular-nums' };
@@ -37,7 +38,9 @@ const Spark: React.FC<{ data: number[]; color: string; w?: number; h?: number }>
 // ── Hero KPI ─────────────────────────────────────────────────────────────────────
 export const HeroKPI: React.FC<{ label: string; value: string; delta?: string; up?: boolean; accent?: string; spark?: number[]; i?: number }> = ({ label, value, delta, up, accent = colores.primario, spark, i = 0 }) => (
   <Reveal delay={i * 60} style={{ height: '100%' }}>
-    <div style={{ position: 'relative', background: colores.fondoSecundario, border: `1px solid ${colores.borde}`, borderRadius: '18px', padding: '16px 18px', overflow: 'hidden', boxShadow: colores.sombra, height: '100%' }}>
+    <div style={{ position: 'relative', background: colores.fondoSecundario, border: `1px solid ${colores.borde}`, borderRadius: '18px', padding: '16px 18px', overflow: 'hidden', boxShadow: colores.sombra, height: '100%', transition: 'transform 0.2s', cursor: 'default' }}
+         onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+         onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
       <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: accent }} />
       <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0, textTransform: 'uppercase', letterSpacing: '0.4px', fontWeight: 600 }}>{label}</p>
       <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '8px', marginTop: '4px' }}>
@@ -118,16 +121,20 @@ export const Shell: React.FC<{ icon: LucideIcon; title: string; subtitle: string
   </div>
 );
 
-export const badgeLive = <span style={{ padding: '6px 12px', borderRadius: '20px', background: 'rgba(255,255,255,0.2)', fontSize: '12px', fontWeight: 700 }}>● EN VIVO</span>;
+export const badgeLive = <span style={{ padding: '6px 12px', borderRadius: '20px', background: 'rgba(255,255,255,0.2)', fontSize: '12px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}><div className="live-dot" style={{ width: '6px', height: '6px', background: '#fff', boxShadow: 'none' }}/> EN VIVO</span>;
 
 // ════════════════════════════════════════════════════════════════════════════════
 // 1 · VISTA CEO
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaCEO: React.FC = () => {
   const [sel, setSel] = useState<string | null>(null);
-  const totalVentas = agencias.reduce((s, a) => s + a.ventas, 0);
+  const { events } = useLiveFeed();
+  const liveVentas = events.filter(e => e.type === 'venta').length;
+  const liveLeads = events.filter(e => e.type === 'lead').length;
+
+  const totalVentas = agencias.reduce((s, a) => s + a.ventas, 0) + liveVentas;
   const totalMeta = agencias.reduce((s, a) => s + a.meta, 0);
-  const totalLeads = agencias.reduce((s, a) => s + a.leads, 0);
+  const totalLeads = agencias.reduce((s, a) => s + a.leads, 0) + liveLeads;
   const conv = (agencias.reduce((s, a) => s + a.conv, 0) / agencias.length).toFixed(1);
   const cumpl = Math.round((totalVentas / totalMeta) * 100);
   const maxV = Math.max(...agencias.map(a => a.ventas));
@@ -140,9 +147,9 @@ export const PaginaCEO: React.FC = () => {
   return (
     <Shell icon={Crown} title="Vista CEO" subtitle="13 agencias · consolidado en tiempo real" badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Ventas mes" value={`${totalVentas}`} delta="8.4%" up accent={colores.primario} spark={[1180, 1240, 1190, 1320, 1380, totalVentas]} />
+        <HeroKPI i={0} label="Ventas mes" value={`${totalVentas}`} delta={liveVentas > 0 ? `+${liveVentas} live` : '8.4%'} up accent={colores.primario} spark={[1180, 1240, 1190, 1320, 1380, totalVentas]} />
         <HeroKPI i={1} label="Cumpl. meta" value={`${cumpl}%`} delta={`${totalMeta} obj.`} up accent={colores.exito} spark={[78, 80, 79, 84, 86, cumpl]} />
-        <HeroKPI i={2} label="Leads" value={`${(totalLeads / 1000).toFixed(1)}K`} delta="12.8%" up accent="#2563EB" spark={[8.1, 8.6, 9.0, 9.4, 9.9, totalLeads / 1000]} />
+        <HeroKPI i={2} label="Leads" value={`${(totalLeads / 1000).toFixed(1)}K`} delta={liveLeads > 0 ? `+${liveLeads} live` : '12.8%'} up accent="#2563EB" spark={[8.1, 8.6, 9.0, 9.4, 9.9, totalLeads / 1000]} />
         <HeroKPI i={3} label="Conversión" value={`${conv}%`} delta="1.2 pts" up accent="#7C3AED" spark={[11, 12, 12.4, 13, 13.2, +conv]} />
       </>}>
       <div className="row2">
@@ -152,7 +159,9 @@ export const PaginaCEO: React.FC = () => {
             const on = sel === a.nombre;
             return (
               <div key={a.nombre} onClick={() => setSel(on ? null : a.nombre)}
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '7px 8px', borderRadius: '10px', cursor: 'pointer', background: on ? colores.fondoTerciario : 'transparent', transition: 'background .2s' }}>
+                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '7px 8px', borderRadius: '10px', cursor: 'pointer', background: on ? colores.fondoTerciario : 'transparent', transition: 'background .2s' }}
+                onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
+                onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
                 <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: i < 3 ? colores.primario : colores.textoOscuro, width: '20px' }}>{i + 1}</span>
                 <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: col(a.estado), boxShadow: `0 0 0 3px ${col(a.estado)}22`, flexShrink: 0 }} />
                 <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '92px', flexShrink: 0 }}>{a.nombre}</span>
@@ -184,15 +193,44 @@ export const PaginaCEO: React.FC = () => {
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaScoring: React.FC = () => {
   const [sel, setSel] = useState(scoring[0].nombre);
-  const dist = { alta: scoring.filter(s => s.intencion === 'alta').length, media: scoring.filter(s => s.intencion === 'media').length, baja: scoring.filter(s => s.intencion === 'baja').length };
-  const prom = Math.round(scoring.reduce((s, x) => s + x.score, 0) / scoring.length);
+  const { events } = useLiveFeed();
+  const liveLeads = events.filter(e => e.type === 'lead').length;
+
+  const dist = { alta: scoring.filter(s => s.intencion === 'alta').length + Math.floor(liveLeads/2), media: scoring.filter(s => s.intencion === 'media').length + Math.ceil(liveLeads/2), baja: scoring.filter(s => s.intencion === 'baja').length };
+  const prom = Math.round(scoring.reduce((s, x) => s + x.score, 0) / scoring.length) + (liveLeads > 0 ? 1 : 0);
   const sc = scoring.find(s => s.nombre === sel)!;
   const f = scoringFactores[sel];
   const scoreCol = (n: number) => n >= 80 ? colores.exito : n >= 50 ? colores.advertencia : colores.peligro;
 
+  const [sugIdx, setSugIdx] = useState(0);
+
+  const getLeadSugerencias = (score: number) => {
+    if (score >= 80) {
+      return [
+        'Contactar hoy — alta probabilidad de cierre.',
+        'Ofrecer financiamiento pre-aprobado para acelerar la compra.',
+        'Asignar al mejor vendedor disponible de inmediato.'
+      ];
+    } else if (score >= 50) {
+      return [
+        'Nutrir con prueba de manejo y cotización detallada.',
+        'Enviar campaña de retargeting con beneficios del modelo.',
+        'Programar seguimiento telefónico en 48 horas.'
+      ];
+    } else {
+      return [
+        'Seguimiento automatizado por Mensajería IA.',
+        'Enviar contenido educativo sobre las ventajas de MAYIACars.',
+        'Reclasificar como "explorador" y nutrir con email marketing a 30 días.'
+      ];
+    }
+  };
+
+  const sugerencias = getLeadSugerencias(sc.score);
+
   return (
     <Shell icon={Target} title="Lead Scoring IA" subtitle="Intención de compra calculada por IA"
-      badge={<span style={{ padding: '6px 12px', borderRadius: '20px', background: 'rgba(255,255,255,0.2)', fontSize: '12px', fontWeight: 700 }}>IA</span>}
+      badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Score promedio" value={`${prom}`} delta="alta calidad" up accent={colores.primario} spark={[58, 61, 64, 66, 65, prom]} />
         <HeroKPI i={1} label="Intención alta" value={`${dist.alta}`} delta="prioritarios" up accent={colores.exito} />
@@ -204,8 +242,10 @@ export const PaginaScoring: React.FC = () => {
           {scoring.map(s => {
             const on = s.nombre === sel; const c = scoreCol(s.score);
             return (
-              <div key={s.nombre} onClick={() => setSel(s.nombre)}
-                style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', borderRadius: '12px', cursor: 'pointer', marginBottom: '6px', background: on ? colores.fondoTerciario : 'transparent', border: `1px solid ${on ? c + '55' : 'transparent'}`, transition: 'all .2s' }}>
+              <div key={s.nombre} onClick={() => { setSel(s.nombre); setSugIdx(0); }}
+                style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '10px', borderRadius: '12px', cursor: 'pointer', marginBottom: '6px', background: on ? colores.fondoTerciario : 'transparent', border: `1px solid ${on ? c + '55' : 'transparent'}`, transition: 'all .2s' }}
+                onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
+                onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
                 <div style={{ width: '42px', height: '42px', borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', background: `conic-gradient(${c} ${s.score * 3.6}deg, ${colores.fondoTerciario} 0deg)` }}>
                   <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: colores.fondoSecundario, display: 'flex', alignItems: 'center', justifyContent: 'center', ...tnum, fontSize: '12px', fontWeight: 800, color: c }}>{s.score}</div>
                 </div>
@@ -235,11 +275,32 @@ export const PaginaScoring: React.FC = () => {
               ))}
             </div>
           </div>
-          <div style={{ padding: '12px 14px', borderRadius: '12px', background: colores.fondoTerciario, borderLeft: `4px solid ${scoreCol(sc.score)}` }}>
-            <span style={{ fontSize: '12px', color: colores.textoMedio }}>Recomendación IA: </span>
-            <span style={{ fontSize: '12px', fontWeight: 700, color: colores.textoClaro }}>
-              {sc.score >= 80 ? 'Contactar hoy — alta probabilidad de cierre.' : sc.score >= 50 ? 'Nutrir con prueba de manejo y cotización.' : 'Seguimiento automatizado por WhatsApp.'}
-            </span>
+          <div style={{ padding: '12px 14px', borderRadius: '12px', background: colores.fondoTerciario, borderLeft: `4px solid ${scoreCol(sc.score)}`, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div>
+              <span style={{ fontSize: '12px', color: colores.textoMedio }}>Recomendación IA: </span>
+              <span style={{ fontSize: '12px', fontWeight: 700, color: colores.textoClaro }}>
+                {sugerencias[sugIdx]}
+              </span>
+            </div>
+            <button
+              onClick={() => setSugIdx(prev => (prev + 1) % sugerencias.length)}
+              style={{
+                alignSelf: 'flex-end',
+                background: 'transparent',
+                border: `1px solid ${colores.borde}`,
+                color: colores.textoClaro,
+                padding: '3px 8px',
+                borderRadius: '6px',
+                fontSize: '9px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = `${colores.borde}40`; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+            >
+              Propónme otra
+            </button>
           </div>
         </Panel></Reveal>
       </div>
@@ -252,8 +313,11 @@ export const PaginaScoring: React.FC = () => {
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaCampanias: React.FC = () => {
   const [sel, setSel] = useState<string | null>(null);
+  const { events } = useLiveFeed();
+  const liveVentas = events.filter(e => e.type === 'venta').length;
+
   const invTotal = campanias.reduce((s, c) => s + c.inv, 0);
-  const ventas = campanias.reduce((s, c) => s + c.ventas, 0);
+  const ventas = campanias.reduce((s, c) => s + c.ventas, 0) + liveVentas;
   const activas = campanias.filter(c => c.estado === 'Activa');
   const roiProm = (activas.reduce((s, c) => s + c.roi, 0) / activas.length).toFixed(1);
   const mejor = [...campanias].sort((a, b) => b.roi - a.roi)[0];
@@ -261,12 +325,31 @@ export const PaginaCampanias: React.FC = () => {
   const palette = [colores.primario, '#E5733A', '#2563EB', '#7C3AED'];
   const segs = campanias.map((c, i) => ({ v: c.inv, color: palette[i % palette.length], label: c.nombre }));
 
+  const [sugIdx, setSugIdx] = useState(0);
+
+  const getCampSugerencias = (campana: string | null) => {
+    if (!campana) {
+      return [
+        'Te sugiero lanzar una campaña de reactivación para leads fríos, el costo por adquisición general es favorable hoy.',
+        'He notado un aumento en búsquedas. Considera ajustar el presupuesto de Search Ads para captar la intención nocturna.',
+        'El CPA en canales de video es el más bajo del mes. Sugiero escalar la inversión en Video Shorts un 20%.'
+      ];
+    }
+    return [
+      `La campaña de ${campana} está activa. Sugiero aumentar su presupuesto en un 15% para aprovechar la tendencia actual.`,
+      `El CPA de ${campana} podría optimizarse aún más si activamos remarketing dinámico para los visitantes del último mes.`,
+      `Considera revisar los canales de menor rendimiento en ${campana} y reasignar esos fondos a Mensajería IA.`
+    ];
+  };
+
+  const sugerencias = getCampSugerencias(sel);
+
   return (
     <Shell icon={Megaphone} title="Campañas" subtitle="Inversión, performance y atribución"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Inversión total" value={`$${invTotal}K`} delta="4 campañas" up accent={colores.primario} />
-        <HeroKPI i={1} label="Ventas atribuidas" value={`${ventas}`} delta="ROI activo" up accent={colores.exito} spark={[20, 28, 34, 38, 40, ventas]} />
+        <HeroKPI i={1} label="Ventas atribuidas" value={`${ventas}`} delta={liveVentas > 0 ? `+${liveVentas} live` : 'ROI activo'} up accent={colores.exito} spark={[20, 28, 34, 38, 40, ventas]} />
         <HeroKPI i={2} label="ROI promedio" value={`×${roiProm}`} delta="activas" up accent="#2563EB" />
         <HeroKPI i={3} label="Mejor campaña" value={`×${mejor.roi}`} delta={mejor.nombre.split(' ')[0]} up accent="#7C3AED" />
       </>}>
@@ -276,7 +359,10 @@ export const PaginaCampanias: React.FC = () => {
             const on = sel === c.nombre; const det = campaniaDetalle.find(d => d.nombre === c.nombre);
             const ec = c.estado === 'Activa' ? colores.exito : c.estado === 'Programada' ? colores.advertencia : colores.textoOscuro;
             return (
-              <div key={c.nombre} onClick={() => setSel(on ? null : c.nombre)} style={{ padding: '10px', borderRadius: '12px', cursor: 'pointer', marginBottom: '6px', background: on ? colores.fondoTerciario : 'transparent', transition: 'background .2s' }}>
+              <div key={c.nombre} onClick={() => { setSel(on ? null : c.nombre); setSugIdx(0); }} 
+                   style={{ padding: '10px', borderRadius: '12px', cursor: 'pointer', marginBottom: '6px', background: on ? colores.fondoTerciario : 'transparent', transition: 'background .2s' }}
+                   onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
+                   onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '150px', flexShrink: 0 }}>{c.nombre}</span>
                   <GrowBar pct={(c.roi / maxRoi) * 100} color={colores.primario} delay={i * 60} />
@@ -306,6 +392,50 @@ export const PaginaCampanias: React.FC = () => {
               <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio }}>${s.v}K</span>
             </div>
           ))}
+          
+          {/* ── MAYIA Agent Recommendation Block ── */}
+          <div style={{
+            marginTop: '20px', 
+            padding: '12px',
+            borderRadius: '12px', 
+            border: `1px solid ${colores.primario}40`,
+            background: `${colores.primario}10`,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+              <div style={{ flexShrink: 0, marginTop: '2px' }}>
+                <Megaphone size={16} color={colores.primario} />
+              </div>
+              <div>
+                <p style={{ fontSize: '12px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+                  <strong style={{ color: colores.primario }}>MAYIA sugiere:</strong><br/>
+                  {sugerencias[sugIdx]}
+                </p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+              <button
+                onClick={() => setSugIdx(prev => (prev + 1) % sugerencias.length)}
+                style={{
+                  background: 'transparent',
+                  border: `1px solid ${colores.primario}60`,
+                  color: colores.primario,
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                Otra sugerencia
+              </button>
+            </div>
+          </div>
         </Panel></Reveal>
       </div>
     </Shell>
@@ -316,34 +446,73 @@ export const PaginaCampanias: React.FC = () => {
 // 4 · VENDEDORES
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaVendedores: React.FC = () => {
-  const totalV = vendedores.reduce((s, v) => s + v.ventas, 0);
+  const { colores } = brandingConfig;
+  const { events } = useLiveFeed();
+  const liveVentas = events.filter(e => e.type === 'venta').length;
+  
+  const totalV = vendedores.reduce((s, v) => s + v.ventas, 0) + liveVentas;
   const efic = (vendedores.reduce((s, v) => s + v.efic, 0) / vendedores.length).toFixed(1);
   const vencidos = vendedores.reduce((s, v) => s + v.seguimientos, 0);
   const maxV = Math.max(...vendedores.map(v => v.ventas));
   const sorted = [...vendedores].sort((a, b) => b.ventas - a.ventas);
   const medal = ['#D4AF37', '#9CA3AF', '#B87333'];
 
+  const [sel, setSel] = useState<string | null>(sorted[0]?.nombre || null);
+  const [sugIdx, setSugIdx] = useState(0);
+
+  const getSugerencias = (vendedor: typeof sorted[0]) => {
+    if (!vendedor) return [];
+    if (vendedor.ventas > 100) {
+      return [
+        `Te sugiero felicitar a ${vendedor.nombre.split(' ')[0]} por superar la meta mensual. Envíale un mensaje reconociendo su esfuerzo y compártele el playbook de Mejores Prácticas.`,
+        `MAYIA sugiere enviarle este mensaje: '¡Excelente trabajo, ${vendedor.nombre.split(' ')[0]}! Sigue así, tu tasa de conversión es un ejemplo para el equipo.'`,
+        `Considera asignar a ${vendedor.nombre.split(' ')[0]} como mentor temporal para los asesores con menor conversión este mes.`
+      ];
+    } else if (vendedor.seguimientos > 0) {
+      return [
+        `He detectado que ${vendedor.nombre.split(' ')[0]} tiene ${vendedor.seguimientos} seguimientos vencidos. Sugiero preguntarle si necesita apoyo de MAYIA Chatbot para calentar sus leads.`,
+        `MAYIA sugiere enviarle este mensaje: 'Hola ${vendedor.nombre.split(' ')[0]}, vi que tienes algunos seguimientos pendientes. ¿Te activo el copiloto IA para ayudarte a filtrarlos?'`,
+        `Te sugiero agendar una sesión rápida de coaching de 10 min con ${vendedor.nombre.split(' ')[0]} para revisar técnicas de cierre de ventas.`
+      ];
+    } else {
+      return [
+        `Motiva a ${vendedor.nombre.split(' ')[0]} para aumentar su número de cotizaciones. Sugiero enviarle leads calificados del modelo Lumio.`,
+        `MAYIA sugiere enviarle este mensaje: 'Hola ${vendedor.nombre.split(' ')[0]}, el equipo está cerca de la meta. Te acabo de asignar 5 leads VIP, ¡ve por ellos!'`,
+        `Te sugiero invitar a ${vendedor.nombre.split(' ')[0]} a revisar el nuevo módulo de entrenamiento sobre el modelo Voltae EV.`
+      ];
+    }
+  };
+
+  const sugerenciasActuales = sel ? getSugerencias(sorted.find(v => v.nombre === sel)!) : [];
+
   return (
     <Shell icon={Users} title="Vendedores" subtitle="Ranking, eficiencia y seguimientos"
       badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Ventas equipo" value={`${totalV}`} delta="este mes" up accent={colores.primario} spark={[18, 20, 19, 22, 21, totalV / 5]} />
+        <HeroKPI i={0} label="Ventas equipo" value={`${totalV}`} delta={liveVentas > 0 ? `+${liveVentas} live` : 'este mes'} up accent={colores.primario} spark={[18, 20, 19, 22, 21, totalV / 5]} />
         <HeroKPI i={1} label="Líder" value={sorted[0].nombre.split(' ')[0]} delta={`${sorted[0].ventas} ventas`} up accent="#D4AF37" />
         <HeroKPI i={2} label="Eficiencia prom." value={`${efic}%`} delta="cierre" up accent={colores.exito} />
         <HeroKPI i={3} label="Seg. vencidos" value={`${vencidos}`} delta="atención" accent={colores.peligro} />
       </>}>
       <div className="row2">
         <Reveal delay={120}><Panel title="Ranking por ventas">
-          {sorted.map((v, i) => (
-            <div key={v.nombre} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px' }}>
-              <div style={{ width: '26px', height: '26px', borderRadius: '8px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...tnum, fontSize: '12px', fontWeight: 800, color: i < 3 ? '#fff' : colores.textoMedio, background: i < 3 ? medal[i] : colores.fondoTerciario }}>{i + 1}</div>
-              <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '88px', flexShrink: 0 }}>{v.nombre}</span>
-              <GrowBar pct={(v.ventas / maxV) * 100} color={i < 3 ? colores.primario : `${colores.primario}99`} delay={i * 55} />
-              <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: colores.textoClaro, width: '34px', textAlign: 'right' }}>{v.ventas}</span>
-              <span style={{ ...tnum, fontSize: '11px', fontWeight: 700, color: colores.textoMedio, width: '44px', textAlign: 'right' }}>{v.efic}%</span>
-              {v.seguimientos > 0 && <span style={{ ...tnum, fontSize: '10px', fontWeight: 700, color: '#fff', background: v.seguimientos > 4 ? colores.peligro : colores.advertencia, borderRadius: '8px', padding: '2px 7px' }}>{v.seguimientos}</span>}
-            </div>
-          ))}
+          {sorted.map((v, i) => {
+            const isSelected = sel === v.nombre;
+            return (
+              <div key={v.nombre} 
+                   onClick={() => { setSel(v.nombre); setSugIdx(0); }}
+                   style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px', borderRadius: '10px', transition: 'background .2s', cursor: 'pointer', background: isSelected ? colores.fondoTerciario : 'transparent', border: `1px solid ${isSelected ? colores.primario + '40' : 'transparent'}` }}
+                   onMouseEnter={e => { if (!isSelected) e.currentTarget.style.background = `${colores.fondoTerciario}80` }}
+                   onMouseLeave={e => { if (!isSelected) e.currentTarget.style.background = 'transparent' }}>
+                <div style={{ width: '26px', height: '26px', borderRadius: '8px', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', ...tnum, fontSize: '12px', fontWeight: 800, color: i < 3 ? '#fff' : colores.textoMedio, background: i < 3 ? medal[i] : colores.fondoTerciario }}>{i + 1}</div>
+                <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '88px', flexShrink: 0 }}>{v.nombre}</span>
+                <GrowBar pct={(v.ventas / maxV) * 100} color={i < 3 ? colores.primario : `${colores.primario}99`} delay={i * 55} />
+                <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: colores.textoClaro, width: '34px', textAlign: 'right' }}>{v.ventas}</span>
+                <span style={{ ...tnum, fontSize: '11px', fontWeight: 700, color: colores.textoMedio, width: '44px', textAlign: 'right' }}>{v.efic}%</span>
+                {v.seguimientos > 0 && <span style={{ ...tnum, fontSize: '10px', fontWeight: 700, color: '#fff', background: v.seguimientos > 4 ? colores.peligro : colores.advertencia, borderRadius: '8px', padding: '2px 7px' }}>{v.seguimientos}</span>}
+              </div>
+            );
+          })}
         </Panel></Reveal>
         <Reveal delay={180}><Panel title="Eficiencia del equipo por etapa">
           {vendedorEtapas.map((e, i) => {
@@ -358,6 +527,72 @@ export const PaginaVendedores: React.FC = () => {
               </div>
             );
           })}
+          
+          {/* ── MAYIA Agent Recommendation Block ── */}
+          {sugerenciasActuales.length > 0 && (
+            <div style={{
+              marginTop: '20px', 
+              padding: '12px',
+              borderRadius: '12px', 
+              border: `1px solid ${colores.primario}40`,
+              background: `${colores.primario}10`,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ flexShrink: 0, marginTop: '2px' }}>
+                  <Users size={16} color={colores.primario} />
+                </div>
+                <div>
+                  <p style={{ fontSize: '12px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+                    <strong style={{ color: colores.primario }}>MAYIA aconseja sobre {sel}:</strong><br/>
+                    {sugerenciasActuales[sugIdx]}
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                <button
+                  style={{
+                    background: colores.primario,
+                    border: 'none',
+                    color: '#fff',
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; }}
+                  onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+                >
+                  <Send size={10} /> Enviar mensaje
+                </button>
+                <button
+                  onClick={() => setSugIdx(prev => (prev + 1) % sugerenciasActuales.length)}
+                  style={{
+                    background: 'transparent',
+                    border: `1px solid ${colores.primario}60`,
+                    color: colores.primario,
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                >
+                  Otra sugerencia
+                </button>
+              </div>
+            </div>
+          )}
         </Panel></Reveal>
       </div>
     </Shell>
@@ -369,7 +604,10 @@ export const PaginaVendedores: React.FC = () => {
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaInventario: React.FC = () => {
   const [filtro, setFiltro] = useState<'todas' | 'alta' | 'media' | 'baja'>('todas');
-  const totalU = inventario.reduce((s, i) => s + i.stock, 0);
+  const { events } = useLiveFeed();
+  const liveVentas = events.filter(e => e.type === 'venta').length;
+  
+  const totalU = inventario.reduce((s, i) => s + i.stock, 0) - liveVentas;
   const rot = Math.round(inventario.reduce((s, i) => s + i.dias, 0) / inventario.length);
   const alertas = inventario.filter(i => i.dias > 50 || i.dias < 20).length;
   const maxDias = Math.max(...inventario.map(i => i.dias));
@@ -377,11 +615,19 @@ export const PaginaInventario: React.FC = () => {
   const vis = inventario.filter(i => filtro === 'todas' || i.demanda === filtro);
   const segs = (['alta', 'media', 'baja'] as const).map(d => ({ v: inventario.filter(i => i.demanda === d).reduce((s, i) => s + i.stock, 0), color: dcol(d), label: d }));
 
+  const [sugIdx, setSugIdx] = useState(0);
+
+  const sugerenciasInventario = [
+    'El modelo Celix y Avenar tienen sobrestock moderado. Sugiero activar una promoción especial de arrendamiento para acelerar su salida.',
+    'El modelo Nexora se está agotando rápidamente debido a alta demanda. Te sugiero redirigir inventario de otras zonas.',
+    'Para los vehículos con más de 45 días en piso, sugiero ofrecer un bono SPIF adicional a los asesores comerciales.'
+  ];
+
   return (
     <Shell icon={Package} title="Inventario Inteligente" subtitle="Stock, rotación y demanda conectada"
       badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Unidades en piso" value={`${totalU}`} delta="5 modelos" accent={colores.primario} />
+        <HeroKPI i={0} label="Unidades en piso" value={`${totalU}`} delta={liveVentas > 0 ? `-${liveVentas} vendidas` : '5 modelos'} accent={colores.primario} />
         <HeroKPI i={1} label="Rotación prom." value={`${rot}d`} delta="en lote" up accent="#2563EB" />
         <HeroKPI i={2} label="Alertas stock" value={`${alertas}`} delta="revisar" accent={colores.peligro} />
         <HeroKPI i={3} label="Demanda alta" value={`${inventario.filter(i => i.demanda === 'alta').length}`} delta="modelos" up accent={colores.exito} />
@@ -400,7 +646,9 @@ export const PaginaInventario: React.FC = () => {
             const slow = it.dias > 50, fast = it.dias < 20;
             const c = slow ? colores.peligro : it.dias > 30 ? colores.advertencia : colores.exito;
             return (
-              <div key={it.modelo} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px' }}>
+              <div key={it.modelo} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px', borderRadius: '10px', transition: 'background .2s', cursor: 'default' }}
+                   onMouseEnter={e => e.currentTarget.style.background = `${colores.fondoTerciario}`}
+                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
                 {it.demanda === 'alta' ? <Flame size={16} color={colores.exito} /> : it.demanda === 'baja' ? <Snowflake size={16} color={colores.peligro} /> : <span style={{ width: '16px' }} />}
                 <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '70px', flexShrink: 0 }}>{it.modelo}</span>
                 <GrowBar pct={(it.dias / maxDias) * 100} color={c} delay={i * 55} />
@@ -433,25 +681,39 @@ export const PaginaInventario: React.FC = () => {
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaConversion: React.FC = () => {
   const [sel, setSel] = useState(0);
-  const maxF = conversionFunnel[0].n;
-  const tasa = ((conversionFunnel[conversionFunnel.length - 1].n / conversionFunnel[0].n) * 100).toFixed(1);
-  const e = conversionFunnel[sel];
-  const prev = sel > 0 ? conversionFunnel[sel - 1] : null;
+  const { events } = useLiveFeed();
+  const liveVentas = events.filter(e => e.type === 'venta').length;
+  
+  const funnelC = [...conversionFunnel];
+  funnelC[funnelC.length - 1] = { ...funnelC[funnelC.length - 1], n: funnelC[funnelC.length - 1].n + liveVentas };
+
+  const maxF = funnelC[0].n;
+  const tasa = ((funnelC[funnelC.length - 1].n / funnelC[0].n) * 100).toFixed(1);
+  const e = funnelC[sel];
+  const prev = sel > 0 ? funnelC[sel - 1] : null;
   const convPrev = prev ? Math.round((e.n / prev.n) * 100) : 100;
   const maxC = Math.max(...retencionCohorte.map(r => r.clientes));
 
+  const [sugIdx, setSugIdx] = useState(0);
+
+  const sugerenciasConversion = [
+    '¡Excelente ritmo de ventas! Te sugiero lanzar un programa de "referidos" automático por Mensajería IA para compradores recientes.',
+    'Noto un embudo ancho pero una caída de retención en "Agenda". Sugiero implementar la pre-aprobación express de crédito en 3 min con MAYIA.',
+    'La base instalada de >4 años muestra alta recompra. ¿Lanzo un e-mail hiper-personalizado con una oferta preferencial a este segmento?'
+  ];
+
   return (
     <Shell icon={Repeat} title="Conversión y Retención" subtitle="Embudo IA + cohortes de recompra"
-      badge={<span style={{ padding: '6px 12px', borderRadius: '20px', background: 'rgba(255,255,255,0.2)', fontSize: '12px', fontWeight: 700 }}>ESPECIAL</span>}
+      badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Conversión total" value={`${tasa}%`} delta="lead→venta" up accent={colores.primario} spark={[6.8, 7.2, 7.6, 8.1, 8.4, +tasa]} />
+        <HeroKPI i={0} label="Conversión total" value={`${tasa}%`} delta={liveVentas > 0 ? 'en vivo' : 'lead→venta'} up accent={colores.primario} spark={[6.8, 7.2, 7.6, 8.1, 8.4, +tasa]} />
         <HeroKPI i={1} label="Aprob. crédito" value="76%" delta="6%" up accent={colores.exito} />
         <HeroKPI i={2} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />
         <HeroKPI i={3} label="NPS" value="74" delta="6 pts" up accent="#2563EB" />
       </>}>
       <div className="row2">
         <Reveal delay={120}><Panel title="Embudo de conversión · clic en una etapa">
-          {conversionFunnel.map((s, i) => {
+          {funnelC.map((s, i) => {
             const on = i === sel; const w = (s.n / maxF) * 100;
             return (
               <div key={s.etapa} onClick={() => setSel(i)} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', marginBottom: '7px' }}>
@@ -473,7 +735,9 @@ export const PaginaConversion: React.FC = () => {
         <Reveal delay={180}><Panel title="Recompra por antigüedad">
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: '10px', height: '120px', marginBottom: '14px' }}>
             {retencionCohorte.map((r, i) => (
-              <div key={r.anio} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '5px' }}>
+              <div key={r.anio} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', height: '100%', gap: '5px', transition: 'transform 0.2s', cursor: 'default' }}
+                   onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-3px)'}
+                   onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}>
                 <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: colores.primario }}>{r.recompra}%</span>
                 <GrowBarV pct={(r.clientes / maxC) * 100} sub={(r.recompra / 31) * 100} delay={i * 70} />
                 <span style={{ fontSize: '9px', color: colores.textoMedio, textAlign: 'center' }}>{r.anio}</span>
@@ -481,7 +745,70 @@ export const PaginaConversion: React.FC = () => {
             ))}
           </div>
           <Gauge value={76} color={colores.exito} label="aprobación de crédito" />
-          <p style={{ fontSize: '11px', color: colores.textoMedio, margin: '12px 0 0', textAlign: 'center' }}>La tasa de recompra <b style={{ color: colores.textoClaro }}>sube con la antigüedad</b> — foco en clientes 4+ años.</p>
+          
+          {/* ── MAYIA Agent Recommendation Block ── */}
+          <div style={{
+            marginTop: '20px', 
+            padding: '12px',
+            borderRadius: '12px', 
+            border: `1px solid ${colores.primario}40`,
+            background: `${colores.primario}10`,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '10px'
+          }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+              <div style={{ flexShrink: 0, marginTop: '2px' }}>
+                <Repeat size={16} color={colores.primario} />
+              </div>
+              <div>
+                <p style={{ fontSize: '12px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+                  <strong style={{ color: colores.primario }}>MAYIA sugiere:</strong><br/>
+                  {sugerenciasConversion[sugIdx]}
+                </p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+              <button
+                style={{
+                  background: colores.primario,
+                  border: 'none',
+                  color: '#fff',
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '0.9'; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '1'; }}
+              >
+                <Send size={10} /> Aplicar plan
+              </button>
+              <button
+                onClick={() => setSugIdx(prev => (prev + 1) % sugerenciasConversion.length)}
+                style={{
+                  background: 'transparent',
+                  border: `1px solid ${colores.primario}60`,
+                  color: colores.primario,
+                  padding: '6px 12px',
+                  borderRadius: '8px',
+                  fontSize: '10px',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+              >
+                Otra sugerencia
+              </button>
+            </div>
+          </div>
         </Panel></Reveal>
       </div>
     </Shell>

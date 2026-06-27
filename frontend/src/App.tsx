@@ -20,8 +20,9 @@ import { PaginaLeads } from './components/comercial/PaginaLeads';
 import { PaginaOperacion } from './components/comercial/PaginaOperacion';
 import { PaginaInfluencers } from './components/comercial/PaginaInfluencers';
 import { brandingConfig } from './config/branding';
+import { LiveToast } from './components/LiveToast';
+import { AgentStatusBar } from './components/AgentStatusBar';
 
-// true cuando el ancho es de móvil/tablet
 function useIsMobile(bp = 900) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
   useEffect(() => {
@@ -68,69 +69,41 @@ function App() {
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':
-        return <Dashboard />;
-      case 'rh':
-        return <RecursosHumanos />;
-      case 'finanzas':
-        return <FinanzasContabilidad />;
-      case 'operaciones':
-        return <Operaciones />;
-      case 'ventas':
-        return <VentasMarketing />;
-      case 'ti':
-        return <TecnologiasInformacion />;
-      case 'administracion':
-        return <Administracion />;
-      case 'comercial':
-        return <VistaComercial />;
-      case 'leads':
-        return <PaginaLeads />;
-      case 'operacion':
-        return <PaginaOperacion />;
-      case 'influencers':
-        return <PaginaInfluencers />;
-      case 'ceo':
-        return <PaginaCEO />;
-      case 'scoring':
-        return <PaginaScoring />;
-      case 'campanias':
-        return <PaginaCampanias />;
-      case 'vendedores':
-        return <PaginaVendedores />;
-      case 'inventario':
-        return <PaginaInventario />;
-      case 'conversion':
-        return <PaginaConversion />;
-      case 'ciberseguridad':
-        return <Ciberseguridad />;
-      case 'playground':
-        return <Playground />;
-      case 'academia':
-        return <Academia />;
-      default:
-        return <Dashboard />;
+      case 'dashboard':   return <Dashboard />;
+      case 'rh':          return <RecursosHumanos />;
+      case 'finanzas':    return <FinanzasContabilidad />;
+      case 'operaciones': return <Operaciones />;
+      case 'ventas':      return <VentasMarketing />;
+      case 'ti':          return <TecnologiasInformacion />;
+      case 'administracion': return <Administracion />;
+      case 'comercial':   return <VistaComercial />;
+      case 'leads':       return <PaginaLeads />;
+      case 'operacion':   return <PaginaOperacion />;
+      case 'influencers': return <PaginaInfluencers />;
+      case 'ceo':         return <PaginaCEO />;
+      case 'scoring':     return <PaginaScoring />;
+      case 'campanias':   return <PaginaCampanias />;
+      case 'vendedores':  return <PaginaVendedores />;
+      case 'inventario':  return <PaginaInventario />;
+      case 'conversion':  return <PaginaConversion />;
+      case 'ciberseguridad': return <Ciberseguridad />;
+      case 'playground':  return <Playground />;
+      case 'academia':    return <Academia />;
+      default:            return <Dashboard />;
     }
   };
 
   return (
-    <div 
-      style={{ 
-        display: 'flex',
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
-        backgroundColor: colores.fondoPrincipal
-      }}
-    >
-      {/* SIDEBAR — fijo en escritorio */}
+    <div style={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden', backgroundColor: colores.fondoPrincipal }}>
+
+      {/* SIDEBAR fijo escritorio */}
       {!isMobile && (
         <div style={{ width: '240px', flexShrink: 0 }}>
           <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
         </div>
       )}
 
-      {/* SIDEBAR — drawer en móvil */}
+      {/* SIDEBAR drawer móvil */}
       {isMobile && drawerOpen && (
         <div onClick={() => setDrawerOpen(false)}
           style={{ position: 'fixed', inset: 0, zIndex: 3000, background: 'rgba(0,0,0,0.45)', display: 'flex' }}>
@@ -140,16 +113,17 @@ function App() {
         </div>
       )}
 
-      {/* CONTENIDO */}
+      {/* CONTENIDO PRINCIPAL */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Header */}
         <Header title={getTitulo()} onMenu={isMobile ? () => setDrawerOpen(true) : undefined} />
-
-        {/* Main content */}
+        <AgentStatusBar />
         <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: 'clamp(14px, 3vw, 24px)' }}>
           {renderContent()}
         </div>
       </div>
+
+      {/* Toasts globales */}
+      <LiveToast />
     </div>
   );
 }

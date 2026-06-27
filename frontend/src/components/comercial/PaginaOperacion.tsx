@@ -5,6 +5,7 @@ import { Pill, StatTile } from './ui';
 import { Bloque } from './PaginaLeads';
 import { Shell, HeroKPI, badgeLive } from './paginasPro';
 import { acciones, retencionCohorte } from './data';
+import { useLiveFeed } from '../../context/LiveFeedContext';
 
 const { colores } = brandingConfig;
 
@@ -23,11 +24,22 @@ function useCountUp(to: number, dur = 800) {
 const Copiloto: React.FC = () => {
   const [filtro, setFiltro] = useState<'todas' | 'alta' | 'media'>('todas');
   const [hechas, setHechas] = useState<Set<number>>(new Set());
-  const visibles = acciones.map((a, i) => ({ ...a, i })).filter(a => filtro === 'todas' || a.prioridad === filtro);
-  const pendientes = acciones.filter((a, i) => !hechas.has(i)).length;
+  const { events } = useLiveFeed();
+
+  // Fake actions from live events
+  const liveActions = events.filter(e => e.type === 'alerta').map((e, i) => ({
+    accion: e.title,
+    vendedor: 'Copiloto IA',
+    prioridad: 'alta' as const,
+    i: 100 + i, // Fake ID
+  }));
+
+  const allActions = [...liveActions, ...acciones.map((a, i) => ({ ...a, i }))];
+  const visibles = allActions.filter(a => filtro === 'todas' || a.prioridad === filtro);
+  const pendientes = allActions.filter((a) => !hechas.has(a.i)).length;
 
   return (
-    <Bloque icon={Compass} title="Copiloto Comercial" subtitle="Siguiente mejor acción · IA">
+    <Bloque icon={Compass} title="Copiloto Comercial" subtitle="Siguiente mejor acción en tiempo real">
       <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
         {(['todas', 'alta', 'media'] as const).map(f => (
           <button key={f} onClick={() => setFiltro(f)} style={{
@@ -38,14 +50,15 @@ const Copiloto: React.FC = () => {
         ))}
         <Pill text={`${pendientes} pendientes`} color={colores.primario} />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-        {visibles.map(a => {
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', maxHeight: '300px', overflowY: 'auto' }} className="no-scrollbar">
+        {visibles.map((a, idx) => {
           const done = hechas.has(a.i);
           return (
             <div key={a.i} style={{
               display: 'flex', alignItems: 'center', gap: '10px', padding: '12px', borderRadius: '12px',
               borderLeft: `4px solid ${done ? colores.exito : a.prioridad === 'alta' ? colores.peligro : colores.advertencia}`,
-              background: colores.fondoTerciario, opacity: done ? 0.55 : 1, transition: 'opacity 0.3s',
+              background: colores.fondoTerciario, opacity: done ? 0.55 : 1, transition: 'all 0.3s',
+              animation: idx === 0 && a.i >= 100 ? 'slideInRight 0.4s' : 'none',
             }}>
               <div style={{ flex: 1 }}>
                 <p style={{ fontSize: '13px', fontWeight: 600, color: colores.textoClaro, margin: 0, textDecoration: done ? 'line-through' : 'none' }}>{a.accion}</p>
@@ -73,10 +86,23 @@ const datasetsWA = {
 };
 const AgenteWA: React.FC = () => {
   const [rango, setRango] = useState<'Hoy' | 'Semana'>('Hoy');
+  const { events } = useLiveFeed();
+  
+  const liveChats = events.filter(e => e.type === 'seguimiento').length;
+  const liveCitas = events.filter(e => e.type === 'cita').length;
+
   const d = datasetsWA[rango];
-  const chats = useCountUp(d.chats); const calif = useCountUp(d.calif); const citas = useCountUp(d.citas);
-  const steps = [{ l: 'Chats', n: d.chats }, { l: 'Calificados', n: d.calif }, { l: 'Citas', n: d.citas }];
-  const max = d.chats;
+  
+  // Real-time values
+  const currentChats = d.chats + (rango === 'Hoy' ? liveChats : liveChats);
+  const currentCitas = d.citas + (rango === 'Hoy' ? liveCitas : liveCitas);
+  
+  const chats = useCountUp(currentChats); 
+  const calif = useCountUp(d.calif + liveCitas * 2); 
+  const citas = useCountUp(currentCitas);
+  
+  const steps = [{ l: 'Chats', n: currentChats }, { l: 'Calificados', n: d.calif + liveCitas * 2 }, { l: 'Citas', n: currentCitas }];
+  const max = currentChats;
 
   return (
     <Bloque icon={MessageCircle} title="Agente WhatsApp / IA" subtitle="Calificación y agenda automática">
@@ -93,9 +119,9 @@ const AgenteWA: React.FC = () => {
         <Pill text="LIVE" color={colores.exito} />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: '8px', marginBottom: '14px' }}>
-        <StatTile label="Chats" value={chats.toLocaleString()} delta="24%" deltaUp />
+        <StatTile label="Chats" value={chats.toLocaleString()} delta={liveChats > 0 ? `+${liveChats} live` : '24%'} deltaUp />
         <StatTile label="Calificados" value={calif.toLocaleString()} delta="60.5%" deltaUp />
-        <StatTile label="Citas agendadas" value={citas.toLocaleString()} delta="auto" deltaUp />
+        <StatTile label="Citas agendadas" value={citas.toLocaleString()} delta={liveCitas > 0 ? `+${liveCitas} auto` : 'auto'} deltaUp />
         <StatTile label="Sin atender" value={`${d.sin}`} />
       </div>
       {steps.map((s, i) => (
@@ -130,9 +156,11 @@ const Financiamiento: React.FC = () => {
   const mensualidad = Math.round((capital * r) / (1 - Math.pow(1 + r, -plazo)));
   const aprob = Math.max(40, Math.min(98, Math.round(58 + (engPct - 10) * 1.8 - (plazo - 48) * 0.25)));
   const aprobCol = aprob >= 75 ? colores.exito : aprob >= 55 ? colores.advertencia : colores.peligro;
+  const { events } = useLiveFeed();
+  const liveCredits = events.filter(e => e.type === 'credito').length;
 
   return (
-    <Bloque icon={CreditCard} title="Financiamiento" subtitle="Simulador de crédito en vivo">
+    <Bloque icon={CreditCard} title="Financiamiento" subtitle="Simulador de crédito">
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', alignItems: 'center', justifyItems: 'center' }}>
         <div>
           <div style={{ display: 'flex', gap: '6px', marginBottom: '14px', flexWrap: 'wrap' }}>
@@ -146,8 +174,13 @@ const Financiamiento: React.FC = () => {
           </div>
           <Slider label="Enganche" value={`${engPct}% · $${enganche.toLocaleString()}`} min={10} max={50} step={5} v={engPct} set={setEngPct} />
           <Slider label="Plazo" value={`${plazo} meses`} min={12} max={72} step={6} v={plazo} set={setPlazo} />
-          <div style={{ marginTop: '14px', padding: '14px', borderRadius: '14px', background: colores.fondoTerciario, textAlign: 'center' }}>
-            <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0, textTransform: 'uppercase', letterSpacing: '0.3px' }}>Mensualidad estimada</p>
+          <div style={{ marginTop: '14px', padding: '14px', borderRadius: '14px', background: colores.fondoTerciario, textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+            {liveCredits > 0 && (
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, background: colores.exito, color: '#fff', fontSize: '9px', fontWeight: 800, padding: '2px' }}>
+                {liveCredits} CRÉDITOS APROBADOS RECIENTEMENTE
+              </div>
+            )}
+            <p style={{ fontSize: '11px', color: colores.textoMedio, margin: liveCredits > 0 ? '12px 0 0' : 0, textTransform: 'uppercase', letterSpacing: '0.3px' }}>Mensualidad estimada</p>
             <p style={{ fontSize: '28px', fontWeight: 800, color: colores.primario, margin: '2px 0 0' }}>${mensualidad.toLocaleString()}</p>
             <p style={{ fontSize: '10px', color: colores.textoMedio, margin: '2px 0 0' }}>{modelos[mi].nombre} · ${precio.toLocaleString()} · tasa 13% anual</p>
           </div>
@@ -207,7 +240,7 @@ const Postventa: React.FC = () => {
         <StatTile label="Potenciales" value={`${potenciales}`} delta="upgrade" deltaUp />
       </div>
       <p style={{ fontSize: '12px', color: colores.textoMedio, margin: '12px 0 0' }}>
-        Segmento <b style={{ color: colores.textoClaro }}>{c.anio}</b>: <b style={{ color: colores.primario }}>{potenciales}</b> clientes listos para recompra/upgrade.
+        Segmento <b style={{ color: colores.textoClaro }}>{c.anio}</b>: MAYIA identificó <b style={{ color: colores.primario }}>{potenciales}</b> clientes listos para recompra/upgrade con crédito pre-aprobado.
       </p>
     </Bloque>
   );
@@ -249,20 +282,25 @@ const Seminuevos: React.FC = () => {
 };
 
 // ── Página Operación ─────────────────────────────────────────────────────────────
-export const PaginaOperacion: React.FC = () => (
-  <Shell icon={Store} title="Operación · Piso, Producto y Conversión" subtitle="Copiloto · WhatsApp IA · financiamiento · postventa · B2B" badge={badgeLive}
-    kpis={<>
-      <HeroKPI i={0} label="Acciones IA hoy" value="4" delta="prioridad" up accent="#CC0000" />
-      <HeroKPI i={1} label="Chats WhatsApp" value="312" delta="24%" up accent="#10B981" spark={[180, 210, 240, 270, 300, 312]} />
-      <HeroKPI i={2} label="Aprob. crédito" value="76%" delta="6%" up accent="#2563EB" />
-      <HeroKPI i={3} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />
-    </>}>
-    <Copiloto />
-    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-      <AgenteWA />
-      <Postventa />
-    </div>
-    <Financiamiento />
-    <Seminuevos />
-  </Shell>
-);
+export const PaginaOperacion: React.FC = () => {
+  const { events } = useLiveFeed();
+  const alertasCount = events.filter(e => e.type === 'alerta').length;
+  
+  return (
+    <Shell icon={Store} title="Operación · Piso, Producto y Conversión" subtitle="Copiloto · WhatsApp IA · financiamiento · postventa · B2B" badge={badgeLive}
+      kpis={<>
+        <HeroKPI i={0} label="Acciones IA hoy" value={String(4 + alertasCount)} delta={alertasCount > 0 ? `+${alertasCount} live` : 'prioridad'} up accent="#CC0000" />
+        <HeroKPI i={1} label="Chats WhatsApp" value="312" delta="24%" up accent="#10B981" spark={[180, 210, 240, 270, 300, 312]} />
+        <HeroKPI i={2} label="Aprob. crédito" value="76%" delta="6%" up accent="#2563EB" />
+        <HeroKPI i={3} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />
+      </>}>
+      <Copiloto />
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+        <AgenteWA />
+        <Postventa />
+      </div>
+      <Financiamiento />
+      <Seminuevos />
+    </Shell>
+  );
+};

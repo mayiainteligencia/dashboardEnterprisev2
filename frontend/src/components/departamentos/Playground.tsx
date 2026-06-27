@@ -1,192 +1,143 @@
 import React, { useState } from 'react';
-import { Code2 } from 'lucide-react';
+import { Code2, Terminal, Brain, BarChart, Zap, Bot } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { DepartamentoShell } from './DepartamentoShell';
+
+const { colores } = brandingConfig;
+
+const tools = [
+  { id: 1, title: 'API Testing', desc: 'Pruebas de integración y endpoints', icon: Terminal, color: '#10B981' },
+  { id: 2, title: 'Code Sandbox', desc: 'Entorno de desarrollo experimental', icon: Code2, color: '#3B82F6' },
+  { id: 3, title: 'IA Generativa', desc: 'Modelos de lenguaje y prompts', icon: Brain, color: '#8B5CF6' },
+  { id: 4, title: 'Visualización', desc: 'Gráficos y dashboards interactivos', icon: BarChart, color: '#F59E0B' },
+  { id: 5, title: 'Automatización', desc: 'Scripts y flujos de trabajo', icon: Zap, color: '#EF4444' },
+  { id: 6, title: 'Agentes Custom', desc: 'Construye tu propio agente IA', icon: Bot, color: '#CC0000' },
+];
 
 export const Playground: React.FC = () => {
-  const { colores } = brandingConfig;
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [activeConsole, setActiveConsole] = useState(false);
+  const [consoleText, setConsoleText] = useState('');
 
-  const cards = [
-    {
-      id: 1,
-      titulo: 'API Testing',
-      descripcion: 'Pruebas de integración y endpoints',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/playG/apitest.png',
-    },
-    {
-      id: 2,
-      titulo: 'Code Sandbox',
-      descripcion: 'Entorno de desarrollo experimental',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/playG/codesandbox.png',
-    },
-    {
-      id: 3,
-      titulo: 'IA Generativa',
-      descripcion: 'Modelos de lenguaje y prompts',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/playG/ia-gen.png',
-    },
-    {
-      id: 4,
-      titulo: 'Visualización de Datos',
-      descripcion: 'Gráficos y dashboards interactivos',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/playG/visualizacion.png',
-    },
-    {
-      id: 5,
-      titulo: 'Automatización',
-      descripcion: 'Scripts y flujos de trabajo',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/playG/automatizacion.png',
-    },
-  ];
+  const simulateQuery = () => {
+    setActiveConsole(true);
+    setConsoleText('');
+    const steps = [
+      '> Iniciando MAYIA Agent...',
+      '> Conectando a Google Gemini API...',
+      '> Cargando contexto de ventas...',
+      '> Analizando datos del CRM...',
+      '> Respuesta lista: Hay 3 leads de alta intención sin seguimiento. ¿Deseas asignarlos automáticamente?',
+    ];
+    let i = 0;
+    const iv = setInterval(() => {
+      if (i < steps.length) {
+        setConsoleText(prev => prev + '\n' + steps[i]);
+        i++;
+      } else {
+        clearInterval(iv);
+      }
+    }, 600);
+  };
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div>
-        <h2 style={{ fontSize: '32px', fontWeight: 'bold', color: colores.textoClaro, marginBottom: '8px' }}>
-          Playground
-        </h2>
-        <p style={{ color: colores.textoMedio, fontSize: '16px' }}>
-          Zona de pruebas y desarrollo experimental
-        </p>
+    <DepartamentoShell
+      icon={Code2}
+      title="Playground IA"
+      subtitle="Zona de pruebas, desarrollo experimental y agentes custom"
+      color="#06B6D4"
+      kpis={[
+        { label: 'Agentes disponibles', value: '6', delta: '2 en beta', deltaUp: true, color: '#06B6D4' },
+        { label: 'API calls hoy', value: '1,840', delta: '+24%', deltaUp: true, color: '#8B5CF6' },
+        { label: 'Tests activos', value: '12', delta: '100% ok', deltaUp: true, color: '#10B981' },
+        { label: 'Latencia prom.', value: '380ms', delta: 'óptima', deltaUp: true, color: '#F59E0B' },
+      ]}
+      agent={{ name: 'Dev Agent', role: 'Testing & Debug', status: 'online', actionsToday: 64 }}
+      actions={[
+        { text: 'Actualizar agente WhatsApp a v2.3', priority: 'alta', assignee: 'Dev Agent' },
+        { text: 'Probar integración Gemini con CRM Polanco', priority: 'alta', assignee: 'Ingeniería' },
+        { text: 'Documentar API de Lead Scoring', priority: 'media', assignee: 'Dev Team' },
+        { text: 'Deploy staging de nueva versión MAYIA', priority: 'baja', assignee: 'DevOps' },
+      ]}
+      recommendation="El API de Lead Scoring tiene latencia de 380ms promedio — dentro del SLA. El agente WhatsApp v2.3 está listo para producción y mejora la precisión de calificación un 14%. Recomiendo deploy esta semana."
+    >
+      {/* Tool grid */}
+      <div style={{
+        background: colores.fondoSecundario,
+        border: `1px solid ${colores.borde}`,
+        borderRadius: '16px', padding: '18px',
+      }}>
+        <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 800, color: colores.textoClaro }}>Herramientas disponibles</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '12px' }}>
+          {tools.map(tool => {
+            const Icon = tool.icon;
+            const isHov = hovered === tool.id;
+            return (
+              <div
+                key={tool.id}
+                onMouseEnter={() => setHovered(tool.id)}
+                onMouseLeave={() => setHovered(null)}
+                style={{
+                  padding: '16px',
+                  background: isHov ? `${tool.color}10` : colores.fondoTerciario,
+                  border: `1px solid ${isHov ? tool.color + '50' : colores.borde}`,
+                  borderRadius: '14px', cursor: 'pointer',
+                  transition: 'all 0.25s cubic-bezier(0.34,1.56,0.64,1)',
+                  transform: isHov ? 'translateY(-3px)' : 'translateY(0)',
+                  boxShadow: isHov ? `0 8px 20px ${tool.color}25` : 'none',
+                  textAlign: 'center',
+                }}
+              >
+                <div style={{
+                  width: '40px', height: '40px', borderRadius: '10px',
+                  background: `${tool.color}20`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  margin: '0 auto 10px',
+                }}>
+                  <Icon size={20} color={tool.color} />
+                </div>
+                <p style={{ margin: 0, fontSize: '12px', fontWeight: 700, color: colores.textoClaro }}>{tool.title}</p>
+                <p style={{ margin: '4px 0 0', fontSize: '10px', color: colores.textoMedio }}>{tool.desc}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-        gap: '20px',
+      {/* Mini console */}
+      <div style={{
+        background: '#0A0A0A',
+        border: `1px solid ${colores.borde}`,
+        borderRadius: '16px', padding: '16px',
+        fontFamily: 'monospace',
       }}>
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            onMouseEnter={() => setHoveredCard(card.id)}
-            onMouseLeave={() => setHoveredCard(null)}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <div style={{ display: 'flex', gap: '5px' }}>
+            {['#FF5F57', '#FEBC2E', '#28C840'].map(c => (
+              <div key={c} style={{ width: '10px', height: '10px', borderRadius: '50%', background: c }} />
+            ))}
+          </div>
+          <span style={{ fontSize: '11px', color: '#666', marginLeft: '8px' }}>MAYIA Console</span>
+          <button
+            onClick={simulateQuery}
             style={{
-              backgroundColor: colores.fondoSecundario,
-              borderRadius: '16px',
-              border: hoveredCard === card.id 
-                ? `2px solid ${colores.primario}`
-                : `1px solid ${colores.borde}`,
-              overflow: 'hidden',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              transform: hoveredCard === card.id ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
-              boxShadow: hoveredCard === card.id 
-                ? `0 20px 40px rgba(3, 140, 174, 0.3), 0 0 0 1px ${colores.primario}20`
-                : '0 2px 8px rgba(0, 0, 0, 0.1)',
+              marginLeft: 'auto', padding: '4px 12px', borderRadius: '8px',
+              border: 'none', background: '#CC0000', color: '#fff',
+              fontSize: '11px', fontWeight: 700, cursor: 'pointer',
             }}
           >
-            <div style={{
-              width: '100%',
-              height: '280px',
-              position: 'relative',
-              backgroundColor: colores.fondoTerciario,
-              overflow: 'hidden',
-            }}>
-              {card.mediaType === 'video' ? (
-                <video 
-                  autoPlay 
-                  muted 
-                  loop
-                  playsInline
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.1)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const container = e.currentTarget.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                >
-                  <source src={card.mediaSrc} type="video/mp4" />
-                </video>
-              ) : (
-                <img 
-                  src={card.mediaSrc}
-                  alt={card.titulo}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease, filter 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.1)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const container = target.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                />
-              )}
-
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(to top, rgba(3, 140, 174, 0.95) 0%, rgba(3, 140, 174, 0.7) 40%, transparent 100%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                padding: '20px',
-                opacity: hoveredCard === card.id ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-                backdropFilter: 'blur(4px)',
-              }}>
-                <p style={{
-                  color: '#FFFFFF',
-                  fontSize: '13px',
-                  margin: 0,
-                  lineHeight: '1.5',
-                  fontWeight: '600',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                }}>
-                  {card.descripcion}
-                </p>
-              </div>
-            </div>
-
-            <div style={{ 
-              padding: '14px',
-              backgroundColor: hoveredCard === card.id ? colores.fondoTerciario : 'transparent',
-              transition: 'background-color 0.3s ease',
-            }}>
-              <h4 style={{
-                fontSize: '14px',
-                fontWeight: '600',
-                color: hoveredCard === card.id ? colores.primario : colores.textoClaro,
-                margin: 0,
-                lineHeight: '1.3',
-                transition: 'color 0.3s ease',
-              }}>
-                {card.titulo}
-              </h4>
-            </div>
-          </div>
-        ))}
+            ▶ Simular query
+          </button>
+        </div>
+        <div style={{
+          minHeight: '100px', padding: '8px',
+          background: '#111', borderRadius: '8px',
+          fontSize: '12px', color: '#00FF41',
+          whiteSpace: 'pre-wrap', lineHeight: 1.6,
+        }}>
+          {consoleText || '> Listo para ejecutar. Haz clic en "Simular query".'}
+        </div>
       </div>
-    </div>
+    </DepartamentoShell>
   );
 };

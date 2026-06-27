@@ -13,82 +13,45 @@ export const Dashboard: React.FC = () => {
   const { colores } = brandingConfig;
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        background: colores.fondoPrincipal,
-        padding: 'clamp(16px, 4vw, 32px)',
-      }}
-    >
+    <div style={{ minHeight: '100vh', background: colores.fondoPrincipal, padding: 'clamp(8px, 2vw, 16px)' }}>
       <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
-        {/* Welcome Header */}
+
+        {/* Welcome Header con reloj y ticker live */}
         <WelcomeHeader />
 
-        {/* --- FILA 1: Operaciones y Asistente (SE MANTIENEN IGUAL) --- */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
-            marginBottom: '24px',
-          }}
-        >
-          {/* Análisis Predictivo */}
-          <div>
-            <AnalisisDemanda />
-          </div>
-
-          {/* Hero */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            <HeroCard />
-          </div>
-
-          {/* Monitoreo de Redes */}
-          <div>
-            <MonitoreoRedesSociales />
-          </div>
+        {/* --- FILA 1: Análisis, MAYIA Chat, Monitor Redes --- */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '20px',
+          marginBottom: '20px',
+        }}>
+          <AnalisisDemanda />
+          <HeroCard />
+          <MonitoreoRedesSociales />
         </div>
 
-        {/* --- FILA 3: Redes Sociales, Campañas y Alertas --- */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
-            gap: '24px',
-            marginBottom: '24px',
-          }}
-        >
-          {/* Campañas Inteligentes */}
-          <div>
-            <CampañasInteligentes />
-          </div>
-
-          {/* Alertas de la Empresa */}
-          <div>
-            <AlertasEmpresa />
-          </div>
+        {/* --- FILA 2: Campañas + Alertas en vivo --- */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))',
+          gap: '20px',
+          marginBottom: '20px',
+        }}>
+          <CampañasInteligentes />
+          <AlertasEmpresa />
         </div>
 
-        {/* --- FILA 4: Calendario y Top Cursos (el "remate" visual) --- */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '24px',
-          }}
-        >
-          {/* Mini Calendario */}
-          <div>
-            <MiniCalendarCard />
-          </div>
-
-          {/* Top Cursos */}
-          <div>
-            <TopCoursesCard />
-          </div>
+        {/* --- FILA 3: Calendario + Top Cursos --- */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+          gap: '20px',
+        }}>
+          <MiniCalendarCard />
+          <TopCoursesCard />
         </div>
 
-        {/* ... tus estilos globales se mantienen igual ... */}
         <style>{`
           @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -107,21 +70,10 @@ export const Dashboard: React.FC = () => {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
           }
-          ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-          }
-          ::-webkit-scrollbar-track {
-            background: ${colores.fondoSecundario}40;
-            border-radius: 4px;
-          }
-          ::-webkit-scrollbar-thumb {
-            background: ${colores.primario}60;
-            border-radius: 4px;
-          }
-          ::-webkit-scrollbar-thumb:hover {
-            background: ${colores.primario}80;
-          }
+          ::-webkit-scrollbar { width: 6px; height: 6px; }
+          ::-webkit-scrollbar-track { background: ${colores.fondoSecundario}40; border-radius: 3px; }
+          ::-webkit-scrollbar-thumb { background: ${colores.primario}60; border-radius: 3px; }
+          ::-webkit-scrollbar-thumb:hover { background: ${colores.primario}80; }
         `}</style>
       </div>
     </div>

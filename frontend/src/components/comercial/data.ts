@@ -32,10 +32,10 @@ export const funnel = [
 ];
 
 export const canales = [
-  { nombre: 'Facebook Ads', leads: 3120, cpl: 84,  roi: 4.2 },
-  { nombre: 'Google Ads',   leads: 2480, cpl: 112, roi: 3.6 },
-  { nombre: 'WhatsApp',     leads: 1890, cpl: 41,  roi: 6.1 },
-  { nombre: 'TikTok',       leads: 1240, cpl: 68,  roi: 2.9 },
+  { nombre: 'Social Ads', leads: 3120, cpl: 84,  roi: 4.2 },
+  { nombre: 'Search Ads',   leads: 2480, cpl: 112, roi: 3.6 },
+  { nombre: 'Mensajería IA',     leads: 1890, cpl: 41,  roi: 6.1 },
+  { nombre: 'Video Ads',       leads: 1240, cpl: 68,  roi: 2.9 },
   { nombre: 'Piso de venta', leads: 760, cpl: 0,   roi: 9.8 },
   { nombre: 'Referidos',    leads: 380,  cpl: 22,  roi: 7.4 },
 ];
@@ -49,10 +49,10 @@ export const scoring = [
 ];
 
 export const campanias = [
-  { nombre: 'Auron Legend',  inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
+  { nombre: 'MAYIA Legend EV',  inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
   { nombre: 'Velox Track',   inv: 210, ventas: 38, roi: 3.8, estado: 'Activa' },
   { nombre: 'Trekar Adv.',  inv: 0,   ventas: 0,  roi: 0,   estado: 'Programada' },
-  { nombre: 'CB650R Neo Sports', inv: 148, ventas: 51, roi: 5.1, estado: 'Completada' },
+  { nombre: 'MAYIA Neo Sports', inv: 148, ventas: 51, roi: 5.1, estado: 'Completada' },
 ];
 
 export const vendedores = [
@@ -85,11 +85,11 @@ export const alertas = [
   { txt: 'Kestra: stock crítico (12 días en lote)', tipo: 'amarillo', hace: '20 min',
     detalle: 'El modelo Kestra tiene solo 18 unidades con rotación de 12 días en lote y demanda alta. Al ritmo actual se agota en ~9 días, antes del próximo reabasto programado.',
     accion: 'Solicitar traspaso entre agencias o adelantar pedido a planta.' },
-  { txt: 'WhatsApp: 18 leads sin atender', tipo: 'amarillo', hace: '40 min',
+  { txt: 'Mensajería: 18 leads sin atender', tipo: 'amarillo', hace: '40 min',
     detalle: 'El agente IA calificó 18 leads que llevan >2h sin respuesta humana. 6 son de intención alta (score >80). Riesgo de fuga estimado: 32%.',
     accion: 'Encender intervención humana / round-robin de asesores.' },
   { txt: 'Guadalajara superó meta mensual', tipo: 'verde', hace: '1 h',
-    detalle: 'Guadalajara cerró 151 ventas vs meta de 145 (104%) con 5 días aún por delante. Mejor canal: Facebook Ads (ROI ×4.6). Buen caso para replicar playbook.',
+    detalle: 'Guadalajara cerró 151 ventas vs meta de 145 (104%) con 5 días aún por delante. Mejor canal: Social Ads (ROI ×4.6). Buen caso para replicar playbook.',
     accion: 'Documentar y replicar estrategia en agencias rezagadas.' },
 ];
 
@@ -121,10 +121,10 @@ export const scoringFactores: Record<string, { presupuesto: number; urgencia: nu
 
 // desglose de campañas
 export const campaniaDetalle = [
-  { nombre: 'Auron Legend',  alcance: 920000, conv: 42, cpa: 4452, canal: 'Facebook Ads' },
-  { nombre: 'Velox Track',   alcance: 780000, conv: 38, cpa: 5526, canal: 'Google Ads' },
-  { nombre: 'Trekar Adv.',  alcance: 0,      conv: 0,  cpa: 0,    canal: 'TikTok' },
-  { nombre: 'CB650R Neo Sports', alcance: 640000, conv: 51, cpa: 2902, canal: 'WhatsApp' },
+  { nombre: 'MAYIA Legend EV',  alcance: 920000, conv: 42, cpa: 4452, canal: 'Social Ads' },
+  { nombre: 'Velox Track',   alcance: 680000, conv: 38, cpa: 5526, canal: 'Search Ads' },
+  { nombre: 'Trekar Adv.',  alcance: 0,      conv: 0,  cpa: 0,    canal: 'Video Shorts' },
+  { nombre: 'MAYIA Neo Sports', alcance: 640000, conv: 51, cpa: 2902, canal: 'Mensajería IA' },
 ];
 
 // eficiencia de vendedores por etapa del funnel (% de paso)
@@ -136,13 +136,14 @@ export const vendedorEtapas = [
   { etapa: 'Crédito → Venta', pct: 71 },
 ];
 
-// embudo de conversión (whatsapp → venta) y retención
+// embudo de conversión (mensajería → venta) y retención
 export const conversionFunnel = [
-  { etapa: 'Lead WhatsApp', n: 3120 },
-  { etapa: 'Calificado IA', n: 1890 },
-  { etapa: 'Cita agendada', n: 740 },
-  { etapa: 'Crédito iniciado', n: 410 },
-  { etapa: 'Venta', n: 268 },
+  { etapa: 'Lead Chat', n: 3120 },
+  { etapa: 'Contacto IA', n: 2450 },
+  { etapa: 'Asignado',  n: 1890 },
+  { etapa: 'Agenda',    n: 1240 },
+  { etapa: 'Crédito',   n: 410 },
+  { etapa: 'Venta',     n: 268 },
 ];
 
 export const retencionCohorte = [

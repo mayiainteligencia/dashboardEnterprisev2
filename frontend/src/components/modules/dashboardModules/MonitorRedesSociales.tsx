@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Radio, Heart, TrendingUp, TrendingDown, ThumbsUp, ThumbsDown, Minus, RefreshCw } from 'lucide-react';
+import { Radio, Heart, TrendingUp, TrendingDown, ThumbsUp, ThumbsDown, Minus, RefreshCw, Camera, Music, MessageCircle, Users, PlayCircle, MessageSquare } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
 // ─── Types & Data ─────────────────────────────────────────────────────────────
 
-type Red = 'Instagram' | 'TikTok' | 'X' | 'Facebook' | 'YouTube';
+type Red = 'Fotos' | 'Shorts' | 'Microblog' | 'Red Social' | 'Videos';
 type Sentimiento = 'positivo' | 'neutro' | 'negativo';
 
 interface RedMetrica {
@@ -13,7 +13,7 @@ interface RedMetrica {
   engagement: number;
   tendencia: number;
   color: string;
-  emoji: string;
+  Icon: React.FC<{ size: number, color?: string }>;
 }
 
 interface Post {
@@ -29,18 +29,18 @@ interface Post {
 }
 
 const redes: RedMetrica[] = [
-  { nombre: 'Instagram', seguidores: 284000, engagement: 4.8, tendencia: 12.3,  color: '#E1306C', emoji: '📸' },
-  { nombre: 'TikTok',   seguidores: 198000, engagement: 8.2, tendencia: 34.7,  color: '#010101', emoji: '🎵' },
-  { nombre: 'X',        seguidores: 91000,  engagement: 2.1, tendencia: -3.2,  color: '#1DA1F2', emoji: '𝕏'  },
-  { nombre: 'Facebook', seguidores: 312000, engagement: 1.9, tendencia: -8.1,  color: '#1877F2', emoji: '👤' },
-  { nombre: 'YouTube',  seguidores: 74000,  engagement: 6.4, tendencia: 18.6,  color: '#FF0000', emoji: '▶'  },
+  { nombre: 'Fotos', seguidores: 284000, engagement: 4.8, tendencia: 12.3,  color: '#E1306C', Icon: Camera },
+  { nombre: 'Shorts',   seguidores: 198000, engagement: 8.2, tendencia: 34.7,  color: '#010101', Icon: Music },
+  { nombre: 'Microblog',        seguidores: 91000,  engagement: 2.1, tendencia: -3.2,  color: '#1DA1F2', Icon: MessageCircle  },
+  { nombre: 'Red Social', seguidores: 312000, engagement: 1.9, tendencia: -8.1,  color: '#1877F2', Icon: Users },
+  { nombre: 'Videos',  seguidores: 74000,  engagement: 6.4, tendencia: 18.6,  color: '#FF0000', Icon: PlayCircle  },
 ];
 
 const posts: Post[] = [
-  { id: 1, red: 'TikTok',    usuario: '@mayiacars',   contenido: '¡El Voltae EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Voltae', hace: '2h',  color: '#CC0000' },
-  { id: 2, red: 'Instagram', usuario: '@mayia_fans_cdmx', contenido: 'Test drive Lumio — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Lumio', hace: '4h',  color: '#333333' },
-  { id: 3, red: 'X',         usuario: '@auto_journalista', contenido: 'Precio Nexora alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Nexora',    hace: '6h',  color: '#666666' },
-  { id: 4, red: 'Facebook',  usuario: 'Manejando por México',contenido: 'Problema con el servicio en el distribuidor 😞',  likes: 210,  sentimiento: 'negativo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
+  { id: 1, red: 'Shorts',    usuario: '@mayiacars',   contenido: '¡El Voltae EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Voltae', hace: '2h',  color: '#CC0000' },
+  { id: 2, red: 'Fotos', usuario: '@mayia_fans_cdmx', contenido: 'Test drive Lumio — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Lumio', hace: '4h',  color: '#333333' },
+  { id: 3, red: 'Microblog',         usuario: '@auto_journalista', contenido: 'Precio Nexora alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Nexora',    hace: '6h',  color: '#666666' },
+  { id: 4, red: 'Red Social',  usuario: 'Manejando por México',contenido: 'Problema con el servicio en el distribuidor 😞',  likes: 210,  sentimiento: 'negativo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
 ];
 
 // Sentiment 7 días
@@ -113,6 +113,13 @@ export const MonitoreoRedesSociales: React.FC = () => {
   const [activeRed, setActiveRed]   = useState<Red | 'todas'>('todas');
   const [spinning, setSpinning]     = useState(false);
   const [postIdx, setPostIdx]       = useState(0);
+  const [sugIdx, setSugIdx]         = useState(0);
+
+  const sugerencias = [
+    "Te recomiendo que capitalices el sentimiento positivo del Voltae EV creando una campaña de 'Video Ads' dirigida a prospectos jóvenes urbanos para agendar pruebas de manejo.",
+    "Sugiero amplificar los testimonios de usuarios satisfechos del modelo Lumio en 'Social Ads' para contrarrestar dudas sobre autonomía.",
+    "Activa una campaña de retargeting en 'Microblog' para usuarios que mostraron interés inicial en el modelo Nexora pero no agendaron cita."
+  ];
 
   useEffect(() => { const t = setTimeout(() => setMounted(true), 80); return () => clearTimeout(t); }, []);
 
@@ -230,7 +237,7 @@ export const MonitoreoRedesSociales: React.FC = () => {
                 color: isA ? 'white' : colores.textoMedio,
                 fontSize: '10px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.25s',
               }}>
-                {r === 'todas' ? 'Todas' : red?.emoji}
+                {r === 'todas' ? 'Todas' : red && React.createElement(red.Icon, { size: 12 })}
               </button>
             );
           })}
@@ -246,7 +253,9 @@ export const MonitoreoRedesSociales: React.FC = () => {
                 display: 'flex', alignItems: 'center', gap: '8px',
                 opacity: mounted ? 1 : 0, transition: `opacity 0.4s ease ${0.25 + i * 0.06}s`,
               }}>
-                <span style={{ fontSize: '12px', width: '18px', textAlign: 'center', flexShrink: 0 }}>{r.emoji}</span>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '18px', flexShrink: 0 }}>
+                  {React.createElement(r.Icon, { size: 14, color: r.color })}
+                </span>
                 <div style={{ flex: 1, height: '4px', borderRadius: '2px', background: colores.fondoSecundario, overflow: 'hidden' }}>
                   <div style={{
                     height: '100%', borderRadius: '2px', background: r.color,
@@ -306,7 +315,12 @@ export const MonitoreoRedesSociales: React.FC = () => {
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '6px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
-                <span style={{ fontSize: '14px' }}>{redes.find(r => r.nombre === post.red)?.emoji}</span>
+                <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {(() => {
+                    const foundRed = redes.find(r => r.nombre === post.red);
+                    return foundRed ? React.createElement(foundRed.Icon, { size: 16, color: foundRed.color }) : null;
+                  })()}
+                </span>
                 <div>
                   <p style={{ fontSize: '11px', fontWeight: '700', color: colores.textoClaro, margin: 0 }}>{post.usuario}</p>
                   <p style={{ fontSize: '9px', color: colores.textoMedio, margin: 0 }}>{post.red} · {post.hace}</p>
@@ -350,18 +364,45 @@ export const MonitoreoRedesSociales: React.FC = () => {
         )}
       </div>
 
-      {/* ── Footer CTA ── */}
-      <button style={{
-        width: '100%', marginTop: '10px', padding: '10px',
-        borderRadius: '10px', border: `1px solid ${colores.borde}`,
-        background: 'transparent', color: colores.primario,
-        fontSize: '13px', fontWeight: '600', cursor: 'pointer', transition: 'all 0.2s',
-      }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = `${colores.primario}10`; (e.currentTarget as HTMLElement).style.borderColor = colores.primario; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.borderColor = colores.borde; }}
-      >
-        Ver análisis completo
-      </button>
+      {/* ── Footer AI Recommendation ── */}
+      <div style={{
+        marginTop: '10px', 
+        padding: '10px 12px',
+        borderRadius: '10px', 
+        border: `1px solid ${colores.primario}40`,
+        background: `${colores.primario}10`,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px'
+      }}>
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+          <div style={{ flexShrink: 0, marginTop: '2px' }}>
+            <MessageSquare size={14} color={colores.primario} />
+          </div>
+          <p style={{ fontSize: '11px', color: colores.textoClaro, margin: 0, lineHeight: 1.4 }}>
+            <strong style={{ color: colores.primario }}>MAYIA sugiere:</strong> {sugerencias[sugIdx]}
+          </p>
+        </div>
+        <button
+          onClick={() => setSugIdx(prev => (prev + 1) % sugerencias.length)}
+          style={{
+            alignSelf: 'flex-end',
+            background: 'transparent',
+            border: `1px solid ${colores.primario}60`,
+            color: colores.primario,
+            padding: '3px 8px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+        >
+          Propónme otra
+        </button>
+      </div>
 
       <style>{`
         @keyframes rsFade {

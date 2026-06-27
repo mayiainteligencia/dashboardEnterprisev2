@@ -1,194 +1,59 @@
-import React, { useState } from 'react';
-import { Building2 } from 'lucide-react';
+import React from 'react';
+import { Building2, FileText, Calendar, Award } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { DepartamentoShell } from './DepartamentoShell';
 
-export const Administracion: React.FC = () => {
-  const { colores } = brandingConfig;
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+const { colores } = brandingConfig;
 
-  const cards = [
-    {
-      id: 1,
-      titulo: 'ESTRATEGIA IA',
-      descripcion: 'Consultor Digital para portafolio de sistemas de IA - $98,000',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD1.png',
-    },
-    {
-      id: 2,
-      titulo: 'INNOVACIÓN EMPRESARIAL',
-      descripcion: 'Democratiza la innovación con IA generativa - $98,000',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD2.png',
-    },
-    {
-      id: 3,
-      titulo: 'Business Consulting',
-      descripcion: 'Enfoque holístico: personas, procesos y tecnología',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD3.png',
-    },
-    {
-      id: 4,
-      titulo: 'Asesor ISO 9001',
-      descripcion: 'Cumplimiento normativo y gestión de calidad con IA',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD4.png',
-    },
-    {
-      id: 5,
-      titulo: 'Operadora Con IA',
-      descripcion: 'Automatización de operaciones administrativas',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD5.png',
-    },
-  ];
+const compliance = [
+  { label: 'NOM-035 STPS', status: 'Cumplido', color: '#10B981' },
+  { label: 'IMSS / INFONAVIT', status: 'Al día', color: '#10B981' },
+  { label: 'SAT — Facturación', status: 'Cumplido', color: '#10B981' },
+  { label: 'Contratos de arrendamiento', status: 'Revisión', color: '#F59E0B' },
+  { label: 'Pólizas de seguro', status: '30 días', color: '#F59E0B' },
+];
 
-  return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div>
-        <h2 style={{ fontSize: '32px', fontWeight: 'bold', color: colores.textoClaro, marginBottom: '8px' }}>
-          Administración
-        </h2>
-        <p style={{ color: colores.textoMedio, fontSize: '16px' }}>
-          Consultoría estratégica y gestión inteligente
-        </p>
-      </div>
-
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-        gap: '20px',
-      }}>
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            onMouseEnter={() => setHoveredCard(card.id)}
-            onMouseLeave={() => setHoveredCard(null)}
-            style={{
-              backgroundColor: colores.fondoSecundario,
-              borderRadius: '16px',
-              border: hoveredCard === card.id 
-                ? `2px solid ${colores.primario}`
-                : `1px solid ${colores.borde}`,
-              overflow: 'hidden',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              transform: hoveredCard === card.id ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-              boxShadow: hoveredCard === card.id 
-                ? `0 16px 32px rgba(3, 140, 174, 0.25), 0 0 0 1px ${colores.primario}20`
-                : '0 2px 8px rgba(0, 0, 0, 0.1)',
-              maxWidth: '240px',
-            }}
-          >
-            <div style={{
-              width: '100%',
-              height: '280px',
-              position: 'relative',
-              backgroundColor: colores.fondoTerciario,
-              overflow: 'hidden',
-            }}>
-              {card.mediaType === 'video' ? (
-                <video 
-                  autoPlay 
-                  muted 
-                  loop
-                  playsInline
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const container = e.currentTarget.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                >
-                  <source src={card.mediaSrc} type="video/mp4" />
-                </video>
-              ) : (
-                <img 
-                  src={card.mediaSrc}
-                  alt={card.titulo}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease, filter 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const container = target.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                />
-              )}
-
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(to top, rgba(3, 140, 174, 0.95) 0%, rgba(3, 140, 174, 0.7) 40%, transparent 100%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                padding: '16px',
-                opacity: hoveredCard === card.id ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-                backdropFilter: 'blur(4px)',
-              }}>
-                <p style={{
-                  color: '#FFFFFF',
-                  fontSize: '11px',
-                  margin: 0,
-                  lineHeight: '1.4',
-                  fontWeight: '600',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                }}>
-                  {card.descripcion}
-                </p>
-              </div>
-            </div>
-
-            <div style={{ 
-              padding: '12px',
-              backgroundColor: hoveredCard === card.id ? colores.fondoTerciario : 'transparent',
-              transition: 'background-color 0.3s ease',
-              minHeight: '55px',
-            }}>
-              <h4 style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: hoveredCard === card.id ? colores.primario : colores.textoClaro,
-                margin: 0,
-                lineHeight: '1.3',
-                transition: 'color 0.3s ease',
-              }}>
-                {card.titulo}
-              </h4>
-            </div>
+export const Administracion: React.FC = () => (
+  <DepartamentoShell
+    icon={Building2}
+    title="Administración"
+    subtitle="Gestión corporativa, legal y cumplimiento"
+    color="#6B7280"
+    kpis={[
+      { label: 'Contratos activos', value: '47', delta: '+3 este mes', deltaUp: true, color: '#6B7280' },
+      { label: 'Cumplimiento', value: '94%', delta: '3 pendientes', color: '#F59E0B' },
+      { label: 'Documentos digitalizados', value: '1,240', delta: '+87 mes', deltaUp: true, color: '#10B981' },
+      { label: 'Proveedores activos', value: '32', delta: '2 nuevos', deltaUp: true, color: '#8B5CF6' },
+    ]}
+    agent={{ name: 'Admin Agent', role: 'Gestión documental', status: 'online', actionsToday: 16 }}
+    actions={[
+      { text: 'Renovar pólizas de seguro (vencen en 30 días)', priority: 'alta', assignee: 'Legal' },
+      { text: 'Revisar contratos de arrendamiento Satélite', priority: 'alta', assignee: 'Admin Agent' },
+      { text: 'Digitalizar expedientes de nuevos empleados', priority: 'media', assignee: 'Administración' },
+      { text: 'Actualizar inventario de activos fijos', priority: 'baja', assignee: 'Contabilidad' },
+    ]}
+    recommendation="El cumplimiento normativo está al 94%. Los 3 puntos restantes son las pólizas de seguro y contratos de arrendamiento. Priorizar antes del cierre del trimestre para evitar sanciones regulatorias."
+  >
+    <div style={{
+      background: colores.fondoSecundario,
+      border: `1px solid ${colores.borde}`,
+      borderRadius: '16px', padding: '18px',
+    }}>
+      <h3 style={{ margin: '0 0 14px', fontSize: '14px', fontWeight: 800, color: colores.textoClaro }}>Cumplimiento normativo</h3>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {compliance.map(c => (
+          <div key={c.label} style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            padding: '10px 14px', background: colores.fondoTerciario,
+            border: `1px solid ${colores.borde}`, borderRadius: '10px',
+          }}>
+            <span style={{ fontSize: '13px', fontWeight: 600, color: colores.textoClaro }}>{c.label}</span>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: c.color, background: `${c.color}15`, padding: '3px 9px', borderRadius: '6px' }}>
+              {c.status}
+            </span>
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  </DepartamentoShell>
+);

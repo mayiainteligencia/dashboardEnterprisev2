@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ── Reset ─────────────────────────────────────────────────────────────────── */
 * {
   margin: 0;
   padding: 0;
@@ -12,80 +14,122 @@ html, body, #root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-
-/* Oculta la barra de scroll pero conserva el scroll */
-.no-scrollbar {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE/Edge */
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;                /* Chrome/Safari */
-  width: 0;
-  height: 0;
-}
-
-/* Rejillas de 2 columnas que se apilan en móvil */
-.row2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
-.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
-@media (max-width: 880px) {
-  .row2, .row2-rev { grid-template-columns: 1fr; }
-}
-
-/* Mapa + panel lateral */
-.row-map { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
-@media (max-width: 880px) {
-  .row-map { grid-template-columns: 1fr; }
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
+button, input, select, textarea {
   font-family: inherit;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ── Scrollbars ─────────────────────────────────────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CC000040; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #CC000080; }
+
+/* ── Grids ─────────────────────────────────────────────────────────────────── */
+.row2     { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
+.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
+.row-map  { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
+
+@media (max-width: 880px) {
+  .row2, .row2-rev, .row-map { grid-template-columns: 1fr; }
+}
+
+/* ── Global animations ─────────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 8px #CC000040; }
+  50%       { box-shadow: 0 0 20px #CC000070; }
+}
+
+/* ── Typing dots ─────────────────────────────────────────────────────────── */
 .typing-dots span {
   display: inline-block;
-  width: 6px;
-  height: 6px;
+  width: 6px; height: 6px;
   margin: 0 2px;
-  background: #038CAE;
+  background: #CC0000;
   border-radius: 50%;
   animation: blink 1.4s infinite both;
 }
-
-.typing-dots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-.typing-dots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 
 @keyframes blink {
-  0%,
-  80%,
-  100% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
+  0%, 80%, 100% { opacity: 0; }
+  40%           { opacity: 1; }
+}
+
+/* ── Glassmorphism card ──────────────────────────────────────────────────── */
+.jarvis-card {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 20px;
+}
+
+/* ── Live pulse indicator ─────────────────────────────────────────────────── */
+.live-dot {
+  display: inline-block;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  animation: livePulse 1.5s infinite;
+  box-shadow: 0 0 8px #10B981;
+}
+
+@keyframes livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.4); }
+}
+
+/* ── Agent badge ─────────────────────────────────────────────────────────── */
+.agent-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(204,0,0,0.12);
+  border: 1px solid rgba(204,0,0,0.3);
+  color: #CC0000;
+}
+
+/* ── Glow text ───────────────────────────────────────────────────────────── */
+.glow-red {
+  text-shadow: 0 0 20px #CC000060;
+}
+
+/* ── Number font feature ─────────────────────────────────────────────────── */
+.tabnum {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.5px;
 }
