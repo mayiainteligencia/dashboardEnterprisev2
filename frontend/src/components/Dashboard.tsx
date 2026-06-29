@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import {
   TrendingUp, BookOpen, Users, ShoppingBag, Map, Clock, 
   ArrowRight, Zap, BarChart3, Sparkles, Mic, X, Send, Utensils, 
-  AlertTriangle, CheckCircle, HelpCircle, ChevronRight, MicOff
+  AlertTriangle, CheckCircle, HelpCircle, ChevronRight, MicOff,
+  DollarSign
 } from 'lucide-react';
 import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, Tooltip as RechartsTooltip
@@ -19,20 +20,7 @@ interface ChatMsg {
   time: string;
 }
 
-interface ProductItem {
-  nombre: string;
-  categoria: string;
-  imgUrl: string;
-  desc: string;
-}
 
-const products: ProductItem[] = [
-  { nombre: 'Whip Topping Base', categoria: 'Cremas para batir', imgUrl: 'https://www.richs.com.mx/wp-content/uploads/2025/11/whip-topping.png', desc: 'Crema base para batir de alto rendimiento y estabilidad.' },
-  { nombre: 'Bettercreme Vainilla', categoria: 'Cremas para batir', imgUrl: 'https://www.richs.com.mx/wp-content/uploads/2025/11/bettercreme.png', desc: 'Crema lista para batir con excelente tolerancia a temperatura ambiente.' },
-  { nombre: 'Tres Riches Jarabe', categoria: 'Tres Leches', imgUrl: 'https://www.richs.com.mx/wp-content/uploads/2025/11/tres-riches.png', desc: 'Jarabe de tres leches tradicional de absorción inmediata.' },
-  { nombre: 'Versatié Crema Culinaria', categoria: 'Cremas Culinarias', imgUrl: 'https://www.richs.com.mx/wp-content/uploads/2025/11/versatie.png', desc: 'Solución culinaria neutra para platillos salados y dulces.' },
-  { nombre: 'On Top Topping', categoria: 'Toppings', imgUrl: 'https://www.richs.com.mx/wp-content/uploads/2025/11/on-top.png', desc: 'Crema batida en manga lista para usar con boquilla estrella.' }
-];
 
 export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
   const { colores, empresa, ia } = brandingConfig;
@@ -44,7 +32,6 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
     { role: 'assistant', content: '¡Hola! Soy tu asistente de voz MAYIA para Rich’s México. ¿En qué te puedo ayudar hoy con tus recetas, distribuidores o demanda?', time: '10:30' }
   ]);
   const [toast, setToast] = useState<string | null>(null);
-  const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const [isMicCardHovered, setIsMicCardHovered] = useState(false);
@@ -892,63 +879,63 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
           </button>
         </div>
 
-        {/* Portafolio Destacado (span 12) */}
-        <div className="pharb-card" style={{ gridColumn: 'span 12', padding: '24px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '20px' }}>
-            <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'rgba(211,18,69,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Utensils size={16} color="#D31245" />
-            </div>
-            <h3 style={{ fontSize: '15px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: 0 }}>
-              Portafolio Destacado — Productos Extraídos de richs.com.mx
-            </h3>
-          </div>
-
-          <div className="portfolio-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '16px' }}>
-            {products.map(p => (
-              <div
-                key={p.nombre}
-                onClick={() => setSelectedProduct(p)}
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid var(--border)',
-                  borderRadius: '16px',
-                  padding: '16px',
-                  textAlign: 'center',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  minHeight: '220px'
-                }}
-                className="portfolio-item-card"
-              >
-                <div style={{ width: '80px', height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#FAFAFA', borderRadius: '50%', padding: '10px', boxShadow: '0 1px 4px rgba(0,0,0,0.01)', overflow: 'hidden', marginBottom: '12px' }}>
-                  <img
-                    src={p.imgUrl}
-                    alt={p.nombre}
-                    style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
-                    onError={(e) => {
-                      const img = e.currentTarget;
-                      img.style.display = 'none';
-                      const parent = img.parentElement;
-                      if (parent) {
-                        const div = document.createElement('div');
-                        div.innerText = '🍰';
-                        div.style.fontSize = '24px';
-                        parent.appendChild(div);
-                      }
-                    }}
-                  />
+        {/* TARJETA 8: Retorno de Inversión (ROI) (span 12) */}
+        <div className="pharb-card" style={{ gridColumn: 'span 12', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '24px', minHeight: '180px' }}>
+          <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(16,185,129,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <DollarSign size={22} color="#10B981" />
                 </div>
                 <div>
-                  <div style={{ fontSize: '12px', fontWeight: '700', color: 'var(--text-primary)', lineHeight: 1.2 }}>{p.nombre}</div>
-                  <div style={{ fontSize: '9px', color: '#D31245', fontWeight: '700', marginTop: '4px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{p.categoria}</div>
+                  <span style={{ fontSize: '11px', color: '#10B981', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    MAYIA Business Value
+                  </span>
+                  <h3 style={{ fontSize: '16px', fontWeight: '750', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif', margin: '2px 0 0 0' }}>
+                    Retorno de Inversión (ROI) Consolidado
+                  </h3>
                 </div>
-                <span style={{ fontSize: '9px', color: '#1E40AF', fontWeight: '700', marginTop: '14px', textDecoration: 'underline' }}>Detalles Ficha &rarr;</span>
               </div>
-            ))}
+              <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '0 0 16px 0', lineHeight: 1.4, maxWidth: '600px' }}>
+                Suma de ahorros anualizados en Supply Chain (Demand Sensing), Ventas B2B (Foodservice, Academia), Logística (Distribuidor 360) y Precios de Competencia (E-commerce & Mkt) mediante modelos de IA.
+              </p>
+            </div>
+            
+            <div style={{ display: 'flex', gap: '24px', flexWrap: 'wrap' }}>
+              {[
+                { label: 'ROI Consolidado', val: '4.6x', col: '#10B981' },
+                { label: 'Ahorro Anualizado', val: '$11.1M MXN', col: '#1E40AF' },
+                { label: 'Inversión Total', val: '$2.4M MXN', col: '#D31245' },
+                { label: 'Payback Estimado', val: '2.5 meses', col: '#EA580C' },
+              ].map(x => (
+                <div key={x.label} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span style={{ fontSize: '10px', color: 'var(--text-muted)', fontWeight: '700', textTransform: 'uppercase' }}>{x.label}</span>
+                  <span style={{ fontSize: '16px', fontWeight: '800', color: x.col, fontFamily: 'Outfit, sans-serif', marginTop: '2px' }}>{x.val}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: '12px', alignItems: 'stretch' }}>
+            {/* Small Sparkline / Preview Chart */}
+            <div style={{ height: '70px', background: '#F8FAFC', borderRadius: '12px', padding: '8px', border: '1px solid var(--border)' }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={[
+                  { name: 'M1', Inv: 960, Ah: 928 },
+                  { name: 'M3', Inv: 1320, Ah: 2785 },
+                  { name: 'M6', Inv: 1860, Ah: 5570 },
+                  { name: 'M9', Inv: 2400, Ah: 8355 },
+                  { name: 'M12', Inv: 2400, Ah: 11140 },
+                ]} margin={{ top: 2, right: 2, left: 2, bottom: 2 }}>
+                  <Area type="monotone" dataKey="Ah" stroke="#10B981" fill="rgba(16,185,129,0.06)" strokeWidth={1.5} />
+                  <Area type="monotone" dataKey="Inv" stroke="#D31245" fill="rgba(211,18,69,0.02)" strokeWidth={1} />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            
+            <button className="btn-primary" style={{ background: '#10B981', borderColor: '#10B981', justifyContent: 'center', borderRadius: '12px', padding: '11px', fontWeight: '700', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px' }} onClick={() => onNavigate?.('roi')}>
+              Calcular y Simular ROI <ArrowRight size={13} />
+            </button>
           </div>
         </div>
 
@@ -1025,38 +1012,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onNavigate }) => {
 
       </div>
 
-      {/* Product Detail Modal */}
-      {selectedProduct && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 3000 }}>
-          <div style={{ width: '90%', maxWidth: '420px', background: '#FFFFFF', borderRadius: '24px', padding: '24px', border: '1px solid var(--border)', boxShadow: '0 20px 48px rgba(0,0,0,0.12)', animation: 'scaleIn 0.25s ease' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px' }}>
-              <div>
-                <h3 style={{ fontSize: '18px', fontWeight: '700', color: 'var(--text-primary)', fontFamily: 'Outfit, sans-serif' }}>{selectedProduct.nombre}</h3>
-                <span style={{ fontSize: '10px', color: '#D31245', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{selectedProduct.categoria}</span>
-              </div>
-              <button onClick={() => setSelectedProduct(null)} style={{ background: '#F1F5F9', border: 'none', borderRadius: '50%', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-                <X size={14} color="var(--text-secondary)" />
-              </button>
-            </div>
-            
-            <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', borderBottom: '1px solid var(--border)', marginBottom: '16px' }}>
-              <img src={selectedProduct.imgUrl} alt={selectedProduct.nombre} style={{ height: '140px', objectFit: 'contain' }} />
-            </div>
-
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: '20px' }}>
-              {selectedProduct.desc}
-            </p>
-
-            <button
-              onClick={() => { setSelectedProduct(null); onNavigate?.('copilot-chef'); }}
-              className="btn-primary"
-              style={{ width: '100%', justifyContent: 'center', background: '#D31245', borderColor: '#D31245', borderRadius: '12px', padding: '12px', fontSize: '13px', fontWeight: '600' }}
-            >
-              Ver Recetas & Soluciones Técnicas
-            </button>
-          </div>
-        </div>
-      )}
+      {/* Modal del Asistente de Voz */}
 
       {/* Modal del Asistente de Voz */}
       {modalOpen && (
