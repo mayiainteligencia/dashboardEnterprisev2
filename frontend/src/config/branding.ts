@@ -75,7 +75,7 @@ export const brandingConfig = {
     distribuidoresActivos: 34,
     usuariosCapacitados: 285,
     clientesFoodservice: 512,
-    modulosDashboard: 7,
+    modulosDashboard: 8,
   },
 
   ia: {
@@ -94,6 +94,7 @@ export const brandingConfig = {
     { id: "ventas-b2b", nombre: "Ventas Foodservice", descripcion: "Copiloto comercial y simulador de clientes" },
     { id: "distribuidores", nombre: "Distribuidor 360 AI", descripcion: "Control geográfico, frecuencia y surtido" },
     { id: "ecommerce-mkt", nombre: "E-commerce & Mkt Intel", descripcion: "Precios de competencia, expansión y canal online" },
+    { id: "roi", nombre: "Retorno de Inversión (ROI)", descripcion: "Cálculo de retorno, simulación de escenarios y beneficios de negocio" },
   ],
 };
 
