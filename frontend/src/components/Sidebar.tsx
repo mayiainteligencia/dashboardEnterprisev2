@@ -10,6 +10,7 @@ import {
   ChevronRight,
   Sparkles,
   Store,
+  DollarSign,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -70,6 +71,13 @@ const modulosItems = [
     icono: ShoppingBag,
     color: '#EF4444',
     description: 'Precios & Competencia',
+  },
+  {
+    id: 'roi',
+    nombre: 'Retorno de Inversión',
+    icono: DollarSign,
+    color: '#10B981',
+    description: 'Cálculo de ROI y valor',
   },
 ];
 
