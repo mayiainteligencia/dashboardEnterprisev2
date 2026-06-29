@@ -8,6 +8,7 @@ import { AcademiaRichMayia } from './components/richs/AcademiaRichMayia';
 import { CopilotoVentasFoodservice } from './components/richs/CopilotoVentasFoodservice';
 import { Distribuidor360AI } from './components/richs/Distribuidor360AI';
 import { EcommerceMarketIntelligence } from './components/richs/EcommerceMarketIntelligence';
+import { RetornoInversion } from './components/richs/RetornoInversion';
 import './responsive.css';
 
 function useIsMobile(bp = 900) {
@@ -36,6 +37,7 @@ function App() {
       'ventas-b2b':    'Ventas Foodservice',
       distribuidores:  'Distribuidor 360 AI',
       'ecommerce-mkt': 'E-commerce & Market Intelligence',
+      roi:             'Retorno de Inversión (ROI)',
     };
     return titulos[activeSection] || 'Rich’s México Dashboard';
   };
@@ -49,6 +51,7 @@ function App() {
       case 'ventas-b2b':      return <CopilotoVentasFoodservice />;
       case 'distribuidores':  return <Distribuidor360AI />;
       case 'ecommerce-mkt':   return <EcommerceMarketIntelligence />;
+      case 'roi':             return <RetornoInversion />;
       default:                return <Dashboard onNavigate={selectSection} />;
     }
   };
