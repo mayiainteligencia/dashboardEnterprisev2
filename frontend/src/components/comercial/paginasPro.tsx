@@ -140,9 +140,35 @@ export const PaginaCEO: React.FC = () => {
   const maxV = Math.max(...agencias.map(a => a.ventas));
   const top = [...agencias].sort((a, b) => b.ventas - a.ventas);
   const col = (e: string) => e === 'verde' ? colores.exito : e === 'amarillo' ? colores.advertencia : colores.peligro;
-  // ventas por región para donut
   const regiones = Array.from(new Set(agencias.map(a => a.estado)));
   const segs = regiones.map((e, i) => ({ v: agencias.filter(a => a.estado === e).reduce((s, a) => s + a.ventas, 0), color: col(e), label: e, key: i }));
+
+  // ── Strategic Insights state ──
+  const [sugIdx, setSugIdx] = useState(0);
+  const resumenEjecutivo = [
+    `Las ventas acumulan ${totalVentas} unidades (${cumpl}% de meta). A este ritmo, proyectamos cerrar el mes al ${Math.min(cumpl + 6, 110)}%. Sugiero enfocar los 5 dias restantes en las 3 agencias bajo meta: Santa Fe, Lindavista y Leon.`,
+    `La conversion promedio de la red es ${conv}%, pero Santa Fe esta en 9.7%. Si logramos llevarla al promedio, se suman ~40 ventas adicionales. Sugiero activar el copiloto IA y reasignar leads de alta intencion a esa agencia.`,
+    `Guadalajara y Polanco superaron meta. Te sugiero documentar su playbook y replicarlo en las agencias rezagadas. Tambien recomiendo un reconocimiento publico al equipo de Guadalajara para impulsar la moral de la red.`,
+  ];
+
+  // ── Action items state ──
+  const [accEstado, setAccEstado] = useState<Record<number, 'pending' | 'approved' | 'dismissed'>>({});
+  const accionesEstrategicas = [
+    { titulo: 'Reasignar 40 leads VIP a Santa Fe', desc: 'Detecte que Santa Fe tiene la menor conversion. Mover leads de alta intencion desde Polanco y Guadalajara podria subir su conversion 3 puntos.', impacto: '+$2.1M ingreso potencial', prioridad: 'alta' as const },
+    { titulo: 'Activar promo Avenar fin de mes', desc: 'El modelo Avenar lleva 64 dias en lote (sobrestock). Una promo de arrendamiento con tasa preferencial reduciria inventario y mejoraria la rotacion.', impacto: '-18 unidades en piso', prioridad: 'media' as const },
+    { titulo: 'Coaching express para Lindavista', desc: 'Lindavista tiene 72 ventas vs meta de 110. Sugiero una sesion de coaching con el equipo enfocada en tecnicas de cierre y seguimientos pendientes.', impacto: '+15 ventas estimadas', prioridad: 'alta' as const },
+    { titulo: 'Escalar presupuesto Social Ads +20%', desc: 'El CPA de Social Ads es el mas bajo del trimestre ($84). Aumentar la inversion generaria ~600 leads adicionales con alto ROI.', impacto: '+600 leads, ROI x4.2', prioridad: 'media' as const },
+  ];
+
+  // ── Agency detail recommendation ──
+  const getAgencyRec = (a: typeof agencias[0]) => {
+    const pct = Math.round((a.ventas / a.meta) * 100);
+    if (pct >= 100) return `La agencia ${a.nombre} supero meta (${pct}%). Felicita al equipo y documenta su estrategia para replicarla en la red.`;
+    if (pct >= 80) return `${a.nombre} esta al ${pct}% de meta. Con un empujon en seguimientos puede llegar. Sugiero asignar 10 leads VIP adicionales esta semana.`;
+    return `${a.nombre} necesita atencion urgente (${pct}% de meta). Sugiero una intervencion directa: coaching de cierre + reasignacion de leads calificados.`;
+  };
+
+  const prioColor = (p: string) => p === 'alta' ? colores.peligro : colores.advertencia;
 
   return (
     <Shell icon={Crown} title="Vista CEO" subtitle="13 agencias · consolidado en tiempo real" badge={badgeLive}
@@ -152,37 +178,158 @@ export const PaginaCEO: React.FC = () => {
         <HeroKPI i={2} label="Leads" value={`${(totalLeads / 1000).toFixed(1)}K`} delta={liveLeads > 0 ? `+${liveLeads} live` : '12.8%'} up accent="#2563EB" spark={[8.1, 8.6, 9.0, 9.4, 9.9, totalLeads / 1000]} />
         <HeroKPI i={3} label="Conversión" value={`${conv}%`} delta="1.2 pts" up accent="#7C3AED" spark={[11, 12, 12.4, 13, 13.2, +conv]} />
       </>}>
+
       <div className="row2">
-        <Reveal delay={120}><Panel title="Ventas vs meta por agencia · clic para resaltar">
+        {/* ── LEFT: Agencies Ranking (expandable) ── */}
+        <Reveal delay={120}><Panel title="Agencias · clic para ver detalle y accion IA">
           {top.map((a, i) => {
             const pct = Math.round((a.ventas / a.meta) * 100);
             const on = sel === a.nombre;
             return (
-              <div key={a.nombre} onClick={() => setSel(on ? null : a.nombre)}
-                style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '7px 8px', borderRadius: '10px', cursor: 'pointer', background: on ? colores.fondoTerciario : 'transparent', transition: 'background .2s' }}
-                onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
-                onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
-                <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: i < 3 ? colores.primario : colores.textoOscuro, width: '20px' }}>{i + 1}</span>
-                <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: col(a.estado), boxShadow: `0 0 0 3px ${col(a.estado)}22`, flexShrink: 0 }} />
-                <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '92px', flexShrink: 0 }}>{a.nombre}</span>
-                <GrowBar pct={pct} color={col(a.estado)} delay={i * 45} />
-                <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio, width: '68px', textAlign: 'right' }}>{a.ventas}/{a.meta}</span>
+              <div key={a.nombre}>
+                <div onClick={() => setSel(on ? null : a.nombre)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '7px 8px', borderRadius: '10px', cursor: 'pointer', background: on ? colores.fondoTerciario : 'transparent', border: `1px solid ${on ? col(a.estado) + '40' : 'transparent'}`, transition: 'all .2s' }}
+                  onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
+                  onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
+                  <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: i < 3 ? colores.primario : colores.textoOscuro, width: '20px' }}>{i + 1}</span>
+                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: col(a.estado), boxShadow: `0 0 0 3px ${col(a.estado)}22`, flexShrink: 0 }} />
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '92px', flexShrink: 0 }}>{a.nombre}</span>
+                  <GrowBar pct={pct} color={col(a.estado)} delay={i * 45} />
+                  <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio, width: '68px', textAlign: 'right' }}>{a.ventas}/{a.meta}</span>
+                </div>
+                {/* ── Expanded detail ── */}
+                <div style={{ maxHeight: on ? '140px' : 0, overflow: 'hidden', transition: 'max-height .35s ease' }}>
+                  <div style={{ padding: '10px 8px 10px 38px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', gap: '16px', fontSize: '11px', color: colores.textoMedio, flexWrap: 'wrap' }}>
+                      <span>Leads <b style={{ color: colores.textoClaro }}>{a.leads}</b></span>
+                      <span>Conversion <b style={{ color: colores.textoClaro }}>{a.conv}%</b></span>
+                      <span>Cumpl. <b style={{ color: col(a.estado) }}>{pct}%</b></span>
+                      <span>Faltan <b style={{ color: colores.textoClaro }}>{Math.max(0, a.meta - a.ventas)}</b></span>
+                    </div>
+                    <div style={{ padding: '8px 10px', borderRadius: '8px', background: `${colores.primario}10`, borderLeft: `3px solid ${colores.primario}`, fontSize: '11px', color: colores.textoClaro, lineHeight: 1.4 }}>
+                      <strong style={{ color: colores.primario }}>MAYIA:</strong> {getAgencyRec(a)}
+                    </div>
+                  </div>
+                </div>
               </div>
             );
           })}
         </Panel></Reveal>
-        <Reveal delay={180}><Panel title="Mix de ventas por desempeño">
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-            <Donut segs={segs} center={<><span style={{ ...tnum, fontSize: '22px', fontWeight: 800, color: colores.textoClaro }}>{totalVentas}</span><span style={{ fontSize: '10px', color: colores.textoMedio }}>ventas</span></>} />
-          </div>
-          {segs.map(s => (
-            <div key={s.key} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '3px', background: s.color }} />
-              <span style={{ fontSize: '12px', color: colores.textoClaro, flex: 1, textTransform: 'capitalize' }}>{s.label === 'verde' ? 'En meta' : s.label === 'amarillo' ? 'En riesgo' : 'Bajo meta'}</span>
-              <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio }}>{s.v}</span>
+
+        {/* ── RIGHT: Strategic Actions + Executive Summary ── */}
+        <Reveal delay={180}>
+          <Panel title="Acciones estrategicas · aprueba o rechaza">
+            {accionesEstrategicas.map((acc, i) => {
+              const estado = accEstado[i] || 'pending';
+              return (
+                <div key={i} style={{
+                  padding: '10px 12px', borderRadius: '10px', marginBottom: '8px',
+                  background: estado === 'approved' ? `${colores.exito}12` : estado === 'dismissed' ? `${colores.textoOscuro}08` : colores.fondoTerciario,
+                  border: `1px solid ${estado === 'approved' ? colores.exito + '40' : estado === 'dismissed' ? colores.textoOscuro + '20' : colores.borde}`,
+                  opacity: estado === 'dismissed' ? 0.5 : 1,
+                  transition: 'all .3s',
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <span style={{ fontSize: '9px', fontWeight: 800, color: '#fff', background: prioColor(acc.prioridad), borderRadius: '5px', padding: '2px 7px', textTransform: 'uppercase' }}>{acc.prioridad}</span>
+                    <span style={{ fontSize: '12px', fontWeight: 700, color: colores.textoClaro, flex: 1 }}>{acc.titulo}</span>
+                  </div>
+                  <p style={{ fontSize: '11px', color: colores.textoMedio, margin: '0 0 6px', lineHeight: 1.35 }}>{acc.desc}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <span style={{ fontSize: '10px', fontWeight: 700, color: colores.exito }}>{acc.impacto}</span>
+                    {estado === 'pending' ? (
+                      <div style={{ display: 'flex', gap: '6px' }}>
+                        <button
+                          onClick={() => setAccEstado(prev => ({ ...prev, [i]: 'approved' }))}
+                          style={{ background: colores.exito, border: 'none', color: '#fff', padding: '5px 12px', borderRadius: '7px', fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .2s', display: 'flex', alignItems: 'center', gap: '4px' }}
+                          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; }}
+                          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+                        >
+                          <TrendingUp size={10} /> Aprobar
+                        </button>
+                        <button
+                          onClick={() => setAccEstado(prev => ({ ...prev, [i]: 'dismissed' }))}
+                          style={{ background: 'transparent', border: `1px solid ${colores.borde}`, color: colores.textoMedio, padding: '5px 10px', borderRadius: '7px', fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .2s' }}
+                          onMouseEnter={e => { e.currentTarget.style.background = `${colores.borde}40`; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                        >
+                          Descartar
+                        </button>
+                      </div>
+                    ) : (
+                      <span style={{ fontSize: '10px', fontWeight: 700, color: estado === 'approved' ? colores.exito : colores.textoOscuro, display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        {estado === 'approved' ? <><TrendingUp size={10} /> Aprobada</> : 'Descartada'}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* ── MAYIA Executive Summary ── */}
+            <div style={{
+              marginTop: '12px',
+              padding: '14px',
+              borderRadius: '12px',
+              border: `1px solid ${colores.primario}40`,
+              background: `linear-gradient(135deg, ${colores.primario}08, ${colores.primario}15)`,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ flexShrink: 0, marginTop: '2px' }}>
+                  <Crown size={16} color={colores.primario} />
+                </div>
+                <div>
+                  <p style={{ fontSize: '12px', color: colores.textoClaro, margin: 0, lineHeight: 1.45 }}>
+                    <strong style={{ color: colores.primario }}>Resumen ejecutivo MAYIA:</strong><br/>
+                    {resumenEjecutivo[sugIdx]}
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                <button
+                  style={{
+                    background: colores.primario,
+                    border: 'none',
+                    color: '#fff',
+                    padding: '6px 14px',
+                    borderRadius: '8px',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+                >
+                  <Send size={10} /> Compartir con equipo
+                </button>
+                <button
+                  onClick={() => setSugIdx(prev => (prev + 1) % resumenEjecutivo.length)}
+                  style={{
+                    background: 'transparent',
+                    border: `1px solid ${colores.primario}60`,
+                    color: colores.primario,
+                    padding: '6px 12px',
+                    borderRadius: '8px',
+                    fontSize: '10px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                >
+                  Otro insight
+                </button>
+              </div>
             </div>
-          ))}
-        </Panel></Reveal>
+          </Panel>
+        </Reveal>
       </div>
     </Shell>
   );
@@ -604,6 +751,7 @@ export const PaginaVendedores: React.FC = () => {
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaInventario: React.FC = () => {
   const [filtro, setFiltro] = useState<'todas' | 'alta' | 'media' | 'baja'>('todas');
+  const [selModelo, setSelModelo] = useState<string | null>(null);
   const { events } = useLiveFeed();
   const liveVentas = events.filter(e => e.type === 'venta').length;
   
@@ -617,25 +765,46 @@ export const PaginaInventario: React.FC = () => {
 
   const [sugIdx, setSugIdx] = useState(0);
 
+  // ── Action states per model ──
+  const [acciones, setAcciones] = useState<Record<string, 'pending' | 'traspasar' | 'promover' | 'reabastecer' | 'done'>>({});
+
+  // ── Per-model detail data ──
+  const modelDetail: Record<string, { proyeccion: string; agotamiento: string; velocidad: string; margen: string; tendencia: number[]; recomendacion: string }> = {
+    'Nexora':  { proyeccion: 'Alta demanda sostenida', agotamiento: '~9 dias', velocidad: '1.5 u./dia', margen: '$48K/u.', tendencia: [28, 30, 32, 34, 33, 34], recomendacion: 'Stock critico. Sugiero solicitar traspaso inmediato de 20 unidades desde zona Bajio y activar pre-venta digital para asegurar apartados.' },
+    'Lumio':   { proyeccion: 'Demanda estable', agotamiento: '~38 dias', velocidad: '1.1 u./dia', margen: '$35K/u.', tendencia: [40, 42, 41, 41, 40, 41], recomendacion: 'Inventario en rango optimo. Sugiero mantener nivel actual y monitorear la tendencia. Si baja la rotacion, considerar incentivo al equipo de ventas.' },
+    'Kestra':  { proyeccion: 'Pico de demanda', agotamiento: '~5 dias', velocidad: '2.1 u./dia', margen: '$52K/u.', tendencia: [22, 20, 19, 18, 17, 18], recomendacion: 'Alerta critica: al ritmo actual se agota antes del proximo reabasto. Sugiero activar pedido urgente a planta y redirigir 10 unidades de Monterrey.' },
+    'Avenar':  { proyeccion: 'Demanda en descenso', agotamiento: '~90 dias', velocidad: '0.4 u./dia', margen: '$29K/u.', tendencia: [30, 29, 28, 27, 27, 27], recomendacion: 'Sobrestock confirmado (64 dias). Sugiero lanzar promocion de arrendamiento con tasa preferencial y asignar bono SPIF de $2K a vendedores que muevan este modelo.' },
+    'Celix':   { proyeccion: 'Demanda moderada', agotamiento: '~52 dias', velocidad: '0.8 u./dia', margen: '$31K/u.', tendencia: [50, 51, 52, 52, 51, 52], recomendacion: 'Rotacion lenta pero estable. Sugiero crear un paquete "Celix Premium" con accesorios incluidos para aumentar el atractivo y reducir dias en piso un 20%.' },
+  };
+
+  // ── MAYIA strategic insights ──
   const sugerenciasInventario = [
-    'El modelo Celix y Avenar tienen sobrestock moderado. Sugiero activar una promoción especial de arrendamiento para acelerar su salida.',
-    'El modelo Nexora se está agotando rápidamente debido a alta demanda. Te sugiero redirigir inventario de otras zonas.',
-    'Para los vehículos con más de 45 días en piso, sugiero ofrecer un bono SPIF adicional a los asesores comerciales.'
+    `El inventario general esta en ${totalU} unidades. Los modelos Nexora y Kestra requieren atencion inmediata por alta demanda y stock bajo. MAYIA recomienda priorizar reabastecimiento antes de que se pierdan ventas.`,
+    `El costo de oportunidad por sobrestock de Avenar es de ~$783K/mes en capital inmovilizado. Una promocion agresiva de fin de mes podria liberar 12 unidades y mejorar la rotacion general de la red.`,
+    `La rotacion promedio de ${rot} dias esta dentro del rango optimo (25-45d). Sin embargo, la dispersion es alta: Kestra a 12d vs Avenar a 64d. Sugiero balancear con traspasos entre agencias.`,
   ];
 
+  const getActionLabel = (it: typeof inventario[0]) => {
+    const slow = it.dias > 50, fast = it.dias < 20;
+    if (slow) return { text: 'Promover venta', action: 'promover' as const, icon: Megaphone };
+    if (fast) return { text: 'Reabastecer', action: 'reabastecer' as const, icon: Package };
+    return { text: 'Traspasar', action: 'traspasar' as const, icon: TrendingUp };
+  };
+
   return (
-    <Shell icon={Package} title="Inventario Inteligente" subtitle="Stock, rotación y demanda conectada"
+    <Shell icon={Package} title="Inventario Inteligente" subtitle="Stock, rotacion y demanda conectada"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Unidades en piso" value={`${totalU}`} delta={liveVentas > 0 ? `-${liveVentas} vendidas` : '5 modelos'} accent={colores.primario} />
-        <HeroKPI i={1} label="Rotación prom." value={`${rot}d`} delta="en lote" up accent="#2563EB" />
+        <HeroKPI i={1} label="Rotacion prom." value={`${rot}d`} delta="en lote" up accent="#2563EB" />
         <HeroKPI i={2} label="Alertas stock" value={`${alertas}`} delta="revisar" accent={colores.peligro} />
         <HeroKPI i={3} label="Demanda alta" value={`${inventario.filter(i => i.demanda === 'alta').length}`} delta="modelos" up accent={colores.exito} />
       </>}>
       <div className="row2">
+        {/* ── LEFT: Interactive inventory list with expandable details ── */}
         <Reveal delay={120}><Panel>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px', flexWrap: 'wrap', gap: '8px' }}>
-            <h3 style={{ fontSize: '14px', fontWeight: 800, color: colores.textoClaro, margin: 0 }}>Días en lote · filtra por demanda</h3>
+            <h3 style={{ fontSize: '14px', fontWeight: 800, color: colores.textoClaro, margin: 0 }}>Modelos · clic para analisis IA</h3>
             <div style={{ display: 'flex', gap: '6px' }}>
               {(['todas', 'alta', 'media', 'baja'] as const).map(f => (
                 <button key={f} onClick={() => setFiltro(f)} style={{ padding: '5px 11px', borderRadius: '8px', border: `1px solid ${filtro === f ? colores.primario : colores.borde}`, background: filtro === f ? colores.primario : 'transparent', color: filtro === f ? '#fff' : colores.textoMedio, fontSize: '11px', fontWeight: 700, cursor: 'pointer', textTransform: 'capitalize', transition: 'all .2s' }}>{f}</button>
@@ -645,32 +814,172 @@ export const PaginaInventario: React.FC = () => {
           {vis.map((it, i) => {
             const slow = it.dias > 50, fast = it.dias < 20;
             const c = slow ? colores.peligro : it.dias > 30 ? colores.advertencia : colores.exito;
+            const on = selModelo === it.modelo;
+            const detail = modelDetail[it.modelo];
+            const estado = acciones[it.modelo] || 'pending';
+            const actionInfo = getActionLabel(it);
             return (
-              <div key={it.modelo} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px', borderRadius: '10px', transition: 'background .2s', cursor: 'default' }}
-                   onMouseEnter={e => e.currentTarget.style.background = `${colores.fondoTerciario}`}
-                   onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                {it.demanda === 'alta' ? <Flame size={16} color={colores.exito} /> : it.demanda === 'baja' ? <Snowflake size={16} color={colores.peligro} /> : <span style={{ width: '16px' }} />}
-                <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '70px', flexShrink: 0 }}>{it.modelo}</span>
-                <GrowBar pct={(it.dias / maxDias) * 100} color={c} delay={i * 55} />
-                <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: colores.textoClaro, width: '40px', textAlign: 'right' }}>{it.dias}d</span>
-                <span style={{ ...tnum, fontSize: '11px', color: colores.textoMedio, width: '46px', textAlign: 'right' }}>{it.stock} u.</span>
-                <span style={{ fontSize: '10px', fontWeight: 700, color: '#fff', background: slow ? colores.peligro : fast ? colores.advertencia : colores.exito, borderRadius: '7px', padding: '2px 7px', width: '92px', textAlign: 'center' }}>{slow ? 'Sobre-stock' : fast ? 'Reabastecer' : 'Óptimo'}</span>
+              <div key={it.modelo}>
+                <div onClick={() => setSelModelo(on ? null : it.modelo)}
+                     style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 6px', borderRadius: '10px', transition: 'all .2s', cursor: 'pointer', background: on ? colores.fondoTerciario : 'transparent', border: `1px solid ${on ? c + '40' : 'transparent'}` }}
+                     onMouseEnter={e => { if (!on) e.currentTarget.style.background = `${colores.fondoTerciario}80`; }}
+                     onMouseLeave={e => { if (!on) e.currentTarget.style.background = 'transparent'; }}>
+                  {it.demanda === 'alta' ? <Flame size={16} color={colores.exito} /> : it.demanda === 'baja' ? <Snowflake size={16} color={colores.peligro} /> : <span style={{ width: '16px' }} />}
+                  <span style={{ fontSize: '13px', fontWeight: 700, color: colores.textoClaro, width: '70px', flexShrink: 0 }}>{it.modelo}</span>
+                  <GrowBar pct={(it.dias / maxDias) * 100} color={c} delay={i * 55} />
+                  <span style={{ ...tnum, fontSize: '12px', fontWeight: 800, color: colores.textoClaro, width: '40px', textAlign: 'right' }}>{it.dias}d</span>
+                  <span style={{ ...tnum, fontSize: '11px', color: colores.textoMedio, width: '46px', textAlign: 'right' }}>{it.stock} u.</span>
+                  <span style={{ fontSize: '10px', fontWeight: 700, color: '#fff', background: slow ? colores.peligro : fast ? colores.advertencia : colores.exito, borderRadius: '7px', padding: '2px 7px', width: '92px', textAlign: 'center' }}>{slow ? 'Sobre-stock' : fast ? 'Reabastecer' : 'Optimo'}</span>
+                </div>
+
+                {/* ── Expanded model detail ── */}
+                <div style={{ maxHeight: on ? '260px' : 0, overflow: 'hidden', transition: 'max-height .4s ease' }}>
+                  {detail && (
+                    <div style={{ padding: '12px 8px 12px 34px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* KPI row */}
+                      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                        {[
+                          { label: 'Proyeccion', val: detail.proyeccion },
+                          { label: 'Se agota en', val: detail.agotamiento },
+                          { label: 'Velocidad', val: detail.velocidad },
+                          { label: 'Margen', val: detail.margen },
+                        ].map(kpi => (
+                          <div key={kpi.label} style={{ padding: '6px 10px', borderRadius: '8px', background: colores.fondoTerciario, minWidth: '80px' }}>
+                            <p style={{ fontSize: '9px', color: colores.textoMedio, margin: 0, textTransform: 'uppercase', fontWeight: 700 }}>{kpi.label}</p>
+                            <p style={{ fontSize: '12px', fontWeight: 800, color: colores.textoClaro, margin: 0, ...tnum }}>{kpi.val}</p>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Mini sparkline */}
+                      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '3px', height: '28px' }}>
+                        {detail.tendencia.map((v, idx) => (
+                          <div key={idx} style={{ flex: 1, height: `${(v / Math.max(...detail.tendencia)) * 100}%`, background: idx === detail.tendencia.length - 1 ? colores.primario : `${colores.primario}55`, borderRadius: '3px 3px 0 0', transition: 'height .5s ease' }} />
+                        ))}
+                        <span style={{ fontSize: '9px', color: colores.textoMedio, marginLeft: '6px', whiteSpace: 'nowrap' }}>6 sem</span>
+                      </div>
+
+                      {/* MAYIA recommendation */}
+                      <div style={{ padding: '8px 10px', borderRadius: '8px', background: `${colores.primario}10`, borderLeft: `3px solid ${colores.primario}`, fontSize: '11px', color: colores.textoClaro, lineHeight: 1.4 }}>
+                        <strong style={{ color: colores.primario }}>MAYIA:</strong> {detail.recomendacion}
+                      </div>
+
+                      {/* Action button */}
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '6px' }}>
+                        {estado === 'pending' ? (
+                          <button
+                            onClick={(e) => { e.stopPropagation(); setAcciones(prev => ({ ...prev, [it.modelo]: actionInfo.action })); }}
+                            style={{
+                              background: c, border: 'none', color: '#fff', padding: '5px 14px', borderRadius: '7px',
+                              fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all .2s',
+                              display: 'flex', alignItems: 'center', gap: '5px'
+                            }}
+                            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.04)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+                          >
+                            <actionInfo.icon size={10} /> {actionInfo.text}
+                          </button>
+                        ) : (
+                          <span style={{ fontSize: '10px', fontWeight: 700, color: colores.exito, display: 'flex', alignItems: 'center', gap: '4px', padding: '5px 0' }}>
+                            <TrendingUp size={10} /> Accion ejecutada
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}
         </Panel></Reveal>
-        <Reveal delay={180}><Panel title="Stock por nivel de demanda">
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
-            <Donut segs={segs} center={<><span style={{ ...tnum, fontSize: '22px', fontWeight: 800, color: colores.textoClaro }}>{totalU}</span><span style={{ fontSize: '10px', color: colores.textoMedio }}>unidades</span></>} />
-          </div>
-          {segs.map((s, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <span style={{ width: '10px', height: '10px', borderRadius: '3px', background: s.color }} />
-              <span style={{ fontSize: '12px', color: colores.textoClaro, flex: 1, textTransform: 'capitalize' }}>Demanda {s.label}</span>
-              <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio }}>{s.v} u.</span>
+
+        {/* ── RIGHT: Donut + Health Matrix + MAYIA Strategic ── */}
+        <Reveal delay={180}>
+          <Panel title="Stock por nivel de demanda">
+            <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }}>
+              <Donut segs={segs} center={<><span style={{ ...tnum, fontSize: '22px', fontWeight: 800, color: colores.textoClaro }}>{totalU}</span><span style={{ fontSize: '10px', color: colores.textoMedio }}>unidades</span></>} />
             </div>
-          ))}
-        </Panel></Reveal>
+            {segs.map((s, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                <span style={{ width: '10px', height: '10px', borderRadius: '3px', background: s.color }} />
+                <span style={{ fontSize: '12px', color: colores.textoClaro, flex: 1, textTransform: 'capitalize' }}>Demanda {s.label}</span>
+                <span style={{ ...tnum, fontSize: '12px', fontWeight: 700, color: colores.textoMedio }}>{s.v} u.</span>
+              </div>
+            ))}
+
+            {/* ── Health matrix ── */}
+            <div style={{ marginTop: '16px', padding: '12px', borderRadius: '10px', background: colores.fondoTerciario }}>
+              <h4 style={{ fontSize: '12px', fontWeight: 800, color: colores.textoClaro, margin: '0 0 10px' }}>Salud del inventario</h4>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+                {inventario.map(it => {
+                  const health = it.dias <= 20 ? colores.advertencia : it.dias <= 45 ? colores.exito : colores.peligro;
+                  const pct = Math.min(100, Math.round((it.dias / 70) * 100));
+                  return (
+                    <div key={it.modelo} style={{ padding: '8px', borderRadius: '8px', background: colores.fondoSecundario, textAlign: 'center', border: `1px solid ${health}25`, cursor: 'pointer', transition: 'all .2s' }}
+                         onClick={() => setSelModelo(it.modelo)}
+                         onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; e.currentTarget.style.borderColor = health + '60'; }}
+                         onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.borderColor = health + '25'; }}>
+                      <p style={{ fontSize: '11px', fontWeight: 700, color: colores.textoClaro, margin: '0 0 4px' }}>{it.modelo}</p>
+                      <div style={{ width: '100%', height: '4px', borderRadius: '2px', background: `${health}22`, overflow: 'hidden' }}>
+                        <div style={{ width: `${pct}%`, height: '100%', background: health, borderRadius: '2px', transition: 'width .6s ease' }} />
+                      </div>
+                      <p style={{ ...tnum, fontSize: '10px', fontWeight: 700, color: health, margin: '4px 0 0' }}>{it.dias}d · {it.stock}u</p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* ── MAYIA Strategic Block ── */}
+            <div style={{
+              marginTop: '16px',
+              padding: '14px',
+              borderRadius: '12px',
+              border: `1px solid ${colores.primario}40`,
+              background: `linear-gradient(135deg, ${colores.primario}08, ${colores.primario}15)`,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '10px'
+            }}>
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                <div style={{ flexShrink: 0, marginTop: '2px' }}>
+                  <Package size={16} color={colores.primario} />
+                </div>
+                <div>
+                  <p style={{ fontSize: '12px', color: colores.textoClaro, margin: 0, lineHeight: 1.45 }}>
+                    <strong style={{ color: colores.primario }}>MAYIA sugiere:</strong><br/>
+                    {sugerenciasInventario[sugIdx]}
+                  </p>
+                </div>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+                <button
+                  style={{
+                    background: colores.primario, border: 'none', color: '#fff',
+                    padding: '6px 14px', borderRadius: '8px', fontSize: '10px', fontWeight: 700,
+                    cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '6px'
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+                >
+                  <Send size={10} /> Ejecutar plan
+                </button>
+                <button
+                  onClick={() => setSugIdx(prev => (prev + 1) % sugerenciasInventario.length)}
+                  style={{
+                    background: 'transparent', border: `1px solid ${colores.primario}60`,
+                    color: colores.primario, padding: '6px 12px', borderRadius: '8px',
+                    fontSize: '10px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${colores.primario}20`; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                >
+                  Otra sugerencia
+                </button>
+              </div>
+            </div>
+          </Panel>
+        </Reveal>
       </div>
     </Shell>
   );
