@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Megaphone, Zap, Clock, CheckCircle, TrendingUp, Users, Target, MoreVertical } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
+import { ConfirmModal, SuccessToast, useConfirm } from '../../comercial/ConfirmModal';
 
 // ─── Types & Data ─────────────────────────────────────────────────────────────
 
@@ -75,6 +76,7 @@ const SparkBars: React.FC<{ data: number[]; color: string; animated: boolean }> 
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export const CampañasInteligentes: React.FC = () => {
+  const confirm = useConfirm();
   const { colores } = brandingConfig;
   const [mounted, setMounted]     = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -104,6 +106,7 @@ export const CampañasInteligentes: React.FC = () => {
   const avgRoi       = campañas.filter(c => c.roi > 0).reduce((s, c) => s + c.roi, 0) / campañas.filter(c => c.roi > 0).length;
 
   return (
+    <>
     <div style={{
       backgroundColor: colores.fondoSecundario,
       borderRadius: '24px',
@@ -355,6 +358,29 @@ export const CampañasInteligentes: React.FC = () => {
         >
           Propónme otra
         </button>
+        <button
+          onClick={confirm.requestConfirm}
+          style={{
+            alignSelf: 'flex-end',
+            background: `linear-gradient(135deg, ${colores.exito || '#22c55e'}, #059669)`,
+            border: 'none',
+            color: '#fff',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            boxShadow: `0 2px 6px rgba(34,197,94,.3)`,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+        >
+          <Zap size={9} /> Hazlo
+        </button>
       </div>
 
       <style>{`
@@ -364,5 +390,8 @@ export const CampañasInteligentes: React.FC = () => {
         }
       `}</style>
     </div>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };

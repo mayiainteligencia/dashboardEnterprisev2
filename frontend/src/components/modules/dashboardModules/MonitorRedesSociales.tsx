@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Radio, Heart, TrendingUp, TrendingDown, ThumbsUp, ThumbsDown, Minus, RefreshCw, Camera, Music, MessageCircle, Users, PlayCircle, MessageSquare } from 'lucide-react';
+import { Radio, Heart, TrendingUp, TrendingDown, ThumbsUp, ThumbsDown, Minus, RefreshCw, Camera, Music, MessageCircle, Users, PlayCircle, MessageSquare, Zap } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
+import { ConfirmModal, SuccessToast, useConfirm } from '../../comercial/ConfirmModal';
 
 // ─── Types & Data ─────────────────────────────────────────────────────────────
 
@@ -107,7 +108,8 @@ const LiveDot: React.FC = () => {
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-export const MonitoreoRedesSociales: React.FC = () => {
+export const MonitorRedesSociales: React.FC = () => {
+  const confirm = useConfirm();
   const { colores } = brandingConfig;
   const [mounted, setMounted]       = useState(false);
   const [activeRed, setActiveRed]   = useState<Red | 'todas'>('todas');
@@ -141,6 +143,7 @@ export const MonitoreoRedesSociales: React.FC = () => {
   const refresh = () => { setSpinning(true); setTimeout(() => setSpinning(false), 800); };
 
   return (
+    <>
     <div style={{
       backgroundColor: colores.fondoSecundario,
       borderRadius: '24px',
@@ -402,6 +405,29 @@ export const MonitoreoRedesSociales: React.FC = () => {
         >
           Propónme otra
         </button>
+        <button
+          onClick={confirm.requestConfirm}
+          style={{
+            alignSelf: 'flex-end',
+            background: `linear-gradient(135deg, ${colores.exito || '#22c55e'}, #059669)`,
+            border: 'none',
+            color: '#fff',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            boxShadow: `0 2px 6px rgba(34,197,94,.3)`,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+        >
+          <Zap size={9} /> Hazlo
+        </button>
       </div>
 
       <style>{`
@@ -411,5 +437,8 @@ export const MonitoreoRedesSociales: React.FC = () => {
         }
       `}</style>
     </div>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };

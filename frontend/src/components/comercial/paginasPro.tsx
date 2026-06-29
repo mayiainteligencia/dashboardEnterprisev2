@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   Crown, Target, Megaphone, Users, Package, Repeat,
-  TrendingUp, Trophy, AlertTriangle, Flame, Snowflake, Send
+  TrendingUp, Trophy, AlertTriangle, Flame, Snowflake, Send, Zap
 } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 import {
@@ -10,9 +10,36 @@ import {
   vendedorEtapas, inventario, conversionFunnel, retencionCohorte,
 } from './data';
 import { useLiveFeed } from '../../context/LiveFeedContext';
+import { ConfirmModal, SuccessToast, useConfirm } from './ConfirmModal';
 
 export const colores = brandingConfig.colores;
 export const tnum: React.CSSProperties = { fontVariantNumeric: 'tabular-nums' };
+
+// ── Reusable "Hazlo" button ──────────────────────────────────────────────────
+const HazloBtn: React.FC<{ onClick: () => void }> = ({ onClick }) => (
+  <button
+    onClick={onClick}
+    style={{
+      background: `linear-gradient(135deg, ${colores.exito}, #059669)`,
+      border: 'none',
+      color: '#fff',
+      padding: '6px 14px',
+      borderRadius: '8px',
+      fontSize: '10px',
+      fontWeight: 700,
+      cursor: 'pointer',
+      transition: 'all 0.2s',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '5px',
+      boxShadow: `0 2px 8px ${colores.exito}40`,
+    }}
+    onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = `0 4px 14px ${colores.exito}60`; }}
+    onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = `0 2px 8px ${colores.exito}40`; }}
+  >
+    <Zap size={10} /> Hazlo
+  </button>
+);
 
 // ── Entrada escalonada ───────────────────────────────────────────────────────────
 export const Reveal: React.FC<{ delay?: number; children: React.ReactNode; style?: React.CSSProperties }> = ({ delay = 0, children, style }) => {
@@ -127,6 +154,7 @@ export const badgeLive = <span style={{ padding: '6px 12px', borderRadius: '20px
 // 1 · VISTA CEO
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaCEO: React.FC = () => {
+  const confirm = useConfirm();
   const [sel, setSel] = useState<string | null>(null);
   const { events } = useLiveFeed();
   const liveVentas = events.filter(e => e.type === 'venta').length;
@@ -171,6 +199,7 @@ export const PaginaCEO: React.FC = () => {
   const prioColor = (p: string) => p === 'alta' ? colores.peligro : colores.advertencia;
 
   return (
+    <>
     <Shell icon={Crown} title="Vista CEO" subtitle="13 agencias · consolidado en tiempo real" badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Ventas mes" value={`${totalVentas}`} delta={liveVentas > 0 ? `+${liveVentas} live` : '8.4%'} up accent={colores.primario} spark={[1180, 1240, 1190, 1320, 1380, totalVentas]} />
@@ -326,12 +355,16 @@ export const PaginaCEO: React.FC = () => {
                 >
                   Otro insight
                 </button>
+                <HazloBtn onClick={confirm.requestConfirm} />
               </div>
             </div>
           </Panel>
         </Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 
@@ -339,6 +372,7 @@ export const PaginaCEO: React.FC = () => {
 // 2 · LEAD SCORING
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaScoring: React.FC = () => {
+  const confirm = useConfirm();
   const [sel, setSel] = useState(scoring[0].nombre);
   const { events } = useLiveFeed();
   const liveLeads = events.filter(e => e.type === 'lead').length;
@@ -376,7 +410,8 @@ export const PaginaScoring: React.FC = () => {
   const sugerencias = getLeadSugerencias(sc.score);
 
   return (
-    <Shell icon={Target} title="Lead Scoring IA" subtitle="Intención de compra calculada por IA"
+    <>
+    <Shell icon={Target} title="Lead Scoring IA" subtitle="Intención de compra calculada en tiempo real"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Score promedio" value={`${prom}`} delta="alta calidad" up accent={colores.primario} spark={[58, 61, 64, 66, 65, prom]} />
@@ -448,10 +483,14 @@ export const PaginaScoring: React.FC = () => {
             >
               Propónme otra
             </button>
+            <HazloBtn onClick={confirm.requestConfirm} />
           </div>
         </Panel></Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 
@@ -459,6 +498,7 @@ export const PaginaScoring: React.FC = () => {
 // 3 · CAMPAÑAS
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaCampanias: React.FC = () => {
+  const confirm = useConfirm();
   const [sel, setSel] = useState<string | null>(null);
   const { events } = useLiveFeed();
   const liveVentas = events.filter(e => e.type === 'venta').length;
@@ -492,7 +532,8 @@ export const PaginaCampanias: React.FC = () => {
   const sugerencias = getCampSugerencias(sel);
 
   return (
-    <Shell icon={Megaphone} title="Campañas" subtitle="Inversión, performance y atribución"
+    <>
+    <Shell icon={Megaphone} title="Campañas Inteligentes" subtitle="Optimización automatizada de presupuesto"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Inversión total" value={`$${invTotal}K`} delta="4 campañas" up accent={colores.primario} />
@@ -581,11 +622,15 @@ export const PaginaCampanias: React.FC = () => {
               >
                 Otra sugerencia
               </button>
+              <HazloBtn onClick={confirm.requestConfirm} />
             </div>
           </div>
         </Panel></Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 
@@ -593,6 +638,7 @@ export const PaginaCampanias: React.FC = () => {
 // 4 · VENDEDORES
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaVendedores: React.FC = () => {
+  const confirm = useConfirm();
   const { colores } = brandingConfig;
   const { events } = useLiveFeed();
   const liveVentas = events.filter(e => e.type === 'venta').length;
@@ -633,7 +679,8 @@ export const PaginaVendedores: React.FC = () => {
   const sugerenciasActuales = sel ? getSugerencias(sorted.find(v => v.nombre === sel)!) : [];
 
   return (
-    <Shell icon={Users} title="Vendedores" subtitle="Ranking, eficiencia y seguimientos"
+    <>
+    <Shell icon={Users} title="Top Vendedores" subtitle="Ranking nacional en tiempo real"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Ventas equipo" value={`${totalV}`} delta={liveVentas > 0 ? `+${liveVentas} live` : 'este mes'} up accent={colores.primario} spark={[18, 20, 19, 22, 21, totalV / 5]} />
@@ -737,12 +784,16 @@ export const PaginaVendedores: React.FC = () => {
                 >
                   Otra sugerencia
                 </button>
+                <HazloBtn onClick={confirm.requestConfirm} />
               </div>
             </div>
           )}
         </Panel></Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 
@@ -750,6 +801,7 @@ export const PaginaVendedores: React.FC = () => {
 // 5 · INVENTARIO
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaInventario: React.FC = () => {
+  const confirm = useConfirm();
   const [filtro, setFiltro] = useState<'todas' | 'alta' | 'media' | 'baja'>('todas');
   const [selModelo, setSelModelo] = useState<string | null>(null);
   const { events } = useLiveFeed();
@@ -792,6 +844,7 @@ export const PaginaInventario: React.FC = () => {
   };
 
   return (
+    <>
     <Shell icon={Package} title="Inventario Inteligente" subtitle="Stock, rotacion y demanda conectada"
       badge={badgeLive}
       kpis={<>
@@ -976,12 +1029,16 @@ export const PaginaInventario: React.FC = () => {
                 >
                   Otra sugerencia
                 </button>
+                <HazloBtn onClick={confirm.requestConfirm} />
               </div>
             </div>
           </Panel>
         </Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 
@@ -989,6 +1046,7 @@ export const PaginaInventario: React.FC = () => {
 // 6 · CONVERSIÓN Y RETENCIÓN
 // ════════════════════════════════════════════════════════════════════════════════
 export const PaginaConversion: React.FC = () => {
+  const confirm = useConfirm();
   const [sel, setSel] = useState(0);
   const { events } = useLiveFeed();
   const liveVentas = events.filter(e => e.type === 'venta').length;
@@ -1012,7 +1070,8 @@ export const PaginaConversion: React.FC = () => {
   ];
 
   return (
-    <Shell icon={Repeat} title="Conversión y Retención" subtitle="Embudo IA + cohortes de recompra"
+    <>
+    <Shell icon={Repeat} title="Conversión y Retención" subtitle="Embudos en tiempo real y cohortes"
       badge={badgeLive}
       kpis={<>
         <HeroKPI i={0} label="Conversión total" value={`${tasa}%`} delta={liveVentas > 0 ? 'en vivo' : 'lead→venta'} up accent={colores.primario} spark={[6.8, 7.2, 7.6, 8.1, 8.4, +tasa]} />
@@ -1116,11 +1175,15 @@ export const PaginaConversion: React.FC = () => {
               >
                 Otra sugerencia
               </button>
+              <HazloBtn onClick={confirm.requestConfirm} />
             </div>
           </div>
         </Panel></Reveal>
       </div>
     </Shell>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };
 

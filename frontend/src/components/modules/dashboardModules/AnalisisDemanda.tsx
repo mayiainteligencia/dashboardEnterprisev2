@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { BarChart2, AlertTriangle, TrendingUp, TrendingDown } from 'lucide-react';
+import { BarChart2, AlertTriangle, TrendingUp, TrendingDown, Zap } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
+import { ConfirmModal, SuccessToast, useConfirm } from '../../comercial/ConfirmModal';
 
 // ─── Types & Data ─────────────────────────────────────────────────────────────
 
@@ -84,6 +85,7 @@ const Donut: React.FC<{ value: number; color: string; animated: boolean; size?: 
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 export const AnalisisDemanda: React.FC = () => {
+  const confirm = useConfirm();
   const { colores } = brandingConfig;
   const [mounted, setMounted]       = useState(false);
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -102,6 +104,7 @@ export const AnalisisDemanda: React.FC = () => {
   const avgConfianza = Math.round(modelos.reduce((s, m) => s + m.confianza, 0) / modelos.length);
 
   return (
+    <>
     <div style={{
       backgroundColor: colores.fondoSecundario,
       borderRadius: '24px',
@@ -329,7 +332,33 @@ export const AnalisisDemanda: React.FC = () => {
         >
           Propónme otra
         </button>
+        <button
+          onClick={confirm.requestConfirm}
+          style={{
+            alignSelf: 'flex-end',
+            background: `linear-gradient(135deg, ${colores.exito || '#22c55e'}, #059669)`,
+            border: 'none',
+            color: '#fff',
+            padding: '3px 10px',
+            borderRadius: '6px',
+            fontSize: '9px',
+            fontWeight: 700,
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '4px',
+            boxShadow: `0 2px 6px rgba(34,197,94,.3)`,
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
+        >
+          <Zap size={9} /> Hazlo
+        </button>
       </div>
     </div>
+    <ConfirmModal open={confirm.modalOpen} onAccept={confirm.handleAccept} onDecline={confirm.handleDecline} />
+    <SuccessToast show={confirm.toastVisible} />
+    </>
   );
 };

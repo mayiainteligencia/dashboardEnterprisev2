@@ -7,7 +7,7 @@ import { TopCoursesCard } from './modules/dashboardModules/Topcoursescard';
 import { AlertasEmpresa } from './modules/dashboardModules/Alertaempresa';
 import { CampañasInteligentes } from './modules/dashboardModules/CampaniasInteligentes';
 import { AnalisisDemanda } from './modules/dashboardModules/AnalisisDemanda';
-import { MonitoreoRedesSociales } from './modules/dashboardModules/MonitorRedesSociales';
+import { MonitorRedesSociales } from './modules/dashboardModules/MonitorRedesSociales';
 
 export const Dashboard: React.FC = () => {
   const { colores } = brandingConfig;
@@ -28,7 +28,7 @@ export const Dashboard: React.FC = () => {
         }}>
           <AnalisisDemanda />
           <HeroCard />
-          <MonitoreoRedesSociales />
+          <MonitorRedesSociales />
         </div>
 
         {/* --- FILA 2: Campañas + Alertas en vivo --- */}
