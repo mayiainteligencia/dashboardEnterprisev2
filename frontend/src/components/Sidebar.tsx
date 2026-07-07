@@ -1,15 +1,16 @@
 import React from 'react';
 import {
   LayoutDashboard,
-  Atom,
-  FileText,
-  BookOpen,
-  Users,
-  Shield,
-  FlaskConical,
+  Navigation,
+  AlertTriangle,
+  Clock,
+  CreditCard,
+  Building2,
+  Accessibility,
+  Compass,
   ChevronRight,
-  Dna,
-  Microscope,
+  Train,
+  ShieldCheck,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -18,65 +19,89 @@ interface SidebarProps {
   onSectionChange: (section: string) => void;
 }
 
-const mainItems = [
+interface NavItem {
+  id: string;
+  nombre: string;
+  icono: React.ComponentType<any>;
+  color: string;
+  description: string;
+  badge: number | null;
+}
+
+const mainItems: NavItem[] = [
   {
     id: 'dashboard',
-    nombre: 'Command Center',
+    nombre: 'Centro de Movilidad',
     icono: LayoutDashboard,
-    color: '#0EA5E9',
-    description: 'Vista ejecutiva',
+    color: '#D40000',
+    description: 'Resumen y métricas',
+    badge: null,
+  },
+  {
+    id: 'home',
+    nombre: 'Planificador de Rutas',
+    icono: Navigation,
+    color: '#003DA5',
+    description: 'Puerta a puerta',
+    badge: null,
   },
 ];
 
-const modulosItems = [
+const modulosItems: NavItem[] = [
   {
-    id: 'pipeline',
-    nombre: 'Drug Discovery',
-    icono: Atom,
-    color: '#7C3AED',
-    description: 'Moléculas & I+D',
+    id: 'estado',
+    nombre: 'Estado del Servicio',
+    icono: AlertTriangle,
+    color: '#F5A623',
+    description: 'Líneas y alertas en vivo',
+    badge: 3,        // 3 alertas activas
   },
   {
-    id: 'reportes',
-    nombre: 'Report Copilot',
-    icono: FileText,
-    color: '#0EA5E9',
-    description: 'Reportes científicos',
+    id: 'salidas',
+    nombre: 'Próximas Salidas',
+    icono: Clock,
+    color: '#003DA5',
+    description: 'Frecuencias en tiempo real',
+    badge: null,
   },
   {
-    id: 'academia',
-    nombre: 'Academia IA',
-    icono: BookOpen,
-    color: '#14B8A6',
-    description: 'Cursos & diplomados',
+    id: 'tarifas',
+    nombre: 'Tarifas y Pago',
+    icono: CreditCard,
+    color: '#00843D',
+    description: 'Tarjeta MI y costos',
+    badge: null,
   },
   {
-    id: 'prospeccion',
-    nombre: 'Prospección Pharma',
-    icono: Users,
-    color: '#10B981',
-    description: 'Leads B2B',
+    id: 'operadores',
+    nombre: 'Operadores CDMX',
+    icono: Building2,
+    color: '#6929C4',
+    description: 'Directorio institucional',
+    badge: null,
   },
   {
-    id: 'patentes',
-    nombre: 'Patent & IP Agent',
-    icono: Shield,
-    color: '#F59E0B',
-    description: 'Propiedad intelectual',
+    id: 'accesible',
+    nombre: 'Viaje Accesible',
+    icono: Accessibility,
+    color: '#E87722',
+    description: 'Guías de inclusión',
+    badge: null,
   },
   {
-    id: 'regulatorio',
-    nombre: 'Regulatory Intel.',
-    icono: FlaskConical,
-    color: '#EF4444',
-    description: 'ICH · COFEPRIS · ADMET',
+    id: 'turismo',
+    nombre: 'Salidas y Turismo',
+    icono: Compass,
+    color: '#D946EF',
+    description: 'Destinos y eventos',
+    badge: null,
   },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
-  const { empresa, colores } = brandingConfig;
+  const { empresa } = brandingConfig;
 
-  const renderItem = (item: typeof mainItems[0], isActive: boolean) => {
+  const renderItem = (item: NavItem, isActive: boolean) => {
     const Icon = item.icono;
     return (
       <button
@@ -88,89 +113,108 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           display: 'flex',
           alignItems: 'center',
           gap: '10px',
-          padding: '10px 14px',
-          borderRadius: '12px',
-          marginBottom: '2px',
-          backgroundColor: isActive
-            ? `${item.color}15`
-            : 'transparent',
-          border: isActive
-            ? `1px solid ${item.color}33`
-            : '1px solid transparent',
-          color: isActive ? '#0F172A' : '#475569',
+          padding: '9px 12px',
+          borderRadius: '11px',
+          marginBottom: '3px',
+          backgroundColor: isActive ? `${item.color}18` : 'transparent',
+          border: isActive ? `1px solid ${item.color}35` : '1px solid transparent',
+          color: isActive ? '#FFFFFF' : '#A0AEC0',
           cursor: 'pointer',
-          transition: 'all 0.2s',
+          transition: 'all 0.18s ease',
           textAlign: 'left',
           position: 'relative',
           overflow: 'hidden',
         }}
         onMouseEnter={(e) => {
           if (!isActive) {
-            e.currentTarget.style.backgroundColor = 'rgba(14,165,233,0.05)';
-            e.currentTarget.style.color = '#0F172A';
-            e.currentTarget.style.borderColor = 'rgba(14,165,233,0.2)';
+            e.currentTarget.style.backgroundColor = 'rgba(212,0,0,0.05)';
+            e.currentTarget.style.color = '#FFFFFF';
+            e.currentTarget.style.borderColor = 'rgba(212,0,0,0.15)';
           }
         }}
         onMouseLeave={(e) => {
           if (!isActive) {
             e.currentTarget.style.backgroundColor = 'transparent';
-            e.currentTarget.style.color = '#475569';
+            e.currentTarget.style.color = '#A0AEC0';
             e.currentTarget.style.borderColor = 'transparent';
           }
         }}
       >
-        {/* Active indicator */}
+        {/* Active left border indicator */}
         {isActive && (
           <div style={{
             position: 'absolute',
-            left: 0, top: '20%', bottom: '20%',
+            left: 0, top: '18%', bottom: '18%',
             width: '3px',
             borderRadius: '0 3px 3px 0',
             background: item.color,
           }} />
         )}
 
-        {/* Icon */}
+        {/* Icon box */}
         <div style={{
-          width: '34px',
-          height: '34px',
-          borderRadius: '10px',
-          background: isActive ? `${item.color}22` : '#F1F5F9',
+          width: '32px',
+          height: '32px',
+          borderRadius: '9px',
+          background: isActive ? `${item.color}22` : '#1C1C28',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           flexShrink: 0,
-          border: isActive ? `1px solid ${item.color}33` : '1px solid #E2E8F0',
-          transition: 'all 0.2s',
+          border: isActive ? `1px solid ${item.color}35` : '1px solid #2A2A3E',
+          transition: 'all 0.18s',
         }}>
-          <Icon size={16} color={isActive ? item.color : '#475569'} />
+          <Icon size={15} color={isActive ? item.color : '#717187'} />
         </div>
 
         {/* Text */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{
-            fontSize: '13px',
-            fontWeight: isActive ? '600' : '500',
-            color: isActive ? '#0F172A' : '#475569',
+            fontSize: '12.5px',
+            fontWeight: isActive ? '700' : '500',
+            color: isActive ? '#FFFFFF' : '#A0AEC0',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            lineHeight: 1.2,
           }}>
             {item.nombre}
           </div>
           <div style={{
             fontSize: '10px',
-            color: isActive ? item.color : '#64748B',
+            color: isActive ? item.color : '#4A5568',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            marginTop: '1px',
           }}>
             {item.description}
           </div>
         </div>
 
+        {/* Badge */}
+        {item.badge && !isActive && (
+          <div style={{
+            minWidth: '18px',
+            height: '18px',
+            borderRadius: '9px',
+            background: '#D40000',
+            color: '#fff',
+            fontSize: '10px',
+            fontWeight: '700',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '0 5px',
+            flexShrink: 0,
+            animation: 'pulse-glow 2s infinite',
+          }}>
+            {item.badge}
+          </div>
+        )}
+
         {isActive && (
-          <ChevronRight size={14} color={item.color} style={{ flexShrink: 0 }} />
+          <ChevronRight size={13} color={item.color} style={{ flexShrink: 0 }} />
         )}
       </button>
     );
@@ -180,61 +224,51 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
     <div style={{
       width: '240px',
       height: '100vh',
-      background: 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)',
+      background: 'linear-gradient(180deg, #111118 0%, #0D0D0D 100%)',
       display: 'flex',
       flexDirection: 'column',
       overflow: 'hidden',
-      borderRight: '1px solid #E2E8F0',
+      borderRight: '1px solid #1E1E2A',
       position: 'relative',
     }}>
-      {/* Subtle grid pattern overlay */}
+      {/* Subtle metro track background line */}
       <div style={{
         position: 'absolute',
-        inset: 0,
-        backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(14,165,233,0.04) 1px, transparent 0)',
-        backgroundSize: '24px 24px',
+        top: 0, bottom: 0, left: '27px',
+        width: '1px',
+        background: 'linear-gradient(180deg, rgba(212,0,0,0.08) 0%, rgba(0,61,165,0.06) 60%, transparent 100%)',
         pointerEvents: 'none',
+        zIndex: 0,
       }} />
 
       {/* Logo */}
-      <div style={{ padding: '20px 16px 16px', flexShrink: 0, position: 'relative' }}>
+      <div style={{ padding: '18px 14px 14px', flexShrink: 0, position: 'relative', zIndex: 10 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {/* Logo container */}
           <div style={{
-            width: '44px',
-            height: '44px',
+            width: '42px',
+            height: '42px',
             borderRadius: '12px',
-            background: 'linear-gradient(135deg, #0EA5E9 0%, #7C3AED 100%)',
+            background: 'linear-gradient(135deg, #D40000 0%, #8B0000 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            boxShadow: '0 4px 16px rgba(14,165,233,0.3)',
-            overflow: 'hidden',
+            boxShadow: '0 4px 14px rgba(212,0,0,0.35)',
           }}>
-            <img
-              src={empresa.logoUrl}
-              alt={empresa.nombre}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '12px' }}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const parent = target.parentElement;
-                if (parent) {
-                  const icon = document.createElement('div');
-                  icon.innerHTML = `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>`;
-                  parent.appendChild(icon);
-                }
-              }}
-            />
+            <Train size={22} color="#FFFFFF" />
           </div>
-
           <div>
-            <div style={{ fontSize: '15px', fontWeight: '800', color: '#0F172A', fontFamily: 'Outfit, sans-serif', lineHeight: 1.1 }}>
+            <div style={{
+              fontSize: '15px', fontWeight: '800', color: '#FFFFFF',
+              fontFamily: 'Outfit, sans-serif', lineHeight: 1.1, letterSpacing: '-0.01em',
+            }}>
               {empresa.nombre}
             </div>
-            <div style={{ fontSize: '10px', color: '#0EA5E9', fontWeight: '600', marginTop: '2px', letterSpacing: '0.04em' }}>
-              × MAYIA
+            <div style={{
+              fontSize: '9px', color: '#D40000', fontWeight: '700',
+              marginTop: '2px', letterSpacing: '0.1em', textTransform: 'uppercase',
+            }}>
+              MOVILIDAD CDMX
             </div>
           </div>
         </div>
@@ -245,63 +279,60 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         flex: '1 1 0',
         minHeight: 0,
         overflowY: 'auto',
-        padding: '0 10px',
+        padding: '0 8px',
         position: 'relative',
+        zIndex: 10,
       }}>
-        {/* Overview Section */}
-        <div style={{ padding: '4px 8px 6px', marginBottom: '4px' }}>
-          <span style={{
-            fontSize: '10px',
-            fontWeight: '700',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#334155',
-          }}>
-            General
+        {/* Main section */}
+        <div style={{ padding: '4px 8px 5px', marginBottom: '2px' }}>
+          <span style={{ fontSize: '9.5px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#3A3A52' }}>
+            Principal
           </span>
         </div>
         {mainItems.map((item) => renderItem(item, activeSection === item.id))}
 
-        {/* Modules Section */}
-        <div style={{ padding: '16px 8px 6px', marginBottom: '4px' }}>
-          <span style={{
-            fontSize: '10px',
-            fontWeight: '700',
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#334155',
-          }}>
-            Módulos IA
+        {/* Divider */}
+        <div style={{ height: '1px', background: 'linear-gradient(90deg, transparent, #1E1E2A, transparent)', margin: '8px 4px' }} />
+
+        {/* Sistemas section */}
+        <div style={{ padding: '4px 8px 5px', marginBottom: '2px' }}>
+          <span style={{ fontSize: '9.5px', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#3A3A52' }}>
+            Sistemas
           </span>
         </div>
         {modulosItems.map((item) => renderItem(item, activeSection === item.id))}
       </nav>
 
-      {/* Footer */}
+      {/* Footer: system status */}
       <div style={{
-        padding: '12px 16px 16px',
+        padding: '10px 14px 14px',
         flexShrink: 0,
-        borderTop: '1px solid #E2E8F0',
+        borderTop: '1px solid #1E1E2A',
         position: 'relative',
+        zIndex: 10,
       }}>
+        {/* Line color bar */}
+        <div style={{ height: '3px', borderRadius: '2px', marginBottom: '10px', display: 'flex', overflow: 'hidden', gap: '1px' }}>
+          {['#F54394','#004F9F','#007D63','#B0925A','#F5A623','#DA0000','#E87722','#009A44','#6B2E8C','#B5A139','#6B6B6B','#6BC2C8'].map((c, i) => (
+            <div key={i} style={{ flex: 1, backgroundColor: c, opacity: 0.8 }} />
+          ))}
+        </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <div style={{
-            width: '8px',
-            height: '8px',
-            borderRadius: '50%',
-            background: '#10B981',
-            boxShadow: '0 0 6px rgba(16,185,129,0.6)',
-            animation: 'pulse-glow 2s infinite',
+            width: '8px', height: '8px', borderRadius: '50%',
+            background: '#00843D', boxShadow: '0 0 8px #00843D',
+            animation: 'pulse-green 2s infinite',
+            flexShrink: 0,
           }} />
-          <div>
-            <div style={{ fontSize: '11px', color: '#475569', fontWeight: '500' }}>
-              MAYIA Scientific
+          <div style={{ flex: 1 }}>
+            <div style={{ fontSize: '11px', color: '#A0AEC0', fontWeight: '600' }}>
+              Red de CDMX · 12 Líneas
             </div>
-            <div style={{ fontSize: '10px', color: '#10B981' }}>
-              Sistema activo
+            <div style={{ fontSize: '10px', color: '#00843D', marginTop: '1px' }}>
+              92% Operando · 3 Alertas
             </div>
           </div>
-          <Microscope size={14} color="#94A3B8" style={{ marginLeft: 'auto' }} />
+          <ShieldCheck size={13} color="#3A3A52" />
         </div>
       </div>
     </div>

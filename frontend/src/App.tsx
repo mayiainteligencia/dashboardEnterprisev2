@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-import { Dashboard } from './components/Dashboard';
-import { DrugDiscoveryPipeline } from './components/pharbiois/DrugDiscoveryPipeline';
-import { ScientificReportCopilot } from './components/pharbiois/ScientificReportCopilot';
-import { AcademiaInteligente } from './components/pharbiois/AcademiaInteligente';
-import { ProspeccionPharma } from './components/pharbiois/ProspeccionPharma';
-import { PatentIPAgent } from './components/pharbiois/PatentIPAgent';
-import { RegulatoryIntelligence } from './components/pharbiois/RegulatoryIntelligence';
+import { MetroDashboard } from './components/cdmx/MetroDashboard';
+import { PlanificadorRutas } from './components/cdmx/PlanificadorRutas';
+import { EstadoServicio } from './components/cdmx/EstadoServicio';
+import { TiemposSalida } from './components/cdmx/TiemposSalida';
+import { TarifasPago } from './components/cdmx/TarifasPago';
+import { OperadoresCDMX } from './components/cdmx/OperadoresCDMX';
+import { ViajeAccesible } from './components/cdmx/ViajeAccesible';
+import { SalidasTurismo } from './components/cdmx/SalidasTurismo';
 
 function useIsMobile(bp = 900) {
   const [m, setM] = useState(typeof window !== 'undefined' ? window.innerWidth <= bp : false);
@@ -28,27 +29,29 @@ function App() {
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard:   'AI BioPharma Command Center',
-      pipeline:    'Drug Discovery Pipeline',
-      reportes:    'Scientific Report Copilot',
-      academia:    'Academia Inteligente',
-      prospeccion: 'Prospección Pharma/Biotech',
-      patentes:    'Patent & IP Intelligence',
-      regulatorio: 'Regulatory Intelligence Agent',
+      dashboard:   'Movilidad Inteligente CDMX — Centro de Control',
+      home:        'Planificador de Rutas',
+      estado:      'Estado del Servicio',
+      salidas:     'Próximas Salidas',
+      tarifas:     'Tarifas y Pago',
+      operadores:  'Operadores CDMX',
+      accesible:   'Viaje Accesible',
+      turismo:     'Salidas y Turismo',
     };
-    return titulos[activeSection] || 'Pharbiois Dashboard';
+    return titulos[activeSection] || 'Movilidad Inteligente CDMX';
   };
 
   const renderContent = () => {
     switch (activeSection) {
-      case 'dashboard':   return <Dashboard onNavigate={selectSection} />;
-      case 'pipeline':    return <DrugDiscoveryPipeline />;
-      case 'reportes':    return <ScientificReportCopilot />;
-      case 'academia':    return <AcademiaInteligente />;
-      case 'prospeccion': return <ProspeccionPharma />;
-      case 'patentes':    return <PatentIPAgent />;
-      case 'regulatorio': return <RegulatoryIntelligence />;
-      default:            return <Dashboard onNavigate={selectSection} />;
+      case 'dashboard':   return <MetroDashboard onNavigate={selectSection} />;
+      case 'home':        return <PlanificadorRutas />;
+      case 'estado':      return <EstadoServicio />;
+      case 'salidas':     return <TiemposSalida />;
+      case 'tarifas':     return <TarifasPago />;
+      case 'operadores':  return <OperadoresCDMX />;
+      case 'accesible':   return <ViajeAccesible />;
+      case 'turismo':     return <SalidasTurismo onNavigate={selectSection} />;
+      default:            return <MetroDashboard onNavigate={selectSection} />;
     }
   };
 
@@ -73,13 +76,13 @@ function App() {
           onClick={() => setDrawerOpen(false)}
           style={{
             position: 'fixed', inset: 0, zIndex: 3000,
-            background: 'rgba(255, 255, 255, 0.7)',
+            background: 'rgba(0, 0, 0, 0.7)',
             backdropFilter: 'blur(6px)',
             display: 'flex',
           }}
         >
           <div onClick={(e) => e.stopPropagation()}
-            style={{ width: '240px', height: '100%', boxShadow: '0 4px 30px rgba(0,0,0,0.05)' }}>
+            style={{ width: '240px', height: '100%', boxShadow: '0 4px 30px rgba(0,0,0,0.4)' }}>
             <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
           </div>
         </div>

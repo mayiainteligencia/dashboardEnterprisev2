@@ -37,16 +37,11 @@ async function migrate() {
 
     console.log('✅ Migraciones completadas exitosamente!');
     console.log('\n📊 Tablas creadas:');
-    console.log('   - departamentos');
-    console.log('   - servicios');
-    console.log('   - cursos_academia');
-    console.log('   - servicios_corporativos');
-    console.log('   - info_empresa');
-    console.log('   - empleados');
-    console.log('   - presupuestos');
-    console.log('   - ventas');
-    console.log('   - inventario');
-    console.log('   - tickets_ti');
+    console.log('   - lineas_metro');
+    console.log('   - estaciones');
+    console.log('   - alertas');
+    console.log('   - tarifas');
+    console.log('   - operadores');
 
   } catch (error) {
     console.error('❌ Error ejecutando migraciones:', error.message);

@@ -6,12 +6,10 @@ import {
   AlertTriangle,
   CheckCircle,
   Info,
-  Atom,
   Search,
-  ChevronDown,
-  Dna,
-  Microscope,
+  Train,
   Clock,
+  Compass,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 import { AsistenteBuscador } from './AsistenteBuscador';
@@ -30,63 +28,64 @@ interface Notification {
   leida: boolean;
 }
 
-const notificacionesPharbiois: Notification[] = [
+const notificacionesCDMX: Notification[] = [
   {
     id: 1,
     tipo: 'urgente',
-    titulo: 'Alerta ADMET: Molécula PB-2847',
-    mensaje: 'Score de toxicidad hepática supera el umbral aceptable (>0.7). Revisión requerida.',
+    titulo: 'Alerta L3: Retraso de Trenes',
+    mensaje: 'Afluencia crítica de usuarios en Indios Verdes y Deportivo 18 de Marzo. Avance lento.',
     tiempo: 'Hace 8 min',
     leida: false,
   },
   {
     id: 2,
     tipo: 'alerta',
-    titulo: 'Cumplimiento ICH M7: Impureza detectada',
-    mensaje: 'Se identificó impureza tipo nitrosamina en lote LAB-094. Acción correctiva pendiente.',
+    titulo: 'Metrobús L1: Manifestación',
+    mensaje: 'Cortes a la circulación en Av. Insurgentes a la altura de El Ángel. Circuitos activos.',
     tiempo: 'Hace 32 min',
     leida: false,
   },
   {
     id: 3,
     tipo: 'exito',
-    titulo: 'Molécula PB-1203 → Candidata',
-    mensaje: 'La molécula superó evaluación preclínica in silico. Lista para siguiente fase.',
+    titulo: 'Cablebús L2: Operación Normal',
+    mensaje: 'Se reanuda el servicio regular tras concluir revisión preventiva en torre 14.',
     tiempo: 'Hace 2 horas',
-    leida: false,
+    leida: true,
   },
   {
     id: 4,
     tipo: 'info',
-    titulo: 'Nuevo alumno en Diplomado ADMET',
-    mensaje: '3 nuevos alumnos registrados en Toxicoinformática Avanzada.',
-    tiempo: 'Hace 3 horas',
-    leida: true,
-  },
-  {
-    id: 5,
-    tipo: 'exito',
-    titulo: 'Patente PCT/MX2024/000847 — Aprobada',
-    mensaje: 'La solicitud de patente para el scaffold benzimidazólico fue aceptada para examen.',
-    tiempo: 'Hace 5 horas',
-    leida: true,
-  },
-  {
-    id: 6,
-    tipo: 'info',
-    titulo: 'Reporte generado: Cliente Farmacias Torres',
-    mensaje: 'El reporte técnico de docking molecular fue generado y enviado al cliente.',
-    tiempo: 'Hace 6 horas',
+    titulo: 'Programa BiciRed Activo',
+    mensaje: 'Este domingo recuerda que puedes ingresar con tu bicicleta al metro todo el día.',
+    tiempo: 'Hace 4 horas',
     leida: true,
   },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
-  const { colores, empresa, ia } = brandingConfig;
+  const { colores, ia } = brandingConfig;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesPharbiois);
+  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesCDMX);
   const [buscadorAbierto, setBuscadorAbierto] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Reloj CDMX en vivo
+  const [time, setTime] = useState('');
+  useEffect(() => {
+    const updateClock = () => {
+      setTime(new Date().toLocaleTimeString('es-MX', { 
+        timeZone: 'America/Mexico_City',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }));
+    };
+    updateClock();
+    const t = setInterval(updateClock, 1000);
+    return () => clearInterval(t);
+  }, []);
 
   const fecha = new Date();
   const opcionesFecha: Intl.DateTimeFormatOptions = {
@@ -108,19 +107,19 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
 
   const iconoNotificacion = (tipo: Notification['tipo']) => {
     switch (tipo) {
-      case 'urgente': return <AlertTriangle size={14} color="#EF4444" />;
-      case 'alerta':  return <AlertTriangle size={14} color="#F59E0B" />;
-      case 'exito':   return <CheckCircle size={14} color="#10B981" />;
-      case 'info':    return <Info size={14} color="#0EA5E9" />;
+      case 'urgente': return <AlertTriangle size={14} color="var(--color-metro-primary)" />;
+      case 'alerta':  return <AlertTriangle size={14} color="var(--color-metro-gold)" />;
+      case 'exito':   return <CheckCircle size={14} color="var(--color-metro-green)" />;
+      case 'info':    return <Info size={14} color="var(--color-metro-blue)" />;
     }
   };
 
   const colorNotificacion = (tipo: Notification['tipo']) => {
     const map = {
-      urgente: { bg: 'rgba(239,68,68,0.12)', border: 'rgba(239,68,68,0.25)' },
-      alerta:  { bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.25)' },
-      exito:   { bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.25)' },
-      info:    { bg: 'rgba(14,165,233,0.12)', border: 'rgba(14,165,233,0.25)' },
+      urgente: { bg: 'rgba(212,0,0,0.12)', border: 'rgba(212,0,0,0.25)' },
+      alerta:  { bg: 'rgba(245,166,35,0.12)', border: 'rgba(245,166,35,0.25)' },
+      exito:   { bg: 'rgba(0,132,61,0.12)', border: 'rgba(0,132,61,0.25)' },
+      info:    { bg: 'rgba(0,61,165,0.12)', border: 'rgba(0,61,165,0.25)' },
     };
     return map[tipo];
   };
@@ -133,9 +132,9 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
     <>
       <header style={{
         height: '64px',
-        background: 'rgba(255, 255, 255, 0.95)',
+        background: 'rgba(13, 13, 13, 0.95)',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #E2E8F0',
+        borderBottom: '1px solid #2A2A3E',
         display: 'flex',
         alignItems: 'center',
         padding: '0 20px',
@@ -151,9 +150,9 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
             onClick={onMenu}
             style={{
               width: '36px', height: '36px', borderRadius: '10px',
-              background: '#F1F5F9', border: '1px solid #E2E8F0',
+              background: '#1C1C28', border: '1px solid #2A2A3E',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#475569', cursor: 'pointer', flexShrink: 0,
+              color: '#A0AEC0', cursor: 'pointer', flexShrink: 0,
             }}
           >
             <Menu size={18} />
@@ -163,20 +162,31 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
         {/* Page title */}
         <div style={{ flex: 1 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Dna size={16} color="#0EA5E9" style={{ flexShrink: 0 }} />
+            <Train size={16} color="var(--color-metro-primary)" style={{ flexShrink: 0 }} />
             <h1 style={{
               fontSize: '16px',
               fontWeight: '700',
-              color: '#0F172A',
+              color: '#FFFFFF',
               fontFamily: 'Outfit, sans-serif',
               margin: 0,
             }}>
               {title}
             </h1>
           </div>
-          <div style={{ fontSize: '11px', color: '#475569', marginTop: '1px', textTransform: 'capitalize' }}>
+          <div style={{ fontSize: '11px', color: '#A0AEC0', marginTop: '1px', textTransform: 'capitalize' }}>
             {fechaFormateada}
           </div>
+        </div>
+
+        {/* Reloj en Vivo CDMX */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '6px',
+          padding: '6px 12px', background: '#121212', border: '1px solid #2A2A3E',
+          borderRadius: '8px', fontSize: '12px', fontWeight: 'bold', color: '#FFFFFF',
+          fontFamily: 'Outfit, sans-serif'
+        }} className="hide-mobile">
+          <Clock size={12} color="var(--color-metro-gold)" />
+          <span>CDMX {time}</span>
         </div>
 
         {/* Search */}
@@ -186,47 +196,47 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
           style={{
             display: 'flex', alignItems: 'center', gap: '8px',
             padding: '8px 14px',
-            background: '#F1F5F9',
-            border: '1px solid #E2E8F0',
+            background: '#1C1C28',
+            border: '1px solid #2A2A3E',
             borderRadius: '10px',
-            color: '#64748B',
+            color: '#A0AEC0',
             cursor: 'pointer',
             transition: 'all 0.2s',
             fontSize: '12px',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#E2E8F0';
-            e.currentTarget.style.borderColor = '#CBD5E1';
-            e.currentTarget.style.color = '#0F172A';
+            e.currentTarget.style.background = '#222238';
+            e.currentTarget.style.borderColor = 'var(--color-metro-primary)';
+            e.currentTarget.style.color = '#FFFFFF';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = '#F1F5F9';
-            e.currentTarget.style.borderColor = '#E2E8F0';
-            e.currentTarget.style.color = '#64748B';
+            e.currentTarget.style.background = '#1C1C28';
+            e.currentTarget.style.borderColor = '#2A2A3E';
+            e.currentTarget.style.color = '#A0AEC0';
           }}
         >
           <Search size={14} />
-          <span className="hide-mobile">Buscar en el dashboard…</span>
+          <span className="hide-mobile">Pregunta al asistente de rutas…</span>
         </button>
 
-        {/* MAYIA badge */}
+        {/* IA badge */}
         <div style={{
           display: 'flex', alignItems: 'center', gap: '6px',
           padding: '6px 12px',
-          background: 'rgba(124,58,237,0.1)',
-          border: '1px solid rgba(124,58,237,0.25)',
+          background: 'rgba(212,0,0,0.1)',
+          border: '1px solid rgba(212,0,0,0.25)',
           borderRadius: '999px',
           fontSize: '11px',
-          color: '#A78BFA',
+          color: '#FFFFFF',
           fontWeight: '600',
           cursor: 'default',
         }} className="hide-mobile">
-          <Atom size={12} color="#A78BFA" />
+          <Compass size={12} color="var(--color-metro-primary)" />
           {ia.nombre}
           <div style={{
             width: '6px', height: '6px',
-            borderRadius: '50%', background: '#10B981',
-            boxShadow: '0 0 6px rgba(16,185,129,0.6)',
+            borderRadius: '50%', background: '#00843D',
+            boxShadow: '0 0 6px #00843D',
           }} />
         </div>
 
@@ -237,10 +247,10 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
             onClick={() => setNotificacionesAbiertas(!notificacionesAbiertas)}
             style={{
               width: '38px', height: '38px', borderRadius: '10px',
-              background: notificacionesAbiertas ? 'rgba(14,165,233,0.1)' : '#F1F5F9',
-              border: `1px solid ${notificacionesAbiertas ? 'rgba(14,165,233,0.3)' : '#E2E8F0'}`,
+              background: notificacionesAbiertas ? 'rgba(212,0,0,0.1)' : '#1C1C28',
+              border: `1px solid ${notificacionesAbiertas ? 'rgba(212,0,0,0.3)' : '#2A2A3E'}`,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
-              color: '#475569', cursor: 'pointer',
+              color: '#A0AEC0', cursor: 'pointer',
               position: 'relative', transition: 'all 0.2s',
             }}
           >
@@ -249,11 +259,11 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
               <span style={{
                 position: 'absolute', top: '-4px', right: '-4px',
                 width: '18px', height: '18px',
-                background: '#EF4444',
+                background: 'var(--color-metro-primary)',
                 borderRadius: '50%',
                 fontSize: '10px', fontWeight: '700', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                border: '2px solid #FFFFFF',
+                border: '2px solid #0D0D0D',
               }}>
                 {sinLeer}
               </span>
@@ -264,10 +274,10 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
             <div style={{
               position: 'absolute', top: '48px', right: 0,
               width: '360px', maxHeight: '480px',
-              background: '#FFFFFF',
-              border: '1px solid #E2E8F0',
+              background: '#1A1A2E',
+              border: '1px solid #2A2A3E',
               borderRadius: '16px',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.08)',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
               zIndex: 1000,
               overflow: 'hidden',
               animation: 'fadeIn 0.2s ease',
@@ -275,15 +285,15 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
               {/* Header */}
               <div style={{
                 padding: '16px 18px 12px',
-                borderBottom: '1px solid #E2E8F0',
+                borderBottom: '1px solid #2A2A3E',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               }}>
                 <div>
-                  <div style={{ fontSize: '14px', fontWeight: '700', color: '#0F172A', fontFamily: 'Outfit, sans-serif' }}>
-                    Alertas Científicas
+                  <div style={{ fontSize: '14px', fontWeight: '700', color: '#FFFFFF', fontFamily: 'Outfit, sans-serif' }}>
+                    Alertas de Movilidad
                   </div>
                   {sinLeer > 0 && (
-                    <div style={{ fontSize: '11px', color: '#EF4444', fontWeight: '600', marginTop: '2px' }}>
+                    <div style={{ fontSize: '11px', color: 'var(--color-metro-primary)', fontWeight: '600', marginTop: '2px' }}>
                       {sinLeer} sin leer
                     </div>
                   )}
@@ -293,7 +303,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                     <button
                       onClick={marcarTodas}
                       style={{
-                        fontSize: '11px', color: '#0EA5E9', fontWeight: '600',
+                        fontSize: '11px', color: 'var(--color-metro-primary)', fontWeight: '600',
                         background: 'none', border: 'none', cursor: 'pointer', padding: '4px 8px',
                         borderRadius: '6px',
                       }}
@@ -305,9 +315,9 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                     onClick={() => setNotificacionesAbiertas(false)}
                     style={{
                       width: '26px', height: '26px', borderRadius: '8px',
-                      background: '#F1F5F9', border: '1px solid #E2E8F0',
+                      background: '#1C1C28', border: '1px solid #2A2A3E',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: '#64748B', cursor: 'pointer',
+                      color: '#A0AEC0', cursor: 'pointer',
                     }}
                   >
                     <X size={13} />
@@ -327,14 +337,14 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                       )}
                       style={{
                         padding: '12px 18px',
-                        borderBottom: '1px solid #E2E8F0',
+                        borderBottom: '1px solid #2A2A3E',
                         display: 'flex', gap: '10px',
-                        background: n.leida ? 'transparent' : 'rgba(14,165,233,0.02)',
+                        background: n.leida ? 'transparent' : 'rgba(212,0,0,0.02)',
                         cursor: 'pointer',
                         transition: 'background 0.15s',
                       }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = '#F8FAFC'; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.background = n.leida ? 'transparent' : 'rgba(14,165,233,0.02)'; }}
+                      onMouseEnter={(e) => { e.currentTarget.style.background = '#222238'; }}
+                      onMouseLeave={(e) => { e.currentTarget.style.background = n.leida ? 'transparent' : 'rgba(212,0,0,0.02)'; }}
                     >
                       <div style={{
                         width: '30px', height: '30px', borderRadius: '8px',
@@ -347,15 +357,15 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{
                           fontSize: '12px', fontWeight: n.leida ? '500' : '700',
-                          color: n.leida ? '#64748B' : '#0F172A',
+                          color: n.leida ? '#A0AEC0' : '#FFFFFF',
                           marginBottom: '2px',
                         }}>
                           {n.titulo}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#475569', lineHeight: 1.4 }}>
+                        <div style={{ fontSize: '11px', color: '#A0AEC0', lineHeight: 1.4 }}>
                           {n.mensaje}
                         </div>
-                        <div style={{ fontSize: '10px', color: '#475569', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <div style={{ fontSize: '10px', color: '#4A5568', marginTop: '4px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                           <Clock size={9} />
                           {n.tiempo}
                         </div>
@@ -363,7 +373,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                       {!n.leida && (
                         <div style={{
                           width: '8px', height: '8px', borderRadius: '50%',
-                          background: '#EF4444', flexShrink: 0, marginTop: '4px',
+                          background: 'var(--color-metro-primary)', flexShrink: 0, marginTop: '4px',
                         }} />
                       )}
                     </div>
@@ -379,7 +389,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
       {buscadorAbierto && (
         <div style={{
           position: 'fixed', inset: 0,
-          background: 'rgba(255, 255, 255, 0.7)',
+          background: 'rgba(0,0,0,0.7)',
           backdropFilter: 'blur(8px)',
           zIndex: 2000,
           display: 'flex', alignItems: 'flex-start',

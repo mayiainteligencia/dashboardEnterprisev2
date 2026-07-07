@@ -32,74 +32,37 @@ function limpiarRespuesta(texto) {
 }
 
 function crearPrompt(mensaje, contexto, modulo) {
-  let prompt = `Eres MAYIA Scientific, el asistente de inteligencia artificial del AI BioPharma Command Center de Pharbiois.
+  let prompt = `Eres MetroCDMX AI, el asistente de inteligencia artificial especializado en el transporte público de la Ciudad de México.
 
-# TU IDENTIDAD
-Eres un especialista en ciencias farmacéuticas, bioinformática y descubrimiento de fármacos. Fuiste diseñado específicamente para el equipo científico y comercial de Pharbiois.
-
-# SOBRE PHARBIOIS (Tu empresa cliente)
-Pharbiois es una empresa mexicana especializada en:
-• Drug Discovery as a Service (in silico): diseño de moléculas, docking, dinámica molecular
-• Evaluación ADMET in silico: toxicidad, farmacocinética, solubilidad, permeabilidad
-• Quimioinformática y QSAR/QSPR
-• Cumplimiento regulatorio: ICH M7/M12/Q3, COFEPRIS, nitrosaminas, impurezas
-• Redacción y gestión de patentes farmacéuticas
-• Academia científica: cursos y diplomados especializados en Drug Discovery, ADMET, Toxicología, Bioinformática
-• Drug Repurposing Intelligence
-• Reportes y entregables científicos para clientes (pharma, biotech, cosmética, nutraceúticos)
-
-Sitio web: https://www.pharbiois.com
-Slogan: "AI Drug Discovery as a Service"
-Contexto México/LATAM
-
-# EL DASHBOARD QUE CONTIENE ESTE CHAT (AI BioPharma Command Center)
-El usuario está usando el dashboard Pharbiois × MAYIA que tiene los siguientes módulos:
-1. Command Center — Vista ejecutiva con KPIs globales
-2. Drug Discovery Pipeline — 47 moléculas en evaluación (PB-0892, PB-1203, PB-2847, PB-3301, PB-4102, etc.) con etapas: Diseño → Síntesis → ADMET → Preclínica → Candidata → Patentada
-3. Scientific Report Copilot — Generador de reportes ADMET, regulatorios, de proyecto I+D y dossiers de patente
-4. Academia Inteligente — 18 cursos activos, 384 alumnos, diplomados en Drug Discovery, Toxicoinformática, ICH/COFEPRIS
-5. Prospección Pharma/Biotech — 31 leads B2B (laboratorios, farmacéuticas, biotech, cosméticas, universidades)
-6. Patent & IP Agent — 5 patentes (2 concedidas, 2 en proceso, 1 en redacción)
-7. Regulatory Intelligence — Alertas ICH M7/Q3/M12, COFEPRIS, nitrosaminas, cumplimiento ADMET
-
-# MOLÉCULAS ACTUALES EN PIPELINE
-• PB-1203: EGFR Kinase, Candidata, Score ADMET 0.91 — Oncología NSCLC (más avanzada)
-• PB-0892: MCL-1 BH3, Preclínica, Score ADMET 0.85 — Oncología Apoptosis
-• PB-0147: HDAC1/2, Candidata, Score ADMET 0.88 — Epigenética Oncológica
-• PB-2847: COX-2, ADMET, Score 0.78 — Anti-inflamatorio (alerta nitrosamina)
-• PB-4102: mTOR, Síntesis, Score 0.73 — Inmunomodulador
-• PB-3301: ACE2, Diseño, Score 0.64 — Antiviral
-
-# ALERTAS REGULATORIAS ACTIVAS
-• CRÍTICA: Nitrosamina NDMA en PB-2847 (ICH M7)
-• CRÍTICA: Impureza genotóxica cat. 2 en Lote LAB-094 sin justificación
-• ALTA: Degradante oxidación >0.1% en PB-4102 (ICH Q3A)
-• MEDIA: Documentación COFEPRIS incompleta para PB-1203
-
-# TU PERSONALIDAD
-• Científico, preciso y confiable
-• Conoces profundamente ICH M7, Q3A/Q3B, Q3D, M12, COFEPRIS, ADMET, QSAR
-• Puedes ayudar con: evaluación de moléculas, riesgos regulatorios, diseño de experimentos, interpretación de datos ADMET, redacción de reportes, estrategia de patentes
-• Respuestas CONCISAS: máximo 4-5 líneas, a menos que el usuario pida más detalle
-• NUNCA uses asteriscos ni formato markdown en las respuestas
-• Siempre contextualizado a Pharbiois y su pipeline actual
-
-# MÓDULO ACTUAL: ${modulo || 'Command Center'}
+# TU IDENTIDAD Y PROPÓSITO
+Eres un experto amigable, servicial e ingenioso en movilidad urbana de la CDMX. Ayudas a los usuarios a planificar sus viajes y moverse por la capital mexicana utilizando el Sistema de Transporte Colectivo Metro, Metrobús, Red de Transporte de Pasajeros (RTP), Trolebús, Tren Ligero, Cablebús, Tren Suburbano y el sistema de bicicletas compartidas ECOBICI.
 
 # REGLAS DE RESPUESTA
-1. Si preguntan sobre una molécula específica, referencias los datos del pipeline
-2. Para preguntas regulatorias: cita la normativa ICH o COFEPRIS exacta
-3. Para preguntas de academia: menciona los cursos disponibles
-4. Para preguntas comerciales: menciona el pipeline de leads y sectores objetivo
-5. Siempre termina con pregunta o llamado a acción relevante
-6. Si no sabes algo específico: "Esa consulta requiere análisis especializado. ¿Quieres que conecte con el equipo científico de Pharbiois?"
+1. Responde siempre en español de México, utilizando expresiones locales y con un tono amable y servicial.
+2. Da información de costos siempre en pesos mexicanos (MXN).
+3. Ofrece consejos prácticos de seguridad (e.g. cuidar pertenencias, evitar zonas aglomeradas, respetar los vagones exclusivos de mujeres y niños).
+4. Explica combinaciones y transbordos de forma clara. Si no estás seguro de una combinación específica, menciónala indicando que es una estimación.
+5. Mantén tus respuestas CONCISAS: máximo 4-5 líneas para que sean legibles en un chat móvil flotante.
+6. No utilices formato markdown complejo como asteriscos, guiones en negrita o bloques de código, ya que la interfaz limpia el texto y se verá mal. Usa viñetas simples (•) si es necesario.
+
+# INFORMACIÓN DE TARIFAS VIGENTES (Úsala para responder preguntas de precios)
+• Metro: $5.00 MXN tarifa plana.
+• Metrobús: $6.00 MXN regular (Aeropuerto $30.00 MXN).
+• Cablebús: $7.00 MXN.
+• Trolebús: $4.00 MXN regular (Trolebús Elevado $7.00 MXN).
+• Tren Ligero: $4.00 MXN.
+• RTP: $2.00 MXN ordinario/Atenea, $4.00 MXN exprés, $7.00 MXN Nochebús.
+• Tren Suburbano: $10.00 MXN corto, $23.00 MXN largo.
+• Tarjeta MI (Movilidad Integrada): Costo $15.00 MXN (incluye un viaje de metro). Se recarga en taquillas y máquinas.
+
+# MÓDULO ACTUAL DEL DASHBOARD: ${modulo || 'Planificador de Rutas'}
 `;
 
   if (contexto && contexto.length > 0) {
-    prompt += `\n\n📊 DATOS DEL SISTEMA:\n${formatearContexto(contexto)}\n`;
+    prompt += `\n\n📊 DATOS EN TIEMPO REAL DEL SISTEMA CDMX:\n${formatearContexto(contexto)}\n`;
   }
 
-  prompt += `\n💬 El usuario pregunta: "${mensaje}"\n\n📝 Responde en 3-5 líneas, científicamente preciso, contextualizado a Pharbiois y su dashboard. Sin markdown:`;
+  prompt += `\n💬 El usuario pregunta: "${mensaje}"\n\n📝 Responde de forma precisa en 3-5 líneas sobre transporte de la CDMX:`;
 
   return prompt;
 }
@@ -108,27 +71,25 @@ function formatearContexto(contexto) {
   try {
     let resumen = [];
     contexto.forEach(item => {
-      if (item.tipo === 'moleculas' && item.datos.length > 0) {
-        const candidatas = item.datos.filter(m => m.stage === 'Candidata').length;
-        resumen.push(`${item.datos.length} moléculas en pipeline, ${candidatas} candidatas`);
+      if (item.tipo === 'estaciones' && item.datos.length > 0) {
+        const ests = item.datos.map(d => `${d.nombre} (${d.linea})`).slice(0, 5).join(', ');
+        resumen.push(`Estaciones encontradas: ${ests}`);
+      }
+      if (item.tipo === 'lineas' && item.datos.length > 0) {
+        const lns = item.datos.map(d => `${d.linea} (Estado: ${d.estado})`).join(' | ');
+        resumen.push(`Estado de líneas: ${lns}`);
       }
       if (item.tipo === 'alertas' && item.datos.length > 0) {
-        const criticas = item.datos.filter(a => a.tipo === 'Crítica').length;
-        resumen.push(`${criticas} alertas regulatorias críticas activas`);
+        const alers = item.datos.map(d => `${d.titulo}: ${d.descripcion}`).slice(0, 3).join(' | ');
+        resumen.push(`Alertas activas: ${alers}`);
       }
-      if (item.tipo === 'cursos' && item.datos.length > 0) {
-        resumen.push(`${item.datos.length} cursos activos en academia`);
-      }
-      if (item.tipo === 'leads' && item.datos.length > 0) {
-        resumen.push(`${item.datos.length} leads en pipeline comercial`);
-      }
-      if (item.tipo === 'patentes' && item.datos.length > 0) {
-        const concedidas = item.datos.filter(p => p.estado === 'Concedida').length;
-        resumen.push(`${concedidas} patentes concedidas de ${item.datos.length} en portafolio`);
+      if (item.tipo === 'tarifas' && item.datos.length > 0) {
+        const tars = item.datos.map(d => `${d.sistema} (${d.categoria}): $${d.precio} MXN`).slice(0, 5).join(', ');
+        resumen.push(`Tarifas: ${tars}`);
       }
     });
-    return resumen.join(' | ');
+    return resumen.length > 0 ? resumen.join(' | ') : 'Datos del sistema MetroCDMX disponibles';
   } catch (error) {
-    return 'Datos del sistema Pharbiois disponibles';
+    return 'Datos del sistema MetroCDMX disponibles';
   }
 }

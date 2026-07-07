@@ -83,7 +83,7 @@ export const AsistenteBuscador: React.FC = () => {
             {messages.length === 0 && !loading && (
               <div style={{ textAlign: 'center', padding: '18px 8px' }}>
                 <Sparkles size={26} color={colores.primario} style={{ marginBottom: '8px' }} />
-                <p style={{ fontSize: '13px', color: colores.textoMedio, margin: 0 }}>Pregúntame sobre ventas, leads, inventario o campañas.</p>
+                <p style={{ fontSize: '13px', color: colores.textoMedio, margin: 0 }}>Pregúntame sobre cómo llegar a un sitio, líneas del metro, tarifas o combinaciones de transporte.</p>
               </div>
             )}
             {messages.map((m, i) => (

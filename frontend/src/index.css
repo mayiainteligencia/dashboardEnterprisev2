@@ -10,55 +10,55 @@
    ========================================== */
 
 :root {
-  /* Core Palette */
-  --pharb-blue: #0EA5E9;
-  --pharb-blue-dark: #0369A1;
-  --pharb-blue-light: #0284C7;
-  --pharb-teal: #14B8A6;
-  --pharb-teal-dark: #0D9488;
-  --pharb-teal-light: #0F766E;
-  --pharb-purple: #7C3AED;
-  --pharb-purple-light: #6D28D9;
+  /* CDMX Transit Colors */
+  --color-metro-primary: #D40000;   /* Rojo Metro CDMX */
+  --color-metro-dark: #1A0A0A;      /* Fondo oscuro Metro */
+  --color-metro-gold: #F5A623;      /* Dorado Metro L3 */
+  --color-metro-blue: #003DA5;      /* Azul Metrobús */
+  --color-metro-green: #00843D;     /* Verde Cablebús/Ecobici */
+  --color-metro-orange: #E87722;    /* Naranja RTP */
+  --color-metro-purple: #6929C4;    /* Morado Trolebús */
+  --accent: #D40000;
 
-  /* Backgrounds */
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F8FAFC;
-  --bg-card: #FFFFFF;
-  --bg-card-hover: #F1F5F9;
-  --bg-elevated: #E2E8F0;
+  /* Global Backgrounds (Forced Dark Theme) */
+  --bg-primary: #0D0D0D;            /* Fondo principal */
+  --bg-secondary: #121212;          /* Fondo sidebar */
+  --bg-card: #1A1A2E;               /* Fondo tarjetas glassmorphism */
+  --bg-card-hover: #22223A;         /* Tarjeta hover */
+  --bg-elevated: #282845;
 
-  /* Text */
-  --text-primary: #0F172A;
-  --text-secondary: #475569;
-  --text-muted: #94A3B8;
-  --text-accent: #0284C7;
+  /* Text Colors */
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0AEC0;
+  --text-muted: #4A5568;
+  --text-accent: #D40000;
 
-  /* Status */
-  --color-success: #10B981;
-  --color-warning: #F59E0B;
-  --color-danger: #EF4444;
-  --color-info: #0EA5E9;
+  /* Status Colors */
+  --color-success: #00843D;
+  --color-warning: #F5A623;
+  --color-danger: #D40000;
+  --color-info: #003DA5;
 
   /* Borders */
-  --border: #E2E8F0;
-  --border-active: #0EA5E9;
-  --border-hover: #14B8A6;
+  --border: #2A2A3E;
+  --border-active: #D40000;
+  --border-hover: #003DA5;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.05), 0 1px 2px -1px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.05), 0 4px 6px -4px rgba(0,0,0,0.05);
-  --shadow-blue: 0 4px 20px -2px rgba(14, 165, 233, 0.1);
-  --shadow-teal: 0 4px 20px -2px rgba(20, 184, 166, 0.1);
-  --shadow-glow: 0 0 15px rgba(14,165,233,0.15);
+  /* Shadows & Glows */
+  --shadow-sm: 0 1px 3px 0 rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.4);
+  --shadow-blue: 0 4px 20px -2px rgba(0, 61, 165, 0.2);
+  --shadow-teal: 0 4px 20px -2px rgba(0, 132, 61, 0.2);
+  --shadow-glow: 0 0 15px rgba(212,0,0,0.2);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, #0EA5E9 0%, #7C3AED 100%);
-  --gradient-teal: linear-gradient(135deg, #14B8A6 0%, #0EA5E9 100%);
-  --gradient-molecule: linear-gradient(135deg, #10B981 0%, #14B8A6 100%);
-  --gradient-alert: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
-  --gradient-sidebar: linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%);
-  --gradient-card: linear-gradient(135deg, rgba(14,165,233,0.02) 0%, rgba(20,184,166,0.02) 100%);
+  --gradient-primary: linear-gradient(135deg, #D40000 0%, #003DA5 100%);
+  --gradient-teal: linear-gradient(135deg, #00843D 0%, #003DA5 100%);
+  --gradient-molecule: linear-gradient(135deg, #00843D 0%, #F5A623 100%);
+  --gradient-alert: linear-gradient(135deg, #F5A623 0%, #D40000 100%);
+  --gradient-sidebar: linear-gradient(180deg, #121212 0%, #0D0D0D 100%);
+  --gradient-card: linear-gradient(135deg, rgba(212,0,0,0.02) 0%, rgba(0,61,165,0.02) 100%);
 }
 
 /* Reset */
@@ -510,3 +510,78 @@ button {
 @media (min-width: 769px) {
   .hide-desktop { display: none !important; }
 }
+
+/* ==========================================
+   METRОCDMX ANIMATIONS
+   ========================================== */
+
+/* Pulse glow for alert indicators */
+@keyframes pulse-glow {
+  0%   { box-shadow: 0 0 0 0 rgba(212, 0, 0, 0.5); transform: scale(0.95); }
+  70%  { box-shadow: 0 0 0 8px rgba(212, 0, 0, 0); transform: scale(1); }
+  100% { box-shadow: 0 0 0 0 rgba(212, 0, 0, 0); transform: scale(0.95); }
+}
+
+/* Shimmer skeleton loading */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Fade in upward */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide in from left */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Bar grow animation */
+@keyframes growBar {
+  from { width: 0%; }
+  to   { width: var(--target-width, 100%); }
+}
+
+/* Horizontal marquee news ticker */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Spinning loader */
+.spin-anim {
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* Countdown pulse */
+@keyframes countdown-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+/* Green pulse for live indicators */
+@keyframes pulse-green {
+  0%   { box-shadow: 0 0 0 0 rgba(0, 132, 61, 0.5); }
+  70%  { box-shadow: 0 0 0 6px rgba(0, 132, 61, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 132, 61, 0); }
+}
+
+/* Card entry animation */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Utility classes */
+.animate-fadeInUp   { animation: fadeInUp 0.4s ease forwards; }
+.animate-slideLeft  { animation: slideInLeft 0.3s ease forwards; }
+.animate-cardEnter  { animation: cardEnter 0.35s ease forwards; }
+
