@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 import { brandingConfig, type TemaBesco } from '../config/branding';
 import { detalleModulos, serieTipo, colorSeveridad, type Modulo } from './bescoData';
+import { ExtrasModulo } from './ExtrasModulo';
 
 const { colores } = brandingConfig;
 
@@ -187,6 +188,11 @@ export const ModuloBesco: React.FC<{ modulo: Modulo; tema: TemaBesco }> = ({ mod
           </div>
         </Card>
       )}
+
+      {/* Alertas del módulo + recomendación MAYIA + palancas financieras */}
+      <div style={{ marginTop: '20px' }}>
+        <ExtrasModulo moduloId={modulo.id} tema={tema} />
+      </div>
     </div>
   );
 };

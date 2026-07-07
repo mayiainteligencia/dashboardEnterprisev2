@@ -4,6 +4,8 @@ import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
 import { BescoDashboard } from './besco/BescoDashboard';
 import { ModuloBesco } from './besco/ModuloBesco';
+import { ControladorPisos } from './besco/ControladorPisos';
+import { ToastAlertas } from './besco/ToastAlertas';
 import { modulosPorModo, type Modo } from './besco/bescoData';
 import { brandingConfig } from './config/branding';
 
@@ -99,6 +101,7 @@ function App() {
 
   const renderContent = () => {
     if (activeSection === 'dashboard') return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
+    if (activeSection === 'pisos') return <ControladorPisos tema={tema} />;
     if (moduloActivo) return <ModuloBesco modulo={moduloActivo} tema={tema} />;
     return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
   };
@@ -148,6 +151,9 @@ function App() {
       </div>
 
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} onOk={loginOk} />}
+
+      {/* Alertas al momento (toaster) — solo admin */}
+      <ToastAlertas modo={modo} />
     </div>
   );
 }

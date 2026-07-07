@@ -2,8 +2,9 @@ import React from 'react';
 import type { LucideIcon } from 'lucide-react';
 import { Truck, Wrench, AlertTriangle, DollarSign, Building2, Video, Zap, Flame } from 'lucide-react';
 import { brandingConfig, type TemaBesco } from '../config/branding';
-import { kpisAdmin, modulosPorModo, type Modo } from './bescoData';
+import { kpisAdmin, modulosPorModo, resumenGeneral, type Modo } from './bescoData';
 import { HeroCard } from '../components/modules/dashboardModules/Herocard';
+import { ExtrasModulo } from './ExtrasModulo';
 
 type Lado = { icon: LucideIcon; valor: string; titulo: string };
 
@@ -110,6 +111,21 @@ export const BescoDashboard: React.FC<{ modo: Modo; tema: TemaBesco; onOpen: (id
         <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
           {lados.slice(2, 4).map((d, i) => <SideCard key={i} d={d} tema={tema} />)}
         </div>
+      </div>
+
+      {/* Centro de decisiones: alertas + recomendación MAYIA + palancas de toda la operación */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '14px' }}>
+        <h2 style={{ margin: 0, fontSize: '19px', fontWeight: 800, color: colores.textoClaro, letterSpacing: '-0.2px' }}>Centro de decisiones</h2>
+        <span style={{ fontSize: '13px', color: colores.textoMedio }}>lo que MAYIA sugiere accionar hoy</span>
+      </div>
+      <div style={{ marginBottom: '28px' }}>
+        <ExtrasModulo tema={tema} extra={resumenGeneral(modo)} titulo={modo === 'admin' ? 'Alertas de la operación' : 'Alertas de inmuebles'} />
+      </div>
+
+      {/* Módulos */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '14px' }}>
+        <h2 style={{ margin: 0, fontSize: '19px', fontWeight: 800, color: colores.textoClaro, letterSpacing: '-0.2px' }}>Módulos</h2>
+        <span style={{ fontSize: '13px', color: colores.textoMedio }}>entra a cada uno para ver alertas y palancas al detalle</span>
       </div>
 
       {/* Grid de módulos (cuadritos) */}

@@ -3,6 +3,7 @@ import {
   Truck, Route, Wrench, Gauge, FileText, DollarSign, AlertTriangle,
   UserCog, ScanEye, BarChart3,
   Video, Flame, Building2, Wind, Zap, FileBarChart, LayoutGrid, TrendingUp,
+  Grid3x3,
 } from 'lucide-react';
 
 export type Modo = 'cliente' | 'admin';
@@ -45,6 +46,8 @@ export const modulosAdmin: Modulo[] = [
     kpis: [{ label: 'Cierres validados', valor: '212' }, { label: 'Disputas evitadas', valor: '38' }] },
   { id: 'ejecutivo-op', titulo: 'Dashboard ejecutivo de operaciones', descripcion: 'KPIs consolidados de la operación.', icono: BarChart3,
     kpis: [{ label: 'Costo / unidad', valor: '$2,140' }, { label: 'KPIs en verde', valor: '21/26' }] },
+  { id: 'pisos', titulo: 'Controlador de pisos laminados', descripcion: 'Piso técnico en vivo: paneles por nivel, carga y clima bajo piso.', icono: Grid3x3,
+    kpis: [{ label: 'Paneles', valor: '288' }, { label: 'En alerta', valor: '7' }, { label: 'Niveles', valor: '6' }] },
 ];
 
 // Dashboard 2 — Hacia clientes (verde) · 8 módulos
@@ -290,3 +293,314 @@ export const notifsPorModo: Record<Modo, Notif[]> = {
     { id: 4, severidad: 'ok', titulo: 'Reporte enviado', mensaje: 'Se envió el reporte ejecutivo mensual al cliente.', tiempo: 'Hace 4 h', leida: true },
   ],
 };
+
+// ---------- Alertas "al momento" (toaster) — solo Admin ----------
+// Pool del que el ToastHost va sacando alertas en vivo mientras se opera en modo admin.
+export type ToastAlerta = { severidad: Severidad; modulo: string; titulo: string; mensaje: string };
+
+export const alertasVivoAdmin: ToastAlerta[] = [
+  { severidad: 'critico', modulo: 'Flota', titulo: 'Unidad 142 fuera de servicio', mensaje: 'Falla de motor en CDMX Centro. Ruta con 2 servicios pendientes.' },
+  { severidad: 'critico', modulo: 'Piso técnico', titulo: 'Panel N3-C4 sobrecargado', mensaje: 'Carga 118% en el nivel 3. Redistribuir rack o aligerar el panel.' },
+  { severidad: 'atencion', modulo: 'SLA', titulo: '3 tickets por vencer', mensaje: 'Vencen en menos de 2 h y no tienen cuadrilla en sitio.' },
+  { severidad: 'atencion', modulo: 'Gasto', titulo: 'Anomalía de combustible', mensaje: 'Región Bajío +18% vs. promedio, sin más servicios.' },
+  { severidad: 'atencion', modulo: 'Piso técnico', titulo: 'Humedad bajo piso', mensaje: 'Nivel 2, zona B: 71% HR. Revisar posible filtración.' },
+  { severidad: 'atencion', modulo: 'Pólizas', titulo: '9 pólizas vencen esta semana', mensaje: 'Renovar antes del viernes para no detener unidades.' },
+  { severidad: 'critico', modulo: 'Driver Risk', titulo: 'Exceso de velocidad', mensaje: 'Conductor J. Pérez, 132 km/h en autopista. 7º evento.' },
+  { severidad: 'ok', modulo: 'Mantenimiento', titulo: 'Preventivo completado', mensaje: '12 unidades salieron del taller central sin pendientes.' },
+  { severidad: 'ok', modulo: 'Piso técnico', titulo: 'Nivel 5 estabilizado', mensaje: 'Temperatura bajo piso de vuelta a 22°C tras ajuste HVAC.' },
+];
+
+// ---------- Extras por módulo: alertas + recomendación MAYIA + palancas financieras ----------
+export type PalancaFin = { label: string; impacto: string; nota: string; ajuste: number };
+export type ExtraModulo = {
+  alertas: { severidad: Severidad; texto: string; meta?: string }[];
+  recomendacion: string;
+  palancas: PalancaFin[];
+};
+
+const extraFallback: ExtraModulo = {
+  alertas: [{ severidad: 'ok', texto: 'Sin alertas activas para este módulo.' }],
+  recomendacion: 'Sin acciones prioritarias. Mantén el monitoreo en curso.',
+  palancas: [{ label: 'Eficiencia operativa', impacto: '+3%', nota: 'Optimización continua', ajuste: 40 }],
+};
+
+export const extraModulos: Record<string, ExtraModulo> = {
+  // ----- ADMIN -----
+  fleet: {
+    alertas: [
+      { severidad: 'critico', texto: 'Unidad 142 detenida por falla de motor', meta: 'CDMX · 8 min' },
+      { severidad: 'atencion', texto: '48 unidades detenidas concentradas en 3 regiones', meta: 'Centro / Norte / Bajío' },
+    ],
+    recomendacion: 'Reasigna las rutas de las 12 unidades detenidas del Centro a las 8 disponibles del Norte: recuperas ~94% de SLA sin costo de grúa adicional.',
+    palancas: [
+      { label: 'Disponibilidad de flota', impacto: '+$1.2M/año', nota: 'Subir de 88% a 96% de uptime', ajuste: 72 },
+      { label: 'Costo de grúas', impacto: '-$320K/año', nota: 'Predictivo evita arrastres', ajuste: 55 },
+      { label: 'Utilización por unidad', impacto: '+11%', nota: 'Menos ociosidad regional', ajuste: 48 },
+    ],
+  },
+  rutas: {
+    alertas: [
+      { severidad: 'atencion', texto: 'R-Bajío en riesgo de incumplir SLA', meta: '220 km · 9 paradas' },
+      { severidad: 'ok', texto: 'Combinar R-Bajío con R-Centro ahorra 38 km', meta: 'Sugerencia IA' },
+    ],
+    recomendacion: 'Acepta la fusión R-Bajío + R-Centro y adelanta la parada crítica: liberas una unidad completa y sostienes el 94% de cumplimiento.',
+    palancas: [
+      { label: 'Combustible por ruta', impacto: '-$184K/mes', nota: '12,480 km ahorrados', ajuste: 68 },
+      { label: 'Horas-hombre', impacto: '-9%', nota: 'Rutas más cortas', ajuste: 52 },
+      { label: 'Penalizaciones SLA', impacto: '-$210K/año', nota: 'Menos incumplimientos', ajuste: 60 },
+    ],
+  },
+  'mant-veh': {
+    alertas: [
+      { severidad: 'critico', texto: 'U-142 · 82% de probabilidad de falla de motor', meta: 'Taller hoy' },
+      { severidad: 'atencion', texto: '17 unidades en riesgo en los próximos 15 días', meta: 'Frenos y motor' },
+    ],
+    recomendacion: 'Adelanta el servicio de las 5 unidades con falla de frenos: cada correctivo cuesta ~4x un preventivo y detiene la unidad 2 días.',
+    palancas: [
+      { label: 'Correctivo vs preventivo', impacto: '-$540K/año', nota: 'Anticipar 17 fallas', ajuste: 74 },
+      { label: 'Downtime de flota', impacto: '-96 h/trim', nota: 'Menos paros no planeados', ajuste: 63 },
+      { label: 'Vida útil de activos', impacto: '+8%', nota: 'Desgaste controlado', ajuste: 45 },
+    ],
+  },
+  'driver-risk': {
+    alertas: [
+      { severidad: 'critico', texto: 'J. Pérez · 7 excesos de velocidad esta semana', meta: 'Capacitación' },
+      { severidad: 'atencion', texto: '23 alertas de velocidad acumuladas', meta: 'Riesgo de siniestro' },
+    ],
+    recomendacion: 'Envía a capacitación a los 3 conductores con score < 7: bajarías la prima de seguro y el riesgo de siniestro, que hoy pesa $2.1M en cartera.',
+    palancas: [
+      { label: 'Prima de seguro', impacto: '-$180K/año', nota: 'Mejor score de flota', ajuste: 58 },
+      { label: 'Siniestralidad', impacto: '-$1.4M riesgo', nota: 'Menos incidentes', ajuste: 66 },
+      { label: 'Consumo por conducción', impacto: '-4%', nota: 'Manejo eficiente', ajuste: 42 },
+    ],
+  },
+  polizas: {
+    alertas: [
+      { severidad: 'critico', texto: '9 pólizas vencen esta semana', meta: 'U-142, U-87, U-23…' },
+      { severidad: 'atencion', texto: '19 documentos por vencer en 30 días', meta: 'Cumplimiento 98%' },
+    ],
+    recomendacion: 'Renueva en bloque las 9 pólizas antes del viernes: una unidad sin póliza vigente es una multa y un servicio detenido, no un ahorro.',
+    palancas: [
+      { label: 'Multas evitadas', impacto: '-$95K/año', nota: 'Cero documentos vencidos', ajuste: 70 },
+      { label: 'Descuento por volumen', impacto: '-7%', nota: 'Renovación consolidada', ajuste: 50 },
+      { label: 'Unidades detenidas', impacto: '-$140K/año', nota: 'Sin paros por trámite', ajuste: 57 },
+    ],
+  },
+  gasto: {
+    alertas: [
+      { severidad: 'critico', texto: 'Fuga estimada de $184K en combustible', meta: '6 anomalías' },
+      { severidad: 'atencion', texto: 'Bajío +18% en cargas sin más servicios', meta: 'Auditar' },
+    ],
+    recomendacion: 'Audita las cargas de combustible del Bajío esta semana: el 46% de la fuga se concentra ahí y se recupera con control de folios.',
+    palancas: [
+      { label: 'Fuga de combustible', impacto: '-$184K/mes', nota: 'Cerrar anomalías', ajuste: 78 },
+      { label: 'Refacciones', impacto: '-$52K/mes', nota: 'Compra centralizada', ajuste: 54 },
+      { label: 'Viáticos', impacto: '-$28K/mes', nota: 'Política por zona', ajuste: 40 },
+    ],
+  },
+  sla: {
+    alertas: [
+      { severidad: 'critico', texto: '4 tickets en rojo, vencen en < 2 h', meta: 'Torre Reforma, Santa Fe…' },
+      { severidad: 'atencion', texto: '23 tickets en ámbar', meta: 'Vigilar' },
+    ],
+    recomendacion: 'Prioriza el ticket #4821 (38 min): cada incumplimiento de SLA en clientes ancla pone en riesgo la renovación anual del contrato.',
+    palancas: [
+      { label: 'Penalización por SLA', impacto: '-$210K/año', nota: 'Cero tickets en rojo', ajuste: 69 },
+      { label: 'Retención de contratos', impacto: '+$3.4M', nota: 'Clientes ancla', ajuste: 61 },
+      { label: 'Reprocesos', impacto: '-6%', nota: 'Atención a la primera', ajuste: 47 },
+    ],
+  },
+  copiloto: {
+    alertas: [
+      { severidad: 'critico', texto: 'Falta refacción para U-142', meta: 'Escalar a Compras' },
+      { severidad: 'atencion', texto: 'Cliente reporta retraso · Torre Reforma', meta: '5 escalamientos' },
+    ],
+    recomendacion: 'Aprueba las 4 asignaciones de alta prioridad ahora: automatizar el despacho libera ~6 h/día del supervisor para casos críticos.',
+    palancas: [
+      { label: 'Tiempo de supervisor', impacto: '-$260K/año', nota: '6 h/día liberadas', ajuste: 64 },
+      { label: 'Escalamientos tardíos', impacto: '-40%', nota: 'Despacho asistido', ajuste: 52 },
+      { label: 'Cuadrillas ociosas', impacto: '-8%', nota: 'Mejor asignación', ajuste: 44 },
+    ],
+  },
+  auditor: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Jardinería Santa Fe validada al 68%', meta: 'Revisar evidencia' },
+      { severidad: 'ok', texto: '212 cierres validados por visión', meta: '38 disputas evitadas' },
+    ],
+    recomendacion: 'Marca como estándar la validación por CV en limpieza y mantenimiento: cada disputa evitada ahorra el costo de re-servicio y la nota de crédito.',
+    palancas: [
+      { label: 'Disputas / notas de crédito', impacto: '-$380K/año', nota: '38 evitadas al mes', ajuste: 71 },
+      { label: 'Re-servicios', impacto: '-9%', nota: 'Cierres verificados', ajuste: 53 },
+      { label: 'Horas de auditoría', impacto: '-$120K/año', nota: 'Revisión automática', ajuste: 46 },
+    ],
+  },
+  'ejecutivo-op': {
+    alertas: [
+      { severidad: 'atencion', texto: 'Cumplimiento SLA en 94% (meta 95%)', meta: 'KPI en ámbar' },
+      { severidad: 'ok', texto: '21 de 26 KPIs en verde', meta: 'Costo/unidad -6%' },
+    ],
+    recomendacion: 'El costo por unidad ya bajó a $2,140; enfoca el trimestre en cerrar el KPI de SLA, que es el único que frena la utilidad objetivo.',
+    palancas: [
+      { label: 'Costo por unidad', impacto: '-6%', nota: '$2,140 vs $2,300 meta', ajuste: 65 },
+      { label: 'Margen operativo', impacto: '+2.4 pp', nota: 'KPIs en verde', ajuste: 58 },
+      { label: 'EBITDA operación', impacto: '+$2.1M', nota: 'Consolidado anual', ajuste: 60 },
+    ],
+  },
+  pisos: {
+    alertas: [
+      { severidad: 'critico', texto: 'Panel N3-C4 al 118% de carga', meta: 'Nivel 3 · redistribuir' },
+      { severidad: 'atencion', texto: 'Humedad 71% HR bajo piso', meta: 'Nivel 2, zona B' },
+    ],
+    recomendacion: 'Redistribuye el rack del panel N3-C4 y activa deshumidificación en N2-B: prevenir un colapso de piso técnico evita el paro del site y el reemplazo de plafón.',
+    palancas: [
+      { label: 'Paro de site evitado', impacto: '-$1.8M riesgo', nota: 'Sin colapso de carga', ajuste: 76 },
+      { label: 'Reemplazo de panel', impacto: '-$240K/año', nota: 'Deterioro anticipado', ajuste: 59 },
+      { label: 'Enfriamiento bajo piso', impacto: '-11%', nota: 'Flujo balanceado', ajuste: 50 },
+    ],
+  },
+  // ----- CLIENTE -----
+  cctv: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Acceso no autorizado · Santa Fe', meta: 'En revisión' },
+      { severidad: 'ok', texto: '1,284 eventos, 96% sin intervención humana', meta: '742 cámaras' },
+    ],
+    recomendacion: 'La analítica ya cubre el 96% sin operador; ofrece al cliente el monitoreo nocturno asistido por IA como servicio adicional.',
+    palancas: [
+      { label: 'Horas de monitoreo', impacto: '-$420K/año', nota: 'Menos operadores', ajuste: 67 },
+      { label: 'Pérdidas por robo', impacto: '-$1.1M riesgo', nota: 'Respuesta temprana', ajuste: 61 },
+      { label: 'Upsell analítica', impacto: '+$780K', nota: 'Servicio premium', ajuste: 55 },
+    ],
+  },
+  fuego: {
+    alertas: [
+      { severidad: 'critico', texto: 'Detección de humo · Polanco 04', meta: 'Verificando · 3 min' },
+      { severidad: 'atencion', texto: 'Tiempo de respuesta promedio 42s', meta: 'Meta < 30s' },
+    ],
+    recomendacion: 'Confirma en sitio Polanco 04 de inmediato; una detección temprana validada es la diferencia entre un susto y una pérdida total asegurable.',
+    palancas: [
+      { label: 'Pérdida catastrófica', impacto: '-$8M riesgo', nota: 'Detección en segundos', ajuste: 82 },
+      { label: 'Prima de seguro cliente', impacto: '-9%', nota: 'Protección certificada', ajuste: 54 },
+      { label: 'Falsas alarmas', impacto: '-31%', nota: 'IA discrimina humo', ajuste: 48 },
+    ],
+  },
+  health: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Insurgentes bajó de 88 a 72', meta: 'HVAC + energía' },
+      { severidad: 'atencion', texto: '5 inmuebles por debajo de 75', meta: 'Revisar' },
+    ],
+    recomendacion: 'Prioriza Insurgentes y Centro 09; recuperar el score arriba de 85 alarga la vida de los equipos críticos y sostiene la renovación del contrato.',
+    palancas: [
+      { label: 'Vida útil de equipos', impacto: '+$620K/año', nota: 'Score arriba de 85', ajuste: 63 },
+      { label: 'Renovación de contrato', impacto: '+$2.8M', nota: 'Inmuebles sanos', ajuste: 60 },
+      { label: 'Correctivos de emergencia', impacto: '-12%', nota: 'Salud monitoreada', ajuste: 49 },
+    ],
+  },
+  hvac: {
+    alertas: [
+      { severidad: 'critico', texto: 'HVAC-3 Insurgentes · 79% prob. de falla', meta: 'Servicio hoy' },
+      { severidad: 'atencion', texto: '14 sistemas críticos en riesgo', meta: 'HVAC / UPS / bombas' },
+    ],
+    recomendacion: 'Agenda hoy HVAC-3 y UPS-1: un UPS caído tira el site del cliente, y el costo del paro supera 20x el del mantenimiento predictivo.',
+    palancas: [
+      { label: 'Downtime del cliente', impacto: '-$1.5M riesgo', nota: '96 h evitadas/trim', ajuste: 75 },
+      { label: 'Consumo HVAC', impacto: '-7%', nota: 'Equipos afinados', ajuste: 52 },
+      { label: 'Reemplazo prematuro', impacto: '-$310K/año', nota: 'Predictivo real', ajuste: 57 },
+    ],
+  },
+  energy: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Reforma 22 es el mayor consumidor', meta: '184 MWh · 8% ahorro' },
+      { severidad: 'ok', texto: '14% de ahorro vs mes anterior', meta: '1.2 GWh cartera' },
+    ],
+    recomendacion: 'Replica en Reforma 22 la estrategia horaria que ya da 19% en MTY; es el inmueble con mayor margen de ahorro de toda la cartera.',
+    palancas: [
+      { label: 'Factura eléctrica', impacto: '-$1.9M/año', nota: '14% → 20% ahorro', ajuste: 70 },
+      { label: 'Tarifa horaria', impacto: '-8%', nota: 'Cargas fuera de punta', ajuste: 56 },
+      { label: 'Bonos de eficiencia', impacto: '+$140K', nota: 'Certificación verde', ajuste: 44 },
+    ],
+  },
+  reporte: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Reporte de Grupo C pendiente de envío', meta: 'Junio' },
+      { severidad: 'ok', texto: '128 reportes enviados este mes', meta: 'Generación automática' },
+    ],
+    recomendacion: 'Automatiza el envío de Grupo C; cada reporte ejecutivo puntual sostiene la percepción de valor y facilita el upsell en la próxima revisión.',
+    palancas: [
+      { label: 'Horas de elaboración', impacto: '-$180K/año', nota: 'Reportes automáticos', ajuste: 62 },
+      { label: 'Retención por valor', impacto: '+$1.6M', nota: 'Evidencia mensual', ajuste: 55 },
+      { label: 'Ciclo de cobro', impacto: '-5 días', nota: 'Soporte a facturación', ajuste: 41 },
+    ],
+  },
+  portal: {
+    alertas: [
+      { severidad: 'ok', texto: '46 clientes activos, sesiones +62% en el mes', meta: 'Self-service' },
+      { severidad: 'atencion', texto: 'Grupo C con satisfacción 4.2', meta: 'La más baja' },
+    ],
+    recomendacion: 'Impulsa el portal con Grupo C: cada cliente que se auto-atiende reduce carga del call center y sube el margen del contrato.',
+    palancas: [
+      { label: 'Costo de atención', impacto: '-$300K/año', nota: 'Menos tickets manuales', ajuste: 60 },
+      { label: 'Churn de clientes', impacto: '-4 pp', nota: 'Mayor engagement', ajuste: 53 },
+      { label: 'Upsell en portal', impacto: '+$540K', nota: 'Ofertas contextuales', ajuste: 50 },
+    ],
+  },
+  upsell: {
+    alertas: [
+      { severidad: 'ok', texto: '63 oportunidades priorizadas por IA', meta: '$2.7M potencial' },
+      { severidad: 'atencion', texto: 'Grupo A · CCTV IA con score 92 sin contactar', meta: 'Actuar' },
+    ],
+    recomendacion: 'Ataca primero Grupo A (CCTV IA, score 92, $1.2M): es la oportunidad de mayor valor y probabilidad de cierre de toda la cartera.',
+    palancas: [
+      { label: 'Ingreso incremental', impacto: '+$2.7M', nota: '63 oportunidades', ajuste: 74 },
+      { label: 'Ticket promedio', impacto: '+18%', nota: 'Servicios premium', ajuste: 58 },
+      { label: 'Ciclo de venta', impacto: '-22%', nota: 'Priorización por score', ajuste: 51 },
+    ],
+  },
+};
+
+export const getExtra = (id: string): ExtraModulo => extraModulos[id] ?? extraFallback;
+
+// Resumen consolidado para el Dashboard General: alertas y palancas top de todos los módulos del modo.
+const ordenSev: Severidad[] = ['critico', 'atencion', 'ok'];
+export const resumenGeneral = (modo: Modo): ExtraModulo => {
+  const exs = modulosPorModo(modo).map(m => extraModulos[m.id]).filter(Boolean) as ExtraModulo[];
+  const alertas = exs.flatMap(e => e.alertas)
+    .sort((a, b) => ordenSev.indexOf(a.severidad) - ordenSev.indexOf(b.severidad))
+    .slice(0, 4);
+  const palancas = [...exs.flatMap(e => e.palancas)].sort((a, b) => b.ajuste - a.ajuste).slice(0, 4);
+  const recomendacion = modo === 'admin'
+    ? 'Ataca primero la fuga de combustible del Bajío ($184K/mes) y libera las unidades detenidas del Centro: son las dos palancas que más mueven la utilidad operativa este mes.'
+    : 'Confirma la detección de humo de Polanco 04 y replica en Reforma 22 la estrategia energética de MTY: proteges el contrato ancla y capturas el mayor ahorro de la cartera.';
+  return { alertas, recomendacion, palancas };
+};
+
+// ---------- Piso técnico: niveles y paneles (Controlador de pisos laminados) ----------
+export type Panel = { id: string; estado: Severidad; carga: number; temp: number; humedad: number };
+export type Nivel = { id: string; nombre: string; cols: number; filas: number; paneles: Panel[] };
+
+// Genera una malla determinista de paneles con unos cuantos en alerta.
+const genNivel = (id: string, nombre: string, cols: number, filas: number, alertas: Record<string, Severidad>): Nivel => {
+  const paneles: Panel[] = [];
+  for (let r = 0; r < filas; r++) {
+    for (let c = 0; c < cols; c++) {
+      const pid = `${id}-${String.fromCharCode(65 + r)}${c + 1}`;
+      const estado = alertas[pid] ?? 'ok';
+      const base = estado === 'critico' ? 112 : estado === 'atencion' ? 88 : 55 + ((r * cols + c) % 22);
+      paneles.push({
+        id: pid, estado,
+        carga: base,
+        temp: estado === 'critico' ? 27 : estado === 'atencion' ? 24 : 21 + ((c + r) % 2),
+        humedad: estado === 'atencion' && r % 2 === 0 ? 71 : 44 + ((r + c) % 6),
+      });
+    }
+  }
+  return { id, nombre, cols, filas, paneles };
+};
+
+export const nivelesPiso: Nivel[] = [
+  genNivel('N1', 'Nivel 1 · Data hall', 8, 6, { 'N1-B3': 'atencion' }),
+  genNivel('N2', 'Nivel 2 · MDF/IDF', 8, 6, { 'N2-B2': 'atencion', 'N2-B6': 'atencion' }),
+  genNivel('N3', 'Nivel 3 · Cómputo', 8, 6, { 'N3-C4': 'critico', 'N3-D7': 'atencion' }),
+  genNivel('N4', 'Nivel 4 · Oficinas', 8, 6, { 'N4-E2': 'atencion' }),
+  genNivel('N5', 'Nivel 5 · Telecom', 8, 6, {}),
+  genNivel('N6', 'Nivel 6 · Azotea técnica', 8, 6, { 'N6-A8': 'atencion' }),
+];
