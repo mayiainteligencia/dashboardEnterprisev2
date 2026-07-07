@@ -9,6 +9,7 @@ import { Academia } from './components/departamentos/Academia';
 
 import { MonitorMedios } from './components/MonitorMedios';
 import { MonitorIA } from './components/MonitorIA';
+import { MonitorDigital } from './components/MonitorDigital';
 import { InteligenciaElectoral } from './components/InteligenciaElectoral';
 import { brandingConfig } from './config/branding';
 
@@ -28,6 +29,7 @@ function App() {
 
       monitor: 'Monitor de Medios',
       monitoria: 'Monitor IA',
+      digital: 'Monitor Digital',
       electoral: 'Inteligencia Electoral',
     };
     return titulos[activeSection] || 'Dashboard';
@@ -42,6 +44,7 @@ function App() {
 
       case 'monitor': return <MonitorMedios />;
       case 'monitoria': return <MonitorIA />;
+      case 'digital': return <MonitorDigital />;
       case 'electoral': return <InteligenciaElectoral />;
       default:               return <Dashboard onSectionChange={setActiveSection} />;
     }

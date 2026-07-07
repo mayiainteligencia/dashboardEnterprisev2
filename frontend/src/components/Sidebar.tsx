@@ -8,6 +8,7 @@ import {
   Radio,
   BrainCircuit,
   Vote,
+  Globe,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -48,6 +49,7 @@ const menuItems = [
   // { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp},
   { id: 'monitor', nombre: 'Monitor de Medios', icono: Radio },  // ← NUEVO
   { id: 'monitoria', nombre: 'Monitor IA', icono: BrainCircuit },
+  { id: 'digital', nombre: 'Monitor Digital', icono: Globe },
   { id: 'electoral', nombre: 'Inteligencia Electoral', icono: Vote },
 ];
 

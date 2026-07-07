@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Menu, X, LayoutDashboard, TrendingUp, Shield,
-  Code2, GraduationCap, ChevronRight, Radio, BrainCircuit, Vote
+  Code2, GraduationCap, ChevronRight, Radio, BrainCircuit, Vote, Globe
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -18,6 +18,7 @@ const menuItems = [
   { id: 'dashboard',      nombre: 'Dashboard General', icono: LayoutDashboard },
   { id: 'monitor',     nombre: 'Monitor de Medios',         icono: Radio      },
   { id: 'monitoria',   nombre: 'Monitor IA',                icono: BrainCircuit },
+  { id: 'digital',     nombre: 'Monitor Digital',           icono: Globe      },
   { id: 'electoral',   nombre: 'Inteligencia Electoral',    icono: Vote       },
   { id: 'ciberseguridad', nombre: 'CiberSeguridad',     icono: Shield          },
   { id: 'playground',     nombre: 'Playground',         icono: Code2           },
