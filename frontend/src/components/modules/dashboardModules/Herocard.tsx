@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
 import { brandingConfig, type TemaBesco } from '../../../config/branding';
+import { BrainCanvas } from './BrainCanvas';
 
 type ChatMessage = {
   role: 'user' | 'assistant';
@@ -247,17 +248,19 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
     <>
       <div
         className="group relative transition-all duration-500"
+        onClick={handleMicClick}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{
           background: `linear-gradient(135deg, ${acc}20 0%, ${accDark}20 100%)`,
           backdropFilter: 'blur(20px)',
           borderRadius: '24px',
-          padding: '28px',
+          padding: '18px',
           border: `2px solid ${acc}40`,
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '200px',
+          minHeight: '160px',
+          cursor: 'pointer',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -323,152 +326,36 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
 
         {/* Contenido principal con z-index más alto */}
         <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          {/* 3D Glassmorphic shape */}
-          <div
-            style={{
-              position: 'relative',
-              width: '160px',
-              height: '120px',
-              marginBottom: '16px',
-            }}
-          >
-            {[...Array(5)].map((_, i) => (
-              <div
-                key={i}
-                style={{
-                  position: 'absolute',
-                  left: `${i * 5}px`,
-                  top: '0',
-                  width: '120px',
-                  height: '100px',
-                  background: `linear-gradient(135deg, 
-                    ${acc}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 0%, 
-                    ${accDark}${Math.max(20 - i * 2, 5).toString(16).padStart(2, '0')} 100%)`,
-                  backdropFilter: 'blur(10px)',
-                  borderRadius: '32px',
-                  border: `1px solid ${acc}${Math.max(40 - i * 5, 10).toString(16).padStart(2, '0')}`,
-                  transform: `perspective(800px) rotateY(${-15 + i * 4}deg) translateZ(${i * 10}px)`,
-                  boxShadow: `0 ${10 + i * 5}px ${30 + i * 10}px rgba(0,0,0,0.2)`,
-                  transition: 'all 0.3s ease',
-                  pointerEvents: 'none',
-                }}
-              />
-            ))}
-
-            <div
-              style={{
-                position: 'absolute',
-                top: '10%',
-                left: '20%',
-                width: '60%',
-                height: '30%',
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, transparent 100%)',
-                borderRadius: '50%',
-                filter: 'blur(20px)',
-                transform: 'perspective(800px) rotateY(-10deg)',
-                pointerEvents: 'none',
-              }}
-            />
+          {/* Núcleo IA 3D animado */}
+          <div style={{ width: '240px', marginBottom: '8px' }}>
+            <BrainCanvas accent={acc} height={200} />
           </div>
 
           {/* Title */}
           <h2
             style={{
-              fontSize: '28px',
+              fontSize: '19px',
               fontWeight: '700',
               color: acc,
-              marginBottom: '12px',
-              letterSpacing: '-0.5px',
+              marginBottom: '6px',
+              letterSpacing: '-0.4px',
             }}
           >
             Asistente Inteligente BESCO
           </h2>
 
-          {/* Texto de instrucción */}
+          {/* Instrucción condensada */}
           <p
             style={{
-              fontSize: '13px',
+              fontSize: '11.5px',
               color: colores.textoMedio,
-              margin: '0 0 4px 0',
-              maxWidth: '400px',
+              margin: '0 0 12px 0',
+              maxWidth: '320px',
+              lineHeight: 1.4,
             }}
           >
-            Pulsa para comunicarte con tu asesor IA por voz
+            Pulsa para hablar con tu asesor IA · di <strong style={{ color: acc, fontStyle: 'normal' }}>"MAYIA"</strong> para enviar
           </p>
-          <p
-            style={{
-              fontSize: '14px',
-              color: colores.textoOscuro,
-              margin: '0 0 8px 0',
-              maxWidth: '400px',
-              fontStyle: 'italic',
-            }}
-          >
-            Di "MAYIA" al final para enviar tu mensaje
-          </p>
-
-          {/* Potenciado por MAYIA */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              fontSize: '11px',
-              color: colores.textoOscuro,
-              marginBottom: '16px',
-            }}
-          >
-            <span>Potenciado por</span>
-            <img
-              src="/assets/logosNativos/mayiaLogoBlanco.png"
-              alt="MAYIA"
-              style={{
-                height: '16px',
-                width: 'auto',
-                objectFit: 'contain',
-              }}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const fallback = document.createElement('span');
-                fallback.textContent = 'MAYIA';
-                fallback.style.fontWeight = '600';
-                fallback.style.color = acc;
-                target.parentElement?.appendChild(fallback);
-              }}
-            />
-          </div>
-
-          {/* Botón de micrófono minimalista - AHORA CON Z-INDEX ALTO */}
-          <button
-            onClick={handleMicClick}
-            style={{
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              border: `1.5px solid ${acc}40`,
-              background: 'transparent',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              position: 'relative',
-              zIndex: 20,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = `${acc}10`;
-              e.currentTarget.style.borderColor = acc;
-              e.currentTarget.style.transform = 'scale(1.05)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderColor = `${acc}40`;
-              e.currentTarget.style.transform = 'scale(1)';
-            }}
-          >
-            <Mic size={20} color={acc} strokeWidth={2} />
-          </button>
         </div>
 
         <style>
