@@ -1,6 +1,7 @@
 import React from 'react';
 import { WAI_BRAND_CONFIG } from '../../../config/branding';
 import { Globe, Users, Target, Shield, Landmark, Sparkles, BookOpen, Star, HelpCircle } from 'lucide-react';
+import { EarthGlobe } from '../EarthGlobe';
 
 export const LaAsamblea: React.FC = () => {
   const theme = WAI_BRAND_CONFIG.theme;
@@ -28,25 +29,57 @@ export const LaAsamblea: React.FC = () => {
         background: theme.gradientHero,
         border: `1.5px solid ${theme.border}`,
         borderRadius: '24px',
-        padding: '48px clamp(20px, 5vw, 64px)',
+        padding: '40px clamp(20px, 5vw, 48px)',
         position: 'relative',
         overflow: 'hidden',
         boxShadow: theme.shadow,
       }}>
         <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '300px', height: '300px', borderRadius: '50%', background: `radial-gradient(circle, ${theme.glow} 0%, transparent 70%)`, pointerEvents: 'none' }} />
         
-        <span style={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: theme.secondary, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
-          <Sparkles size={14} fill={theme.secondary} />
-          Diálogo Nacional de Mujeres en Inteligencia Artificial y Competitividad
-        </span>
-        
-        <h1 style={{ fontSize: 'clamp(28px, 4vw, 42px)', fontWeight: '900', color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.2 }}>
-          La plataforma donde México escribe con IA la agenda del futuro
-        </h1>
-        
-        <p style={{ ...textStyle, fontSize: '16px', color: '#E2E8F0', margin: 0, maxWidth: '800px' }}>
-          WAI México 2026 no es un congreso tradicional. Es una asamblea nacional de alto nivel diseñada para reunir, escuchar, organizar y consolidar la voz del ecosistema mexicano de inteligencia artificial en una Declaratoria Nacional inédita.
-        </p>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '40px',
+          flexWrap: 'wrap',
+          position: 'relative',
+          zIndex: 2
+        }}>
+          {/* Text Content */}
+          <div style={{ flex: '1 1 500px', maxWidth: '750px' }}>
+            <span style={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: theme.secondary, letterSpacing: '2px', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+              <Sparkles size={14} fill={theme.secondary} />
+              Diálogo Nacional de Mujeres en Inteligencia Artificial y Competitividad con Visión Global
+            </span>
+            
+            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 38px)', fontWeight: '900', color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.25 }}>
+              La plataforma que conecta a México con la agenda global de Inteligencia Artificial
+            </h1>
+            
+            <p style={{ ...textStyle, fontSize: '15px', color: '#E2E8F0', margin: 0 }}>
+              WAI México 2026 no es un congreso tradicional. Es una asamblea nacional de alto nivel articulada con el movimiento internacional Women in AI para reunir, escuchar, organizar y consolidar la voz del ecosistema mexicano de inteligencia artificial en una Declaratoria Nacional con trascendencia e impacto global.
+            </p>
+          </div>
+
+          {/* Earth Globe */}
+          <div style={{
+            flex: '0 0 auto',
+            width: '300px',
+            height: '300px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: '0 auto',
+            overflow: 'hidden',
+            borderRadius: '50%',
+            border: `1.5px solid rgba(212, 175, 55, 0.3)`,
+            boxShadow: '0 0 40px rgba(212, 175, 55, 0.2)',
+            background: 'radial-gradient(circle, rgba(10, 25, 47, 0.9) 0%, rgba(2, 11, 28, 0.98) 100%)',
+          }}>
+            <EarthGlobe width={300} height={300} />
+          </div>
+        </div>
       </div>
 
       {/* Stats Row */}
@@ -73,10 +106,10 @@ export const LaAsamblea: React.FC = () => {
             <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>¿Por qué existe?</h3>
           </div>
           <p style={textStyle}>
-            A nivel global, la participación de las mujeres en el desarrollo de la inteligencia artificial representa apenas entre el 22% y el 30%, con menos del 15% en roles directivos. En México, la adopción y el desarrollo de IA carecen de una articulación nacional inclusiva.
+            A nivel global, la participación de las mujeres en el desarrollo de la inteligencia artificial representa apenas entre el 22% y el 30%, con menos del 15% en roles directivos. Como parte de la red global de Women in AI (fundada en París y activa en 150+ países), el capítulo mexicano busca revertir esta brecha y conectar el talento local con las mejores prácticas mundiales.
           </p>
           <p style={{ ...textStyle, marginTop: '12px' }}>
-            Esta asamblea nace para cambiar esa realidad. Al poner al liderazgo femenino en el centro, sumando la colaboración activa de todos los sectores, construimos una IA ética, justa y altamente competitiva que beneficie a toda la sociedad.
+            Esta asamblea nace para articular esa realidad. Al posicionar el liderazgo femenino en el núcleo de la innovación, sumando la colaboración activa de todos los sectores nacionales, co-diseñamos un ecosistema de IA ético, justo y altamente competitivo alineado con estándares internacionales.
           </p>
         </div>
 
@@ -86,10 +119,10 @@ export const LaAsamblea: React.FC = () => {
             <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>El Legado WAI México</h3>
           </div>
           <p style={textStyle}>
-            El resultado final de esta asamblea será la <strong>Declaratoria WAI México 2026</strong>: un plan de acción concreto que unifica prioridades en regulación, talento, adopción empresarial y financiamiento.
+            El resultado de esta asamblea será la <strong>Declaratoria WAI México 2026</strong>: un plan de acción concreto alineado con las directrices globales de ética que unifica prioridades en regulación, talento, adopción empresarial y financiamiento.
           </p>
           <p style={{ ...textStyle, marginTop: '12px' }}>
-            Después del evento, la plataforma seguirá operando como un Observatorio Nacional de IA y una Red de Networking inteligente para dar seguimiento e impulso continuo a los compromisos adquiridos.
+            Después de la cumbre, la plataforma seguirá operando como un Observatorio Nacional e Internacional de IA y una Red de Networking inteligente para impulsar continuamente la agenda digital de México en el exterior.
           </p>
         </div>
       </div>
