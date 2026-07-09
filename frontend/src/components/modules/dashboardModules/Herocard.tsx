@@ -19,7 +19,7 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `¡Hola! Soy ${ia.nombre}, tu asistente del Sales Command Center. ¿En qué puedo ayudarte?`,
+      content: `¡Hola! Soy ${ia.nombre}, tu asistente BESCO. ¿En qué puedo ayudarte?`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -341,7 +341,7 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
               letterSpacing: '-0.4px',
             }}
           >
-            Asistente Inteligente · Sales Command Center
+            Asistente Inteligente BESCO
           </h2>
 
           {/* Instrucción condensada */}
