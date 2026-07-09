@@ -79,24 +79,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           <div
             style={{
               width: '100%',
-              height: '90px',
+              height: '120px',
               borderRadius: '12px',
-              backgroundColor: '#000000',
-              padding: '12px',
+              backgroundColor: '#FFFFFF',
+              padding: '6px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
             }}
           >
-            <img 
-              src="/assets/logosNativos/mayiaEscucha.png" 
+            <img
+              src={empresa.logo}
               alt={empresa.nombre}
               style={{
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                transform: 'scale(2.6)',
               }}
               onError={(e) => {
                 // Fallback al SVG si la imagen no carga

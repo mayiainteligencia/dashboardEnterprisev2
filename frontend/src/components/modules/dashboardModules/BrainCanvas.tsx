@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-// ponytail: núcleo IA 3D en canvas 2D (sin deps). Parametrizado por color de
-// acento para caber en la tarjeta del asistente (Monitor IA).
+// ponytail: núcleo IA 3D en canvas 2D (sin deps). Genérico: recibe el color de
+// acento por prop, así se reutiliza tal cual en cualquier rama/branding.
 
 const hexToRgb = (hex: string): [number, number, number] => {
   const h = hex.replace('#', '');
@@ -68,12 +68,12 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
       const R = Math.min(w, h) * 0.44;
       const fov = R * 3.2;
 
-      // Halo exterior (círculo, para no dibujar un cuadrado sobre el fondo blanco)
-      const halo = ctx.createRadialGradient(cx, cy, R * 0.4, cx, cy, R * 1.5);
-      halo.addColorStop(0, `rgba(${C},0.16)`);
+      // Halo exterior
+      const halo = ctx.createRadialGradient(cx, cy, R * 0.5, cx, cy, R * 1.7);
+      halo.addColorStop(0, `rgba(${C},0.10)`);
       halo.addColorStop(1, `rgba(${C},0)`);
       ctx.fillStyle = halo;
-      ctx.beginPath(); ctx.arc(cx, cy, R * 1.5, 0, Math.PI * 2); ctx.fill();
+      ctx.fillRect(0, 0, w, h);
 
       // Anillos orbitales + electrones
       for (const rg of rings) {
@@ -82,18 +82,18 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
         ctx.rotate(t * rg.sp + rg.ph);
         ctx.beginPath();
         ctx.ellipse(0, 0, R * rg.a, R * rg.b, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(${C},0.5)`;
-        ctx.lineWidth = 1.5;
-        ctx.shadowColor = `rgba(${C},0.9)`;
-        ctx.shadowBlur = 12;
+        ctx.strokeStyle = `rgba(${C},0.32)`;
+        ctx.lineWidth = 1.3;
+        ctx.shadowColor = `rgba(${C},0.6)`;
+        ctx.shadowBlur = 7;
         ctx.stroke();
         const ex = Math.cos(t * 2 + rg.ph) * R * rg.a;
         const ey = Math.sin(t * 2 + rg.ph) * R * rg.b;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(${CL},1)`;
+        ctx.fillStyle = `rgba(${CL},0.95)`;
         ctx.shadowColor = `rgba(${C},1)`;
-        ctx.shadowBlur = 18;
-        ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+        ctx.shadowBlur = 12;
+        ctx.arc(ex, ey, 2.6, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       }
@@ -112,22 +112,20 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
       }).sort((a, b) => a.z - b.z);
 
       for (const q of proj) {
-        const depth = (q.z + 1) / 2; // 0 = atrás, 1 = frente
-        // atrás: claro y pequeño · frente: oscuro, grande y nítido → volumen 3D
-        const col = depth > 0.5 ? CD : CL;
+        const depth = (q.z + 1) / 2;
         ctx.beginPath();
-        ctx.fillStyle = `rgba(${col},${0.10 + depth * 0.9})`;
-        ctx.shadowColor = `rgba(${C},${depth})`;
-        ctx.shadowBlur = depth * 6;
-        ctx.arc(q.sx, q.sy, 0.6 + depth * depth * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${CD},${0.12 + depth * 0.78})`;
+        ctx.shadowColor = `rgba(${C},0.9)`;
+        ctx.shadowBlur = depth * 9;
+        ctx.arc(q.sx, q.sy, 0.9 + depth * 2, 0, Math.PI * 2);
         ctx.fill();
       }
       ctx.shadowBlur = 0;
 
       // Núcleo — halo + orbe + destello rotatorio + rim
       const cr = R * 0.27 * (1 + Math.sin(t * 3) * 0.13);
-      const halo2 = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr * 2.6);
-      halo2.addColorStop(0, `rgba(${C},0.5)`);
+      const halo2 = ctx.createRadialGradient(cx, cy, 0, cx, cy, cr * 2.4);
+      halo2.addColorStop(0, `rgba(${C},0.30)`);
       halo2.addColorStop(1, `rgba(${C},0)`);
       ctx.fillStyle = halo2;
       ctx.beginPath(); ctx.arc(cx, cy, cr * 2.4, 0, Math.PI * 2); ctx.fill();
@@ -170,3 +168,4 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
     </div>
   );
 };
+

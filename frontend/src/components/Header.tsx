@@ -240,14 +240,14 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
 
         {/* ── CENTRO: Logo ── */}
         <div style={{
-          backgroundColor: '#000000', borderRadius: '14px',
+          backgroundColor: '#FFFFFF', borderRadius: '14px',
           padding: '4px 16px', display: 'flex', alignItems: 'center',
-          flexShrink: 0, height: '56px', overflow: 'hidden',
+          flexShrink: 0, height: '64px', overflow: 'hidden',
         }}>
           <img
             src={empresa.logo}
             alt={`${empresa.nombre} logo`}
-            style={{ height: '48px', width: 'auto', objectFit: 'contain', transform: 'scale(2.6)' }}
+            style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
             onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
           />
         </div>
@@ -358,7 +358,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           <button
             style={{
               width: '52px', height: '52px', borderRadius: '50%',
-              backgroundColor: '#000000', border: `2px solid ${colores.borde}`,
+              backgroundColor: '#FFFFFF', border: `2px solid ${colores.borde}`,
               cursor: 'pointer', display: 'flex', alignItems: 'center',
               justifyContent: 'center', overflow: 'hidden', padding: '4px',
               transition: 'transform 0.2s',
@@ -367,8 +367,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
           >
             <img
-              src="/assets/logosNativos/mayiaEscucha.png"
-              alt="Perfil"
+              src={empresa.logo}
+              alt={empresa.nombre}
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               onError={e => {
                 const target = e.target as HTMLImageElement;

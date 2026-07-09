@@ -1,8 +1,8 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "MAYIA escucha",
+    nombre: "Wpp monitoria",
     eslogan: "",
-    logo: "/assets/logosNativos/mayiaEscucha.png",
+    logo: "/assets/logosNativos/wpp.png",
   },
 
   colores: {
