@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Calendar, Bell, Menu, ArrowLeftRight, Sparkles } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Calendar, Bell, Menu, ArrowLeftRight, Sparkles, Send, X, Bot, Loader2 } from 'lucide-react';
 import { WAI_BRAND_CONFIG } from '../../config/branding';
 
 interface WaiHeaderProps {
@@ -13,6 +13,50 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
 }) => {
   const { theme, clientName, slogan } = config;
   const [showNotif, setShowNotif] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [chatInput, setChatInput] = useState("");
+  const [chatMessages, setChatMessages] = useState<Array<{ sender: 'user' | 'bot'; text: string }>>([
+    { sender: 'bot', text: "¡Hola! Soy el Agente IA de WAI México. Estoy aquí para responder tus preguntas sobre la Asamblea Nacional, la Declaratoria de IA y el Summit 2026. ¿En qué te puedo apoyar hoy?" }
+  ]);
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (showChat) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [chatMessages, showChat]);
+
+  const handleSend = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim() || loading) return;
+
+    const userText = chatInput;
+    setChatMessages(prev => [...prev, { sender: 'user', text: userText }]);
+    setChatInput("");
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/chat/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ mensaje: userText, departamento: 'general' })
+      });
+      const data = await res.json();
+      if (data.success && data.respuesta) {
+        setChatMessages(prev => [...prev, { sender: 'bot', text: data.respuesta }]);
+      } else {
+        setChatMessages(prev => [...prev, { sender: 'bot', text: "No he podido procesar tu consulta en este momento. Por favor, intenta de nuevo." }]);
+      }
+    } catch (err) {
+      console.error("Chat error:", err);
+      setChatMessages(prev => [...prev, { sender: 'bot', text: "Hubo un error de conexión al servidor de IA. Verifica que el backend esté activo." }]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fecha = new Date();
   const opciones: Intl.DateTimeFormatOptions = {
@@ -96,8 +140,8 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
         </span>
       </div>
 
-      {/* RIGHT: Compact Styled Event Date Badge */}
-      <div style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+      {/* RIGHT: Compact Styled Event Date Badge & AI Agent Button */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
         <div 
           style={{ 
             display: 'flex', 
@@ -115,7 +159,197 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
             24 de Septiembre, 2026
           </span>
         </div>
+
+        {/* AI Agent Chat Toggle Button */}
+        <button
+          onClick={() => setShowChat(!showChat)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backgroundColor: showChat ? theme.secondary : 'rgba(255, 255, 255, 0.05)',
+            border: `1.5px solid ${showChat ? theme.secondary : 'rgba(255, 255, 255, 0.1)'}`,
+            borderRadius: '8px',
+            padding: '8px 14px',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            color: showChat ? '#020B1C' : '#FFFFFF',
+          }}
+          onMouseEnter={e => {
+            if (!showChat) {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }
+          }}
+          onMouseLeave={e => {
+            if (!showChat) {
+              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }
+          }}
+        >
+          <Sparkles size={14} fill={showChat ? '#020B1C' : theme.secondary} />
+          <span style={{ fontSize: '10px', fontWeight: '850', letterSpacing: '0.5px', textTransform: 'uppercase', fontFamily: "'Inter', sans-serif" }}>
+            Asistente IA
+          </span>
+        </button>
       </div>
+
+      {/* CHAT WINDOW OVERLAY */}
+      {showChat && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: '90px',
+            right: '24px',
+            width: '380px',
+            height: '520px',
+            zIndex: 11000,
+            background: 'linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(2, 11, 28, 0.98) 100%)',
+            border: `1.5px solid ${theme.border}`,
+            borderRadius: '16px',
+            boxShadow: '0 20px 50px rgba(2, 11, 28, 0.85), 0 0 30px rgba(212, 175, 55, 0.05)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
+            fontFamily: "'Inter', sans-serif"
+          }}
+        >
+          {/* Chat Header */}
+          <div style={{
+            padding: '16px',
+            borderBottom: `1px solid rgba(255, 255, 255, 0.08)`,
+            background: 'rgba(2, 11, 28, 0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Bot size={18} color={theme.secondary} />
+              <div>
+                <h4 style={{ margin: 0, fontSize: '13px', fontWeight: '800', color: '#FFFFFF' }}>WAI Conversacional</h4>
+                <span style={{ fontSize: '9px', color: theme.secondary, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  Google Gemini flash
+                </span>
+              </div>
+            </div>
+            <button 
+              onClick={() => setShowChat(false)}
+              style={{
+                background: 'none', border: 'none', color: theme.textSecondary,
+                cursor: 'pointer', display: 'flex', alignItems: 'center', padding: '4px'
+              }}
+            >
+              <X size={16} />
+            </button>
+          </div>
+
+          {/* Chat Messages */}
+          <div 
+            style={{
+              flex: 1,
+              overflowY: 'auto',
+              padding: '16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '12px',
+              backgroundColor: 'rgba(0,0,0,0.15)'
+            }}
+            className="no-scrollbar"
+          >
+            {chatMessages.map((msg, idx) => (
+              <div 
+                key={idx}
+                style={{
+                  alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
+                  maxWidth: '85%',
+                  backgroundColor: msg.sender === 'user' ? 'rgba(212, 175, 55, 0.12)' : 'rgba(255, 255, 255, 0.03)',
+                  border: `1px solid ${msg.sender === 'user' ? 'rgba(212, 175, 55, 0.25)' : 'rgba(255, 255, 255, 0.06)'}`,
+                  borderRadius: '12px',
+                  padding: '10px 14px',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                }}
+              >
+                <p style={{ margin: 0, fontSize: '12px', color: '#FFFFFF', lineHeight: 1.45 }}>
+                  {msg.text}
+                </p>
+              </div>
+            ))}
+            {loading && (
+              <div 
+                style={{
+                  alignSelf: 'flex-start',
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.06)',
+                  borderRadius: '12px',
+                  padding: '10px 14px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} color={theme.textSecondary} />
+                <span style={{ fontSize: '10px', color: theme.textSecondary }}>La IA está escribiendo...</span>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
+
+          {/* Chat Input */}
+          <form 
+            onSubmit={handleSend}
+            style={{
+              padding: '12px 16px',
+              borderTop: `1px solid rgba(255, 255, 255, 0.08)`,
+              background: 'rgba(2, 11, 28, 0.4)',
+              display: 'flex',
+              gap: '8px'
+            }}
+          >
+            <input 
+              type="text"
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+              placeholder="Pregunta sobre la asamblea, mesas o WAI..."
+              disabled={loading}
+              style={{
+                flex: 1,
+                backgroundColor: '#020B1C',
+                border: `1px solid ${theme.border}`,
+                borderRadius: '8px',
+                padding: '8px 12px',
+                color: '#FFFFFF',
+                fontSize: '12.5px',
+                outline: 'none',
+                transition: 'border-color 0.2s'
+              }}
+              onFocus={e => e.currentTarget.style.borderColor = theme.secondary}
+              onBlur={e => e.currentTarget.style.borderColor = theme.border}
+            />
+            <button
+              type="submit"
+              disabled={loading || !chatInput.trim()}
+              style={{
+                width: '34px',
+                height: '34px',
+                borderRadius: '8px',
+                backgroundColor: chatInput.trim() && !loading ? theme.secondary : 'rgba(255, 255, 255, 0.03)',
+                color: chatInput.trim() && !loading ? '#020B1C' : theme.textSecondary,
+                border: 'none',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: chatInput.trim() && !loading ? 'pointer' : 'default',
+                transition: 'all 0.2s'
+              }}
+            >
+              <Send size={14} />
+            </button>
+          </form>
+        </div>
+      )}
     </header>
   );
 };
