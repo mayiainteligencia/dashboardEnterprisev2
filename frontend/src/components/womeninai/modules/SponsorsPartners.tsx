@@ -50,15 +50,70 @@ export const SponsorsPartners: React.FC = () => {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
-                {sponsors.map(s => (
-                  <div key={s.nombre} style={{ backgroundColor: 'rgba(0,0,0,0.2)', border: `1px solid ${theme.borderSubtle}`, borderRadius: '12px', padding: '20px 16px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <Building2 size={16} color={tier.color} />
+                {sponsors.map(s => {
+                  const isPending = s.nombre === "Por confirmar...";
+                  return (
+                    <div 
+                      key={s.nombre} 
+                      style={{ 
+                        backgroundColor: 'rgba(0,0,0,0.2)', 
+                        border: isPending ? '1.5px dashed rgba(212, 175, 55, 0.25)' : `1px solid ${theme.borderSubtle}`, 
+                        borderRadius: '12px', 
+                        padding: '20px 16px', 
+                        textAlign: 'center', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        gap: '8px',
+                        transition: 'all 0.2s ease'
+                      }}
+                    >
+                      {isPending ? (
+                        <div style={{ 
+                          width: '100%', 
+                          height: '60px', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center', 
+                          background: 'rgba(255,255,255,0.01)', 
+                          borderRadius: '8px', 
+                          border: '1px dashed rgba(255,255,255,0.08)', 
+                          marginBottom: '8px' 
+                        }}>
+                          <span style={{ fontSize: '20px', fontWeight: '900', color: theme.secondary }}>?</span>
+                        </div>
+                      ) : (
+                        <div style={{ 
+                          width: '100%', 
+                          height: '60px', 
+                          display: 'flex', 
+                          alignItems: 'center', 
+                          justifyContent: 'center',
+                          background: 'rgba(255,255,255,0.02)',
+                          borderRadius: '8px',
+                          padding: '8px',
+                          border: '1px solid rgba(255,255,255,0.05)',
+                          marginBottom: '8px'
+                        }}>
+                          <img 
+                            src={s.img} 
+                            alt={s.nombre} 
+                            style={{ 
+                              maxHeight: '100%', 
+                              maxWidth: '100%', 
+                              objectFit: 'contain',
+                              transform: s.scale ? `scale(${s.scale})` : 'none'
+                            }} 
+                          />
+                        </div>
+                      )}
+                      <span style={{ fontSize: '15px', fontWeight: '800', color: isPending ? theme.secondary : '#FFFFFF', fontStyle: isPending ? 'italic' : 'normal' }}>
+                        {s.nombre}
+                      </span>
+                      <span style={{ fontSize: '10px', color: theme.textMuted }}>{s.tipo}</span>
                     </div>
-                    <span style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF' }}>{s.nombre}</span>
-                    <span style={{ fontSize: '10px', color: theme.textMuted }}>{s.tipo}</span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           );
