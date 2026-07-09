@@ -49,7 +49,7 @@ export const ModuloROI: React.FC<Props> = ({ onSectionChange }) => {
         <ModuloHeader
           numero={8}
           titulo="ROI, Business Case y Ruta Ejecutiva"
-          microcopy={`Visualice el impacto estratégico de EdgeNet en lenguaje de ${perfilLabel}.`}
+          microcopy={`Visualice el impacto estratégico de DC Inteligente en lenguaje de ${perfilLabel}.`}
           icono={<TrendingUp size={26} color="#fff" />}
           color={colores.acento}
         />

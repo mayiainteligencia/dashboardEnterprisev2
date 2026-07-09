@@ -50,20 +50,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       {/* Logo */}
       <div style={{
         height: '72px',
-        padding: '0 24px',
+        padding: '0 16px',
         flexShrink: 0,
         backgroundColor: '#345d90',
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         borderBottom: `1px solid ${colores.borde}`
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
           <img
             src={empresa.logo}
             alt={empresa.nombre}
             style={{
-              height: '32px',
+              height: '52px',
               width: 'auto',
+              maxWidth: '100%',
               objectFit: 'contain',
             }}
             onError={(e) => {

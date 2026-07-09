@@ -1,8 +1,8 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "EdgeNET",
+    nombre: "DC Inteligente",
     eslogan: "",
-    logo: "/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO_AZUL.png",
+    logo: "/assets/logosNativos/dcInt2.png",
   },
   
   colores: {

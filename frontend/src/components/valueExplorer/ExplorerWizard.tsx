@@ -414,7 +414,7 @@ export const ExplorerWizard: React.FC<Props> = ({ onSectionChange }) => {
           {paso === 'resultado' && (
             <>
               <h2 style={{ fontSize: '22px', fontWeight: 800, color: colores.textoClaro, margin: '0 0 6px 0', letterSpacing: '-0.3px' }}>
-                Su Ruta EdgeNet Recomendada
+                Su Ruta DC Inteligente Recomendada
               </h2>
               <p style={{ fontSize: '13px', color: colores.textoMedio, margin: '0 0 20px 0' }}>
                 {perfilInfo ? `Como ${perfilInfo.label}, lo importante es: ${perfilInfo.mensaje}` : 'Resultado preliminar basado en sus respuestas.'}
@@ -500,7 +500,7 @@ export const ExplorerWizard: React.FC<Props> = ({ onSectionChange }) => {
                 >
                   <ArrowLeft size={14} /> Editar respuestas
                 </button>
-                <CtaButton label="Solicitar diagnóstico ejecutivo EdgeNet" onClick={() => setPaso('lead')} icon={<Send size={14} />} />
+                <CtaButton label="Solicitar diagnóstico ejecutivo DC Inteligente" onClick={() => setPaso('lead')} icon={<Send size={14} />} />
               </div>
             </>
           )}
@@ -511,7 +511,7 @@ export const ExplorerWizard: React.FC<Props> = ({ onSectionChange }) => {
                 Reciba su diagnóstico ejecutivo
               </h2>
               <p style={{ fontSize: '13px', color: colores.textoMedio, margin: '0 0 22px 0' }}>
-                Un especialista de EdgeNet preparará su business case personalizado.
+                Un especialista de DC Inteligente preparará su business case personalizado.
               </p>
               <form onSubmit={enviarLead}>
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '12px' }}>
@@ -599,7 +599,7 @@ export const ExplorerWizard: React.FC<Props> = ({ onSectionChange }) => {
         <ConfirmacionModal
           open={modalOpen}
           titulo="Solicitud recibida"
-          mensaje="Hemos registrado su información. Un especialista de EdgeNet preparará su diagnóstico ejecutivo y se pondrá en contacto en las próximas 24 horas."
+          mensaje="Hemos registrado su información. Un especialista de DC Inteligente preparará su diagnóstico ejecutivo y se pondrá en contacto en las próximas 24 horas."
           onClose={() => {
             setModalOpen(false);
             onSectionChange?.('valueExplorer');

@@ -24,8 +24,8 @@ function App() {
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      valueExplorer:        'EdgeNet AI Value Explorer',
-      explorerWizard:       'Diagnóstico Inteligente EdgeNet',
+      valueExplorer:        'DC Inteligente AI Value Explorer',
+      explorerWizard:       'Diagnóstico Inteligente DC Inteligente',
       explorerDiagnostico:  'Diagnóstico Inteligente de Empresa',
       explorerValorDato:    'Valor Estratégico del Dato',
       explorerNube:         'Nube, IaaS y FLAI',
@@ -35,7 +35,7 @@ function App() {
       explorerAIFactory:    'AI Factory y Agentes para Negocio',
       explorerROI:          'ROI, Business Case y Ruta Ejecutiva',
     };
-    return titulos[activeSection] || 'EdgeNet AI Value Explorer';
+    return titulos[activeSection] || 'DC Inteligente AI Value Explorer';
   };
 
   const renderContent = () => {

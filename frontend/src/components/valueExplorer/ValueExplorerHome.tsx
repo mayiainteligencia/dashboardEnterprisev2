@@ -464,7 +464,7 @@ export const ValueExplorerHome: React.FC<ValueExplorerHomeProps> = ({ onSectionC
               <Network size={22} />
             </div>
             <p style={{ fontSize: '13.5px', color: colores.textoClaro, margin: 0, lineHeight: 1.5 }}>
-              <strong>EdgeNet</strong> integra infraestructura crítica, nube soberana, NOC, SOC IA, DRP y AI Factory para
+              <strong>DC Inteligente</strong> integra infraestructura crítica, nube soberana, NOC, SOC IA, DRP y AI Factory para
               convertir sus datos en <strong>valor estratégico</strong>.
             </p>
           </div>
