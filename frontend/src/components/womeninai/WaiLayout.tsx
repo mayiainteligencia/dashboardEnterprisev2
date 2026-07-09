@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { WaiSidebar } from './WaiSidebar';
 import { WaiHeader } from './WaiHeader';
 import { WAI_BRAND_CONFIG } from '../../config/branding';
 import NewProjectHub from '../NewProjectHub';
+import { Sparkles, Globe, ShieldAlert, Zap, UserPlus, X } from 'lucide-react';
 
 interface WaiLayoutProps {
   config: typeof WAI_BRAND_CONFIG;
@@ -40,6 +41,54 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
     setModalContentId(null);
   };
 
+  const [activeAlertIndex, setActiveAlertIndex] = useState(0);
+  const [showAlert, setShowAlert] = useState(true);
+
+  const alertsList = [
+    {
+      titulo: "WAI México 2026",
+      texto: "Una asamblea nacional de alto nivel, selectiva y participativa donde Mexico empieza a escribir, con IA y con mujeres, la agenda de la inteligencia artificial.",
+      icon: "Sparkles",
+      color: theme.secondary
+    },
+    {
+      titulo: "Red de Impacto Global",
+      texto: "Women in AI es una comunidad con más de 19,000 miembros en más de 150 países, trabajando hacia una IA inclusiva para la sociedad.",
+      icon: "Globe",
+      color: theme.teal
+    },
+    {
+      titulo: "Ética e Inclusión en IA",
+      texto: "WAI promueve aplicaciones éticas y el uso responsable de la inteligencia artificial, poniendo a las mujeres y minorías al centro.",
+      icon: "ShieldAlert",
+      color: theme.accent
+    },
+    {
+      titulo: "Declaratoria WAI México 2026",
+      texto: "250 personas convocadas para co-crear la Declaratoria WAI México 2026: visión, diagnóstico, compromisos, prioridades y ruta 2027.",
+      icon: "Zap",
+      color: "#8B5CF6"
+    },
+    {
+      titulo: "Convocatoria Curada",
+      texto: "Sé parte de la Declaratoria Nacional de IA. ¡Solicita tu invitación al WAI Mexico Assembly 2026 | Profetas de la IA!",
+      icon: "UserPlus",
+      color: "#F97316"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setShowAlert(false);
+      setTimeout(() => {
+        setActiveAlertIndex((prev) => (prev + 1) % alertsList.length);
+        setShowAlert(true);
+      }, 500);
+    }, 12000);
+
+    return () => clearInterval(timer);
+  }, [alertsList.length]);
+
   return (
     <div 
       style={{ 
@@ -58,7 +107,25 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
         <WaiSidebar 
           config={config} 
           activeSection={activeSection} 
-          onSectionChange={onSectionChange} 
+          onSectionChange={(s) => {
+            if (s === 'quienes-somos') {
+              onSectionChange('asamblea');
+            } else if (s === 'que-hacemos') {
+              onSectionChange('networking');
+            } else if (s === 'objetivo') {
+              onSectionChange('declaratoria');
+            } else if (s === 'liderazgo-mx') {
+              handleOpenNewProjectModal('liderazgo-mx', 0);
+            } else if (s === 'founders-global') {
+              handleOpenNewProjectModal('founders-global', 0);
+            } else if (s === 'sitio-oficial') {
+              window.open('https://www.womeninai.co/', '_blank', 'noopener noreferrer');
+            } else if (s === 'sobre-wai') {
+              window.open('https://www.womeninai.co/about-wai', '_blank', 'noopener noreferrer');
+            } else {
+              onSectionChange(s);
+            }
+          }} 
         />
       </div>
 
@@ -198,6 +265,80 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           </div>
         </div>
       )}
+      {/* FLOATING LIVE FEED ALERTS */}
+      {showAlert && (
+        <div style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          zIndex: 9999,
+          maxWidth: '380px',
+          width: 'calc(100% - 48px)',
+          background: 'linear-gradient(135deg, rgba(10, 25, 47, 0.85) 0%, rgba(2, 11, 28, 0.95) 100%)',
+          border: `1.5px solid ${theme.border}`,
+          borderRadius: '16px',
+          padding: '16px',
+          boxShadow: `0 10px 40px rgba(2, 11, 28, 0.8), 0 0 15px ${alertsList[activeAlertIndex].color}22`,
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          display: 'flex',
+          gap: '12px',
+          alignItems: 'flex-start',
+          animation: 'alertEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        }}>
+          {/* Glowing underlay indicator */}
+          <div style={{
+            position: 'absolute', top: 0, left: 0, bottom: 0, width: '4px',
+            background: alertsList[activeAlertIndex].color,
+            borderRadius: '16px 0 0 16px',
+            boxShadow: `0 0 8px ${alertsList[activeAlertIndex].color}`
+          }} />
+
+          {/* Icon */}
+          <div style={{
+            width: '36px', height: '36px', borderRadius: '50%',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: `1px solid rgba(255, 255, 255, 0.08)`,
+            display: 'flex', alignItems: 'center', justifyItems: 'center',
+            justifyContent: 'center', flexShrink: 0, marginTop: '2px',
+            color: alertsList[activeAlertIndex].color
+          }}>
+            {alertsList[activeAlertIndex].icon === "Sparkles" && <Sparkles size={16} fill={theme.secondary} />}
+            {alertsList[activeAlertIndex].icon === "Globe" && <Globe size={16} />}
+            {alertsList[activeAlertIndex].icon === "ShieldAlert" && <ShieldAlert size={16} />}
+            {alertsList[activeAlertIndex].icon === "Zap" && <Zap size={16} />}
+            {alertsList[activeAlertIndex].icon === "UserPlus" && <UserPlus size={16} />}
+          </div>
+
+          {/* Content */}
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ fontSize: '9px', fontWeight: '800', color: alertsList[activeAlertIndex].color, textTransform: 'uppercase', letterSpacing: '1px', display: 'block' }}>
+              {alertsList[activeAlertIndex].titulo}
+            </span>
+            <p style={{ fontSize: '12px', color: '#FFFFFF', margin: '4px 0 0', lineHeight: 1.45, fontWeight: '500' }}>
+              {alertsList[activeAlertIndex].texto}
+            </p>
+          </div>
+
+          {/* Close button */}
+          <button 
+            onClick={() => setShowAlert(false)}
+            style={{
+              background: 'none', border: 'none', color: theme.textMuted,
+              cursor: 'pointer', padding: '2px', margin: '-4px -4px 0 0',
+              transition: 'color 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = '#FFFFFF'}
+            onMouseLeave={e => e.currentTarget.style.color = theme.textMuted}
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
     </div>
   );
 };
