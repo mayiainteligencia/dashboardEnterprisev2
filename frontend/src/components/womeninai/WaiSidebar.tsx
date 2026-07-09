@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { 
   LayoutDashboard, Globe, UserPlus, Building2, Calendar, MessagesSquare,
   Bot, FileText, Network, Mic, Users, TrendingUp, MapPin, Briefcase,
-  BarChart3, Award, ShieldCheck, Sparkles, ChevronDown, ChevronRight
+  BarChart3, Award, ShieldCheck, Sparkles, ChevronDown, ChevronRight,
+  BookOpen, Target, Star
 } from 'lucide-react';
 import { WAI_BRAND_CONFIG } from '../../config/branding';
 
@@ -15,7 +16,7 @@ interface WaiSidebarProps {
 const iconMap: Record<string, React.ComponentType<any>> = {
   LayoutDashboard, Globe, UserPlus, Building2, Calendar, MessagesSquare,
   Bot, FileText, Network, Mic, Users, TrendingUp, MapPin, Briefcase,
-  BarChart3, Award, ShieldCheck,
+  BarChart3, Award, ShieldCheck, BookOpen, Target, Star,
 };
 
 export const WaiSidebar: React.FC<WaiSidebarProps> = ({ config, activeSection, onSectionChange }) => {
@@ -37,6 +38,13 @@ export const WaiSidebar: React.FC<WaiSidebarProps> = ({ config, activeSection, o
       boxShadow: `10px 0 40px rgba(2, 11, 28, 0.6)`,
       overflow: 'hidden',
     }}>
+      <style>{`
+        @keyframes pulseGlow {
+          0% { transform: scale(1); opacity: 0.6; }
+          50% { transform: scale(2.4); opacity: 0; }
+          100% { transform: scale(1); opacity: 0.6; }
+        }
+      `}</style>
       {/* Brand Header */}
       <div style={{
         padding: '20px 18px',
@@ -152,19 +160,98 @@ export const WaiSidebar: React.FC<WaiSidebarProps> = ({ config, activeSection, o
 
       {/* Footer */}
       <div style={{
-        padding: '14px 18px',
+        padding: '16px',
         borderTop: `1px solid rgba(255,255,255,0.07)`,
-        background: 'rgba(2,11,28,0.2)',
+        background: 'linear-gradient(to bottom, rgba(2,11,28,0.1) 0%, rgba(2,11,28,0.4) 100%)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '100%',
+        boxSizing: 'border-box'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '6px' }}>
-          <div style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981' }} />
-          <span style={{ fontSize: '9px', color: '#10B981', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            Plataforma Activa
+        <a 
+          href="https://mayia.com" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '8px',
+            width: '100%',
+            padding: '10px 14px',
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%)',
+            border: `1px solid rgba(255, 255, 255, 0.08)`,
+            borderRadius: '12px',
+            textDecoration: 'none',
+            transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255, 192, 0, 0.07) 0%, rgba(255, 255, 255, 0.06) 100%)';
+            e.currentTarget.style.borderColor = 'rgba(255, 192, 0, 0.35)';
+            e.currentTarget.style.boxShadow = '0 6px 20px rgba(255, 192, 0, 0.12), 0 0 10px rgba(255, 192, 0, 0.05)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.05) 100%)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
+        >
+          {/* Pulsing indicator */}
+          <div style={{
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '8px',
+            height: '8px',
+            marginRight: '2px'
+          }}>
+            <div style={{
+              position: 'absolute',
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: '#FFC000',
+              opacity: 0.4,
+              animation: 'pulseGlow 2s infinite ease-in-out'
+            }} />
+            <div style={{
+              position: 'relative',
+              width: '4px',
+              height: '4px',
+              borderRadius: '50%',
+              backgroundColor: '#FFC000',
+              boxShadow: '0 0 4px #FFC000'
+            }} />
+          </div>
+
+          <span style={{ 
+            fontSize: '11px', 
+            fontWeight: '600', 
+            color: '#FFFFFF', 
+            opacity: 0.8,
+            letterSpacing: '0.5px', 
+            textTransform: 'lowercase',
+            fontFamily: "'Inter', sans-serif"
+          }}>
+            made by
           </span>
-        </div>
-        <p style={{ fontSize: '9px', color: theme.textMuted, lineHeight: 1.4, margin: 0 }}>
-          {slogan}
-        </p>
+          <img 
+            src="/assets/logosNativos/mayiaLogoBlanco.png" 
+            alt="MAYiA" 
+            style={{ 
+              height: '16px', 
+              objectFit: 'contain', 
+              display: 'block',
+              filter: 'drop-shadow(0 0 2px rgba(255, 255, 255, 0.1))'
+            }} 
+          />
+        </a>
       </div>
     </div>
   );
