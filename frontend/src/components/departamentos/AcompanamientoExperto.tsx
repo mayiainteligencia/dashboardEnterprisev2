@@ -77,7 +77,7 @@ export const AcompanamientoExperto: React.FC = () => {
               <div style={{ width: '48px', height: '48px', borderRadius: '14px', backgroundColor: `${colores.primario}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
                 <Star size={24} color={colores.primario} />
               </div>
-              <h3 style={{ fontSize: '20px', fontWeight: '900', color: colores.textoClaro, margin: '0 0 12px 0' }}>Comité de Valor EdgeNet</h3>
+              <h3 style={{ fontSize: '20px', fontWeight: '900', color: colores.textoClaro, margin: '0 0 12px 0' }}>Comité de Valor DC Inteligente</h3>
               <p style={{ fontSize: '14px', color: colores.textoMedio, margin: '0 0 20px 0', lineHeight: 1.6 }}>
                 Más que un proveedor tecnológico, actuamos como una extensión de su equipo directivo. El Comité de Valor se reúne periódicamente para alinear la infraestructura, la IA y los datos con los objetivos estratégicos de su negocio.
               </p>

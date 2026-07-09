@@ -31,22 +31,7 @@ export const WelcomeHeader: React.FC = () => {
           }}
         >
           <span>Hola bienvenido</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-            al centro de inteligencia
-            <span style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              background: colores.primarioOscuro,
-              borderRadius: '8px',
-              padding: isMobile ? '2px 7px' : '4px 10px',
-            }}>
-              <img
-                src="/assets/logosNativos/EDGENET-IA-READY-LOGO-MUNDO_AZUL.png"
-                alt="EdgeNET"
-                style={{ height: isMobile ? '24px' : '40px', width: 'auto', objectFit: 'contain', display: 'block' }}
-              />
-            </span>
-          </span>
+          <span>al centro de inteligencia</span>
         </h1>
         <p
           style={{

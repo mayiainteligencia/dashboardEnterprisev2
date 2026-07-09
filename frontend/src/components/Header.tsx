@@ -28,11 +28,11 @@ interface Notification {
 }
 
 const notificacionesEstaticas: Notification[] = [
-  { id: 1, tipo: 'urgente', titulo: 'EdgeNET: Sobrecalentamiento Crítico · Rack B2',        mensaje: 'Latencia térmica en Rack B2 superando umbral de seguridad. Acción de mitigación automática fallida. Requiere intervención.',          tiempo: 'Hace 10 min',  leida: false },
-  { id: 2, tipo: 'alerta',  titulo: 'EdgeNET: Anomalía en Tráfico de Red',         mensaje: 'Detección de pico de peticiones no reconocidas en clúster Edge-04. Nivel de amenaza cibernética en análisis continuo.',           tiempo: 'Hace 25 min',   leida: false },
-  { id: 3, tipo: 'alerta',  titulo: 'EdgeNET: Riesgo de Saturación de Almacenamiento',       mensaje: 'Nodo de almacenamiento NVMe acercándose al 92% de capacidad. Se recomienda redistribución de cargas.',            tiempo: 'Hace 45 min',   leida: false },
-  { id: 4, tipo: 'exito',   titulo: 'EdgeNET: Backup Automático Completado',       mensaje: 'Sincronización DRP completada exitosamente. Integridad de los datos asegurada con redundancia.',  tiempo: 'Hace 3 horas',  leida: true  },
-  { id: 5, tipo: 'info',    titulo: 'EdgeNET: Optimización de Energía IA Activa',     mensaje: 'El módulo AI de eficiencia ajustó la climatización, reduciendo el PUE proyectado en un 4.2% para este ciclo.',      tiempo: 'Hace 5 horas',  leida: true  },
+  { id: 1, tipo: 'urgente', titulo: 'DC Inteligente: Sobrecalentamiento Crítico · Rack B2',        mensaje: 'Latencia térmica en Rack B2 superando umbral de seguridad. Acción de mitigación automática fallida. Requiere intervención.',          tiempo: 'Hace 10 min',  leida: false },
+  { id: 2, tipo: 'alerta',  titulo: 'DC Inteligente: Anomalía en Tráfico de Red',         mensaje: 'Detección de pico de peticiones no reconocidas en clúster Edge-04. Nivel de amenaza cibernética en análisis continuo.',           tiempo: 'Hace 25 min',   leida: false },
+  { id: 3, tipo: 'alerta',  titulo: 'DC Inteligente: Riesgo de Saturación de Almacenamiento',       mensaje: 'Nodo de almacenamiento NVMe acercándose al 92% de capacidad. Se recomienda redistribución de cargas.',            tiempo: 'Hace 45 min',   leida: false },
+  { id: 4, tipo: 'exito',   titulo: 'DC Inteligente: Backup Automático Completado',       mensaje: 'Sincronización DRP completada exitosamente. Integridad de los datos asegurada con redundancia.',  tiempo: 'Hace 3 horas',  leida: true  },
+  { id: 5, tipo: 'info',    titulo: 'DC Inteligente: Optimización de Energía IA Activa',     mensaje: 'El módulo AI de eficiencia ajustó la climatización, reduciendo el PUE proyectado en un 4.2% para este ciclo.',      tiempo: 'Hace 5 horas',  leida: true  },
 ];
 
 const sugerencias = [
@@ -355,8 +355,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
             onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; }}
           >
             <img
-              src="/assets/logosNativos/edgenetLogo.png"
-              alt="Perfil"
+              src={empresa.logo}
+              alt={empresa.nombre}
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               onError={e => {
                 const target = e.target as HTMLImageElement;

@@ -81,7 +81,7 @@ export const MarketplaceServicios: React.FC = () => {
             </div>
             <h3 style={{ fontSize: '20px', fontWeight: '800', color: colores.textoClaro, margin: '0 0 12px 0' }}>Solicitud Recibida</h3>
             <p style={{ fontSize: '14px', color: colores.textoMedio, margin: '0 0 24px 0', lineHeight: 1.5 }}>
-              Hemos registrado su interés en <strong>{selectedService}</strong>. Un especialista de EdgeNet se pondrá en contacto con usted a la brevedad para agendar una sesión consultiva.
+              Hemos registrado su interés en <strong>{selectedService}</strong>. Un especialista de DC Inteligente se pondrá en contacto con usted a la brevedad para agendar una sesión consultiva.
             </p>
             <button onClick={() => setModalOpen(false)} style={{ width: '100%', padding: '14px', borderRadius: '12px', border: 'none', background: colores.gradientePrimario, color: 'white', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
               Entendido

@@ -58,7 +58,7 @@ export const CentroOperacion: React.FC = () => {
             <Server size={16} color="#fff" />
           </div>
           <h2 style={{ fontSize: isMobile ? '18px' : '22px', fontWeight: '900', color: colores.textoClaro, margin: 0, letterSpacing: '-0.5px' }}>
-            Mi Centro de Operación EdgeNet
+            Mi Centro de Operación DC Inteligente
           </h2>
         </div>
         <p style={{ fontSize: '13px', color: colores.textoMedio, margin: '0 0 12px 0' }}>

@@ -22,7 +22,7 @@ function App() {
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
-      dashboard:       'Dashboard EdgeNet',
+      dashboard:       'Dashboard DC Inteligente',
       centroOperacion: 'Centro de Operación',
       seguridadSOC:    'Seguridad y SOC IA',
       continuidadDRP:  'Continuidad y DRP',
@@ -32,7 +32,7 @@ function App() {
       marketplace:     'Marketplace de Servicios',
       acompanamiento:  'Acompañamiento Experto',
     };
-    return titulos[activeSection] || 'EdgeNet AI Value';
+    return titulos[activeSection] || 'DC Inteligente AI Value';
   };
 
   const renderContent = () => {
