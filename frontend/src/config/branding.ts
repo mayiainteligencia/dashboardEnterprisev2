@@ -4,23 +4,23 @@
 export const WAI_BRAND_CONFIG = {
   clientName: "Women in AI",
   clientNameFull: "Women in AI México 2026",
-  slogan: "Empoderando, Conectando y Elevando a Mujeres en IA para un Futuro Inclusivo.",
-  frase: "La plataforma donde México escribe con IA la agenda del futuro.",
+  slogan: "Una iniciativa impulsada por la comunidad que promueve el empoderamiento, el conocimiento y la colaboración activa mediante educación, investigación, eventos y comunidad.",
+  frase: "No será una plataforma para anunciar un evento. Será la plataforma donde México empieza a escribir, con IA y con mujeres, la agenda de crecimiento de la inteligencia artificial.",
   evento: {
     nombre: "Primera Asamblea Nacional WAI México 2026",
     fecha: "Septiembre 24, 2026",
     fechaISO: "2026-09-24T09:00:00-06:00",
-    lugar: "Ciudad de México",
+    lugar: "Ciudad de México (Nodo del Ecosistema Global)",
     aforo: 250,
-    formato: "Asamblea nacional de alto nivel · Medio día de trabajo",
+    formato: "Asamblea nacional de alto nivel con proyección internacional y articulación global",
   },
   organizacion: {
     fundacion: "2016",
     fundadoras: ["Dr. Hanan Salam", "Caroline Lair", "Moojan Asghari"],
     lugarFundacion: "París, Francia",
     tipo: "Nonprofit global do-tank",
-    mision: "Empoderar a mujeres y minorías para convertirse en expertas, innovadoras y líderes en IA y datos, mientras se fomenta el uso ético y responsable de la inteligencia artificial.",
-    vision: "Shape inclusive AI for our common future",
+    mision: "Empoderar a mujeres y minorías para convertirse en expertas, innovadoras y líderes en IA y datos, y promover aplicaciones éticas y el uso responsable de la inteligencia artificial.",
+    vision: "Shape inclusive AI for our common future (Modelar una IA inclusiva para nuestro futuro común)",
     liderazgoMexico: ["Susan Verdiguel (Ambassador)", "Ivete Sánchez Bravo", "Samantha Delfín-Azuara"],
   },
   estadisticas: {
@@ -110,6 +110,28 @@ export const WAI_BRAND_CONFIG = {
           { id: "sponsors", label: "Sponsors & Partners", icon: "Award", desc: "Aliados estratégicos" },
           { id: "trust", label: "Trust Center", icon: "ShieldCheck", desc: "Privacidad & Ética IA" },
         ]
+      },
+      {
+        label: "INFORMACIÓN ESTRATÉGICA",
+        items: [
+          { id: "quienes-somos", label: "¿Quiénes somos?", icon: "Users", desc: "Global nonprofit do-tank" },
+          { id: "que-hacemos", label: "¿Qué hacemos?", icon: "BookOpen", desc: "Educación, investigación y mentoría" },
+          { id: "objetivo", label: "¿Cuál es nuestro objetivo?", icon: "Target", desc: "Impulsar el rol femenino en IA" },
+        ]
+      },
+      {
+        label: "EQUIPO WAI",
+        items: [
+          { id: "liderazgo-mx", label: "Liderazgo México", icon: "Users", desc: "Equipo directivo WAI México" },
+          { id: "founders-global", label: "Fundadoras Globales", icon: "Star", desc: "Dr. Hanan Salam, Caroline Lair y Moojan Asghari" },
+        ]
+      },
+      {
+        label: "CANALES EXTERNOS",
+        items: [
+          { id: "sitio-oficial", label: "Sitio Oficial", icon: "Globe", desc: "Portal global de Women in AI" },
+          { id: "sobre-wai", label: "Sobre WAI", icon: "Globe", desc: "Historia y fundadoras de WAI" },
+        ]
       }
     ]
   },
@@ -125,14 +147,16 @@ export const WAI_BRAND_CONFIG = {
   ],
   // Sponsors reales (womeninai.co)
   sponsors: [
-    { nombre: "NEORIS", tipo: "Marca Protagonista", nivel: "platinum" },
-    { nombre: "Sun Life", tipo: "Premium Sponsor", nivel: "gold" },
-    { nombre: "Deloitte", tipo: "Venue Partner", nivel: "gold" },
-    { nombre: "Capgemini", tipo: "Socio Corporativo", nivel: "silver" },
-    { nombre: "Google Cloud", tipo: "Cloud Partner", nivel: "silver" },
-    { nombre: "Qualcomm AI", tipo: "Research Partner", nivel: "silver" },
-    { nombre: "Microsoft", tipo: "Technology Partner", nivel: "bronze" },
-    { nombre: "AWS", tipo: "Cloud Partner", nivel: "bronze" },
+    { nombre: "Por confirmar...", tipo: "Marca Protagonista", nivel: "platinum", img: "", scale: 1.0 },
+    { nombre: "MAYiA", tipo: "Premium Sponsor", nivel: "gold", img: "/assets/logosNativos/mayiaLogoBlanco.png", scale: 0.95 },
+    { nombre: "FLAi", tipo: "Premium Sponsor", nivel: "gold", img: "/assets/logosNativos/flai.png", scale: 0.95 },
+    { nombre: "Sun Life", tipo: "Premium Sponsor", nivel: "gold", img: "/logos/sunlife.svg", scale: 1.0 },
+    { nombre: "Deloitte", tipo: "Venue Partner", nivel: "gold", img: "/logos/deloitte.svg", scale: 1.3 },
+    { nombre: "Capgemini", tipo: "Socio Corporativo", nivel: "silver", img: "/logos/capgeminiWhite.svg", scale: 1.0 },
+    { nombre: "Google Cloud", tipo: "Cloud Partner", nivel: "silver", img: "/logos/google-cloud.svg", scale: 1.4 },
+    { nombre: "Qualcomm AI", tipo: "Research Partner", nivel: "silver", img: "/logos/Qualcomm.png", scale: 1.5 },
+    { nombre: "Microsoft", tipo: "Technology Partner", nivel: "bronze", img: "/logos/microsoft.svg", scale: 1.35 },
+    { nombre: "AWS", tipo: "Cloud Partner", nivel: "bronze", img: "/logos/aws.svg", scale: 1.0 },
   ],
   // Programas oficiales WAI globales
   programas: [
