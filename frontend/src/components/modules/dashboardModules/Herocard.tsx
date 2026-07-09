@@ -1,8 +1,12 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
-import { brandingConfig, type TemaBesco } from '../../../config/branding';
+import { brandingConfig } from '../../../config/branding';
 import { BrainCanvas } from './BrianCanvas';
+
+// Tema opcional (color de acento). Definido local para no depender de un export
+// específico de branding: así HeroCard es genérico y copiable entre ramas.
+type TemaBesco = { acento: string; acentoOscuro: string; sobreAcento: string };
 
 type ChatMessage = {
   role: 'user' | 'assistant';
