@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 40" width="130" height="40">
+  <!-- Sun Life sun icon -->
+  <circle cx="18" cy="20" r="10" fill="#FFBE00"/>
+  <!-- Sun rays -->
+  <line x1="18" y1="4" x2="18" y2="8" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="18" y1="32" x2="18" y2="36" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="2" y1="20" x2="6" y2="20" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="30" y1="20" x2="34" y2="20" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="7" y1="7" x2="10" y2="10" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="26" y1="30" x2="29" y2="33" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="29" y1="7" x2="26" y2="10" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="7" y1="33" x2="10" y2="30" stroke="#FFBE00" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Wordmark -->
+  <text x="38" y="16" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="#FFBE00">Sun Life</text>
+  <text x="38" y="29" font-family="Arial, sans-serif" font-size="9" fill="#FFFFFF" opacity="0.7">Financial</text>
+</svg>
