@@ -106,7 +106,7 @@ export const BescoDashboard: React.FC<{ modo: Modo; tema: TemaBesco; onOpen: (id
           {lados.slice(0, 2).map((d, i) => <SideCard key={i} d={d} tema={tema} />)}
         </div>
         <div style={{ flex: '2 1 360px', minWidth: '300px' }}>
-          <HeroCard tema={tema} />
+          <HeroCard tema={tema} onNavigate={onOpen} secciones={modulos} />
         </div>
         <div style={{ flex: '1 1 200px', display: 'flex', flexDirection: 'column', gap: '18px' }}>
           {lados.slice(2, 4).map((d, i) => <SideCard key={i} d={d} tema={tema} />)}

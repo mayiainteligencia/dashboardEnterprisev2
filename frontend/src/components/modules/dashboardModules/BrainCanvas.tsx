@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-// ponytail: núcleo IA 3D en canvas 2D (sin deps). Parametrizado por color de
-// acento para caber en la tarjeta del asistente (Sales Command Center).
+// ponytail: núcleo IA 3D en canvas 2D (sin deps). Genérico: recibe el color de
+// acento por prop, así se reutiliza tal cual en cualquier rama/branding.
 
 const hexToRgb = (hex: string): [number, number, number] => {
   const h = hex.replace('#', '');

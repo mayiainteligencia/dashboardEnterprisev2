@@ -9,8 +9,31 @@ type ChatMessage = {
   time: string;
 };
 
-export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
-  const { colores, ia } = brandingConfig;
+// ── Navegación por voz (front-only, sin backend) ──────────
+const normalizar = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const NAV_VERBOS = ['ve al', 've a', 'ir al', 'ir a', 'entra al', 'entra a', 'llevame a', 'vamos a', 'muestrame', 'muestra', 'abre', 'abrir', 'ir'];
+// Devuelve el id de sección si el texto es un comando "ve a X", o null.
+const matchSeccion = (texto: string, secciones: { id: string; titulo: string }[]): string | null => {
+  const t = normalizar(texto);
+  if (!NAV_VERBOS.some(v => t.includes(v))) return null;
+  if (/(dashboard|inicio|principal|home|general)/.test(t)) return 'dashboard';
+  let best: { id: string; score: number } | null = null;
+  for (const s of secciones) {
+    const palabras = normalizar(s.titulo).split(/\s+/).filter(w => w.length > 3);
+    const score = palabras.filter(w => t.includes(w)).length;
+    if (score > 0 && (!best || score > best.score)) best = { id: s.id, score };
+  }
+  return best ? best.id : null;
+};
+
+interface HeroCardProps {
+  tema?: TemaBesco;
+  onNavigate?: (id: string) => void;
+  secciones?: { id: string; titulo: string }[];
+}
+
+export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones = [] }) => {
+  const { colores, ia, empresa } = brandingConfig;
   const acc = tema ? tema.acento : '#374151';
   const accDark = tema ? tema.acentoOscuro : '#1F2937';
   const sobre = tema ? tema.sobreAcento : '#ffffff';
@@ -19,7 +42,7 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `¡Hola! Soy ${ia.nombre}, tu asistente BESCO. ¿En qué puedo ayudarte?`,
+      content: `¡Hola! Soy ${ia.nombre}, tu asistente de ${empresa.nombre}. ¿En qué puedo ayudarte?`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -28,6 +51,12 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
   const [isListening, setIsListening] = useState(false);
   const endRef = useRef<HTMLDivElement | null>(null);
   const recognitionRef = useRef<any>(null);
+  // Refs para que el reconocimiento (creado una sola vez) siempre lea lo último
+  const listeningRef = useRef(false);
+  const seccionesRef = useRef(secciones);
+  const onNavigateRef = useRef(onNavigate);
+  useEffect(() => { listeningRef.current = isListening; }, [isListening]);
+  useEffect(() => { seccionesRef.current = secciones; onNavigateRef.current = onNavigate; }, [secciones, onNavigate]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -56,7 +85,21 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
         }
 
         const currentText = finalTranscript || interimTranscript;
-        
+        console.log('[voz] transcripción:', currentText, finalTranscript ? '(final)' : '(parcial)');
+
+        // Navegación por voz (front-only): "ve a <sección>" → navega, sin backend
+        if (finalTranscript) {
+          const destino = matchSeccion(currentText, seccionesRef.current);
+          if (destino && onNavigateRef.current) {
+            listeningRef.current = false;
+            setIsListening(false);
+            try { recognitionRef.current?.abort(); } catch { /* nada */ }
+            onNavigateRef.current(destino);
+            handleCloseModal();
+            return;
+          }
+        }
+
         // Detectar palabras clave para enviar
         const textLower = currentText.toLowerCase().trim();
         const hasKeyword = textLower.includes('mayia') || 
@@ -94,14 +137,21 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
         }
       };
 
+      recognitionRef.current.onstart = () => console.log('[voz] iniciado, escuchando…');
+      recognitionRef.current.onaudiostart = () => console.log('[voz] micrófono capturando audio');
+      recognitionRef.current.onsoundstart = () => console.log('[voz] hay sonido');
+      recognitionRef.current.onspeechstart = () => console.log('[voz] detectó voz');
+      recognitionRef.current.onspeechend = () => console.log('[voz] fin de voz');
+      recognitionRef.current.onnomatch = () => console.log('[voz] no coincidió');
       recognitionRef.current.onerror = (event: any) => {
-        console.error('Error de reconocimiento:', event.error);
+        console.error('[voz] error:', event.error);
         setIsListening(false);
       };
 
       recognitionRef.current.onend = () => {
-        if (isListening) {
-          recognitionRef.current.start();
+        console.log('[voz] terminó; reiniciar?', listeningRef.current);
+        if (listeningRef.current) {
+          try { recognitionRef.current.start(); } catch { /* ya iniciado */ }
         }
       };
     }
@@ -111,32 +161,27 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
         recognitionRef.current.stop();
       }
     };
-  }, [isListening]);
+  }, []);
 
-  const handleMicClick = async () => {
+  const handleMicClick = () => {
     setShowModal(true);
-    
-    // Esperar a que el modal se abra
-    setTimeout(async () => {
-      // Solicitar permisos de micrófono
+    if (!recognitionRef.current) {
+      alert('Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.');
+      return;
+    }
+    setInput('');
+    listeningRef.current = true;   // sincrónico: evita que onend reinicie fuera de tiempo
+    setIsListening(true);
+    // abort() resetea cualquier sesión previa colgada antes de arrancar de nuevo
+    try { recognitionRef.current.abort(); } catch { /* nada */ }
+    // SpeechRecognition pide su propio permiso de micrófono; no llamamos getUserMedia aparte
+    setTimeout(() => {
       try {
-        await navigator.mediaDevices.getUserMedia({ audio: true });
-        
-        setInput('');
-        setIsListening(true);
-        
-        if (recognitionRef.current) {
-          try {
-            recognitionRef.current.start();
-          } catch (error) {
-            console.error('Error al iniciar reconocimiento:', error);
-          }
-        }
+        recognitionRef.current.start();
       } catch (error) {
-        console.error('Error al acceder al micrófono:', error);
-        alert('Por favor permite el acceso al micrófono para usar esta función');
+        console.error('[voz] error al iniciar:', error);
       }
-    }, 500);
+    }, 300);
   };
 
   const toggleListening = async () => {
@@ -195,6 +240,23 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
+
+    // Modo navegación por voz: intenta navegar; si no, responde local (sin backend)
+    if (onNavigate && secciones.length) {
+      const destino = matchSeccion(messageText, secciones);
+      if (destino) {
+        onNavigate(destino);
+        handleCloseModal();
+        return;
+      }
+      setMessages((prev) => [...prev, {
+        role: 'assistant',
+        content: `Puedo llevarte a una sección. Di o escribe, por ejemplo: "ve a ${secciones[0].titulo}".`,
+        time: now,
+      }]);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -238,9 +300,10 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
 
   const handleCloseModal = () => {
     setShowModal(false);
+    listeningRef.current = false;   // sincrónico: corta el auto-reinicio de onend
     setIsListening(false);
     if (recognitionRef.current) {
-      recognitionRef.current.stop();
+      try { recognitionRef.current.abort(); } catch { /* nada */ }
     }
   };
 
@@ -341,7 +404,7 @@ export const HeroCard: React.FC<{ tema?: TemaBesco }> = ({ tema }) => {
               letterSpacing: '-0.4px',
             }}
           >
-            Asistente Inteligente BESCO
+            Asistente Inteligente {empresa.nombre}
           </h2>
 
           {/* Instrucción condensada */}
