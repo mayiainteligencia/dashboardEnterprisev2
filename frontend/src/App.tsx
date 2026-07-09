@@ -136,6 +136,10 @@ function App() {
     <>
       <style>{`
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes alertEnter {
+          0% { opacity: 0; transform: translateY(20px) scale(0.95); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
         .no-scrollbar::-webkit-scrollbar { width: 4px; }
         .no-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .no-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,192,0,0.2); border-radius: 2px; }
