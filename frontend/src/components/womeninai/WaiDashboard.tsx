@@ -27,16 +27,7 @@ function useCountdown(targetDate: string) {
   return time;
 }
 
-// Datos de las participantes destacadas
-const PARTICIPANTES = [
-  { nombre: "Dra. Brenda Carballo-Pérez", cargo: "Científica & AI Strategist", institucion: "NEORIS - EPAM Méx.", imgLetter: "B" },
-  { nombre: "Dra. Sylvia Conde", cargo: "Investigadora Titular", institucion: "Instituto de IA UNAM", imgLetter: "S" },
-  { nombre: "Mtra. Mariana Costa", cargo: "Tech Leader & Co-fundadora", institucion: "Laboratoria", imgLetter: "M" },
-  { nombre: "Lic. Alejandra Lagunes", cargo: "Co-fundadora ANIA", institucion: "BBVA México", imgLetter: "A" },
-  { nombre: "Lic. Karen Villeda", cargo: "Co-fundadora", institucion: "C Minds", imgLetter: "K" },
-  { nombre: "Mtra. Diana Rosas", cargo: "Head of Data & AI", institucion: "Liverpool", imgLetter: "D" },
-  { nombre: "Lic. Verónica Viniegra", cargo: "Líder de Estrategia WAI", institucion: "Women in AI México", imgLetter: "V" },
-];
+// Datos de las participantes destacadas han sido removidos (carrusel inactivo)
 
 // Mesas temáticas
 const MESAS = [
@@ -71,7 +62,6 @@ const HOTSPOTS = [
 
 export const WaiDashboard: React.FC = () => {
   const theme = WAI_BRAND_CONFIG.theme;
-  const [carouselIndex, setCarouselIndex] = useState(0);
   const [activeHotspot, setActiveHotspot] = useState(0);
   const [inputText, setInputText] = useState("");
   const [activeDelegation, setActiveDelegation] = useState("industria");
@@ -89,13 +79,7 @@ export const WaiDashboard: React.FC = () => {
 
 
 
-  const nextSlide = () => {
-    setCarouselIndex((prev) => (prev + 1) % (PARTICIPANTES.length - 3));
-  };
-
-  const prevSlide = () => {
-    setCarouselIndex((prev) => (prev - 1 + (PARTICIPANTES.length - 3)) % (PARTICIPANTES.length - 3));
-  };
+  // Navegación de carrusel de participantes destacadas removida
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -366,7 +350,7 @@ export const WaiDashboard: React.FC = () => {
                   position: 'relative'
                 }}>
                   <span style={{ 
-                    fontSize: 'clamp(28px, 3.5vw, 36px)', 
+                    fontSize: 'clamp(22px, 2.5vw, 28px)', 
                     fontWeight: '950', 
                     color: '#FFFFFF', 
                     fontFamily: "'Courier New', Courier, monospace",
@@ -437,7 +421,7 @@ export const WaiDashboard: React.FC = () => {
                   {m.label}
                 </span>
                 <div style={{ 
-                  fontSize: 'clamp(22px, 2.5vw, 26px)', 
+                  fontSize: 'clamp(18px, 2vw, 21px)', 
                   fontWeight: '900', 
                   color: m.color, 
                   marginTop: '6px',
@@ -479,10 +463,10 @@ export const WaiDashboard: React.FC = () => {
             <Sparkles size={14} fill={theme.secondary} />
             WAI Mexico Assembly 2026 | Profetas de la IA
           </span>
-          <h1 style={{ fontSize: 'clamp(24px, 4vw, 44px)', fontWeight: '800', lineHeight: 1.2, color: '#FFFFFF', margin: '0 0 16px 0', letterSpacing: '-0.5px' }}>
+          <h1 style={{ fontSize: 'clamp(20px, 2.8vw, 30px)', fontWeight: '800', lineHeight: 1.2, color: '#FFFFFF', margin: '0 0 16px 0', letterSpacing: '-0.5px' }}>
             No será un evento para observar el futuro de la IA; <span style={{ background: `linear-gradient(90deg, ${theme.secondary} 0%, #FF8C00 100%)`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', fontWeight: '900' }}>será una asamblea para ayudar a definirlo.</span>
           </h1>
-          <p style={{ fontSize: 'clamp(14px, 1.6vw, 16px)', color: theme.textSecondary, lineHeight: 1.6, margin: '0 0 24px 0', fontWeight: '400' }}>
+          <p style={{ fontSize: 'clamp(12px, 1.4vw, 14px)', color: theme.textSecondary, lineHeight: 1.6, margin: '0 0 24px 0', fontWeight: '400' }}>
             Una convocatoria altamente curada de 250 personas para construir una conversación de país sobre mujeres, inteligencia artificial y competitividad. Gobierno, academia, industria, startups, cámaras, talento emergente y sociedad civil como actores activos.
           </p>
 
@@ -792,117 +776,12 @@ export const WaiDashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* 3. PARTICIPANTES DESTACADAS (CAROUSEL SLIDER) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Participantes Destacadas</h2>
-            <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '4px 0 0' }}>Mujeres líderes que conectan el desarrollo de la Inteligencia Artificial en México con el entorno internacional</p>
-          </div>
-          <div style={{ display: 'flex', gap: '8px' }}>
-            <button 
-              onClick={prevSlide}
-              style={{
-                width: '40px', height: '40px', borderRadius: '50%',
-                backgroundColor: 'rgba(255,255,255,0.03)', border: `1px solid ${theme.border}`,
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#FFFFFF', transition: 'all 0.2s'
-              }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255, 192, 0, 0.15)'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.03)'}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button 
-              onClick={nextSlide}
-              style={{
-                width: '40px', height: '40px', borderRadius: '50%',
-                backgroundColor: 'rgba(255,255,255,0.03)', border: `1px solid ${theme.border}`,
-                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                color: '#FFFFFF', transition: 'all 0.2s'
-              }}
-              onMouseEnter={e => e.currentTarget.style.backgroundColor = 'rgba(255, 192, 0, 0.15)'}
-              onMouseLeave={e => e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.03)'}
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
-        </div>
 
-        {/* Carousel Container */}
-        <div 
-          style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '20px',
-            overflow: 'hidden'
-          }}
-        >
-          {PARTICIPANTES.slice(carouselIndex, carouselIndex + 4).map((p, idx) => (
-            <div 
-              key={p.nombre}
-              style={{
-                backgroundColor: theme.cardBgGlass,
-                border: `1.5px solid ${theme.border}`,
-                borderRadius: '16px',
-                padding: '24px 20px',
-                textAlign: 'center',
-                position: 'relative',
-                boxShadow: `0 10px 24px rgba(2, 11, 28, 0.3)`,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '14px',
-                transition: 'all 0.3s ease',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = theme.secondary;
-                e.currentTarget.style.transform = 'translateY(-4px)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = theme.border;
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              {/* Photo Avatar Placeholder with glow */}
-              <div 
-                style={{
-                  width: '64px', height: '64px', borderRadius: '50%',
-                  background: `linear-gradient(135deg, ${theme.primary} 0%, ${theme.accent} 100%)`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '24px', fontWeight: 'bold', color: '#FFFFFF',
-                  boxShadow: `0 0 15px rgba(255, 64, 129, 0.25)`,
-                }}
-              >
-                {p.imgLetter}
-              </div>
-
-              <div>
-                <h4 style={{ fontSize: '14px', fontWeight: '700', color: '#FFFFFF', margin: '0 0 4px 0' }}>{p.nombre}</h4>
-                <p style={{ fontSize: '11px', color: theme.secondary, fontWeight: '600', margin: '0 0 2px 0' }}>{p.cargo}</p>
-                <p style={{ fontSize: '11px', color: theme.textSecondary, margin: 0 }}>{p.institucion}</p>
-              </div>
-
-              {/* Tag / Badge */}
-              <span 
-                style={{
-                  fontSize: '9px', fontWeight: '700', textTransform: 'uppercase',
-                  color: '#FFFFFF', backgroundColor: 'rgba(255, 64, 129, 0.15)',
-                  border: `1px solid ${theme.accent}`, borderRadius: '20px',
-                  padding: '3px 8px', marginTop: 'auto'
-                }}
-              >
-                Ponente WAI
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* 4. DELEGACIONES ECOSISTEMA */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Delegaciones del Ecosistema WAI</h2>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Delegaciones del Ecosistema WAI</h2>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '4px 0 0' }}>Objetivos temáticos y aportaciones estructuradas por sector</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '12px' }}>
@@ -1103,7 +982,7 @@ export const WaiDashboard: React.FC = () => {
       {/* 6. LAS SEIS MESAS TEMÁTICAS DE LA ASAMBLEA */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Las Seis Mesas Temáticas de la Asamblea</h2>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Las Seis Mesas Temáticas de la Asamblea</h2>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '4px 0 0' }}>Cada mesa tiene una pregunta detonadora, una moderadora, una relatora y una salida esperada que alimentará la Declaratoria WAI México 2026.</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px' }}>
@@ -1145,7 +1024,7 @@ export const WaiDashboard: React.FC = () => {
       {/* 7. OBSERVATORIO / TERMÓMETRO IA (KPI CARDS) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Observatorio del Ecosistema IA México y Alineación Global</h2>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Observatorio del Ecosistema IA México y Alineación Global</h2>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '4px 0 0' }}>Indicadores clave de liderazgo, adopción y talento tecnológico con perspectiva global</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
@@ -1171,7 +1050,7 @@ export const WaiDashboard: React.FC = () => {
               }}
             >
               <span style={{ fontSize: '11px', color: theme.textSecondary, fontWeight: '500' }}>{k.label}</span>
-              <span style={{ fontSize: '26px', fontWeight: '900', color: '#FFFFFF' }}>{k.value}</span>
+              <span style={{ fontSize: '22px', fontWeight: '900', color: '#FFFFFF' }}>{k.value}</span>
               <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: k.color, fontWeight: '700' }}>
                 <TrendingUp size={12} />
                 <span>{k.trend}</span>
@@ -1184,7 +1063,7 @@ export const WaiDashboard: React.FC = () => {
       {/* 8. CONVERSACIONES WAI - PODCAST */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Conversaciones WAI - Podcast</h2>
+          <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Conversaciones WAI - Podcast</h2>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '4px 0 0' }}>Entrevistas con investigadoras y líderes globales de inteligencia artificial</p>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
