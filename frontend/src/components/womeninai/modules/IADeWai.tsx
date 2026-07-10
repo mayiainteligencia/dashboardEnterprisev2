@@ -59,7 +59,7 @@ export const IADeWai: React.FC = () => {
           <Bot size={28} color={theme.secondary} />
         </div>
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>IA de WAI · Declaration Engine</h1>
+          <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>IA de WAI · Declaration Engine</h1>
           <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>
             El motor de procesamiento que unifica e indexa documentos, transcripciones y relatorías para estructurar la Declaratoria WAI México 2026.
           </p>
@@ -70,7 +70,7 @@ export const IADeWai: React.FC = () => {
         
         {/* Document Ingestion & Consent */}
         <div style={cardStyle}>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Upload size={16} color={theme.secondary} /> Ingesta de Documentos y Propuestas
           </h3>
 
@@ -128,7 +128,7 @@ export const IADeWai: React.FC = () => {
 
         {/* Q&A / Query Tool */}
         <div style={cardStyle}>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <HelpCircle size={16} color={theme.accent} /> RAG de Consulta del Summit
           </h3>
           <p style={{ fontSize: '13px', color: theme.textSecondary, margin: '0 0 16px 0', lineHeight: 1.5 }}>
@@ -197,7 +197,7 @@ export const IADeWai: React.FC = () => {
 
       {/* Visual Pipeline Flow */}
       <div style={cardStyle}>
-        <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Flujo Técnico del Motor IA WAI</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Flujo Técnico del Motor IA WAI</h3>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
           {[
             { step: '1', title: 'Ingesta' },
@@ -224,7 +224,7 @@ export const IADeWai: React.FC = () => {
 
       {/* Agentes de IA WAI list */}
       <div>
-        <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Nuestros Agentes de IA Especializados</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Nuestros Agentes de IA Especializados</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px' }}>
           {WAI_BRAND_CONFIG.agentesIA.map((agent) => (
             <div key={agent.id} style={{ ...cardStyle, padding: '16px 20px', display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
