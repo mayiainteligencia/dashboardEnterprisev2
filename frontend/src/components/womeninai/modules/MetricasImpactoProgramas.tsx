@@ -94,7 +94,7 @@ export const MetricasImpactoProgramas: React.FC = () => {
               </div>
               <div>
                 <span style={{ fontSize: '10px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{kpi.label}</span>
-                <h3 style={{ fontSize: '22px', fontWeight: '900', color: '#FFFFFF', margin: '2px 0' }}>{kpi.value}</h3>
+                <h3 style={{ fontSize: '13px', fontWeight: '900', color: '#FFFFFF', margin: '2px 0' }}>{kpi.value}</h3>
                 <span style={{ fontSize: '9px', color: theme.textMuted }}>{kpi.subtext}</span>
               </div>
             </div>
@@ -236,7 +236,7 @@ export const MetricasImpactoProgramas: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
           <Bot size={22} color={theme.secondary} />
-          <h3 style={{ fontSize: '18px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Informes y Hallazgos Generados por IA</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Informes y Hallazgos Generados por IA</h3>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
