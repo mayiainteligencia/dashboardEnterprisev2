@@ -249,7 +249,7 @@ const IndicadorCard: React.FC<IndicadorCardProps> = ({ indicador }) => {
         opacity: hovered ? 1 : 0, transition: 'opacity 0.3s',
       }} />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-        <span style={{ fontSize: 24 }}>{indicador.icon}</span>
+        <span style={{ fontSize: 19 }}>{indicador.icon}</span>
         {indicador.trend && (
           <span style={{
             fontSize: 11, fontWeight: 700, padding: '3px 8px', borderRadius: 8,
@@ -261,7 +261,7 @@ const IndicadorCard: React.FC<IndicadorCardProps> = ({ indicador }) => {
           </span>
         )}
       </div>
-      <div style={{ fontSize: 22, fontWeight: 800, color: indicador.color, marginBottom: 2 }}>
+      <div style={{ fontSize: 13, fontWeight: 800, color: indicador.color, marginBottom: 2 }}>
         {indicador.valor}
         <span style={{ fontSize: 13, fontWeight: 500, color: theme.textMuted, marginLeft: 4 }}>{indicador.unidad}</span>
       </div>
@@ -286,7 +286,7 @@ export const TermometroIA: React.FC = () => {
   };
 
   const sectionTitle: React.CSSProperties = {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 700,
     color: theme.textPrimary,
     marginBottom: 20,
@@ -329,7 +329,7 @@ export const TermometroIA: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <span style={{ fontSize: 40 }}>🌡️</span>
           <div>
-            <h1 style={{ fontSize: 24, fontWeight: 800, margin: 0, color: theme.textPrimary }}>
+            <h1 style={{ fontSize: 19, fontWeight: 800, margin: 0, color: theme.textPrimary }}>
               Termómetro IA México
               <span style={{ color: theme.secondary }}> — Observatorio Nacional</span>
             </h1>
