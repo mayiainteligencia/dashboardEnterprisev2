@@ -124,7 +124,7 @@ export const MesasAsamblea: React.FC = () => {
       
       {/* Header */}
       <div>
-        <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Mesas de la Asamblea</h1>
+        <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Mesas de la Asamblea</h1>
         <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0 }}>
           Seis espacios temáticos de deliberación. Haz clic en cualquiera de las mesas para ver los detalles, moderadoras y aportar notas de relatoría directo al motor de IA.
         </p>
@@ -144,7 +144,7 @@ export const MesasAsamblea: React.FC = () => {
             onMouseLeave={e => e.currentTarget.style.borderColor = theme.border}
           >
             <span style={{ fontSize: '11px', fontWeight: 'bold', color: m.color, textTransform: 'uppercase', letterSpacing: '1px' }}>Mesa {m.num}</span>
-            <h4 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: '4px 0 8px 0' }}>{m.tema}</h4>
+            <h4 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: '4px 0 8px 0' }}>{m.tema}</h4>
             <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '0 0 16px 0', lineHeight: 1.5 }}>{m.desc}</p>
             
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: theme.textMuted, borderTop: `1px solid ${theme.borderSubtle}`, paddingTop: '10px' }}>
@@ -174,7 +174,7 @@ export const MesasAsamblea: React.FC = () => {
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '12px' }}>
             <div>
               <span style={{ fontSize: '11px', fontWeight: 'bold', color: selectedMesa.color, textTransform: 'uppercase', letterSpacing: '1px' }}>Detalles de la Mesa {selectedMesa.num}</span>
-              <h2 style={{ fontSize: '20px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0 0' }}>{selectedMesa.tema}</h2>
+              <h2 style={{ fontSize: '14px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0 0' }}>{selectedMesa.tema}</h2>
             </div>
             <button 
               onClick={() => setSelectedMesa(null)}
