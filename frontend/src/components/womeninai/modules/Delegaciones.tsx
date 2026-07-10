@@ -48,7 +48,7 @@ export const Delegaciones: React.FC = () => {
       
       {/* Header */}
       <div>
-        <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Delegaciones del Summit</h1>
+        <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Delegaciones del Summit</h1>
         <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0 }}>
           Siete sectores estratégicos convergen para co-crear la Declaratoria Nacional de IA. Cada delegación lidera objetivos y responde a preguntas detonadoras críticas.
         </p>
@@ -73,7 +73,7 @@ export const Delegaciones: React.FC = () => {
           { label: 'Documentos Recibidos', value: '1,248' }
         ].map((s, idx) => (
           <div key={idx} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '18px', fontWeight: '900', color: theme.secondary }}>{s.value}</div>
+            <div style={{ fontSize: '13px', fontWeight: '900', color: theme.secondary }}>{s.value}</div>
             <div style={{ fontSize: '10px', color: theme.textMuted, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</div>
           </div>
         ))}
@@ -92,7 +92,7 @@ export const Delegaciones: React.FC = () => {
                 <div style={{ color: d.color }}>
                   {getIcon(d.id)}
                 </div>
-                <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{d.nombre}</h3>
+                <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{d.nombre}</h3>
               </div>
               <span style={{ fontSize: '11px', color: d.color, backgroundColor: 'rgba(255,255,255,0.03)', padding: '4px 8px', borderRadius: '20px', fontWeight: '600' }}>
                 {d.seats} Asientos
