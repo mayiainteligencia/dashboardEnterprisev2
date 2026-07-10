@@ -254,7 +254,7 @@ const EntidadCard: React.FC<EntidadCardProps> = ({ entidad }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: theme.textPrimary }}>{entidad.nombre}</h3>
+            <h3 style={{ margin: 0, fontSize: 14, fontWeight: 800, color: theme.textPrimary }}>{entidad.nombre}</h3>
             {entidad.destacado && (
               <span style={{
                 fontSize: 9, fontWeight: 800, padding: '2px 7px', borderRadius: 4,
@@ -382,7 +382,7 @@ export const DirectorioEcosistema: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
             <span style={{ fontSize: 40 }}>🗺️</span>
             <div>
-              <h1 style={{ fontSize: 22, fontWeight: 800, margin: 0 }}>
+              <h1 style={{ fontSize: 13, fontWeight: 800, margin: 0 }}>
                 Directorio / Radar del Ecosistema de IA en México
               </h1>
               <p style={{ fontSize: 13, color: theme.textSecondary, margin: '6px 0 0' }}>
@@ -418,7 +418,7 @@ export const DirectorioEcosistema: React.FC = () => {
         <div style={{ position: 'relative' }}>
           <span style={{
             position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)',
-            fontSize: 16, color: searchFocused ? theme.secondary : theme.textMuted,
+            fontSize: 14, color: searchFocused ? theme.secondary : theme.textMuted,
             transition: 'color 0.2s',
           }}>🔍</span>
           <input
@@ -480,7 +480,7 @@ export const DirectorioEcosistema: React.FC = () => {
             color: theme.textMuted,
           }}>
             <div style={{ fontSize: 48, marginBottom: 16 }}>🔍</div>
-            <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8 }}>Sin resultados</div>
+            <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>Sin resultados</div>
             <div style={{ fontSize: 13 }}>Intenta con otros términos de búsqueda o cambia el filtro</div>
           </div>
         )}
@@ -493,7 +493,7 @@ export const DirectorioEcosistema: React.FC = () => {
         borderRadius: 20,
         padding: '24px 28px',
       }}>
-        <div style={{ fontSize: 15, fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 20, display: 'flex', alignItems: 'center', gap: 8 }}>
           <span style={{ color: theme.teal }}>📍</span>
           Actividad del Ecosistema por Estado
         </div>
