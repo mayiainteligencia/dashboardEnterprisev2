@@ -33,7 +33,7 @@ export const DeclaratoriaWai: React.FC = () => {
         <div style={{ position: 'absolute', top: '-100px', right: '-100px', width: '280px', height: '280px', borderRadius: '50%', background: `radial-gradient(circle, rgba(255,64,129,0.08) 0%, transparent 70%)`, pointerEvents: 'none' }} />
         <div>
           <span style={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: theme.secondary, letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>Salida Institucional</span>
-          <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Declaratoria WAI México 2026</h1>
+          <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Declaratoria WAI México 2026</h1>
           <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>El plan de acción nacional para el desarrollo ético e inclusivo de la Inteligencia Artificial.</p>
         </div>
 
@@ -50,7 +50,7 @@ export const DeclaratoriaWai: React.FC = () => {
         
         {/* Progress Card */}
         <div style={cardStyle}>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Clock size={16} color={theme.secondary} /> Estado de Avance de la Declaratoria
           </h3>
           
@@ -83,7 +83,7 @@ export const DeclaratoriaWai: React.FC = () => {
 
         {/* 5 Key Points Preview */}
         <div style={cardStyle}>
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
             <ShieldCheck size={16} color={theme.teal} /> Puntos Clave de la Agenda Nacional
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -110,7 +110,7 @@ export const DeclaratoriaWai: React.FC = () => {
 
       {/* Methodology Section */}
       <div style={cardStyle}>
-        <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Metodología de Co-Creación WAI</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Metodología de Co-Creación WAI</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '12px' }}>
           {[
             { step: '1', title: 'Carga de Documentos', desc: 'Insumos base de la industria y la academia.' },
@@ -133,7 +133,7 @@ export const DeclaratoriaWai: React.FC = () => {
 
       {/* Ruta WAI México 2027 */}
       <div style={{ ...cardStyle, borderLeft: `4px solid ${theme.accent}` }}>
-        <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 8px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
           <AlertTriangle size={16} color={theme.accent} /> Ruta de Continuidad WAI México 2027
         </h3>
         <p style={{ fontSize: '13px', color: theme.textSecondary, margin: '0 0 16px 0', lineHeight: 1.5 }}>
