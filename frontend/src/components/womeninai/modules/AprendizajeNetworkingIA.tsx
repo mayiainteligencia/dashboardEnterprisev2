@@ -85,7 +85,7 @@ export const AprendizajeNetworkingIA: React.FC = () => {
               </div>
               <div>
                 <span style={{ fontSize: '11px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{k.label}</span>
-                <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '2px 0' }}>{k.value}</h3>
+                <h3 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '2px 0' }}>{k.value}</h3>
                 <span style={{ fontSize: '10px', color: theme.textMuted }}>{k.subtext}</span>
               </div>
             </div>
@@ -100,7 +100,7 @@ export const AprendizajeNetworkingIA: React.FC = () => {
         <div style={{ backgroundColor: theme.cardBgGlass, border: `1.5px solid ${theme.border}`, borderRadius: '20px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BookOpen size={20} color={theme.secondary} />
-            <h3 style={{ fontSize: '18px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Rutas de Aprendizaje (AI Recommended)</h3>
+            <h3 style={{ fontSize: '13px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Rutas de Aprendizaje (AI Recommended)</h3>
           </div>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: 0, lineHeight: 1.4 }}>
             Sugerencias personalizadas según tus habilidades de delegación e intereses en IA.
@@ -155,7 +155,7 @@ export const AprendizajeNetworkingIA: React.FC = () => {
         <div style={{ backgroundColor: theme.cardBgGlass, border: `1.5px solid ${theme.border}`, borderRadius: '20px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <Calendar size={20} color={theme.accent} />
-            <h3 style={{ fontSize: '18px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Eventos y Sesiones del Summit</h3>
+            <h3 style={{ fontSize: '13px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Eventos y Sesiones del Summit</h3>
           </div>
           <p style={{ fontSize: '12px', color: theme.textSecondary, margin: 0, lineHeight: 1.4 }}>
             Sesiones sugeridas por el agente orquestador WAI para enriquecer tu agenda participativa.
@@ -222,7 +222,7 @@ export const AprendizajeNetworkingIA: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '18px' }}>
           <Handshake size={22} color={theme.secondary} />
-          <h3 style={{ fontSize: '18px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>WAIMentorship (AI Matchmaking Engine)</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>WAIMentorship (AI Matchmaking Engine)</h3>
         </div>
         <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '0 0 20px 0', lineHeight: 1.5 }}>
           Conectamos mentoras senior con mentees en el sector científico y de startups. El motor de recomendación utiliza perfiles profesionales, áreas de investigación y objetivos de carrera para encontrar el match perfecto.
@@ -247,7 +247,7 @@ export const AprendizajeNetworkingIA: React.FC = () => {
               >
                 {/* Compatibility Score */}
                 <div style={{ position: 'absolute', top: '16px', right: '16px', textAlign: 'right' }}>
-                  <span style={{ fontSize: '18px', fontWeight: '900', color: theme.secondary, display: 'block' }}>{match.compatibilidad}%</span>
+                  <span style={{ fontSize: '13px', fontWeight: '900', color: theme.secondary, display: 'block' }}>{match.compatibilidad}%</span>
                   <span style={{ fontSize: '9px', color: theme.textMuted, textTransform: 'uppercase' }}>Afinidad AI</span>
                 </div>
 
