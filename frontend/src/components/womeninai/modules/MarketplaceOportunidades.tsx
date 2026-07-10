@@ -115,7 +115,7 @@ export const MarketplaceOportunidades: React.FC = () => {
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Marketplace de Oportunidades</h1>
+          <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Marketplace de Oportunidades</h1>
           <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0 }}>
             Retos tecnológicos, vacantes exclusivas, programas de mentoría uno-a-uno y convocatorias abiertas del ecosistema WAI México.
           </p>
@@ -171,7 +171,7 @@ export const MarketplaceOportunidades: React.FC = () => {
               </span>
             </div>
 
-            <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: '4px 0 0 0' }}>{o.titulo}</h3>
+            <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: '4px 0 0 0' }}>{o.titulo}</h3>
             
             <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0, lineHeight: 1.5, flex: 1 }}>
               {o.desc}
