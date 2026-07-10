@@ -14,7 +14,7 @@ export const TrustCenter: React.FC = () => {
   };
 
   const sectionTitle = {
-    fontSize: '15px',
+    fontSize: '13px',
     fontWeight: '800',
     color: '#FFFFFF',
     marginBottom: '12px',
@@ -50,7 +50,7 @@ export const TrustCenter: React.FC = () => {
           <ShieldCheck size={28} color={theme.teal} />
         </div>
         <div>
-          <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Trust Center WAI</h1>
+          <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Trust Center WAI</h1>
           <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>
             Privacidad de datos, consentimiento informado y principios de gobernanza de inteligencia artificial responsable.
           </p>
