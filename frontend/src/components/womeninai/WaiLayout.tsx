@@ -189,7 +189,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           }}>
             {modalContentId === 'liderazgo-mx' && (
               <>
-                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '18px', fontWeight: '800' }}>Liderazgo WAI México</h3>
+                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '15px', fontWeight: '800' }}>Liderazgo WAI México</h3>
                 <p style={{ margin: 0, color: theme.textSecondary, fontSize: '13px', lineHeight: 1.5 }}>
                   El capítulo de <strong>Women in AI México</strong> está liderado por profesionales y científicas destacadas del ecosistema tecnológico:
                 </p>
@@ -212,7 +212,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
 
             {modalContentId === 'founders-global' && (
               <>
-                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '18px', fontWeight: '800' }}>Fundadoras Globales WAI</h3>
+                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '15px', fontWeight: '800' }}>Fundadoras Globales WAI</h3>
                 <p style={{ margin: 0, color: theme.textSecondary, fontSize: '13px', lineHeight: 1.5 }}>
                   Women in AI fue fundada en París, Francia en 2016 por tres pioneras comprometidas con la equidad y ética de la inteligencia artificial:
                 </p>
@@ -235,7 +235,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
 
             {modalContentId !== 'liderazgo-mx' && modalContentId !== 'founders-global' && (
               <>
-                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '18px', fontWeight: '800' }}>Soporte & Contacto</h3>
+                <h3 style={{ margin: 0, color: '#FFFFFF', fontSize: '15px', fontWeight: '800' }}>Soporte & Contacto</h3>
                 <p style={{ margin: 0, color: theme.textSecondary, fontSize: '13px', lineHeight: 1.5 }}>
                   ¿Tienes alguna duda o necesitas soporte técnico con el módulo <strong>{modalContentId}</strong>? Ponte en contacto con nuestro equipo de desarrollo.
                 </p>
