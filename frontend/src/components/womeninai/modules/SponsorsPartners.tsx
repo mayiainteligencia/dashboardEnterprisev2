@@ -27,7 +27,7 @@ export const SponsorsPartners: React.FC = () => {
       
       {/* Header */}
       <div>
-        <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Aliados Estratégicos & Sponsors</h1>
+        <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Aliados Estratégicos & Sponsors</h1>
         <p style={{ color: theme.textSecondary, fontSize: '14px', margin: 0 }}>
           Organizaciones globales comprometidas con cerrar la brecha de género en la inteligencia artificial y propulsar la competitividad nacional.
         </p>
@@ -80,7 +80,7 @@ export const SponsorsPartners: React.FC = () => {
                           border: '1px dashed rgba(255,255,255,0.08)', 
                           marginBottom: '8px' 
                         }}>
-                          <span style={{ fontSize: '20px', fontWeight: '900', color: theme.secondary }}>?</span>
+                          <span style={{ fontSize: '14px', fontWeight: '900', color: theme.secondary }}>?</span>
                         </div>
                       ) : (
                         <div style={{ 
@@ -107,7 +107,7 @@ export const SponsorsPartners: React.FC = () => {
                           />
                         </div>
                       )}
-                      <span style={{ fontSize: '15px', fontWeight: '800', color: isPending ? theme.secondary : '#FFFFFF', fontStyle: isPending ? 'italic' : 'normal' }}>
+                      <span style={{ fontSize: '13px', fontWeight: '800', color: isPending ? theme.secondary : '#FFFFFF', fontStyle: isPending ? 'italic' : 'normal' }}>
                         {s.nombre}
                       </span>
                       <span style={{ fontSize: '10px', color: theme.textMuted }}>{s.tipo}</span>
@@ -128,7 +128,7 @@ export const SponsorsPartners: React.FC = () => {
           { title: 'Colaborador Institucional', price: 'Bronze Tier', desc: 'Derechos de visualización en el Radar del Ecosistema y acceso a reportes agregados y anonimizados del Termómetro de la Industria.' }
         ].map((p, idx) => (
           <div key={idx} style={{ ...cardStyle, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            <h4 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{p.title}</h4>
+            <h4 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{p.title}</h4>
             <span style={{ fontSize: '11px', fontWeight: '750', color: theme.secondary, textTransform: 'uppercase' }}>{p.price}</span>
             <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0, lineHeight: 1.5, flex: 1 }}>{p.desc}</p>
             <button style={{ backgroundColor: 'rgba(255,255,255,0.04)', color: '#FFFFFF', border: `1.5px solid ${theme.border}`, borderRadius: '10px', padding: '10px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', marginTop: '12px' }}>
