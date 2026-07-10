@@ -63,7 +63,7 @@ export const GestionComunidadVoluntarios: React.FC = () => {
           </div>
           <div>
             <span style={{ fontSize: '11px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '1px' }}>Total de Miembros</span>
-            <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>1,482</h3>
+            <h3 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>1,482</h3>
           </div>
         </div>
 
@@ -73,7 +73,7 @@ export const GestionComunidadVoluntarios: React.FC = () => {
           </div>
           <div>
             <span style={{ fontSize: '11px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '1px' }}>Voluntarios Activos</span>
-            <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>324</h3>
+            <h3 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>324</h3>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ export const GestionComunidadVoluntarios: React.FC = () => {
           </div>
           <div>
             <span style={{ fontSize: '11px', color: theme.textSecondary, textTransform: 'uppercase', letterSpacing: '1px' }}>Tasa de Compromiso</span>
-            <h3 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>86.4%</h3>
+            <h3 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '4px 0 0' }}>86.4%</h3>
           </div>
         </div>
       </div>
@@ -100,7 +100,7 @@ export const GestionComunidadVoluntarios: React.FC = () => {
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
           <Bot size={22} color={theme.secondary} />
-          <h3 style={{ fontSize: '18px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Recomendación Inteligente de Voluntarios (AI Match)</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: '850', color: '#FFFFFF', margin: 0 }}>Recomendación Inteligente de Voluntarios (AI Match)</h3>
         </div>
         <p style={{ fontSize: '12px', color: theme.textSecondary, margin: '0 0 20px 0', lineHeight: 1.5 }}>
           Nuestro motor IA evalúa perfiles, habilidades y nivel de participación para sugerir el emparejamiento perfecto para roles estratégicos en el Summit y mesas técnicas de Declaratoria.
@@ -196,7 +196,7 @@ export const GestionComunidadVoluntarios: React.FC = () => {
         }}
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '20px', flexWrap: 'wrap', marginBottom: '20px' }}>
-          <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Listado de la Comunidad</h3>
+          <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Listado de la Comunidad</h3>
           
           <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
             {/* Buscador */}
