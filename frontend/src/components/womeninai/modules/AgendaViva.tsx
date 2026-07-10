@@ -143,7 +143,7 @@ export const AgendaViva: React.FC = () => {
           <span style={{ fontSize: '11px', fontWeight: '800', textTransform: 'uppercase', color: theme.secondary, letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>
             Programa de la Asamblea
           </span>
-          <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Agenda Viva · Septiembre 24, 2026</h1>
+          <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Agenda Viva · Septiembre 24, 2026</h1>
           <p style={{ color: theme.textSecondary, fontSize: '13px', margin: '4px 0 0' }}>Ubicación: Sede del Summit CDMX</p>
         </div>
 
@@ -153,7 +153,7 @@ export const AgendaViva: React.FC = () => {
           <div>
             <div style={{ display: 'flex', gap: '8px' }}>
               {[{v: countdown.days, l:'D'},{v: countdown.hours, l:'H'},{v: countdown.minutes, l:'M'},{v: countdown.seconds, l:'S'}].map(t => (
-                <span key={t.l} style={{ fontSize: '16px', fontWeight: '900', color: theme.secondary }}>
+                <span key={t.l} style={{ fontSize: '14px', fontWeight: '900', color: theme.secondary }}>
                   {String(t.v).padStart(2,'0')}{t.l.toLowerCase()}
                 </span>
               ))}
@@ -220,7 +220,7 @@ export const AgendaViva: React.FC = () => {
             {/* Content info */}
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '8px' }}>
-                <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{item.title}</h3>
+                <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>{item.title}</h3>
                 <span style={{
                   fontSize: '9px',
                   fontWeight: '700',
