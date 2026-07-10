@@ -53,11 +53,11 @@ export const LaAsamblea: React.FC = () => {
               Diálogo Nacional de Mujeres en Inteligencia Artificial y Competitividad con Visión Global
             </span>
             
-            <h1 style={{ fontSize: 'clamp(26px, 3.5vw, 38px)', fontWeight: '900', color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.25 }}>
+            <h1 style={{ fontSize: 'clamp(20px, 2.5vw, 26px)', fontWeight: '900', color: '#FFFFFF', margin: '0 0 20px 0', lineHeight: 1.25 }}>
               La plataforma que conecta a México con la agenda global de Inteligencia Artificial
             </h1>
             
-            <p style={{ ...textStyle, fontSize: '15px', color: '#E2E8F0', margin: 0 }}>
+            <p style={{ ...textStyle, fontSize: '13px', color: '#E2E8F0', margin: 0 }}>
               WAI México 2026 no es un congreso tradicional. Es una asamblea nacional de alto nivel articulada con el movimiento internacional Women in AI para reunir, escuchar, organizar y consolidar la voz del ecosistema mexicano de inteligencia artificial en una Declaratoria Nacional con trascendencia e impacto global.
             </p>
           </div>
@@ -91,7 +91,7 @@ export const LaAsamblea: React.FC = () => {
           { label: 'Salida Institucional', value: '1 Declaratoria', desc: 'Elaborada colaborativamente con IA' }
         ].map((s, idx) => (
           <div key={idx} style={{ ...cardStyle, textAlign: 'center', padding: '20px' }}>
-            <div style={{ fontSize: '24px', fontWeight: '950', color: theme.secondary, marginBottom: '4px' }}>{s.value}</div>
+            <div style={{ fontSize: '19px', fontWeight: '950', color: theme.secondary, marginBottom: '4px' }}>{s.value}</div>
             <div style={{ fontSize: '12px', fontWeight: '700', color: '#FFFFFF', marginBottom: '4px' }}>{s.label}</div>
             <div style={{ fontSize: '11px', color: theme.textMuted }}>{s.desc}</div>
           </div>
@@ -103,7 +103,7 @@ export const LaAsamblea: React.FC = () => {
         <div style={cardStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <HelpCircle size={20} color={theme.secondary} />
-            <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>¿Por qué existe?</h3>
+            <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>¿Por qué existe?</h3>
           </div>
           <p style={textStyle}>
             A nivel global, la participación de las mujeres en el desarrollo de la inteligencia artificial representa apenas entre el 22% y el 30%, con menos del 15% en roles directivos. Como parte de la red global de Women in AI (fundada en París y activa en 150+ países), el capítulo mexicano busca revertir esta brecha y conectar el talento local con las mejores prácticas mundiales.
@@ -116,7 +116,7 @@ export const LaAsamblea: React.FC = () => {
         <div style={cardStyle}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
             <Target size={20} color={theme.accent} />
-            <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>El Legado WAI México</h3>
+            <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>El Legado WAI México</h3>
           </div>
           <p style={textStyle}>
             El resultado de esta asamblea será la <strong>Declaratoria WAI México 2026</strong>: un plan de acción concreto alineado con las directrices globales de ética que unifica prioridades en regulación, talento, adopción empresarial y financiamiento.
@@ -129,7 +129,7 @@ export const LaAsamblea: React.FC = () => {
 
       {/* Los 3 Momentos de la Plataforma */}
       <div>
-        <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>El Ciclo de la Asamblea</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>El Ciclo de la Asamblea</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
           {[
             {
@@ -153,7 +153,7 @@ export const LaAsamblea: React.FC = () => {
                 <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'rgba(255, 192, 0, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <m.icon size={18} color={theme.secondary} />
                 </div>
-                <h4 style={{ fontSize: '16px', fontWeight: '750', color: '#FFFFFF', margin: 0 }}>{m.momento}</h4>
+                <h4 style={{ fontSize: '14px', fontWeight: '750', color: '#FFFFFF', margin: 0 }}>{m.momento}</h4>
               </div>
               <p style={textStyle}>{m.desc}</p>
             </div>
@@ -163,7 +163,7 @@ export const LaAsamblea: React.FC = () => {
 
       {/* Principios de Diseño */}
       <div>
-        <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Nuestros Principios Rectores</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 20px 0' }}>Nuestros Principios Rectores</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
           {[
             { t: 'Institucional + Aspiracional', d: 'Prestigio, rigor nacional y el orgullo de pertenecer a una conversación de alto nivel.' },
