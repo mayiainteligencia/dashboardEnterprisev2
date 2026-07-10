@@ -68,7 +68,7 @@ export const Registro: React.FC = () => {
       
       {/* Header */}
       <div style={{ textAlign: 'center' }}>
-        <h1 style={{ fontSize: '24px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Registro & Invitación Curada</h1>
+        <h1 style={{ fontSize: '19px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 8px 0' }}>Registro & Invitación Curada</h1>
         <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0 }}>
           Solicitud de asiento para la Primera Asamblea Nacional de Women in AI México · Septiembre 24, 2026.
         </p>
@@ -99,7 +99,7 @@ export const Registro: React.FC = () => {
           {/* Step 1: Perfil Profesional */}
           {step === 1 && (
             <div style={cardStyle}>
-              <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 1: Perfil Profesional</h3>
+              <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 1: Perfil Profesional</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div>
                   <label style={{ fontSize: '11px', color: theme.textSecondary }}>Nombre Completo *</label>
@@ -138,7 +138,7 @@ export const Registro: React.FC = () => {
           {/* Step 2: Contribución */}
           {step === 2 && (
             <div style={cardStyle}>
-              <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 2: Aportación & Mesa Temática</h3>
+              <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 2: Aportación & Mesa Temática</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div>
                   <label style={{ fontSize: '11px', color: theme.textSecondary }}>Mesa preferente de Asamblea *</label>
@@ -162,7 +162,7 @@ export const Registro: React.FC = () => {
           {/* Step 3: Consentimiento */}
           {step === 3 && (
             <div style={cardStyle}>
-              <h3 style={{ fontSize: '15px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 3: Consentimiento & Privacidad</h3>
+              <h3 style={{ fontSize: '13px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Paso 3: Consentimiento & Privacidad</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                   <input type="checkbox" checked={form.c1} onChange={e => setForm({...form, c1: e.target.checked})} style={{ marginTop: '3px', accentColor: theme.secondary }} />
@@ -213,7 +213,7 @@ export const Registro: React.FC = () => {
             <CheckCircle2 size={24} color={theme.teal} />
           </div>
           <div>
-            <h2 style={{ fontSize: '18px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 6px 0' }}>¡Solicitud Recibida Exitosamente!</h2>
+            <h2 style={{ fontSize: '13px', fontWeight: '900', color: '#FFFFFF', margin: '0 0 6px 0' }}>¡Solicitud Recibida Exitosamente!</h2>
             <p style={{ color: theme.textSecondary, fontSize: '13px', margin: 0, lineHeight: 1.5 }}>
               Tu perfil y aportación para la asamblea han sido registrados. El comité editorial evaluará tu solicitud para asignación de asiento de delegación.
             </p>
@@ -221,7 +221,7 @@ export const Registro: React.FC = () => {
 
           <div style={{ backgroundColor: 'rgba(0,0,0,0.2)', padding: '12px 24px', borderRadius: '10px', border: `1px solid ${theme.border}` }}>
             <span style={{ fontSize: '9px', color: theme.textMuted, textTransform: 'uppercase', display: 'block', marginBottom: '4px' }}>Folio de Registro</span>
-            <span style={{ fontSize: '18px', fontWeight: '900', color: theme.secondary, letterSpacing: '1px' }}>{folio}</span>
+            <span style={{ fontSize: '13px', fontWeight: '900', color: theme.secondary, letterSpacing: '1px' }}>{folio}</span>
           </div>
 
           <button onClick={() => { setSubmitted(false); setStep(1); }} style={{ backgroundColor: 'rgba(255,255,255,0.04)', color: '#FFFFFF', border: `1.5px solid ${theme.border}`, borderRadius: '10px', padding: '8px 16px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', marginTop: '12px' }}>
