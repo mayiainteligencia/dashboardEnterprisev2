@@ -101,7 +101,7 @@ export const PodcastMediaHub: React.FC = () => {
             <Mic size={22} color={theme.secondary} />
           </div>
           <div>
-            <h1 style={{ fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Podcast & Media Hub WAI</h1>
+            <h1 style={{ fontSize: 'clamp(16px, 2.2vw, 22px)', fontWeight: '900', color: '#FFFFFF', margin: 0 }}>Podcast & Media Hub WAI</h1>
             <p style={{ fontSize: '13px', color: theme.textSecondary, margin: '4px 0 0' }}>Voces del ecosistema de IA en México · Episodios, clips, transcripciones y biblioteca semántica</p>
           </div>
         </div>
@@ -115,7 +115,7 @@ export const PodcastMediaHub: React.FC = () => {
             { label: 'Clips generados', value: '64' },
           ].map(s => (
             <div key={s.label}>
-              <div style={{ fontSize: '20px', fontWeight: '900', color: theme.secondary }}>{s.value}</div>
+              <div style={{ fontSize: '14px', fontWeight: '900', color: theme.secondary }}>{s.value}</div>
               <div style={{ fontSize: '10px', color: theme.textMuted, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{s.label}</div>
             </div>
           ))}
@@ -152,7 +152,7 @@ export const PodcastMediaHub: React.FC = () => {
 
       {/* Episodios Grid */}
       <div>
-        <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Episodios Recientes</h3>
+        <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: '0 0 16px 0' }}>Episodios Recientes</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {filteredEpisodios.map((ep) => (
             <div
@@ -251,7 +251,7 @@ export const PodcastMediaHub: React.FC = () => {
       <div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
           <Bot size={18} color={theme.secondary} />
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Clips Generados por IA</h3>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Clips Generados por IA</h3>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
           {CLIPS.map(clip => (
@@ -285,7 +285,7 @@ export const PodcastMediaHub: React.FC = () => {
       <div style={{ backgroundColor: theme.cardBgGlass, border: `1.5px solid ${theme.border}`, borderRadius: '16px', padding: '24px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
           <Radio size={18} color={theme.accent} />
-          <h3 style={{ fontSize: '16px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Próximos Episodios</h3>
+          <h3 style={{ fontSize: '14px', fontWeight: '800', color: '#FFFFFF', margin: 0 }}>Próximos Episodios</h3>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {PROXIMAS.map((prox, idx) => (
