@@ -152,6 +152,28 @@ const ENTIDADES: Entidad[] = [
     website: 'microsoft.com/es-mx',
     destacado: true,
   },
+  {
+    id: 'mayia',
+    nombre: 'MAYiA',
+    tipo: 'Empresa',
+    ciudad: 'CDMX', estado: 'Ciudad de México',
+    descripcion: 'Socio estratégico enfocado en el despliegue de soluciones de Inteligencia Artificial a escala empresarial.',
+    tags: ['Sovereign AI', 'Infrastructure', 'Premium Sponsor', 'Enterprise AI'],
+    sector: 'Sovereign & Enterprise AI',
+    website: 'mayia.mx',
+    destacado: true,
+  },
+  {
+    id: 'flai',
+    nombre: 'FLAi',
+    tipo: 'Empresa',
+    ciudad: 'CDMX', estado: 'Ciudad de México',
+    descripcion: 'Plataforma de nube soberana que integra un SOC seguro y despliegue nativo de Inteligencia Artificial para el sector corporativo.',
+    tags: ['AI Agents', 'Automation', 'GenAI', 'Empresa', 'Premium Sponsor'],
+    sector: 'AI Automation & Agents',
+    website: 'flai.mx',
+    destacado: true,
+  },
 ];
 
 const FILTROS: FiltroTipo[] = ['Todos', 'Empresa', 'Startup', 'Universidad', 'Laboratorio', 'Comunidad', 'Inversor', 'Fintech'];

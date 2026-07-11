@@ -366,7 +366,7 @@ export const TermometroIA: React.FC = () => {
       </div>
 
       {/* ── Charts Row 1 ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
+      <div className="wai-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
         {/* Area Chart */}
         <div style={sectionStyle}>
           <div style={sectionTitle}>

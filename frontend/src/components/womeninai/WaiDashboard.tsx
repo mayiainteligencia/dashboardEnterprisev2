@@ -962,7 +962,7 @@ export const WaiDashboard: React.FC = () => {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
+          <div className="wai-grid-3col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '12px' }}>
             <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.02)', padding: '12px', borderRadius: '10px', textAlign: 'center', border: `1px solid rgba(255,255,255,0.03)` }}>
               <span style={{ fontSize: '20px', fontWeight: '900', color: theme.secondary, display: 'block' }}>{documentosEnviados}</span>
               <span style={{ fontSize: '9px', color: theme.textSecondary, textTransform: 'uppercase' }}>Aportes recibidos</span>

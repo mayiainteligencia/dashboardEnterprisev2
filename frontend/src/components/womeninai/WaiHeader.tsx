@@ -97,13 +97,17 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
           {onMenu && (
             <button
               onClick={onMenu}
+              className="wai-menu-btn"
               style={{
-                width: '32px', height: '32px', borderRadius: '6px',
-                backgroundColor: 'rgba(255, 255, 255, 0.05)', border: 'none', cursor: 'pointer',
-                display: 'none', alignItems: 'center', justifyContent: 'center',
+                width: '36px', height: '36px', borderRadius: '8px',
+                backgroundColor: 'rgba(255, 255, 255, 0.07)',
+                border: '1px solid rgba(255,255,255,0.1)',
+                cursor: 'pointer',
+                alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
               }}
             >
-              <Menu size={16} color="#FFFFFF" />
+              <Menu size={17} color="#FFFFFF" />
             </button>
           )}
 
@@ -143,8 +147,8 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
       {/* RIGHT: Compact Styled Event Date Badge & AI Agent Button */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
         <div 
+          className="wai-date-badge"
           style={{ 
-            display: 'flex', 
             alignItems: 'center', 
             gap: '8px',
             backgroundColor: 'rgba(212, 175, 55, 0.05)',
@@ -198,11 +202,11 @@ export const WaiHeader: React.FC<WaiHeaderProps> = ({
       {/* CHAT WINDOW OVERLAY */}
       {showChat && (
         <div 
+          className="wai-chat-window"
           style={{
             position: 'fixed',
             top: '90px',
             right: '24px',
-            width: '380px',
             height: '520px',
             zIndex: 11000,
             background: 'linear-gradient(135deg, rgba(10, 25, 47, 0.95) 0%, rgba(2, 11, 28, 0.98) 100%)',

@@ -109,7 +109,7 @@ export const Registro: React.FC = () => {
                   <label style={{ fontSize: '11px', color: theme.textSecondary }}>Correo Electrónico Institucional *</label>
                   <input type="email" required value={form.correo} onChange={e => setForm({...form, correo: e.target.value})} style={inputStyle} placeholder="ejemplo@organizacion.org" />
                 </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                <div className="wai-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                   <div>
                     <label style={{ fontSize: '11px', color: theme.textSecondary }}>Organización / Universidad *</label>
                     <input type="text" required value={form.organizacion} onChange={e => setForm({...form, organizacion: e.target.value})} style={inputStyle} placeholder="Ej. UNAM" />

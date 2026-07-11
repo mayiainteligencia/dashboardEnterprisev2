@@ -201,7 +201,7 @@ export const MesasAsamblea: React.FC = () => {
                 <p style={{ fontSize: '14px', fontWeight: '700', color: '#FFFFFF', margin: '4px 0 0 0', lineHeight: 1.4 }}>{selectedMesa.pregunta}</p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+              <div className="wai-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div style={{ backgroundColor: 'rgba(0,0,0,0.2)', padding: '10px', borderRadius: '8px' }}>
                   <span style={{ fontSize: '9px', color: theme.textMuted }}>MODERADORA</span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>

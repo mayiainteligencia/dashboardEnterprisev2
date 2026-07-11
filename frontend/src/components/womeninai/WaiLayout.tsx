@@ -102,12 +102,19 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
         position: 'relative'
       }}
     >
-      {/* Sidebar - Left */}
-      <div style={{ display: 'block', width: '260px', flexShrink: 0 }}>
+      {/* Mobile overlay — closes sidebar when tapped */}
+      <div
+        className={`wai-sidebar-overlay${drawerOpen ? ' open' : ''}`}
+        onClick={() => setDrawerOpen(false)}
+      />
+
+      {/* Sidebar - Left (drawer on mobile) */}
+      <div className={`wai-sidebar-wrapper${drawerOpen ? ' open' : ''}`}>
         <WaiSidebar 
           config={config} 
           activeSection={activeSection} 
           onSectionChange={(s) => {
+            setDrawerOpen(false); // close drawer after navigation on mobile
             if (s === 'quienes-somos') {
               onSectionChange('asamblea');
             } else if (s === 'que-hacemos') {
@@ -151,7 +158,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           style={{ 
             flex: 1, 
             overflow: 'auto', 
-            padding: 'clamp(16px, 3vw, 32px)',
+            padding: 'clamp(12px, 3vw, 32px)',
             position: 'relative'
           }}
         >
@@ -159,12 +166,15 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
         </div>
       </div>
 
-      {/* Sidebar - Right (NewProjectHub) */}
-      <NewProjectHub 
-        activeSection={activeSection}
-        onSectionChange={handleNewProjectSectionChange}
-        onOpenModal={handleOpenNewProjectModal}
-      />
+      {/* Sidebar - Right (NewProjectHub) — hidden on tablet/mobile via CSS */}
+      <div className="wai-hub-wrapper">
+        <NewProjectHub 
+          activeSection={activeSection}
+          onSectionChange={handleNewProjectSectionChange}
+          onOpenModal={handleOpenNewProjectModal}
+        />
+      </div>
+
 
       {/* Custom Premium Modal Overlay */}
       {isModalOpen && (
@@ -267,13 +277,11 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
       )}
       {/* FLOATING LIVE FEED ALERTS */}
       {showAlert && (
-        <div style={{
+        <div className="wai-alert-toast" style={{
           position: 'fixed',
           bottom: '24px',
           right: '24px',
           zIndex: 9999,
-          maxWidth: '380px',
-          width: 'calc(100% - 48px)',
           background: 'linear-gradient(135deg, rgba(10, 25, 47, 0.85) 0%, rgba(2, 11, 28, 0.95) 100%)',
           border: `1.5px solid ${theme.border}`,
           borderRadius: '16px',
@@ -287,7 +295,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           animation: 'alertEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         }}>
           {/* Glowing underlay indicator */}
-          <div style={{
+          <div className="wai-alert-indicator" style={{
             position: 'absolute', top: 0, left: 0, bottom: 0, width: '4px',
             background: alertsList[activeAlertIndex].color,
             borderRadius: '16px 0 0 16px',
@@ -295,7 +303,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           }} />
 
           {/* Icon */}
-          <div style={{
+          <div className="wai-alert-icon" style={{
             width: '36px', height: '36px', borderRadius: '50%',
             background: 'rgba(255, 255, 255, 0.03)',
             border: `1px solid rgba(255, 255, 255, 0.08)`,
@@ -311,7 +319,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           </div>
 
           {/* Content */}
-          <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="wai-alert-content" style={{ flex: 1, minWidth: 0 }}>
             <span style={{ fontSize: '9px', fontWeight: '800', color: alertsList[activeAlertIndex].color, textTransform: 'uppercase', letterSpacing: '1px', display: 'block' }}>
               {alertsList[activeAlertIndex].titulo}
             </span>
@@ -322,6 +330,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
 
           {/* Close button */}
           <button 
+            className="wai-alert-close"
             onClick={() => setShowAlert(false)}
             style={{
               background: 'none', border: 'none', color: theme.textMuted,
@@ -337,8 +346,6 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
             <X size={14} />
           </button>
         </div>
-      )}
-
-    </div>
+      )}    </div>
   );
 };

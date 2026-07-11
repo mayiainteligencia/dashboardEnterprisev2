@@ -48,6 +48,181 @@ button, input, select, textarea {
   .row2, .row2-rev, .row-map { grid-template-columns: 1fr; }
 }
 
+/* ── Responsive Layout ─────────────────────────────────────────────────────── */
+
+/* Sidebar overlay for mobile */
+.wai-sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 11, 28, 0.75);
+  z-index: 199;
+  backdrop-filter: blur(4px);
+}
+
+/* Left sidebar — full-screen drawer on mobile */
+.wai-sidebar-wrapper {
+  display: block;
+  width: 260px;
+  flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Right hub panel */
+.wai-hub-wrapper {
+  display: block;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Mobile hamburger button inside header */
+.wai-menu-btn {
+  display: none !important;
+}
+
+/* Header date badge — hide on very small screens */
+.wai-date-badge {
+  display: flex;
+}
+
+/* Alert toast — constrain width on mobile */
+.wai-alert-toast {
+  max-width: 380px;
+  width: calc(100% - 48px);
+}
+
+/* Chat window — full width on small screens */
+.wai-chat-window {
+  width: 380px;
+}
+
+/* ── Tablet (≤ 1100px): hide right hub panel ───────────────────────────────── */
+@media (max-width: 1100px) {
+  .wai-hub-wrapper {
+    display: none !important;
+  }
+}
+
+/* ── Mobile (≤ 768px): sidebar becomes a drawer ──────────────────────────── */
+@media (max-width: 768px) {
+  /* Show hamburger */
+  .wai-menu-btn {
+    display: flex !important;
+  }
+
+  /* Left sidebar: slide off-screen by default */
+  .wai-sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 200;
+    transform: translateX(-100%);
+    width: 280px;
+  }
+
+  .wai-sidebar-wrapper.open {
+    transform: translateX(0);
+  }
+
+  /* Show overlay when sidebar is open */
+  .wai-sidebar-overlay.open {
+    display: block;
+  }
+
+  /* Header: reduce height and hide date badge */
+  .wai-date-badge {
+    display: none;
+  }
+
+  /* Chat window full width on mobile */
+  .wai-chat-window {
+    width: calc(100vw - 32px);
+    right: 16px;
+    left: 16px;
+  }
+
+  /* Alert toast — discreet on mobile: compact bar at top */
+  .wai-alert-toast {
+    /* reposition to top so it doesn't block content */
+    top: 72px !important;
+    bottom: auto !important;
+    right: 16px !important;
+    left: 16px !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: calc(100vw - 32px) !important;
+    min-height: 0 !important;
+
+    /* smaller and more transparent */
+    padding: 8px 12px !important;
+    border-radius: 10px !important;
+    opacity: 0.85 !important;
+    font-size: 11px !important;
+
+    /* subtle shadow only */
+    box-shadow: 0 4px 16px rgba(2, 11, 28, 0.5) !important;
+  }
+
+  /* Hide the icon circle on mobile to save space */
+  .wai-alert-icon {
+    display: none !important;
+  }
+
+  /* Truncate the alert body text to one line on mobile */
+  .wai-alert-toast p {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin: 2px 0 0 !important;
+  }
+
+  /* Title label smaller */
+  .wai-alert-toast span {
+    font-size: 8px !important;
+    letter-spacing: 0.8px !important;
+  }
+}
+
+/* ── Very small (≤ 480px): extra adjustments ─────────────────────────────── */
+@media (max-width: 480px) {
+  .wai-sidebar-wrapper {
+    width: 100vw;
+  }
+}
+
+/* ── Module grids: force single column on mobile ─────────────────────────── */
+@media (max-width: 640px) {
+  /* Named classes for reliably-targeted grids */
+  .wai-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Auto-fit grids with large minimums — collapse them too */
+  [style*="gridTemplateColumns"][style*="450px"],
+  [style*="gridTemplateColumns"][style*="500px"],
+  [style*="gridTemplateColumns"][style*="400px"],
+  [style*="gridTemplateColumns"][style*="350px"],
+  [style*="gridTemplateColumns"][style*="340px"],
+  [style*="gridTemplateColumns"][style*="320px"],
+  [style*="gridTemplateColumns"][style*="300px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Dashboard KPI 3-col bar: wrap on tablet ─────────────────────────────── */
+@media (max-width: 900px) {
+  .wai-grid-3col {
+    grid-template-columns: 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .wai-grid-3col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 /* ── Global animations ─────────────────────────────────────────────────────── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
