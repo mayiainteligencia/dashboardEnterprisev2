@@ -170,7 +170,7 @@ export const WaiSidebar: React.FC<WaiSidebarProps> = ({ config, activeSection, o
         boxSizing: 'border-box'
       }}>
         <a 
-          href="https://mayia.com" 
+          href="https://mayia.mx" 
           target="_blank" 
           rel="noopener noreferrer"
           style={{
