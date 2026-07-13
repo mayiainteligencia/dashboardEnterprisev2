@@ -5,6 +5,7 @@ import { Header } from './components/Header';
 import { BescoDashboard } from './besco/BescoDashboard';
 import { ModuloBesco } from './besco/ModuloBesco';
 import { ControladorPisos } from './besco/ControladorPisos';
+import { AbastecimientoInteligente } from './besco/AbastecimientoInteligente';
 import { ToastAlertas } from './besco/ToastAlertas';
 import { modulosPorModo, type Modo } from './besco/bescoData';
 import { brandingConfig } from './config/branding';
@@ -102,6 +103,7 @@ function App() {
   const renderContent = () => {
     if (activeSection === 'dashboard') return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
     if (activeSection === 'pisos') return <ControladorPisos tema={tema} />;
+    if (activeSection === 'abastecimiento') return <AbastecimientoInteligente tema={tema} modo={modo} />;
     if (moduloActivo) return <ModuloBesco modulo={moduloActivo} tema={tema} />;
     return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
   };
