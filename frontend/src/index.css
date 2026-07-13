@@ -84,9 +84,9 @@ button, input, select, textarea {
   display: flex;
 }
 
-/* Alert toast — constrain width on mobile */
+/* Alert toast — constrain width */
 .wai-alert-toast {
-  max-width: 380px;
+  max-width: 340px;
   width: calc(100% - 48px);
 }
 
@@ -154,9 +154,9 @@ button, input, select, textarea {
     min-height: 0 !important;
 
     /* smaller and more transparent */
-    padding: 8px 12px !important;
+    padding: 10px 12px !important;
     border-radius: 10px !important;
-    opacity: 0.85 !important;
+    opacity: 0.9 !important;
     font-size: 11px !important;
 
     /* subtle shadow only */
@@ -168,19 +168,18 @@ button, input, select, textarea {
     display: none !important;
   }
 
-  /* Truncate the alert body text to one line on mobile */
+  /* Allow the alert body text to wrap on mobile so it is not lost/truncated */
   .wai-alert-toast p {
     font-size: 11px !important;
-    white-space: nowrap !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    margin: 2px 0 0 !important;
+    white-space: normal !important;
+    margin: 4px 0 0 !important;
+    line-height: 1.4 !important;
   }
 
   /* Title label smaller */
   .wai-alert-toast span {
-    font-size: 8px !important;
-    letter-spacing: 0.8px !important;
+    font-size: 8.5px !important;
+    letter-spacing: 0.5px !important;
   }
 }
 

@@ -282,48 +282,48 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
           bottom: '24px',
           right: '24px',
           zIndex: 9999,
-          background: 'linear-gradient(135deg, rgba(10, 25, 47, 0.85) 0%, rgba(2, 11, 28, 0.95) 100%)',
-          border: `1.5px solid ${theme.border}`,
-          borderRadius: '16px',
-          padding: '16px',
-          boxShadow: `0 10px 40px rgba(2, 11, 28, 0.8), 0 0 15px ${alertsList[activeAlertIndex].color}22`,
-          backdropFilter: 'blur(12px)',
-          WebkitBackdropFilter: 'blur(12px)',
+          background: 'rgba(10, 25, 47, 0.75)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '12px',
+          padding: '10px 14px',
+          boxShadow: `0 8px 32px rgba(2, 11, 28, 0.5), 0 0 10px ${alertsList[activeAlertIndex].color}08`,
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)',
           display: 'flex',
-          gap: '12px',
+          gap: '10px',
           alignItems: 'flex-start',
           animation: 'alertEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         }}>
           {/* Glowing underlay indicator */}
           <div className="wai-alert-indicator" style={{
-            position: 'absolute', top: 0, left: 0, bottom: 0, width: '4px',
+            position: 'absolute', top: 0, left: 0, bottom: 0, width: '3px',
             background: alertsList[activeAlertIndex].color,
-            borderRadius: '16px 0 0 16px',
-            boxShadow: `0 0 8px ${alertsList[activeAlertIndex].color}`
+            borderRadius: '12px 0 0 12px',
+            boxShadow: `0 0 4px ${alertsList[activeAlertIndex].color}44`
           }} />
 
           {/* Icon */}
           <div className="wai-alert-icon" style={{
-            width: '36px', height: '36px', borderRadius: '50%',
-            background: 'rgba(255, 255, 255, 0.03)',
-            border: `1px solid rgba(255, 255, 255, 0.08)`,
+            width: '28px', height: '28px', borderRadius: '8px',
+            background: 'rgba(255, 255, 255, 0.02)',
+            border: '1px solid rgba(255, 255, 255, 0.04)',
             display: 'flex', alignItems: 'center', justifyItems: 'center',
-            justifyContent: 'center', flexShrink: 0, marginTop: '2px',
+            justifyContent: 'center', flexShrink: 0,
             color: alertsList[activeAlertIndex].color
           }}>
-            {alertsList[activeAlertIndex].icon === "Sparkles" && <Sparkles size={16} fill={theme.secondary} />}
-            {alertsList[activeAlertIndex].icon === "Globe" && <Globe size={16} />}
-            {alertsList[activeAlertIndex].icon === "ShieldAlert" && <ShieldAlert size={16} />}
-            {alertsList[activeAlertIndex].icon === "Zap" && <Zap size={16} />}
-            {alertsList[activeAlertIndex].icon === "UserPlus" && <UserPlus size={16} />}
+            {alertsList[activeAlertIndex].icon === "Sparkles" && <Sparkles size={14} fill={theme.secondary} />}
+            {alertsList[activeAlertIndex].icon === "Globe" && <Globe size={14} />}
+            {alertsList[activeAlertIndex].icon === "ShieldAlert" && <ShieldAlert size={14} />}
+            {alertsList[activeAlertIndex].icon === "Zap" && <Zap size={14} />}
+            {alertsList[activeAlertIndex].icon === "UserPlus" && <UserPlus size={14} />}
           </div>
 
           {/* Content */}
           <div className="wai-alert-content" style={{ flex: 1, minWidth: 0 }}>
-            <span style={{ fontSize: '9px', fontWeight: '800', color: alertsList[activeAlertIndex].color, textTransform: 'uppercase', letterSpacing: '1px', display: 'block' }}>
+            <span style={{ fontSize: '10px', fontWeight: '700', color: alertsList[activeAlertIndex].color, textTransform: 'uppercase', letterSpacing: '0.5px', display: 'block' }}>
               {alertsList[activeAlertIndex].titulo}
             </span>
-            <p style={{ fontSize: '12px', color: '#FFFFFF', margin: '4px 0 0', lineHeight: 1.45, fontWeight: '500' }}>
+            <p style={{ fontSize: '11.5px', color: 'rgba(255, 255, 255, 0.85)', margin: '2px 0 0', lineHeight: 1.4, fontWeight: '500' }}>
               {alertsList[activeAlertIndex].texto}
             </p>
           </div>
@@ -334,7 +334,7 @@ export const WaiLayout: React.FC<WaiLayoutProps> = ({
             onClick={() => setShowAlert(false)}
             style={{
               background: 'none', border: 'none', color: theme.textMuted,
-              cursor: 'pointer', padding: '2px', margin: '-4px -4px 0 0',
+              cursor: 'pointer', padding: '2px', margin: '-2px -4px 0 0',
               transition: 'color 0.2s',
               display: 'flex',
               alignItems: 'center',
