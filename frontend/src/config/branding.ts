@@ -1,8 +1,10 @@
+import logoBesco55aniv from '../besco/logoBesco55aniv.png';
+
 export const brandingConfig = {
   empresa: {
     nombre: "BESCO",
     eslogan: "Facility Services · Piso Técnico",
-    logo: "/assets/logosNativos/besco.png",
+    logo: logoBesco55aniv,
   },
 
   colores: {
