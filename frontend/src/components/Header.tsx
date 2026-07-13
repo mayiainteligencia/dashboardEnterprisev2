@@ -126,7 +126,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
           src={empresa.logo} 
           alt={`${empresa.nombre} logo`}
           style={{
-            height: '48px',
+            height: '80px',
             width: 'auto',
             objectFit: 'contain',
           }}
