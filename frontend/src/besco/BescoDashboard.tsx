@@ -63,7 +63,7 @@ export const BescoDashboard: React.FC<{ modo: Modo; tema: TemaBesco; onOpen: (id
         <div style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '24px' }}>
           <div style={{ maxWidth: '620px' }}>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '6px 14px', borderRadius: '999px', background: 'rgba(255,255,255,0.18)', marginBottom: '16px' }}>
-              <img src={empresa.logo} alt={empresa.nombre} style={{ height: '20px', width: 'auto', objectFit: 'contain' }} />
+              <img src={empresa.logo} alt={empresa.nombre} style={{ height: '30px', width: 'auto', objectFit: 'contain' }} />
               <span style={{ fontSize: '12px', fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: tema.sobreAcento }}>{tema.nombre}</span>
             </div>
             <h1 style={{ margin: 0, fontSize: 'clamp(26px, 4.4vw, 40px)', fontWeight: 800, color: tema.sobreAcento, letterSpacing: '-0.5px', lineHeight: 1.1 }}>
