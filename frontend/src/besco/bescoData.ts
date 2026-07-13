@@ -3,7 +3,7 @@ import {
   Truck, Route, Wrench, Gauge, FileText, DollarSign, AlertTriangle,
   UserCog, ScanEye, BarChart3,
   Video, Flame, Building2, Wind, Zap, FileBarChart, LayoutGrid, TrendingUp,
-  Grid3x3,
+  Grid3x3, Cpu,
 } from 'lucide-react';
 
 export type Modo = 'cliente' | 'admin';
@@ -48,6 +48,8 @@ export const modulosAdmin: Modulo[] = [
     kpis: [{ label: 'Costo / unidad', valor: '$2,140' }, { label: 'KPIs en verde', valor: '21/26' }] },
   { id: 'pisos', titulo: 'Controlador de pisos laminados', descripcion: 'Piso técnico en vivo: paneles por nivel, carga y clima bajo piso.', icono: Grid3x3,
     kpis: [{ label: 'Paneles', valor: '288' }, { label: 'En alerta', valor: '7' }, { label: 'Niveles', valor: '6' }] },
+  { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
+    kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
 ];
 
 // Dashboard 2 — Hacia clientes (verde) · 8 módulos
@@ -68,6 +70,8 @@ export const modulosCliente: Modulo[] = [
     kpis: [{ label: 'Clientes activos', valor: '46' }, { label: 'Inmuebles', valor: '7,000' }] },
   { id: 'upsell', titulo: 'Upsell Scoring de cartera', descripcion: 'Oportunidades comerciales priorizadas.', icono: TrendingUp,
     kpis: [{ label: 'Oportunidades', valor: '63' }] },
+  { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
+    kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
 ];
 
 export const modulosPorModo = (m: Modo): Modulo[] => (m === 'admin' ? modulosAdmin : modulosCliente);
@@ -326,6 +330,18 @@ const extraFallback: ExtraModulo = {
 
 export const extraModulos: Record<string, ExtraModulo> = {
   // ----- ADMIN -----
+  abastecimiento: {
+    alertas: [
+      { severidad: 'critico', texto: 'Requerimiento urgente sin proveedor asignado', meta: 'Hace 2 min' },
+      { severidad: 'atencion', texto: '2 requisiciones de compras pendientes de optimización', meta: 'Oracle ERP' },
+    ],
+    recomendacion: 'Ejecuta el análisis de abastecimiento inteligente para encontrar el proveedor con menor ETA y costo optimizado.',
+    palancas: [
+      { label: 'Tiempo de asignación', impacto: '-45 min', nota: 'Automatización de flujo', ajuste: 88 },
+      { label: 'Costo de traslado', impacto: '-15%', nota: 'Optimización de rutas', ajuste: 74 },
+      { label: 'Disponibilidad de stock', impacto: '+25%', nota: 'Monitoreo en tiempo real', ajuste: 60 },
+    ],
+  },
   fleet: {
     alertas: [
       { severidad: 'critico', texto: 'Unidad 142 detenida por falla de motor', meta: 'CDMX · 8 min' },
