@@ -32,52 +32,37 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       {/* Logo */}
       <div style={{ padding: '24px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div 
-            style={{ 
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 0%)`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-              overflow: 'hidden',
+          <img
+            src={empresa.logo}
+            alt={empresa.nombre}
+            style={{
+              height: '44px',
+              width: 'auto',
+              objectFit: 'contain',
               flexShrink: 0,
             }}
-          >
-            <img
-              src={empresa.logo}
-              alt={empresa.nombre}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                padding: '4px',
-              }}
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const container = target.parentElement;
-                if (container) {
-                  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                  svg.setAttribute('width', '24');
-                  svg.setAttribute('height', '24');
-                  svg.setAttribute('viewBox', '0 0 24 24');
-                  svg.setAttribute('fill', 'none');
-                  
-                  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                  path.setAttribute('d', 'M7 7L17 17M7 17L17 7');
-                  path.setAttribute('stroke', 'white');
-                  path.setAttribute('stroke-width', '2.5');
-                  path.setAttribute('stroke-linecap', 'round');
-                  
-                  svg.appendChild(path);
-                  container.appendChild(svg);
-                }
-              }}
-            />
-          </div>
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const container = target.parentElement;
+              if (container) {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.setAttribute('width', '24');
+                svg.setAttribute('height', '24');
+                svg.setAttribute('viewBox', '0 0 24 24');
+                svg.setAttribute('fill', 'none');
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', 'M7 7L17 17M7 17L17 7');
+                path.setAttribute('stroke', 'white');
+                path.setAttribute('stroke-width', '2.5');
+                path.setAttribute('stroke-linecap', 'round');
+                
+                svg.appendChild(path);
+                container.appendChild(svg);
+              }
+            }}
+          />
           <span style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro }}>
             {empresa.nombre}
           </span>
