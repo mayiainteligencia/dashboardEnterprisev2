@@ -11,6 +11,11 @@ import { MonitorMedios } from './components/MonitorMedios';
 import { MonitorIA } from './components/MonitorIA';
 import { MonitorDigital } from './components/MonitorDigital';
 import { InteligenciaElectoral } from './components/InteligenciaElectoral';
+import { ComandoCentral } from './components/ComandoCentral';
+import { ResultadosElectorales } from './components/ResultadosElectorales';
+import { AlertasElectoral } from './components/AlertasElectoral';
+import { ToastProvider } from './components/electoral/toast';
+import { ConfirmProvider } from './components/electoral/confirm';
 import { brandingConfig } from './config/branding';
 
 
@@ -28,7 +33,10 @@ function App() {
       academia:       'Academia',
 
       monitor: 'Monitor de Medios',
-      monitoria: 'Monitor IA',
+      monitoria: 'Cerebro Electoral',
+      comando: 'Comando Central',
+      resultados: 'Resultados Electorales',
+      alertas: 'Alertas',
       digital: 'Monitor Digital',
       electoral: 'Inteligencia Electoral',
     };
@@ -44,6 +52,9 @@ function App() {
 
       case 'monitor': return <MonitorMedios />;
       case 'monitoria': return <MonitorIA />;
+      case 'comando': return <ComandoCentral />;
+      case 'resultados': return <ResultadosElectorales />;
+      case 'alertas': return <AlertasElectoral />;
       case 'digital': return <MonitorDigital />;
       case 'electoral': return <InteligenciaElectoral />;
       default:               return <Dashboard onSectionChange={setActiveSection} />;
@@ -51,21 +62,25 @@ function App() {
   };
 
   return (
-    <ResponsiveLayout
-      activeSection={activeSection}
-      onSectionChange={setActiveSection}
-      header={<Header title={getTitulo()} />}
-      sidebar={
-        <Sidebar
-          activeSection={activeSection}
-          onSectionChange={setActiveSection}
-        />
-      }
-    >
-      <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
-        {renderContent()}
-      </div>
-    </ResponsiveLayout>
+    <ToastProvider>
+     <ConfirmProvider>
+      <ResponsiveLayout
+        activeSection={activeSection}
+        onSectionChange={setActiveSection}
+        header={<Header title={getTitulo()} onSectionChange={setActiveSection} />}
+        sidebar={
+          <Sidebar
+            activeSection={activeSection}
+            onSectionChange={setActiveSection}
+          />
+        }
+      >
+        <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
+          {renderContent()}
+        </div>
+      </ResponsiveLayout>
+     </ConfirmProvider>
+    </ToastProvider>
   );
 }
 

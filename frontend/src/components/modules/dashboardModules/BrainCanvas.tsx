@@ -13,7 +13,7 @@ const hexToRgb = (hex: string): [number, number, number] => {
 const mix = (rgb: [number, number, number], t: number): [number, number, number] =>
   rgb.map(c => Math.round(c + (255 - c) * t)) as [number, number, number];
 
-export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ accent, height = 140 }) => {
+export const BrainCanvas: React.FC<{ accent: string; height?: number; nodes?: number }> = ({ accent, height = 140, nodes = 220 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const tRef = useRef(0);
   const spinRef = useRef(0);
@@ -43,7 +43,7 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
     resize();
     window.addEventListener('resize', resize);
 
-    const N = 220;
+    const N = nodes;
     const pts: { x: number; y: number; z: number }[] = [];
     const gr = Math.PI * (3 - Math.sqrt(5));
     for (let i = 0; i < N; i++) {
@@ -160,7 +160,7 @@ export const BrainCanvas: React.FC<{ accent: string; height?: number }> = ({ acc
     draw();
 
     return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
-  }, [accent]);
+  }, [accent, nodes]);
 
   return (
     <div style={{ position: 'relative', width: '100%', height, pointerEvents: 'none' }}>

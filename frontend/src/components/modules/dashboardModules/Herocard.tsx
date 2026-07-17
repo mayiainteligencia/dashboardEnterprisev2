@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 import { BrainCanvas } from './BrainCanvas';
+import { responder } from '../../../data/asistente';
 
 // Tema opcional (color de acento). Definido local para no depender de un export
 // específico de branding: así HeroCard es genérico y copiable entre ramas.
@@ -14,30 +15,12 @@ type ChatMessage = {
   time: string;
 };
 
-// ── Navegación por voz (front-only, sin backend) ──────────
-const normalizar = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-const NAV_VERBOS = ['ve al', 've a', 'ir al', 'ir a', 'entra al', 'entra a', 'llevame a', 'vamos a', 'muestrame', 'muestra', 'abre', 'abrir', 'ir'];
-// Devuelve el id de sección si el texto es un comando "ve a X", o null.
-const matchSeccion = (texto: string, secciones: { id: string; titulo: string }[]): string | null => {
-  const t = normalizar(texto);
-  if (!NAV_VERBOS.some(v => t.includes(v))) return null;
-  if (/(dashboard|inicio|principal|home|general)/.test(t)) return 'dashboard';
-  let best: { id: string; score: number } | null = null;
-  for (const s of secciones) {
-    const palabras = normalizar(s.titulo).split(/\s+/).filter(w => w.length > 3);
-    const score = palabras.filter(w => t.includes(w)).length;
-    if (score > 0 && (!best || score > best.score)) best = { id: s.id, score };
-  }
-  return best ? best.id : null;
-};
-
 interface HeroCardProps {
   tema?: TemaBesco;
   onNavigate?: (id: string) => void;
-  secciones?: { id: string; titulo: string }[];
 }
 
-export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones = [] }) => {
+export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate }) => {
   const { colores, ia, empresa } = brandingConfig;
   const acc = tema ? tema.acento : '#374151';
   const accDark = tema ? tema.acentoOscuro : '#1F2937';
@@ -47,7 +30,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `¡Hola! Soy ${ia.nombre}, tu asistente de ${empresa.nombre}. ¿En qué puedo ayudarte?`,
+      content: `Soy ${ia.nombre}. Pregúntame "¿cómo vamos en municipios ganados?", "¿qué dicen de mí?", "¿cómo me ve la gente?" o dime "ve a Alertas".`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -58,10 +41,16 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
   const recognitionRef = useRef<any>(null);
   // Refs para que el reconocimiento (creado una sola vez) siempre lea lo último
   const listeningRef = useRef(false);
-  const seccionesRef = useRef(secciones);
   const onNavigateRef = useRef(onNavigate);
+  const openRef = useRef<() => void>(() => {});
   useEffect(() => { listeningRef.current = isListening; }, [isListening]);
-  useEffect(() => { seccionesRef.current = secciones; onNavigateRef.current = onNavigate; }, [secciones, onNavigate]);
+  useEffect(() => { onNavigateRef.current = onNavigate; }, [onNavigate]);
+  // Permite abrir el asistente desde fuera (mini-jarvis del header).
+  useEffect(() => {
+    const h = () => openRef.current();
+    window.addEventListener('jarvis:open', h);
+    return () => window.removeEventListener('jarvis:open', h);
+  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -94,12 +83,12 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
 
         // Navegación por voz (front-only): "ve a <sección>" → navega, sin backend
         if (finalTranscript) {
-          const destino = matchSeccion(currentText, seccionesRef.current);
-          if (destino && onNavigateRef.current) {
+          const r = responder(currentText);
+          if (r.navigateTo && onNavigateRef.current) {
             listeningRef.current = false;
             setIsListening(false);
             try { recognitionRef.current?.abort(); } catch { /* nada */ }
-            onNavigateRef.current(destino);
+            onNavigateRef.current(r.navigateTo);
             handleCloseModal();
             return;
           }
@@ -188,6 +177,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
       }
     }, 300);
   };
+  openRef.current = handleMicClick;
 
   const toggleListening = async () => {
     if (isListening) {
@@ -246,61 +236,14 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
 
-    // Modo navegación por voz: intenta navegar; si no, responde local (sin backend)
-    if (onNavigate && secciones.length) {
-      const destino = matchSeccion(messageText, secciones);
-      if (destino) {
-        onNavigate(destino);
-        handleCloseModal();
-        return;
-      }
-      setMessages((prev) => [...prev, {
-        role: 'assistant',
-        content: `Puedo llevarte a una sección. Di o escribe, por ejemplo: "ve a ${secciones[0].titulo}".`,
-        time: now,
-      }]);
+    // Respuesta local (front-only, sin backend): navega o contesta con los datos.
+    const r = responder(messageText);
+    if (r.navigateTo && onNavigate) {
+      onNavigate(r.navigateTo);
+      handleCloseModal();
       return;
     }
-
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/chat/message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mensaje: userMessage.content,
-          departamento: 'General',
-        }),
-      });
-
-      if (!response.ok) throw new Error('Error IA');
-
-      const data = await response.json();
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: data.respuesta,
-          time: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        },
-      ]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: 'No fue posible conectar con el asistente. Por favor intenta de nuevo.',
-          time: now,
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
+    setMessages((prev) => [...prev, { role: 'assistant', content: r.text, time: now }]);
   };
 
   const handleCloseModal = () => {
@@ -322,12 +265,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         style={{
           background: `linear-gradient(135deg, ${acc}20 0%, ${accDark}20 100%)`,
           backdropFilter: 'blur(20px)',
-          borderRadius: '24px',
-          padding: '18px',
+          borderRadius: '20px',
+          padding: '14px',
           border: `2px solid ${acc}40`,
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '160px',
+          height: '100%',
+          minHeight: '0',
           cursor: 'pointer',
           display: 'flex',
           flexDirection: 'column',
@@ -395,34 +339,34 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         {/* Contenido principal con z-index más alto */}
         <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* Núcleo IA 3D animado */}
-          <div style={{ width: '240px', marginBottom: '8px' }}>
-            <BrainCanvas accent={acc} height={200} />
+          <div style={{ width: '150px', marginBottom: '4px' }}>
+            <BrainCanvas accent={acc} height={130} />
           </div>
 
           {/* Title */}
           <h2
             style={{
-              fontSize: '19px',
+              fontSize: '16px',
               fontWeight: '700',
               color: acc,
-              marginBottom: '6px',
-              letterSpacing: '-0.4px',
+              marginBottom: '4px',
+              letterSpacing: '-0.3px',
             }}
           >
-            Asistente Inteligente {empresa.nombre}
+            {ia.nombre} · tu asesor de campaña
           </h2>
 
           {/* Instrucción condensada */}
           <p
             style={{
-              fontSize: '11.5px',
+              fontSize: '11px',
               color: colores.textoMedio,
-              margin: '0 0 12px 0',
-              maxWidth: '320px',
+              margin: '0 0 6px 0',
+              maxWidth: '260px',
               lineHeight: 1.4,
             }}
           >
-            Pulsa para hablar con tu asesor IA · di <strong style={{ color: acc, fontStyle: 'normal' }}>"MAYIA"</strong> para enviar
+            Pulsa y pregunta por voz · di <strong style={{ color: acc, fontStyle: 'normal' }}>"MAYIA"</strong> para enviar
           </p>
         </div>
 

@@ -115,7 +115,7 @@ const PLATAFORMAS: Plataforma[] = [
     },
   },
   {
-    id: 'blog', nombre: 'Blog / Sitio web', icon: FileText, color: '#9ac24f', ambito: 'open-web',
+    id: 'blog', nombre: 'Blog / Sitio web', icon: FileText, color: '#8B5CF6', ambito: 'open-web',
     placeholder: 'https://tublog.com',
     feedback: {
       seguidores: '18.4K', alcanceMes: '410K', engagement: '5.5%', impresionesInApp: '520K',

@@ -5,16 +5,20 @@ import {
   CheckCircle,
   Info,
   X,
-  Bot,
+  Search,
   CalendarDays,
-  Sparkles,
+  CornerDownLeft,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { AsistenteIAChat } from './modules/AsistenteIAChat';
-import type { AsistenteIAChatHandle } from './modules/AsistenteIAChat';
+import { SECCIONES, buscarSeccion } from '../data/asistente';
+import { porAnio, ULTIMO, fmt } from '../data/electoral';
+import { BrainCanvas } from './modules/dashboardModules/BrainCanvas';
+import { useConfirm } from './electoral/confirm';
+import { useToast } from './electoral/toast';
 
 interface HeaderProps {
   title: string;
+  onSectionChange?: (id: string) => void;
 }
 
 interface Notification {
@@ -24,33 +28,52 @@ interface Notification {
   mensaje: string;
   tiempo: string;
   leida: boolean;
+  plan?: string;
 }
 
+const D = porAnio[ULTIMO];
 const notificacionesEstaticas: Notification[] = [
-  { id: 1, tipo: 'urgente', titulo: 'Guanajuato: Quiebre Inminente · Antibióticos',        mensaje: 'Zona Norte en riesgo crítico. Stock vs demanda proyectada +34.7%. Acción inmediata requerida.',          tiempo: 'Hace 2 horas',  leida: false },
-  { id: 2, tipo: 'alerta',  titulo: 'Guanajuato: Alertas Epidemiológicas Activas',         mensaje: 'Influenza A +18.6% en 8 zonas y COVID-19 +12.3% en 6 zonas. CDMX con índice de riesgo: 92.',           tiempo: 'Hace 15 min',   leida: false },
-  { id: 3, tipo: 'alerta',  titulo: 'Guanajuato: Riesgo de Desabasto Nacional',       mensaje: '38 alertas activas hoy. 7.4% riesgo desabasto y 156 SKUs críticos de 24,390 monitoreados.',            tiempo: 'Hace 30 min',   leida: false },
-  { id: 4, tipo: 'exito',   titulo: 'Guanajuato: Reabastecimiento Completado · CDMX',       mensaje: 'Operación de reabastecimiento finalizada. Cobertura promedio actual: 92.6% en inventario disponible.',  tiempo: 'Hace 4 horas',  leida: true  },
-  { id: 5, tipo: 'info',    titulo: 'Guanajuato: Sobrestock Detectado · Vitaminas',     mensaje: 'Vitaminas Occidente con variación -3.2%. Cluster Alérgica tendencia -6% — nivel de riesgo bajo.',      tiempo: 'Hace 6 horas',  leida: true  },
+  { id: 1, tipo: 'urgente', titulo: 'Oportunidad: 6 municipios por ≤5 votos',        mensaje: `El PRI quedó a ≤5 votos de ganar en 6 municipios. Un plan de movilización focalizada podría voltearlos. Revisa Alertas.`, tiempo: 'Hace 3 min',  leida: false, plan: 'Desplegar movilización focalizada en los 6 municipios de margen mínimo para intentar voltearlos.' },
+  { id: 2, tipo: 'alerta',  titulo: 'Detección en radio · MVS 102.5',               mensaje: `Nueva mención del PRI en Tlacolula, sentimiento positivo. Escucha el testigo en Monitor de Medios.`,                        tiempo: 'Hace 8 min',  leida: false },
+  { id: 3, tipo: 'alerta',  titulo: `Abstención crítica en Oaxaca (${D.abstProm}%)`, mensaje: `Santo Domingo Ixcatlán registra 96.7% de abstención histórica. Foco de trabajo para movilización.`,                        tiempo: 'Hace 22 min', leida: false, plan: 'Reforzar estructura territorial en las plazas de mayor abstención histórica.' },
+  { id: 4, tipo: 'exito',   titulo: 'Cómputo de ganadores completado',              mensaje: `El PRI ganó ${fmt(D.ganadosPRI)} de ${fmt(D.totalMunicipios)} municipios (${D.sharePRI}% de la votación) en ${ULTIMO}.`,     tiempo: 'Hace 1 hora', leida: true  },
+  { id: 5, tipo: 'info',    titulo: `${D.segundaFuerza} avanza como 2ª fuerza`,      mensaje: `${D.segundaFuerza} concentra ${D.ganadosSegunda} municipios. Vigilar su avance de cara a la próxima elección.`,           tiempo: 'Hace 2 horas', leida: true  },
 ];
 
-const sugerencias = [
-  { icono: '📊', texto: '¿Cuál es el KPI más bajo este mes?' },
-  { icono: '👥', texto: '¿Cuántos empleados están activos hoy?' },
-  { icono: '⚠️', texto: 'Muéstrame las alertas críticas' },
-  { icono: '📈', texto: '¿Cómo van las ventas este trimestre?' },
-];
-
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header: React.FC<HeaderProps> = ({ title, onSectionChange }) => {
   const { colores, empresa } = brandingConfig;
 
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesEstaticas);
   const notifRef = useRef<HTMLDivElement>(null);
+  const confirmar = useConfirm();
+  const { push } = useToast();
 
-  const [chatAbierto, setChatAbierto] = useState(false);
+  const activarPlanNotif = async (n: Notification) => {
+    if (n.plan && await confirmar({ titulo: n.titulo, descripcion: n.plan })) {
+      marcarComoLeida(n.id);
+      push({ kind: 'success', title: 'Plan activado', msg: n.plan });
+    }
+  };
+
+  const [query, setQuery] = useState('');
+  const [buscadorAbierto, setBuscadorAbierto] = useState(false);
   const searchWrapRef = useRef<HTMLDivElement>(null);
-  const chatRef = useRef<AsistenteIAChatHandle>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const resultados = query.trim() ? buscarSeccion(query) : SECCIONES;
+
+  const irASeccion = (id: string) => {
+    onSectionChange?.(id);
+    setBuscadorAbierto(false);
+    setQuery('');
+    inputRef.current?.blur();
+  };
+
+  // Mini-jarvis: va al dashboard (donde vive el asistente) y lo abre.
+  const abrirJarvis = () => {
+    onSectionChange?.('dashboard');
+    setTimeout(() => window.dispatchEvent(new CustomEvent('jarvis:open')), 350);
+  };
 
   const fecha = new Date();
   const fechaFormateada = fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' });
@@ -67,7 +90,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (searchWrapRef.current && !searchWrapRef.current.contains(e.target as Node))
-        setChatAbierto(false);
+        setBuscadorAbierto(false);
     };
     document.addEventListener('mousedown', handler);
     return () => document.removeEventListener('mousedown', handler);
@@ -92,19 +115,6 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
 
   return (
     <>
-      {/* Overlay oscuro cuando el chat está abierto */}
-      {chatAbierto && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.4)',
-            zIndex: 200,
-            backdropFilter: 'blur(2px)',
-          }}
-        />
-      )}
-
       <header
         style={{
           height: '72px',
@@ -120,120 +130,90 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           zIndex: 300,
         }}
       >
-        {/* ── IZQUIERDA: Barra con dropdown ── */}
+        {/* ── IZQUIERDA: Buscador de secciones ── */}
         <div
           ref={searchWrapRef}
           style={{ flex: 1, maxWidth: '540px', position: 'relative' }}
         >
-          {/* La barra */}
           <div
-            onClick={() => { setChatAbierto(true); setTimeout(() => chatRef.current?.focusInput(), 50); }}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
               padding: '0 14px',
               height: '44px',
-              borderRadius: chatAbierto ? '14px 14px 0 0' : '999px',
-              backgroundColor: chatAbierto ? colores.fondoPrincipal : colores.fondoTerciario,
-              border: `1px solid ${chatAbierto ? colores.primario : colores.borde}`,
-              borderBottom: chatAbierto ? `1px solid ${colores.borde}` : `1px solid ${colores.borde}`,
-              cursor: 'text',
-              transition: 'border-radius 0.2s, background-color 0.2s',
-              boxShadow: chatAbierto ? `0 0 0 3px ${colores.primario}28` : 'none',
+              borderRadius: buscadorAbierto && resultados.length ? '14px 14px 0 0' : '999px',
+              backgroundColor: buscadorAbierto ? colores.fondoPrincipal : colores.fondoTerciario,
+              border: `1px solid ${buscadorAbierto ? colores.primario : colores.borde}`,
+              transition: 'border-radius 0.15s, background-color 0.2s',
+              boxShadow: buscadorAbierto ? `0 0 0 3px ${colores.primario}28` : 'none',
               position: 'relative',
               zIndex: 310,
             }}
           >
-            <Sparkles size={17} style={{ color: colores.primario, flexShrink: 0 }} />
-            <span style={{ fontSize: '14px', color: colores.textoMedio, flex: 1, userSelect: 'none' }}>
-              {chatAbierto ? 'Asistente IA — escribe tu pregunta…' : 'Pregúntale algo al asistente IA…'}
-            </span>
-            {chatAbierto ? (
+            <Search size={17} style={{ color: colores.primario, flexShrink: 0 }} />
+            <input
+              ref={inputRef}
+              value={query}
+              onChange={e => { setQuery(e.target.value); setBuscadorAbierto(true); }}
+              onFocus={() => setBuscadorAbierto(true)}
+              onKeyDown={e => {
+                if (e.key === 'Enter' && resultados[0]) irASeccion(resultados[0].id);
+                if (e.key === 'Escape') { setBuscadorAbierto(false); inputRef.current?.blur(); }
+              }}
+              placeholder="Buscar sección…"
+              style={{
+                flex: 1, border: 'none', outline: 'none', background: 'transparent',
+                fontSize: '14px', color: colores.textoClaro,
+              }}
+            />
+            {query && (
               <button
-                onClick={e => { e.stopPropagation(); setChatAbierto(false); }}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex', borderRadius: '50%' }}
+                onClick={() => { setQuery(''); inputRef.current?.focus(); }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '4px', display: 'flex' }}
               >
                 <X size={16} style={{ color: colores.textoMedio }} />
               </button>
-            ) : (
-              <div style={{
-                width: '28px', height: '28px', borderRadius: '50%',
-                backgroundColor: colores.primario,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-              }}>
-                <Bot size={14} color="#fff" />
-              </div>
             )}
           </div>
 
-          {/* ── Dropdown estilo Google ── */}
-          {chatAbierto && (
+          {/* Resultados */}
+          {buscadorAbierto && (
             <div
               style={{
-                position: 'absolute',
-                top: '43px',
-                left: 0,
-                right: 0,
+                position: 'absolute', top: '43px', left: 0, right: 0,
                 backgroundColor: colores.fondoPrincipal,
                 border: `1px solid ${colores.primario}`,
                 borderTop: `1px solid ${colores.borde}`,
-                borderRadius: '0 0 20px 20px',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.45)',
-                overflow: 'hidden',
-                zIndex: 305,
-                display: 'flex',
-                flexDirection: 'column',
-                maxHeight: 'calc(100vh - 130px)',
+                borderRadius: '0 0 16px 16px',
+                boxShadow: '0 20px 60px rgba(0,0,0,0.25)',
+                overflow: 'hidden', zIndex: 305,
+                maxHeight: 'calc(100vh - 130px)', overflowY: 'auto',
               }}
             >
-              {/* Sugerencias rápidas */}
-              <div style={{
-                padding: '12px 16px 10px',
-                borderBottom: `1px solid ${colores.borde}`,
-                flexShrink: 0,
-              }}>
-                <p style={{
-                  margin: '0 0 8px',
-                  fontSize: '10px',
-                  fontWeight: '700',
-                  color: colores.textoMedio,
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                }}>
-                  Sugerencias
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {sugerencias.map((s, i) => (
-                    <button
-                      key={i}
-                      onClick={() => chatRef.current?.sendExternal(s.texto)}
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: '6px',
-                        padding: '5px 12px',
-                        borderRadius: '999px',
-                        border: `1px solid ${colores.borde}`,
-                        backgroundColor: colores.fondoTerciario,
-                        color: colores.textoClaro,
-                        fontSize: '12px',
-                        cursor: 'pointer',
-                        transition: 'background-color 0.15s',
-                        whiteSpace: 'nowrap',
-                      }}
-                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = colores.fondoSecundario)}
-                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = colores.fondoTerciario)}
-                    >
-                      <span>{s.icono}</span>
-                      <span>{s.texto}</span>
-                    </button>
-                  ))}
+              {resultados.length === 0 ? (
+                <div style={{ padding: '16px', fontSize: '13px', color: colores.textoMedio }}>
+                  Sin coincidencias para "{query}"
                 </div>
-              </div>
-
-              {/* Chat */}
-              <div style={{ flex: 1, overflow: 'hidden', display: 'flex', flexDirection: 'column', minHeight: '420px' }}>
-                <AsistenteIAChat ref={chatRef} />
-              </div>
+              ) : (
+                resultados.map(s => (
+                  <button
+                    key={s.id}
+                    onClick={() => irASeccion(s.id)}
+                    style={{
+                      width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
+                      padding: '11px 16px', border: 'none', background: 'transparent',
+                      cursor: 'pointer', textAlign: 'left', borderBottom: `1px solid ${colores.borde}`,
+                    }}
+                    onMouseEnter={e => (e.currentTarget.style.backgroundColor = colores.fondoTerciario)}
+                    onMouseLeave={e => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  >
+                    <Search size={15} style={{ color: colores.textoOscuro, flexShrink: 0 }} />
+                    <span style={{ flex: 1, fontSize: '14px', fontWeight: 500, color: colores.textoClaro }}>{s.titulo}</span>
+                    <CornerDownLeft size={14} style={{ color: colores.textoOscuro }} />
+                  </button>
+                ))
+              )}
             </div>
           )}
         </div>
@@ -252,8 +232,27 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
           />
         </div>
 
-        {/* ── DERECHA: Fecha + Bell + Avatar ── */}
+        {/* ── DERECHA: Jarvis + Fecha + Bell + Avatar ── */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          {/* Mini-jarvis (átomo) — acceso rápido al asistente */}
+          <button
+            onClick={abrirJarvis}
+            title="Abrir MAYIA"
+            aria-label="Abrir asistente MAYIA"
+            style={{
+              width: '46px', height: '46px', borderRadius: '50%',
+              backgroundColor: colores.fondoTerciario, border: `1px solid ${colores.borde}`,
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+              overflow: 'hidden', flexShrink: 0, transition: 'transform 0.2s, box-shadow 0.2s',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.boxShadow = `0 0 0 3px ${colores.primario}28`; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = 'none'; }}
+          >
+            <div style={{ width: 60, height: 60, pointerEvents: 'none' }}>
+              <BrainCanvas accent={colores.primario} height={60} nodes={55} />
+            </div>
+          </button>
+
           {/* Fecha pegada a la campana */}
           <div style={{
             display: 'flex', alignItems: 'center', gap: '7px',
@@ -339,7 +338,17 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                           )}
                         </div>
                         <p style={{ margin: '2px 0', fontSize: '12px', color: colores.textoMedio, lineHeight: '1.4' }}>{notif.mensaje}</p>
-                        <span style={{ fontSize: '11px', color: colores.textoOscuro }}>{notif.tiempo}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 4 }}>
+                          <span style={{ fontSize: '11px', color: colores.textoOscuro }}>{notif.tiempo}</span>
+                          {notif.plan && (
+                            <button
+                              onClick={e => { e.stopPropagation(); activarPlanNotif(notif); }}
+                              style={{ border: 'none', background: colores.primario, color: '#fff', fontSize: '11px', fontWeight: 700, padding: '5px 11px', borderRadius: 8, cursor: 'pointer', flexShrink: 0 }}
+                            >
+                              Activar plan
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}

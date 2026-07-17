@@ -3,9 +3,8 @@ import { brandingConfig } from '../config/branding';
 import { WelcomeHeader } from './modules/dashboardModules/WelcomeHeader';
 import { HeroCard } from './modules/dashboardModules/Herocard';
 import { ProductivityChart } from './modules/dashboardModules/Productivitychart';
-import { TopCoursesCard } from './modules/dashboardModules/Topcoursescard';
-import { ExpandableModule } from './modules/dashboardModules/ExpandableModule';
-import { OfertasCard } from './modules/dashboardModules/Ofertascard';
+import { ResumenElectoralCards } from './modules/dashboardModules/ResumenElectoralCards';
+import { MapaMexicoDashboard } from './modules/dashboardModules/MapaMexicoDashboard';
 import { RadiosEscuchadasCard } from './modules/dashboardModules/RadiosEscuchadasCard';
 import { PalabrasBuscadasCard } from './modules/dashboardModules/PalabrasBuscadasCard';
 import { CSVGeneradosCard } from './modules/dashboardModules/CSVGeneradosCard';
@@ -30,55 +29,34 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSectionChange }) => {
       <div style={{ maxWidth: '1600px', margin: '0 auto' }}>
         <WelcomeHeader />
 
-          {/* ── Fila 1: OfertasCard | HeroCard (centro) | TopCoursesCard ── */}
+          {/* ── Fila 1: [Hero + resumen] | [Mapa + Radios/Palabras/CSV] ── */}
           {isMobile ? (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
-              <HeroCard />
-              <OfertasCard />
-              <TopCoursesCard />
+              <HeroCard onNavigate={onSectionChange} />
+              <ResumenElectoralCards onSectionChange={onSectionChange} />
+              <MapaMexicoDashboard />
+              <RadiosEscuchadasCard />
+              <PalabrasBuscadasCard />
+              <CSVGeneradosCard />
             </div>
           ) : (
-            <div style={{
-              display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)',
-              gap: 24, marginBottom: 24, alignItems: 'stretch',
-            }}>
-              <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-                <ExpandableModule expandDirection="right">
-                  <OfertasCard />
-                </ExpandableModule>
+            <div style={{ display: 'grid', gridTemplateColumns: '0.62fr 1.38fr', gap: 24, marginBottom: 24, alignItems: 'start' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <div style={{ height: 330 }}>
+                  <HeroCard onNavigate={onSectionChange} />
+                </div>
+                <ResumenElectoralCards onSectionChange={onSectionChange} />
               </div>
-              <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-                <HeroCard />
-              </div>
-              <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-                <TopCoursesCard />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+                <div style={{ height: 620 }}>
+                  <MapaMexicoDashboard />
+                </div>
+                <RadiosEscuchadasCard />
+                <PalabrasBuscadasCard />
+                <CSVGeneradosCard />
               </div>
             </div>
           )}
-
-        {/* ── Fila 2: Radios | Palabras | CSV ── */}
-        {isMobile ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginBottom: 16 }}>
-            <RadiosEscuchadasCard />
-            <PalabrasBuscadasCard />
-            <CSVGeneradosCard />
-          </div>
-        ) : (
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: 24, marginBottom: 24, alignItems: 'stretch',
-          }}>
-            <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-              <RadiosEscuchadasCard />
-            </div>
-            <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-              <PalabrasBuscadasCard />
-            </div>
-            <div style={{ gridColumn: 'span 4', display: 'flex', flexDirection: 'column' }}>
-              <CSVGeneradosCard />
-            </div>
-          </div>
-        )}
 
         {/* ── Fila 3: ProductivityChart full width ── */}
         <div style={{ marginBottom: 24 }}>

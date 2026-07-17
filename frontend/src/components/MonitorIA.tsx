@@ -13,7 +13,7 @@ import { ModuloDetalleModal } from './MonitorIADetalles';
 
 const { colores } = brandingConfig;
 
-const PALETA = ['#9ac24f', '#1A1A1A', '#10B981', '#F59E0B', '#EF4444', '#3B82F6', '#8B5CF6'];
+const PALETA = ['#7C3AED', '#1A1A1A', '#10B981', '#F59E0B', '#EF4444', '#3B82F6', '#8B5CF6'];
 
 // ───────────────────────── DATA DUMMY (la lógica/datos reales van después) ─────────────────────────
 
@@ -431,7 +431,7 @@ export const MonitorIA: React.FC = () => {
           }} />
           <Badge texto="EN VIVO" color={colores.primario} pulse />
           <h1 style={{ fontSize: isMobile ? 26 : 38, fontWeight: 300, color: '#fff', margin: '14px 0 6px', letterSpacing: '-0.5px' }}>
-            Monitor <span style={{ fontWeight: 800, color: colores.primario }}>IA</span> · Inteligencia MVS
+            Cerebro <span style={{ fontWeight: 800, color: colores.primario }}>Electoral</span>
           </h1>
           <p style={{ fontSize: isMobile ? 14 : 16, color: 'rgba(255,255,255,0.7)', margin: 0, maxWidth: 620, lineHeight: 1.5 }}>
             Plataforma de inteligencia mediática: del audio en radio al análisis semántico, comercial y político en tiempo real.

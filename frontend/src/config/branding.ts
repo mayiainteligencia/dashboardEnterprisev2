@@ -1,14 +1,14 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Wpp monitoria",
+    nombre: "Cerebro Electoral",
     eslogan: "",
-    logo: "/assets/logosNativos/wpp.png",
+    logo: "/assets/logosNativos/cerebroElectoralLogo.png",
   },
 
   colores: {
-    primario: "#9ac24f",           // Negro — elemento primario activo (sidebar activo)
+    primario: "#8B5CF6",           // Morado claro — elemento primario activo (sidebar activo)
     primarioOscuro: "#2D2D2D",     // Negro suave — hover
-    primarioClaro: "#F0F0F0",      // Gris claro — superficies claras
+    primarioClaro: "#FFFFFF",      // Blanco — superficies claras
 
     secundario: "#1A1A1A",
     acento: "#1A1A1A",
@@ -18,9 +18,9 @@ export const brandingConfig = {
     advertencia: "#F59E0B",
     exito: "#10B981",
 
-    fondoPrincipal: "#F0F0F0",
-    fondoSecundario: "#E8E8E8",
-    fondoTerciario: "#D4D4D4",
+    fondoPrincipal: "#FFFFFF",
+    fondoSecundario: "#FFFFFF",
+    fondoTerciario: "#FFFFFF",
     fondoClaro: "#FFFFFF",
 
     textoClaro: "#0A0A0A",

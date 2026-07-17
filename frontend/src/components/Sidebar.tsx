@@ -1,5 +1,7 @@
-import React from 'react';
-import { 
+import React, { useState } from 'react';
+import {
+  PanelLeftClose,
+  PanelLeftOpen,
   LayoutDashboard,
   TrendingUp,
   Shield,
@@ -9,6 +11,9 @@ import {
   BrainCircuit,
   Vote,
   Globe,
+  Command,
+  ClipboardList,
+  Bell,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -48,7 +53,10 @@ const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
   // { id: 'analiticos', nombre: 'Analíticos', icono: TrendingUp},
   { id: 'monitor', nombre: 'Monitor de Medios', icono: Radio },  // ← NUEVO
-  { id: 'monitoria', nombre: 'Monitor IA', icono: BrainCircuit },
+  { id: 'monitoria', nombre: 'Cerebro Electoral', icono: BrainCircuit },
+  { id: 'comando', nombre: 'Comando Central', icono: Command },
+  { id: 'resultados', nombre: 'Resultados', icono: ClipboardList },
+  { id: 'alertas', nombre: 'Alertas', icono: Bell },
   { id: 'digital', nombre: 'Monitor Digital', icono: Globe },
   { id: 'electoral', nombre: 'Inteligencia Electoral', icono: Vote },
 ];
@@ -62,24 +70,44 @@ const extraSections = [
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { empresa, colores } = brandingConfig;
+  const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <div 
-      style={{ 
-        width: '240px',
+    <div
+      style={{
+        width: collapsed ? '76px' : '240px',
         height: '100vh',
         backgroundColor: colores.fondoSecundario,
         display: 'flex',
         flexDirection: 'column',
+        transition: 'width 0.22s ease',
+        flexShrink: 0,
       }}
     >
+      {/* Toggle colapsar */}
+      <div style={{ display: 'flex', justifyContent: collapsed ? 'center' : 'flex-end', padding: collapsed ? '12px 0 0' : '12px 12px 0' }}>
+        <button
+          onClick={() => setCollapsed(c => !c)}
+          title={collapsed ? 'Expandir menú' : 'Colapsar menú'}
+          aria-label={collapsed ? 'Expandir menú' : 'Colapsar menú'}
+          style={{
+            width: 36, height: 36, borderRadius: 10, border: `1px solid ${colores.borde}`,
+            background: colores.fondoTerciario, color: colores.textoMedio, cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+        </button>
+      </div>
+
       {/* Logo */}
-      <div style={{ padding: '24px', flexShrink: 0 }}>
+      <div style={{ padding: collapsed ? '12px 12px' : '16px 24px 24px', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div
             style={{
               width: '100%',
-              height: '120px',
+              height: collapsed ? '48px' : '120px',
+              transition: 'height 0.22s ease',
               borderRadius: '12px',
               backgroundColor: '#FFFFFF',
               padding: '6px',
@@ -125,8 +153,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       </div>
 
       {/* Label DEPARTAMENTOS */}
-      <div style={{ padding: '0 16px 8px 16px' }}>
-        <span style={{ 
+      <div style={{ padding: '0 16px 8px 16px', display: collapsed ? 'none' : 'block' }}>
+        <span style={{
           fontSize: '11px', 
           fontWeight: '600', 
           textTransform: 'uppercase', 
@@ -147,12 +175,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             <button
               key={item.id}
               onClick={() => onSectionChange(item.id)}
+              title={collapsed ? item.nombre : undefined}
               style={{
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: collapsed ? 'center' : 'flex-start',
                 gap: '12px',
-                padding: '12px 16px',
+                padding: collapsed ? '8px' : '12px 16px',
                 borderRadius: '12px',
                 marginBottom: '4px',
                 backgroundColor: isActive ? colores.primario : 'transparent',
@@ -168,7 +198,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
               }}
             >
-              <div 
+              <div
                 style={{
                   width: '36px',
                   height: '36px',
@@ -182,9 +212,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               >
                 <Icon size={18} />
               </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
-                {item.nombre}
-              </span>
+              {!collapsed && (
+                <span style={{ fontSize: '14px', fontWeight: '500', textAlign: 'left' }}>
+                  {item.nombre}
+                </span>
+              )}
             </button>
           );
         })}
@@ -200,12 +232,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             <button
               key={section.id}
               onClick={() => onSectionChange(section.id)}
+              title={collapsed ? section.nombre : undefined}
               style={{
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: collapsed ? 'center' : 'flex-start',
                 gap: '12px',
-                padding: '12px 16px',
+                padding: collapsed ? '8px' : '12px 16px',
                 borderRadius: '12px',
                 marginBottom: '8px',
                 backgroundColor: isActive ? colores.primario : colores.fondoTerciario,
@@ -239,9 +273,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               >
                 <Icon size={18} />
               </div>
-              <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'left' }}>
-                {section.nombre}
-              </span>
+              {!collapsed && (
+                <span style={{ fontSize: '14px', fontWeight: '500', flex: 1, textAlign: 'left' }}>
+                  {section.nombre}
+                </span>
+              )}
             </button>
           );
         })}

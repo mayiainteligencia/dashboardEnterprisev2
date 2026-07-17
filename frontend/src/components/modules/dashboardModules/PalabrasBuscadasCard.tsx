@@ -58,8 +58,8 @@ export const PalabrasBuscadasCard: React.FC = () => {
       </div>
 
       {keywords.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '32px 0', color: colores.textoOscuro, fontSize: 13 }}>
-          🔍 Sin detecciones aún
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '32px 0', color: colores.textoOscuro, fontSize: 13 }}>
+          <Search size={16} /> Sin detecciones aún
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

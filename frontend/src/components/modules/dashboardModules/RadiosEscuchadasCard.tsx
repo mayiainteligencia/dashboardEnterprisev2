@@ -60,8 +60,8 @@ export const RadiosEscuchadasCard: React.FC = () => {
       </div>
 
       {radios.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '32px 0', color: colores.textoOscuro, fontSize: 13 }}>
-          📻 Sin registros aún
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '32px 0', color: colores.textoOscuro, fontSize: 13 }}>
+          <Radio size={16} /> Sin registros aún
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

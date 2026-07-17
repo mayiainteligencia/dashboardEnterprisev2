@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   Menu, X, LayoutDashboard, TrendingUp, Shield,
-  Code2, GraduationCap, ChevronRight, Radio, BrainCircuit, Vote, Globe
+  Code2, GraduationCap, ChevronRight, Radio, BrainCircuit, Vote, Globe,
+  Command, ClipboardList, Bell
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -17,7 +18,10 @@ interface ResponsiveLayoutProps {
 const menuItems = [
   { id: 'dashboard',      nombre: 'Dashboard General', icono: LayoutDashboard },
   { id: 'monitor',     nombre: 'Monitor de Medios',         icono: Radio      },
-  { id: 'monitoria',   nombre: 'Monitor IA',                icono: BrainCircuit },
+  { id: 'monitoria',   nombre: 'Cerebro Electoral',                icono: BrainCircuit },
+  { id: 'comando',     nombre: 'Comando Central',           icono: Command    },
+  { id: 'resultados',  nombre: 'Resultados',                icono: ClipboardList },
+  { id: 'alertas',     nombre: 'Alertas',                   icono: Bell       },
   { id: 'digital',     nombre: 'Monitor Digital',           icono: Globe      },
   { id: 'electoral',   nombre: 'Inteligencia Electoral',    icono: Vote       },
   { id: 'ciberseguridad', nombre: 'CiberSeguridad',     icono: Shield          },
@@ -219,7 +223,7 @@ export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <img
-            src="/assets/logosNativos/mayiaEscucha.png"
+            src="/assets/logosNativos/cerebroElectoralLogo.png"
             alt={empresa.nombre}
             style={{ height: '28px', objectFit: 'contain' }}
             onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -297,7 +301,7 @@ export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   <img
-                    src="/assets/logosNativos/mayiaEscucha.png"
+                    src="/assets/logosNativos/cerebroElectoralLogo.png"
                     alt={empresa.nombre}
                     style={{ width: '100%', objectFit: 'contain', padding: '4px' }}
                     onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
