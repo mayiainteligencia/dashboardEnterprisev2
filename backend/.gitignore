@@ -1,0 +1,5 @@
+.env
+monitorsol/
+datalab/venv/
+datalab/**/__pycache__/
+datalab/*.pyc
