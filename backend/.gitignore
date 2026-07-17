@@ -8,3 +8,7 @@ node_modules/
 
 # Logs
 *.log
+
+# Exclusivo de campanaelect (monitor sourceless + datos sensibles) — NO subir a main
+monitorsol/
+datalab/
