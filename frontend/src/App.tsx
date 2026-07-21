@@ -6,6 +6,7 @@ import { BescoDashboard } from './besco/BescoDashboard';
 import { ModuloBesco } from './besco/ModuloBesco';
 import { ControladorPisos } from './besco/ControladorPisos';
 import { AbastecimientoInteligente } from './besco/AbastecimientoInteligente';
+import { RendimientoVendedores } from './besco/RendimientoVendedores';
 import { ToastAlertas } from './besco/ToastAlertas';
 import { modulosPorModo, type Modo } from './besco/bescoData';
 import { brandingConfig } from './config/branding';
@@ -84,11 +85,18 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedSellerName, setSelectedSellerName] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const { colores, temas } = brandingConfig;
 
   const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const selectSection = (s: string) => { setActiveSection(s); setDrawerOpen(false); };
+
+  const irARendimientoVendedor = (sellerName?: string) => {
+    setSelectedSellerName(sellerName || null);
+    setActiveSection('rendimiento-vendedores');
+    setDrawerOpen(false);
+  };
 
   const irCliente = () => { setModo('cliente'); setActiveSection('dashboard'); };
   const irAdmin = () => {
@@ -103,7 +111,8 @@ function App() {
   const renderContent = () => {
     if (activeSection === 'dashboard') return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
     if (activeSection === 'pisos') return <ControladorPisos tema={tema} />;
-    if (activeSection === 'abastecimiento') return <AbastecimientoInteligente tema={tema} modo={modo} />;
+    if (activeSection === 'abastecimiento') return <AbastecimientoInteligente tema={tema} modo={modo} onNavigateToRendimiento={irARendimientoVendedor} />;
+    if (activeSection === 'rendimiento-vendedores') return <RendimientoVendedores tema={tema} modo={modo} initialSelectedSellerName={selectedSellerName} />;
     if (moduloActivo) return <ModuloBesco modulo={moduloActivo} tema={tema} />;
     return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
   };

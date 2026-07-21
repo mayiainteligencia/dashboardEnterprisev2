@@ -3,7 +3,7 @@ import {
   Truck, Route, Wrench, Gauge, FileText, DollarSign, AlertTriangle,
   UserCog, ScanEye, BarChart3,
   Video, Flame, Building2, Wind, Zap, FileBarChart, LayoutGrid, TrendingUp,
-  Grid3x3, Cpu,
+  Grid3x3, Cpu, Trophy,
 } from 'lucide-react';
 
 export type Modo = 'cliente' | 'admin';
@@ -50,6 +50,8 @@ export const modulosAdmin: Modulo[] = [
     kpis: [{ label: 'Paneles', valor: '288' }, { label: 'En alerta', valor: '7' }, { label: 'Niveles', valor: '6' }] },
   { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
     kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
+  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Vendedores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
+    kpis: [{ label: 'Ganancia total', valor: '$1.61M' }, { label: 'Pérdida evitada', valor: '$860K' }, { label: 'SLA Promedio', valor: '97.4%' }] },
 ];
 
 // Dashboard 2 — Hacia clientes (verde) · 8 módulos
@@ -72,6 +74,8 @@ export const modulosCliente: Modulo[] = [
     kpis: [{ label: 'Oportunidades', valor: '63' }] },
   { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
     kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
+  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Vendedores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
+    kpis: [{ label: 'Ganancia total', valor: '$1.61M' }, { label: 'Pérdida evitada', valor: '$860K' }, { label: 'SLA Promedio', valor: '97.4%' }] },
 ];
 
 export const modulosPorModo = (m: Modo): Modulo[] => (m === 'admin' ? modulosAdmin : modulosCliente);
@@ -293,25 +297,24 @@ export const notifsPorModo: Record<Modo, Notif[]> = {
   cliente: [
     { id: 1, severidad: 'critico', titulo: 'Posible incendio', mensaje: 'Detección de humo en el inmueble Polanco 04.', tiempo: 'Hace 3 min', leida: false },
     { id: 2, severidad: 'atencion', titulo: 'Cámara sin señal', mensaje: 'Una cámara perdió conexión en C.C. Santa Fe.', tiempo: 'Hace 18 min', leida: false },
-    { id: 3, severidad: 'atencion', titulo: 'Health Score', mensaje: 'El Edificio Insurgentes bajó a 72 puntos.', tiempo: 'Hace 1 h', leida: false },
     { id: 4, severidad: 'ok', titulo: 'Reporte enviado', mensaje: 'Se envió el reporte ejecutivo mensual al cliente.', tiempo: 'Hace 4 h', leida: true },
   ],
 };
 
-// ---------- Alertas "al momento" (toaster) — solo Admin ----------
-// Pool del que el ToastHost va sacando alertas en vivo mientras se opera en modo admin.
 export type ToastAlerta = { severidad: Severidad; modulo: string; titulo: string; mensaje: string };
 
 export const alertasVivoAdmin: ToastAlerta[] = [
-  { severidad: 'critico', modulo: 'Flota', titulo: 'Unidad 142 fuera de servicio', mensaje: 'Falla de motor en CDMX Centro. Ruta con 2 servicios pendientes.' },
-  { severidad: 'critico', modulo: 'Piso técnico', titulo: 'Panel N3-C4 sobrecargado', mensaje: 'Carga 118% en el nivel 3. Redistribuir rack o aligerar el panel.' },
-  { severidad: 'atencion', modulo: 'SLA', titulo: '3 tickets por vencer', mensaje: 'Vencen en menos de 2 h y no tienen cuadrilla en sitio.' },
-  { severidad: 'atencion', modulo: 'Gasto', titulo: 'Anomalía de combustible', mensaje: 'Región Bajío +18% vs. promedio, sin más servicios.' },
-  { severidad: 'atencion', modulo: 'Piso técnico', titulo: 'Humedad bajo piso', mensaje: 'Nivel 2, zona B: 71% HR. Revisar posible filtración.' },
-  { severidad: 'atencion', modulo: 'Pólizas', titulo: '9 pólizas vencen esta semana', mensaje: 'Renovar antes del viernes para no detener unidades.' },
-  { severidad: 'critico', modulo: 'Driver Risk', titulo: 'Exceso de velocidad', mensaje: 'Conductor J. Pérez, 132 km/h en autopista. 7º evento.' },
-  { severidad: 'ok', modulo: 'Mantenimiento', titulo: 'Preventivo completado', mensaje: '12 unidades salieron del taller central sin pendientes.' },
-  { severidad: 'ok', modulo: 'Piso técnico', titulo: 'Nivel 5 estabilizado', mensaje: 'Temperatura bajo piso de vuelta a 22°C tras ajuste HVAC.' },
+  { severidad: 'critico', modulo: 'Abastecimiento IA', titulo: 'Nuevo caso URG-809 registrado', mensaje: 'Falla crítica de compresor Chiller en Torre Reforma (CDMX). SLA 45 min.' },
+  { severidad: 'ok', modulo: 'Análisis IA MAYIA', titulo: 'Optimización de Abastecimiento', mensaje: 'Evaluación completada: 3 proveedores homologados para cisterna Querétaro. Ahorro +22%.' },
+  { severidad: 'atencion', modulo: 'Predictibilidad', titulo: 'Alerta Predictiva PRED-305', mensaje: 'Sobretemperatura en transformador Plaza Mayor León (+12°C). ETA preventivo: 75 min.' },
+  { severidad: 'ok', modulo: 'Despacho Logístico', titulo: 'Técnico en Camino', mensaje: 'Proveedor Vidrios Templados del Centro despachado a Torre Reforma. ETA: 40 min.' },
+  { severidad: 'atencion', modulo: 'Ranking Vendedores', titulo: 'Actualización de Desempeño', mensaje: 'Ing. Carlos Mendoza resolvió URG-808 en Toluca alcanzando 98.8% de SLA.' },
+  { severidad: 'critico', modulo: 'Abastecimiento IA', titulo: 'Requisición OracleERP Importada', mensaje: 'Solicitud urgente de transformador de subestación en C.C. Santa Fe. Asignada a Lic. Sofía Ramírez.' },
+  { severidad: 'ok', modulo: 'Análisis IA MAYIA', titulo: 'Análisis de Cotización en Vivo', mensaje: 'MAYIA seleccionó opción con mayor disponibilidad física y menor costo logístico en Monterrey.' },
+  { severidad: 'atencion', modulo: 'Predictibilidad', titulo: 'Alerta Predictiva PRED-306', mensaje: 'Oscilación de voltaje en Tijuana Logística. Botón "Contactar cliente" disponible.' },
+  { severidad: 'critico', modulo: 'Flota', titulo: 'Unidad 142 fuera de servicio', mensaje: 'Falla de motor en CDMX Centro. Ruta con 2 servicios pendientes reasignada.' },
+  { severidad: 'ok', modulo: 'Despacho Logístico', titulo: 'WhatsApp a Cliente Emitido', mensaje: 'Confirmación enviada a Arq. Roberto Gómez para mantenimiento en Edificio Insurgentes.' },
+  { severidad: 'ok', modulo: 'Mantenimiento', titulo: 'Caso URG-804 Solucionado', mensaje: 'Tablero eléctrico en C.C. Santa Fe reparado con éxito en 25 minutos.' },
 ];
 
 // ---------- Extras por módulo: alertas + recomendación MAYIA + palancas financieras ----------
@@ -620,3 +623,381 @@ export const nivelesPiso: Nivel[] = [
   genNivel('N5', 'Nivel 5 · Telecom', 8, 6, {}),
   genNivel('N6', 'Nivel 6 · Azotea técnica', 8, 6, { 'N6-A8': 'atencion' }),
 ];
+
+// ---------- Abastecimiento de Urgencia: Casos y Predictividad ----------
+export interface CasoUrgencia {
+  id: string;
+  cliente: string;
+  falla: string;
+  estado: 'pendiente' | 'en_proceso' | 'solucionado';
+  costoTotal: number;
+  eta: number; // en minutos
+  distancia: number; // en km
+  calidad: 'Alta' | 'Estándar' | 'Básica';
+  personaAsignada: string;
+  rolPersona: string;
+  fechaCreacion: string;
+}
+
+export interface CasoPredictivo {
+  id: string;
+  cliente: string;
+  contactoCliente: string;
+  telefonoCliente: string;
+  sistema: string;
+  riesgo: 'critico' | 'atencion' | 'ok';
+  probabilidadFalla: number; // %
+  downtimeEvitado: string;
+  costoEstimado: number;
+  etaPreventivo: number; // minutos
+  personaAsignada: string;
+  recomendacionIA: string;
+}
+
+export const casosUrgenciaMock: CasoUrgencia[] = [
+  {
+    id: 'URG-801',
+    cliente: 'Torre Reforma (CDMX)',
+    falla: 'Ruptura de cristal templado en acceso principal',
+    estado: 'en_proceso',
+    costoTotal: 8700,
+    eta: 40,
+    distancia: 8,
+    calidad: 'Alta',
+    personaAsignada: 'Ing. Carlos Mendoza',
+    rolPersona: 'Supervisor Logístico Principal',
+    fechaCreacion: 'Hace 25 min'
+  },
+  {
+    id: 'URG-802',
+    cliente: 'Plaza Querétaro (QRO)',
+    falla: 'Falla de bomba sumergible en cisterna principal',
+    estado: 'pendiente',
+    costoTotal: 12850,
+    eta: 50,
+    distancia: 35,
+    calidad: 'Alta',
+    personaAsignada: 'Lic. Sofía Ramírez',
+    rolPersona: 'Coordinadora de Proveedores',
+    fechaCreacion: 'Hace 12 min'
+  },
+  {
+    id: 'URG-803',
+    cliente: 'Corporativo Monterrey (MTY)',
+    falla: 'Fuga hidráulica en tubos principales de bombeo nivel 2',
+    estado: 'pendiente',
+    costoTotal: 6400,
+    eta: 30,
+    distancia: 5,
+    calidad: 'Estándar',
+    personaAsignada: 'Téc. Fernando Ruiz',
+    rolPersona: 'Especialista Hidráulico',
+    fechaCreacion: 'Hace 45 min'
+  },
+  {
+    id: 'URG-804',
+    cliente: 'C.C. Santa Fe (CDMX)',
+    falla: 'Cortocircuito en tablero eléctrico secundario sector B',
+    estado: 'solucionado',
+    costoTotal: 9200,
+    eta: 25,
+    distancia: 4,
+    calidad: 'Alta',
+    personaAsignada: 'Ing. Carlos Mendoza',
+    rolPersona: 'Supervisor Logístico Principal',
+    fechaCreacion: 'Hace 3 horas'
+  },
+  {
+    id: 'URG-805',
+    cliente: 'Polanco 04 (CDMX)',
+    falla: 'Paro de extractor industrial de humo en cocina ejecutiva',
+    estado: 'solucionado',
+    costoTotal: 4500,
+    eta: 35,
+    distancia: 6,
+    calidad: 'Estándar',
+    personaAsignada: 'Lic. Sofía Ramírez',
+    rolPersona: 'Coordinadora de Proveedores',
+    fechaCreacion: 'Hace 5 horas'
+  },
+  {
+    id: 'URG-806',
+    cliente: 'Parque Industrial Guadalajara (GDL)',
+    falla: 'Falla en Chiller de enfriamiento industrial de procesos',
+    estado: 'en_proceso',
+    costoTotal: 15400,
+    eta: 45,
+    distancia: 18,
+    calidad: 'Alta',
+    personaAsignada: 'Ing. Alejandro Vega',
+    rolPersona: 'Consultor Técnico de Sitio',
+    fechaCreacion: 'Hace 1 hora'
+  },
+  {
+    id: 'URG-807',
+    cliente: 'Complejo Logístico Puebla (PUE)',
+    falla: 'Falla de sensor óptico en puerta automatizada de andén de carga',
+    estado: 'pendiente',
+    costoTotal: 5800,
+    eta: 55,
+    distancia: 28,
+    calidad: 'Estándar',
+    personaAsignada: 'Lic. Mariana Torres',
+    rolPersona: 'Ejecutiva de Solución',
+    fechaCreacion: 'Hace 35 min'
+  },
+  {
+    id: 'URG-808',
+    cliente: 'Corporativo Toluca (TOL)',
+    falla: 'Filtración de agua bajo piso técnico en sitio IDF Nivel 3',
+    estado: 'en_proceso',
+    costoTotal: 11200,
+    eta: 38,
+    distancia: 14,
+    calidad: 'Alta',
+    personaAsignada: 'Ing. Carlos Mendoza',
+    rolPersona: 'Supervisor Logístico Principal',
+    fechaCreacion: 'Hace 50 min'
+  }
+];
+
+export const casosPredictivosMock: CasoPredictivo[] = [
+  {
+    id: 'PRED-301',
+    cliente: 'Edificio Insurgentes (CDMX)',
+    contactoCliente: 'Arq. Roberto Gómez (Gerente de Inmueble)',
+    telefonoCliente: '+52 55 4192 8301',
+    sistema: 'Compresor HVAC-3',
+    riesgo: 'critico',
+    probabilidadFalla: 79,
+    downtimeEvitado: '48 horas',
+    costoEstimado: 14500,
+    etaPreventivo: 60,
+    personaAsignada: 'Ing. Carlos Mendoza',
+    recomendacionIA: 'La vibración de baleros superó 4.2 mm/s. Se sugiere reemplazo preventivo antes del fin de semana.'
+  },
+  {
+    id: 'PRED-302',
+    cliente: 'Torre Reforma 22 (CDMX)',
+    contactoCliente: 'Lic. Mariana Torres (Facility Manager)',
+    telefonoCliente: '+52 55 8821 9940',
+    sistema: 'Banco de Baterías UPS-1',
+    riesgo: 'critico',
+    probabilidadFalla: 66,
+    downtimeEvitado: '24 horas',
+    costoEstimado: 18200,
+    etaPreventivo: 90,
+    personaAsignada: 'Lic. Sofía Ramírez',
+    recomendacionIA: 'Degradación de celda 4 detectada. Riesgo de caída de respaldo eléctrico en piso técnico.'
+  },
+  {
+    id: 'PRED-303',
+    cliente: 'C.C. Santa Fe (CDMX)',
+    contactoCliente: 'Ing. Alejandro Vega (Dir. Operaciones)',
+    telefonoCliente: '+52 55 1204 5590',
+    sistema: 'Bomba de Presión Hidráulica #2',
+    riesgo: 'atencion',
+    probabilidadFalla: 58,
+    downtimeEvitado: '12 horas',
+    costoEstimado: 5600,
+    etaPreventivo: 120,
+    personaAsignada: 'Téc. Fernando Ruiz',
+    recomendacionIA: 'Presión oscilante (-15%). Programar empaquetadura preventivamente sin suspender servicio.'
+  },
+  {
+    id: 'PRED-304',
+    cliente: 'Corporativo MTY (MTY)',
+    contactoCliente: 'Dra. Patricia Silva (Supervisora General)',
+    telefonoCliente: '+52 81 9912 3400',
+    sistema: 'Panel de Piso Técnico N3-C4',
+    riesgo: 'atencion',
+    probabilidadFalla: 54,
+    downtimeEvitado: '18 horas',
+    costoEstimado: 7800,
+    etaPreventivo: 45,
+    personaAsignada: 'Ing. Carlos Mendoza',
+    recomendacionIA: 'Carga térmica acumulada de 118%. Redistribuir racks o ajustar flujo bajo piso.'
+  },
+  {
+    id: 'PRED-305',
+    cliente: 'Plaza Mayor (León)',
+    contactoCliente: 'Ing. Javier Solís (Jefe de Mantenimiento)',
+    telefonoCliente: '+52 477 302 9100',
+    sistema: 'Transformador Secundario Nivel 1',
+    riesgo: 'critico',
+    probabilidadFalla: 72,
+    downtimeEvitado: '36 horas',
+    costoEstimado: 21000,
+    etaPreventivo: 75,
+    personaAsignada: 'Lic. Sofía Ramírez',
+    recomendacionIA: 'Sobretemperatura de devanados B en +12°C por sobrecarga de pico. Agendar filtrado de aceite.'
+  },
+  {
+    id: 'PRED-306',
+    cliente: 'Centro Logístico (Tijuana)',
+    contactoCliente: 'Lic. Eduardo Nava (Director Logístico)',
+    telefonoCliente: '+52 664 821 4450',
+    sistema: 'Variador de Frecuencia Inyección HVAC',
+    riesgo: 'atencion',
+    probabilidadFalla: 61,
+    downtimeEvitado: '16 horas',
+    costoEstimado: 9400,
+    etaPreventivo: 110,
+    personaAsignada: 'Ing. Alejandro Vega',
+    recomendacionIA: 'Oscilación periódica de voltaje en Fase 2. Reemplazo de módulo de control sugerido.'
+  },
+  {
+    id: 'PRED-307',
+    cliente: 'Paseo Montejo (Mérida)',
+    contactoCliente: 'Arq. Diana Pech (Gerente de Sitio)',
+    telefonoCliente: '+52 999 410 8820',
+    sistema: 'Condensadora Central AC-Sector A',
+    riesgo: 'atencion',
+    probabilidadFalla: 52,
+    downtimeEvitado: '10 horas',
+    costoEstimado: 6300,
+    etaPreventivo: 130,
+    personaAsignada: 'Lic. Mariana Torres',
+    recomendacionIA: 'Holgura en bandas de ventilación. Ajustar tensión de polea para mantener eficiencia térmica en clima cálido.'
+  }
+];
+
+// ---------- Rendimiento y Ranking de Vendedores / Agentes ----------
+export interface VendedorRendimiento {
+  id: string;
+  nombre: string;
+  avatar: string;
+  rol: string;
+  region: string;
+  casosAsignados: number;
+  casosSolucionados: number;
+  tiempoRespuestaMin: number; // ETA promedio en min
+  cumplimientoSLA: number; // %
+  gananciaGenerada: number; // MXN
+  perdidaGenerada: number; // MXN
+  perdidaEvitada: number; // MXN
+  scoreEficiencia: number; // 0-100
+  posicionRanking: number;
+  satisfaccionCliente: number; // 1-5 estrellas
+  historialMeses: { mes: string; ganancia: number; perdida: number; casos: number }[];
+}
+
+export const vendedoresRendimientoMock: VendedorRendimiento[] = [
+  {
+    id: 'VEND-01',
+    nombre: 'Ing. Carlos Mendoza',
+    avatar: 'CM',
+    rol: 'Supervisor Logístico Principal',
+    region: 'CDMX Centro',
+    casosAsignados: 48,
+    casosSolucionados: 46,
+    tiempoRespuestaMin: 28,
+    cumplimientoSLA: 98.4,
+    gananciaGenerada: 485000,
+    perdidaGenerada: 12000,
+    perdidaEvitada: 290000,
+    scoreEficiencia: 97.8,
+    posicionRanking: 1,
+    satisfaccionCliente: 4.9,
+    historialMeses: [
+      { mes: 'Ene', ganancia: 390000, perdida: 18000, casos: 40 },
+      { mes: 'Feb', ganancia: 410000, perdida: 15000, casos: 42 },
+      { mes: 'Mar', ganancia: 440000, perdida: 14000, casos: 45 },
+      { mes: 'Abr', ganancia: 485000, perdida: 12000, casos: 46 },
+    ]
+  },
+  {
+    id: 'VEND-02',
+    nombre: 'Lic. Sofía Ramírez',
+    avatar: 'SR',
+    rol: 'Coordinadora de Proveedores',
+    region: 'Bajío & Querétaro',
+    casosAsignados: 42,
+    casosSolucionados: 40,
+    tiempoRespuestaMin: 32,
+    cumplimientoSLA: 96.8,
+    gananciaGenerada: 392000,
+    perdidaGenerada: 18500,
+    perdidaEvitada: 210000,
+    scoreEficiencia: 94.5,
+    posicionRanking: 2,
+    satisfaccionCliente: 4.8,
+    historialMeses: [
+      { mes: 'Ene', ganancia: 310000, perdida: 22000, casos: 35 },
+      { mes: 'Feb', ganancia: 340000, perdida: 20000, casos: 38 },
+      { mes: 'Mar', ganancia: 370000, perdida: 19000, casos: 39 },
+      { mes: 'Abr', ganancia: 392000, perdida: 18500, casos: 40 },
+    ]
+  },
+  {
+    id: 'VEND-03',
+    nombre: 'Téc. Fernando Ruiz',
+    avatar: 'FR',
+    rol: 'Especialista Hidráulico & Climas',
+    region: 'Norte (Monterrey)',
+    casosAsignados: 36,
+    casosSolucionados: 34,
+    tiempoRespuestaMin: 35,
+    cumplimientoSLA: 95.2,
+    gananciaGenerada: 310000,
+    perdidaGenerada: 24000,
+    perdidaEvitada: 165000,
+    scoreEficiencia: 91.2,
+    posicionRanking: 3,
+    satisfaccionCliente: 4.7,
+    historialMeses: [
+      { mes: 'Ene', ganancia: 260000, perdida: 28000, casos: 30 },
+      { mes: 'Feb', ganancia: 280000, perdida: 26000, casos: 31 },
+      { mes: 'Mar', ganancia: 295000, perdida: 25000, casos: 33 },
+      { mes: 'Abr', ganancia: 310000, perdida: 24000, casos: 34 },
+    ]
+  },
+  {
+    id: 'VEND-04',
+    nombre: 'Ing. Alejandro Vega',
+    avatar: 'AV',
+    rol: 'Consultor Técnico de Sitio',
+    region: 'Occidente (Guadalajara)',
+    casosAsignados: 31,
+    casosSolucionados: 28,
+    tiempoRespuestaMin: 41,
+    cumplimientoSLA: 91.5,
+    gananciaGenerada: 245000,
+    perdidaGenerada: 36000,
+    perdidaEvitada: 110000,
+    scoreEficiencia: 86.4,
+    posicionRanking: 4,
+    satisfaccionCliente: 4.5,
+    historialMeses: [
+      { mes: 'Ene', ganancia: 200000, perdida: 42000, casos: 24 },
+      { mes: 'Feb', ganancia: 215000, perdida: 39000, casos: 25 },
+      { mes: 'Mar', ganancia: 230000, perdida: 38000, casos: 27 },
+      { mes: 'Abr', ganancia: 245000, perdida: 36000, casos: 28 },
+    ]
+  },
+  {
+    id: 'VEND-05',
+    nombre: 'Lic. Mariana Torres',
+    avatar: 'MT',
+    rol: 'Ejecutiva de Atención a Clientes',
+    region: 'Sureste (Mérida / Cancún)',
+    casosAsignados: 25,
+    casosSolucionados: 22,
+    tiempoRespuestaMin: 48,
+    cumplimientoSLA: 88.0,
+    gananciaGenerada: 185000,
+    perdidaGenerada: 45000,
+    perdidaEvitada: 85000,
+    scoreEficiencia: 82.0,
+    posicionRanking: 5,
+    satisfaccionCliente: 4.3,
+    historialMeses: [
+      { mes: 'Ene', ganancia: 140000, perdida: 52000, casos: 18 },
+      { mes: 'Feb', ganancia: 155000, perdida: 49000, casos: 19 },
+      { mes: 'Mar', ganancia: 170000, perdida: 47000, casos: 21 },
+      { mes: 'Abr', ganancia: 185000, perdida: 45000, casos: 22 },
+    ]
+  }
+];
+
+
