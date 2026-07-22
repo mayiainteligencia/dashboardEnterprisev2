@@ -1,193 +1,234 @@
 import React, { useState } from 'react';
-import { Building2 } from 'lucide-react';
+import { 
+  Building2, TrendingUp, CheckCircle2, Brain, Target, Zap, ArrowRight, Star, FileCheck, 
+  Activity, ShieldCheck, Cpu
+} from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 
-export const Administracion: React.FC = () => {
-  const { colores } = brandingConfig;
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+interface ServiceCard {
+  id: number;
+  title: string;
+  image: string;
+  description: string;
+  price?: string;
+  tag: string;
+}
 
-  const cards = [
-    {
-      id: 1,
-      titulo: 'ESTRATEGIA IA',
-      descripcion: 'Consultor Digital para portafolio de sistemas de IA - $98,000',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD1.png',
-    },
-    {
-      id: 2,
-      titulo: 'INNOVACIÓN EMPRESARIAL',
-      descripcion: 'Democratiza la innovación con IA generativa - $98,000',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD2.png',
-    },
-    {
-      id: 3,
-      titulo: 'Business Consulting',
-      descripcion: 'Enfoque holístico: personas, procesos y tecnología',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD3.png',
-    },
-    {
-      id: 4,
-      titulo: 'Asesor ISO 9001',
-      descripcion: 'Cumplimiento normativo y gestión de calidad con IA',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD4.png',
-    },
-    {
-      id: 5,
-      titulo: 'Operadora Con IA',
-      descripcion: 'Automatización de operaciones administrativas',
-      mediaType: 'image',
-      mediaSrc: '/assets/adminD/adminD5.png',
-    },
-  ];
+const services: ServiceCard[] = [
+  {
+    id: 1,
+    title: "ESTRATEGIA IA",
+    image: "/assets/adminD/adminD1.png",
+    description: "Consultor Digital para portafolio de sistemas de IA",
+    price: "$98,000",
+    tag: "Estrategia"
+  },
+  {
+    id: 2,
+    title: "INNOVACIÓN EMPRESARIAL",
+    image: "/assets/adminD/adminD2.png",
+    description: "Democratiza la innovación con IA generativa",
+    price: "$98,000",
+    tag: "Innovación"
+  },
+  {
+    id: 3,
+    title: "Business Consulting",
+    image: "/assets/adminD/adminD3.png",
+    description: "Enfoque holístico: personas, procesos y tecnología",
+    tag: "Consultoría"
+  },
+  {
+    id: 4,
+    title: "Asesor ISO 9001",
+    image: "/assets/adminD/adminD4.png",
+    description: "Cumplimiento normativo y gestión de calidad con IA",
+    tag: "Calidad"
+  },
+  {
+    id: 5,
+    title: "Operadora Con IA",
+    image: "/assets/adminD/adminD5.png",
+    description: "Automatización de operaciones administrativas",
+    tag: "Operaciones"
+  }
+];
+
+export const Administracion: React.FC = () => {
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
+
+  const primaryColor = brandingConfig.colores.primario || '#038CAE';
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
-      <div>
-        <h2 style={{ fontSize: '32px', fontWeight: 'bold', color: colores.textoClaro, marginBottom: '8px' }}>
-          Administración
-        </h2>
-        <p style={{ color: colores.textoMedio, fontSize: '16px' }}>
-          Consultoría estratégica y gestión inteligente
-        </p>
+    <div className="min-h-screen p-8" style={{ backgroundColor: '#F8FAFC' }}>
+      {/* Header Section */}
+      <div className="mb-8">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="p-2 rounded-lg" style={{ backgroundColor: `${primaryColor}15` }}>
+            <Building2 size={28} style={{ color: primaryColor }} />
+          </div>
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900">Administración y Estrategia</h1>
+            <p className="text-gray-500 mt-1">Gestión de consultoría estratégica, IA, innovación y operaciones BESCO</p>
+          </div>
+        </div>
+        
+        {/* KPI Chips */}
+        <div className="flex flex-wrap gap-4 mt-6">
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <Target size={18} style={{ color: primaryColor }} />
+            <span className="text-sm font-medium text-gray-700">5 Servicios Activos</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <CheckCircle2 size={18} className="text-green-500" />
+            <span className="text-sm font-medium text-gray-700">ISO 9001 ✓</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <Brain size={18} className="text-purple-500" />
+            <span className="text-sm font-medium text-gray-700">IA Integrada al 100%</span>
+          </div>
+          <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <TrendingUp size={18} className="text-blue-500" />
+            <span className="text-sm font-medium text-gray-700">Alto Crecimiento</span>
+          </div>
+        </div>
       </div>
 
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-        gap: '20px',
-      }}>
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            onMouseEnter={() => setHoveredCard(card.id)}
-            onMouseLeave={() => setHoveredCard(null)}
-            style={{
-              backgroundColor: colores.fondoSecundario,
-              borderRadius: '16px',
-              border: hoveredCard === card.id 
-                ? `2px solid ${colores.primario}`
-                : `1px solid ${colores.borde}`,
-              overflow: 'hidden',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              transform: hoveredCard === card.id ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-              boxShadow: hoveredCard === card.id 
-                ? `0 16px 32px rgba(3, 140, 174, 0.25), 0 0 0 1px ${colores.primario}20`
-                : '0 2px 8px rgba(0, 0, 0, 0.1)',
-              maxWidth: '240px',
-            }}
-          >
-            <div style={{
-              width: '100%',
-              height: '280px',
-              position: 'relative',
-              backgroundColor: colores.fondoTerciario,
-              overflow: 'hidden',
-            }}>
-              {card.mediaType === 'video' ? (
-                <video 
-                  autoPlay 
-                  muted 
-                  loop
-                  playsInline
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const container = e.currentTarget.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                >
-                  <source src={card.mediaSrc} type="video/mp4" />
-                </video>
-              ) : (
-                <img 
-                  src={card.mediaSrc}
-                  alt={card.titulo}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease, filter 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const container = target.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: center; height: 100%; color: ${colores.textoMedio}; background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}); background-size: 20px 20px; background-position: 0 0, 10px 10px;">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                />
-              )}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Column: Services Grid (2 cols) */}
+        <div className="lg:col-span-2">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+              <Zap size={20} style={{ color: primaryColor }} />
+              Portafolio de Servicios
+            </h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {services.map((service) => (
+              <div 
+                key={service.id}
+                className="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative group cursor-pointer"
+                onMouseEnter={() => setHoveredId(service.id)}
+                onMouseLeave={() => setHoveredId(null)}
+              >
+                {/* Image container */}
+                <div className="h-[220px] overflow-hidden relative bg-gray-100">
+                  <img 
+                    src={service.image} 
+                    alt={service.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  
+                  {/* Overlay on hover */}
+                  <div className={`absolute inset-0 bg-black/60 transition-opacity duration-300 flex items-center justify-center p-6 text-center ${hoveredId === service.id ? 'opacity-100' : 'opacity-0'}`}>
+                    <p className="text-white font-medium text-sm leading-relaxed transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                      {service.description}
+                    </p>
+                  </div>
+                  
+                  {/* Badges */}
+                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-bold text-gray-700 shadow-sm">
+                    {service.tag}
+                  </div>
+                  
+                  {service.price && (
+                    <div className="absolute top-3 right-3 bg-green-500/90 backdrop-blur-sm text-white px-3 py-1 rounded-md text-xs font-bold shadow-sm transition-opacity duration-300">
+                      {service.price}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Content */}
+                <div className="p-5 border-t-2" style={{ borderTopColor: primaryColor }}>
+                  <h3 className="font-bold text-gray-800 text-lg mb-1 group-hover:text-[var(--primary)] transition-colors" style={{ '--primary': primaryColor } as React.CSSProperties}>
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-500 text-sm line-clamp-1">{service.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(to top, rgba(3, 140, 174, 0.95) 0%, rgba(3, 140, 174, 0.7) 40%, transparent 100%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                padding: '16px',
-                opacity: hoveredCard === card.id ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-                backdropFilter: 'blur(4px)',
-              }}>
-                <p style={{
-                  color: '#FFFFFF',
-                  fontSize: '11px',
-                  margin: 0,
-                  lineHeight: '1.4',
-                  fontWeight: '600',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                }}>
-                  {card.descripcion}
-                </p>
+        {/* Right Column: Executive Summary Panel */}
+        <div className="lg:col-span-1">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 sticky top-8">
+            <h2 className="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2 pb-4 border-b border-gray-100">
+              <Star size={20} className="text-yellow-500" />
+              Resumen Ejecutivo
+            </h2>
+
+            {/* Mini-stats */}
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <Activity size={16} />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Proyectos</span>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">24<span className="text-sm font-medium text-gray-500 ml-1">activos</span></div>
+              </div>
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <Cpu size={16} />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Madurez IA</span>
+                </div>
+                <div className="text-2xl font-bold text-gray-900">92<span className="text-sm font-medium text-gray-500 ml-1">%</span></div>
+              </div>
+              <div className="col-span-2 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                <div className="flex items-center gap-2 text-slate-500 mb-1">
+                  <TrendingUp size={16} />
+                  <span className="text-xs font-semibold uppercase tracking-wider">Ahorro Operativo Est.</span>
+                </div>
+                <div className="text-3xl font-bold text-green-600">35<span className="text-lg font-medium ml-1">%</span></div>
               </div>
             </div>
 
-            <div style={{ 
-              padding: '12px',
-              backgroundColor: hoveredCard === card.id ? colores.fondoTerciario : 'transparent',
-              transition: 'background-color 0.3s ease',
-              minHeight: '55px',
-            }}>
-              <h4 style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: hoveredCard === card.id ? colores.primario : colores.textoClaro,
-                margin: 0,
-                lineHeight: '1.3',
-                transition: 'color 0.3s ease',
-              }}>
-                {card.titulo}
-              </h4>
+            {/* Capacidades Clave */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider mb-4">Capacidades Clave</h3>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <div className="mt-0.5 p-1.5 rounded-md bg-blue-50 text-blue-600">
+                    <Brain size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-800">Transformación con IA</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">Integración de modelos generativos en procesos diarios.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="mt-0.5 p-1.5 rounded-md bg-green-50 text-green-600">
+                    <ShieldCheck size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-800">Calidad Asegurada</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">Cumplimiento estricto de normativas y estándar ISO 9001.</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="mt-0.5 p-1.5 rounded-md bg-purple-50 text-purple-600">
+                    <FileCheck size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-bold text-gray-800">Optimización de Costos</h4>
+                    <p className="text-xs text-gray-500 mt-0.5">Automatización administrativa para reducir overhead.</p>
+                  </div>
+                </li>
+              </ul>
             </div>
+
+            {/* CTA */}
+            <button 
+              className="w-full py-4 px-6 rounded-xl text-white font-bold text-sm shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5 flex items-center justify-center gap-2 group"
+              style={{ backgroundColor: primaryColor }}
+            >
+              Solicitar Diagnóstico Estratégico
+              <ArrowRight size={18} className="transform group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

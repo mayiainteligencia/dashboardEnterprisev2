@@ -80,7 +80,7 @@ export const RendimientoVendedores: React.FC<{
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 800, color: colores.textoClaro, letterSpacing: '-0.3px' }}>
-                Rendimiento y Ranking de Vendedores / Agentes
+                Rendimiento y Ranking de Compradores / Agentes
               </h1>
               <span style={{ fontSize: '11px', fontWeight: 800, background: tema.acentoSuave, color: tema.acentoOscuro, padding: '3px 9px', borderRadius: '12px' }}>
                 ANÁLISIS DE EFICIENCIA & RENTABILIDAD

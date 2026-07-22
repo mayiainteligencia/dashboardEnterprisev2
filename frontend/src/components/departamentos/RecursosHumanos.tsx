@@ -1,225 +1,247 @@
 import React, { useState } from 'react';
-import { Users } from 'lucide-react';
+import { 
+  Users, UserPlus, GraduationCap, Star, Heart, DollarSign, 
+  CheckCircle2, Calendar, TrendingUp, Award 
+} from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 
+const areas = [
+  {
+    title: 'Portal del Empleado',
+    description: 'Gestión de perfil, recibos y vacaciones',
+    image: '/assets/rh/rh1.png',
+    icon: <Users size={20} className="text-[#038CAE]" />,
+    metric: '1,240 colaboradores',
+    status: 'ACTIVO'
+  },
+  {
+    title: 'Reclutamiento y Selección',
+    description: 'Seguimiento de vacantes y candidatos',
+    image: '/assets/rh/rh2.png',
+    icon: <UserPlus size={20} className="text-[#038CAE]" />,
+    metric: '18 vacantes activas',
+    status: 'EN PROCESO'
+  },
+  {
+    title: 'Capacitación y Desarrollo',
+    description: 'Cursos y planes de carrera',
+    image: '/assets/rh/rh3.png',
+    icon: <GraduationCap size={20} className="text-[#038CAE]" />,
+    metric: '45 cursos online',
+    status: 'ACTIVO'
+  },
+  {
+    title: 'Evaluación del Desempeño',
+    description: 'Evaluaciones 360° y KPIs',
+    image: '/assets/rh/rh4.png',
+    icon: <Star size={20} className="text-[#038CAE]" />,
+    metric: '92% completado',
+    status: 'EN CURSO'
+  },
+  {
+    title: 'Clima Laboral',
+    description: 'Encuestas y análisis de satisfacción',
+    image: '/assets/rh/rh5.png',
+    icon: <Heart size={20} className="text-[#038CAE]" />,
+    metric: '87% satisfacción',
+    status: 'ACTIVO'
+  },
+  {
+    title: 'Nómina y Beneficios',
+    description: 'Control de pagos y prestaciones',
+    image: '/assets/rh/rh6.png',
+    icon: <DollarSign size={20} className="text-[#038CAE]" />,
+    metric: '100% procesado',
+    status: 'COMPLETADO'
+  }
+];
+
 export const RecursosHumanos: React.FC = () => {
-  const { colores } = brandingConfig;
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
-  const cards = [
-    {
-      id: 1,
-      titulo: 'Asesor en Recursos Humanos',
-      descripcion: 'IA especializada en gestión de personal y políticas laborales',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/rh/rh1.png',
-    },
-    {
-      id: 2,
-      titulo: 'Asesor en Seguridad en el Trabajo',
-      descripcion: 'Cumplimiento normativo y prevención de riesgos laborales',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/rh/rh2.png',
-    },
-    {
-      id: 3,
-      titulo: 'Empleados Digitales',
-      descripcion: 'Agentes IA que piensan, actúan y evolucionan con tu empresa',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/rh/rh3.png',
-    },
-    {
-      id: 4,
-      titulo: 'Reclutamiento Inteligente',
-      descripcion: 'Selección automatizada de talento con IA',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/rh/rh4.png',
-    },
-    {
-      id: 5,
-      titulo: 'Evaluación de Desempeño',
-      descripcion: 'Análisis continuo y métricas de productividad',
-      mediaType: 'image',
-      mediaSrc: '../../../public/assets/rh/rh5.png',
-    },
-  ];
-
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+    <div className="min-h-screen bg-[#F8FAFC] p-6 font-sans text-slate-800">
       {/* Header */}
-      <div>
-        <h2 style={{ fontSize: '32px', fontWeight: 'bold', color: colores.textoClaro, marginBottom: '8px' }}>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold" style={{ color: brandingConfig.colores.acento }}>
           Recursos Humanos
-        </h2>
-        <p style={{ color: colores.textoMedio, fontSize: '16px' }}>
-          Gestión inteligente de personal y capital humano
-        </p>
+        </h1>
+        <p className="text-slate-500 text-lg">Capital Humano Inteligente</p>
+        
+        {/* KPI Chips */}
+        <div className="flex flex-wrap gap-4 mt-6">
+          <div className="bg-white px-5 py-3 rounded-lg shadow-sm flex items-center gap-3 border border-slate-100">
+            <div className="p-2 bg-blue-50 rounded-full text-[#038CAE]">
+              <Users size={20} />
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 font-medium">Total Colaboradores</p>
+              <p className="text-lg font-bold text-slate-800">1,240</p>
+            </div>
+          </div>
+          <div className="bg-white px-5 py-3 rounded-lg shadow-sm flex items-center gap-3 border border-slate-100">
+            <div className="p-2 bg-blue-50 rounded-full text-[#038CAE]">
+              <UserPlus size={20} />
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 font-medium">Vacantes Activas</p>
+              <p className="text-lg font-bold text-slate-800">18</p>
+            </div>
+          </div>
+          <div className="bg-white px-5 py-3 rounded-lg shadow-sm flex items-center gap-3 border border-slate-100">
+            <div className="p-2 bg-blue-50 rounded-full text-[#038CAE]">
+              <Heart size={20} />
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 font-medium">Satisfacción</p>
+              <p className="text-lg font-bold text-slate-800">87%</p>
+            </div>
+          </div>
+          <div className="bg-white px-5 py-3 rounded-lg shadow-sm flex items-center gap-3 border border-slate-100">
+            <div className="p-2 bg-blue-50 rounded-full text-[#038CAE]">
+              <TrendingUp size={20} />
+            </div>
+            <div>
+              <p className="text-xs text-slate-500 font-medium">Rotación</p>
+              <p className="text-lg font-bold text-slate-800">3.2%</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Grid de tarjetas verticales */}
-      <div style={{ 
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))',
-        gap: '20px',
-      }}>
-        {cards.map((card) => (
-          <div
-            key={card.id}
-            onMouseEnter={() => setHoveredCard(card.id)}
-            onMouseLeave={() => setHoveredCard(null)}
-            style={{
-              backgroundColor: colores.fondoSecundario,
-              borderRadius: '16px',
-              border: hoveredCard === card.id 
-                ? `2px solid ${colores.primario}`
-                : `1px solid ${colores.borde}`,
-              overflow: 'hidden',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              transform: hoveredCard === card.id ? 'translateY(-6px) scale(1.01)' : 'translateY(0) scale(1)',
-              boxShadow: hoveredCard === card.id 
-                ? `0 16px 32px rgba(3, 140, 174, 0.25), 0 0 0 1px ${colores.primario}20`
-                : '0 2px 8px rgba(0, 0, 0, 0.1)',
-              maxWidth: '240px',
-            }}
-          >
-            {/* Área de media - VERTICAL */}
-            <div style={{
-              width: '100%',
-              height: '280px',
-              position: 'relative',
-              backgroundColor: colores.fondoTerciario,
-              overflow: 'hidden',
-            }}>
-              {card.mediaType === 'video' ? (
-                <video 
-                  autoPlay 
-                  muted 
-                  loop
-                  playsInline
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const container = e.currentTarget.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="
-                          display: flex; 
-                          align-items: center; 
-                          justify-content: center; 
-                          height: 100%; 
-                          color: ${colores.textoMedio};
-                          background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), 
-                                      linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario});
-                          background-size: 20px 20px;
-                          background-position: 0 0, 10px 10px;
-                        ">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                          </svg>
-                        </div>
-                      `;
-                    }
-                  }}
-                >
-                  <source src={card.mediaSrc} type="video/mp4" />
-                </video>
-              ) : (
+      {/* Main Content Layout */}
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Main Column - 60% */}
+        <div className="lg:w-[60%] grid grid-cols-1 md:grid-cols-2 gap-6">
+          {areas.map((area, index) => (
+            <div 
+              key={index} 
+              className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow duration-300 flex flex-col group relative"
+            >
+              <div className="absolute top-0 left-0 right-0 h-1 bg-[#038CAE] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              
+              <div className="h-[180px] relative overflow-hidden bg-slate-100">
                 <img 
-                  src={card.mediaSrc}
-                  alt={card.titulo}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.3s ease, filter 0.3s ease',
-                    transform: hoveredCard === card.id ? 'scale(1.08)' : 'scale(1)',
-                    filter: hoveredCard === card.id ? 'brightness(1.1)' : 'brightness(1)',
-                  }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const container = target.parentElement;
-                    if (container) {
-                      container.innerHTML = `
-                        <div style="
-                          display: flex; 
-                          align-items: center; 
-                          justify-content: center; 
-                          height: 100%; 
-                          color: ${colores.textoMedio};
-                          background: linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario}), 
-                                      linear-gradient(45deg, ${colores.fondoTerciario} 25%, transparent 25%, transparent 75%, ${colores.fondoTerciario} 75%, ${colores.fondoTerciario});
-                          background-size: 20px 20px;
-                          background-position: 0 0, 10px 10px;
-                        ">
-                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                          </svg>
-                        </div>
-                      `;
-                    }
-                  }}
+                  src={area.image} 
+                  alt={area.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
                 />
-              )}
+                <div className="absolute top-4 left-4 bg-white p-2 rounded-full shadow-md">
+                  {area.icon}
+                </div>
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-[10px] font-bold tracking-wider text-slate-700 shadow-sm">
+                  {area.status}
+                </div>
+              </div>
+              
+              <div className="p-5 flex-1 flex flex-col">
+                <h3 className="text-lg font-bold text-slate-800 mb-1 group-hover:text-[#038CAE] transition-colors">{area.title}</h3>
+                <p className="text-slate-500 text-sm mb-4 flex-1">{area.description}</p>
+                
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-slate-700 bg-slate-50 px-3 py-1 rounded-full border border-slate-100">
+                    {area.metric}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
 
-              {/* Overlay con descripción en hover */}
-              <div style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                background: 'linear-gradient(to top, rgba(3, 140, 174, 0.95) 0%, rgba(3, 140, 174, 0.7) 40%, transparent 100%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                padding: '16px',
-                opacity: hoveredCard === card.id ? 1 : 0,
-                transition: 'opacity 0.3s ease',
-                backdropFilter: 'blur(4px)',
-              }}>
-                <p style={{
-                  color: '#FFFFFF',
-                  fontSize: '11px',
-                  margin: 0,
-                  lineHeight: '1.4',
-                  fontWeight: '600',
-                  textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                }}>
-                  {card.descripcion}
-                </p>
+        {/* Right Column - 40% */}
+        <div className="lg:w-[40%] flex flex-col gap-6">
+          {/* Pulso Organizacional Panel */}
+          <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex-1 flex flex-col">
+            <h2 className="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+              <Heart className="text-[#038CAE]" /> 
+              Pulso Organizacional
+            </h2>
+            
+            {/* Circular Indicator */}
+            <div className="flex justify-center mb-8">
+              <div className="relative w-40 h-40 flex items-center justify-center rounded-full bg-blue-50 border-8 border-slate-50 shadow-inner">
+                <svg className="absolute w-full h-full transform -rotate-90">
+                  <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="8" fill="transparent" className="text-slate-200" />
+                  <circle 
+                    cx="80" cy="80" r="70" 
+                    stroke="currentColor" strokeWidth="8" fill="transparent" 
+                    strokeDasharray="440" strokeDashoffset={440 - (440 * 87) / 100} 
+                    className="text-[#038CAE]" 
+                    style={{ transition: 'stroke-dashoffset 1s ease-in-out' }}
+                  />
+                </svg>
+                <div className="text-center z-10">
+                  <span className="text-4xl font-bold text-slate-800 block">87%</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Satisfacción</span>
+                </div>
               </div>
             </div>
 
-            {/* Título abajo - COMPACTO */}
-            <div style={{ 
-              padding: '12px',
-              backgroundColor: hoveredCard === card.id ? colores.fondoTerciario : 'transparent',
-              transition: 'background-color 0.3s ease',
-              minHeight: '55px',
-            }}>
-              <h4 style={{
-                fontSize: '12px',
-                fontWeight: '600',
-                color: hoveredCard === card.id ? colores.primario : colores.textoClaro,
-                margin: 0,
-                lineHeight: '1.3',
-                transition: 'color 0.3s ease',
-              }}>
-                {card.titulo}
-              </h4>
+            {/* 5 Hitos del Mes */}
+            <div className="mb-8">
+              <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 border-b pb-2">Hitos del Mes</h3>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="text-[#038CAE] mt-0.5 flex-shrink-0" />
+                  <span>Onboarding completado para 15 nuevos ingenieros</span>
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="text-[#038CAE] mt-0.5 flex-shrink-0" />
+                  <span>Actualización del tabulador salarial 2024</span>
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="text-[#038CAE] mt-0.5 flex-shrink-0" />
+                  <span>Lanzamiento de programa de bienestar mental</span>
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="text-[#038CAE] mt-0.5 flex-shrink-0" />
+                  <span>Reducción de rotación en 1.5% vs trimestre anterior</span>
+                </li>
+                <li className="flex items-start gap-3 text-sm text-slate-600">
+                  <CheckCircle2 size={18} className="text-[#038CAE] mt-0.5 flex-shrink-0" />
+                  <span>Auditoría STPS superada sin observaciones</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Próximos Eventos */}
+            <div className="mt-auto">
+              <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4 border-b pb-2">Próximos Eventos</h3>
+              <div className="space-y-4">
+                <div className="flex gap-4 p-3 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 transition-colors group cursor-pointer">
+                  <div className="flex flex-col items-center justify-center bg-white p-2 rounded shadow-sm w-12 h-12 text-[#038CAE] group-hover:scale-105 transition-transform">
+                    <span className="text-[10px] font-bold uppercase leading-none">Oct</span>
+                    <span className="text-lg font-black leading-none mt-1">12</span>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <span className="font-semibold text-slate-800 text-sm">Evaluaciones Q3</span>
+                    <span className="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><Calendar size={12} /> Cierre de periodo</span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4 p-3 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 transition-colors group cursor-pointer">
+                  <div className="flex flex-col items-center justify-center bg-white p-2 rounded shadow-sm w-12 h-12 text-[#038CAE] group-hover:scale-105 transition-transform">
+                    <span className="text-[10px] font-bold uppercase leading-none">Oct</span>
+                    <span className="text-lg font-black leading-none mt-1">25</span>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <span className="font-semibold text-slate-800 text-sm">Encuesta de Clima</span>
+                    <span className="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><Calendar size={12} /> Apertura de plataforma</span>
+                  </div>
+                </div>
+
+                <div className="flex gap-4 p-3 rounded-lg bg-slate-50 border border-slate-100 hover:bg-blue-50 transition-colors group cursor-pointer">
+                  <div className="flex flex-col items-center justify-center bg-white p-2 rounded shadow-sm w-12 h-12 text-[#038CAE] group-hover:scale-105 transition-transform">
+                    <span className="text-[10px] font-bold uppercase leading-none">Nov</span>
+                    <span className="text-lg font-black leading-none mt-1">15</span>
+                  </div>
+                  <div className="flex flex-col justify-center">
+                    <span className="font-semibold text-slate-800 text-sm">Noche BESCO</span>
+                    <span className="text-xs text-slate-500 flex items-center gap-1 mt-0.5"><Award size={12} /> Premiación anual</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        ))}
+        </div>
       </div>
     </div>
   );

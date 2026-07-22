@@ -64,7 +64,7 @@ export const brandingConfig = {
     habilitado: true,
   },
 
-  // Acentos por modo (toda decisión de color vive aquí)
+  // Acentos por modo/sección
   temas: {
     admin: {
       nombre: "Operación interna",
@@ -74,10 +74,24 @@ export const brandingConfig = {
       sobreAcento: "#1F2937",   // texto sobre amarillo (contraste AA)
     },
     cliente: {
-      nombre: "Edificios inteligentes",
+      nombre: "Control Inteligente de Nuevos Negocios",
       acento: "#10B981",        // verde
       acentoOscuro: "#047857",
       acentoSuave: "#D1FAE5",
+      sobreAcento: "#FFFFFF",
+    },
+    compras: {
+      nombre: "Comando Inteligente de Compras",
+      acento: "#DC2626",        // rojo
+      acentoOscuro: "#991B1B",
+      acentoSuave: "#FEE2E2",
+      sobreAcento: "#FFFFFF",
+    },
+    flotillas: {
+      nombre: "Comando Inteligente de Flotillas",
+      acento: "#1E40AF",        // azul marino
+      acentoOscuro: "#0F172A",
+      acentoSuave: "#DBEAFE",
       sobreAcento: "#FFFFFF",
     },
   },

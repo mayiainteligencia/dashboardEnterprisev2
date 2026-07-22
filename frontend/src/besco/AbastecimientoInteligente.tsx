@@ -405,19 +405,19 @@ export const AbastecimientoInteligente: React.FC<{
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 800, color: colores.textoClaro, letterSpacing: '-0.3px' }}>
-                Administración Logística y Abastecimiento de Urgencia
+                Abastecimiento de Urgencia
               </h1>
               <span style={{ fontSize: '11px', fontWeight: 800, background: '#EA580C', color: '#fff', padding: '3px 9px', borderRadius: '12px' }}>
                 MÓDULO CENTRAL
               </span>
             </div>
             <p style={{ margin: 0, fontSize: '14.5px', color: colores.textoMedio }}>
-              Gestión prioritaria de resolución de problemas, logística de urgencias y predictibilidad asistida por {ia.nombre}.
+              Gestión prioritaria de abastecimiento de urgencias y predictibilidad asistida por {ia.nombre}.
             </p>
           </div>
         </div>
 
-        {/* ACCESO DIRECTO AL RANKING DE VENDEDORES */}
+        {/* ACCESO DIRECTO AL RANKING DE COMPRADORES */}
         {onNavigateToRendimiento && (
           <button
             onClick={() => onNavigateToRendimiento()}
@@ -437,7 +437,7 @@ export const AbastecimientoInteligente: React.FC<{
               transition: 'all 0.2s'
             }}
           >
-            <Trophy size={16} color="#F59E0B" /> Ranking de Vendedores <ChevronRight size={16} />
+            <Trophy size={16} color="#F59E0B" /> Ranking de Compradores <ChevronRight size={16} />
           </button>
         )}
       </div>

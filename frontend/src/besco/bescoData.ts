@@ -4,6 +4,8 @@ import {
   UserCog, ScanEye, BarChart3,
   Video, Flame, Building2, Wind, Zap, FileBarChart, LayoutGrid, TrendingUp,
   Grid3x3, Cpu, Trophy,
+  FileSpreadsheet, Users, Calculator, Package, CheckCircle2, ShoppingCart, Clock, ShieldCheck,
+  GraduationCap, Sparkles, Headphones, Radio,
 } from 'lucide-react';
 
 export type Modo = 'cliente' | 'admin';
@@ -22,6 +24,54 @@ export const kpisAdmin: Kpi[] = [
   { label: 'Inmuebles', valor: '7,000' },
   { label: 'Oficinas', valor: '35' },
   { label: 'Tickets / SLA hoy', valor: '18 · 94%' },
+];
+
+// Sección 1: Comando Inteligente de Compras
+export const modulosCompras: Modulo[] = [
+  { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
+    kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
+  { id: 'rendimiento-vendedores', titulo: 'Ranking de Compradores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
+    kpis: [{ label: 'Ganancia total', valor: '$1.61M' }, { label: 'Pérdida evitada', valor: '$860K' }, { label: 'SLA Promedio', valor: '97.4%' }] },
+  { id: 'requisiciones', titulo: 'Requisiciones', descripcion: 'Solicitudes y requerimientos de compra activos.', icono: FileSpreadsheet,
+    kpis: [{ label: 'Abiertas', valor: '42' }, { label: 'En proceso', valor: '18' }] },
+  { id: 'proveedores', titulo: 'Proveedores', descripcion: 'Catálogo, evaluación y homologación de proveedores.', icono: Users,
+    kpis: [{ label: 'Homologados', valor: '184' }, { label: 'Rating prom.', valor: '4.8' }] },
+  { id: 'cotizaciones', titulo: 'Cotizaciones', descripcion: 'Comparativo automático de presupuestos y precios.', icono: Calculator,
+    kpis: [{ label: 'En revisión', valor: '12' }, { label: 'Ahorro est.', valor: '15.4%' }] },
+  { id: 'inventario', titulo: 'Inventario', descripcion: 'Control de existencias y refacciones en tiempo real.', icono: Package,
+    kpis: [{ label: 'Stock crítico', valor: '5' }, { label: 'Valuación', valor: '$4.2M' }] },
+  { id: 'aprobaciones', titulo: 'Aprobaciones', descripcion: 'Flujo de firmas y autorización de compras.', icono: CheckCircle2,
+    kpis: [{ label: 'Pendientes', valor: '7' }, { label: 'Tiempo prom.', valor: '1.2h' }] },
+  { id: 'presupuesto', titulo: 'Presupuesto', descripcion: 'Seguimiento de gasto vs. presupuesto asignado.', icono: BarChart3,
+    kpis: [{ label: 'Ejecutado', valor: '68%' }, { label: 'Disponible', valor: '$1.8M' }] },
+  { id: 'ordenes-compra', titulo: 'Órdenes de Compra', descripcion: 'Emisión, envío y trazabilidad de ODC.', icono: ShoppingCart,
+    kpis: [{ label: 'Emitidas hoy', valor: '29' }, { label: 'En tránsito', valor: '14' }] },
+  { id: 'impacto-sla', titulo: 'Impacto SLA', descripcion: 'Medición de urgencias y afectación en la operación.', icono: Clock,
+    kpis: [{ label: 'Cumplimiento', valor: '97.2%' }, { label: 'Riesgo bajo', valor: 'Ok' }] },
+  { id: 'auditoria', titulo: 'Auditoría', descripcion: 'Validación de facturas, entregas y cumplimiento.', icono: ShieldCheck,
+    kpis: [{ label: 'Sin discrepancias', valor: '99.1%' }, { label: 'Auditadas', valor: '156' }] },
+];
+
+// Sección 2: Comando Inteligente de Flotillas (9 módulos)
+export const modulosFlotillas: Modulo[] = [
+  { id: 'fleet', titulo: 'Fleet Intelligence Command Center', descripcion: 'Estado en vivo de la flota por región.', icono: Truck,
+    kpis: [{ label: 'Activas', valor: '352' }, { label: 'Detenidas', valor: '48' }, { label: 'Regiones', valor: '12' }] },
+  { id: 'rutas', titulo: 'Optimización Inteligente de Rutas', descripcion: 'Rutas reordenadas por IA para cumplir SLA.', icono: Route,
+    kpis: [{ label: 'Km ahorrados', valor: '12,480' }, { label: 'Cumplimiento SLA', valor: '94%' }] },
+  { id: 'mant-veh', titulo: 'Mantenimiento predictivo vehicular', descripcion: 'Fallas anticipadas antes de ocurrir.', icono: Wrench,
+    kpis: [{ label: 'Unidades en riesgo', valor: '17' }, { label: 'Disponibilidad', valor: '96%' }] },
+  { id: 'driver-risk', titulo: 'Speed & Driver Risk AI', descripcion: 'Score de conducción y alertas de velocidad.', icono: Gauge,
+    kpis: [{ label: 'Score conductor', valor: '8.4' }, { label: 'Alertas velocidad', valor: '23' }] },
+  { id: 'polizas', titulo: 'Agente de Pólizas y Documentos', descripcion: 'Vencimientos y cumplimiento documental.', icono: FileText,
+    kpis: [{ label: 'Vencen pronto', valor: '9' }, { label: 'Cumplimiento', valor: '98%' }] },
+  { id: 'gasto', titulo: 'IA de Gasto Operativo', descripcion: 'Gasolina, viáticos y refacciones bajo control.', icono: DollarSign,
+    kpis: [{ label: 'Anomalías', valor: '6' }, { label: 'Fuga detectada', valor: '$184K' }] },
+  { id: 'copiloto', titulo: 'Copiloto del Supervisor', descripcion: 'Asignaciones y escalamientos sugeridos.', icono: UserCog,
+    kpis: [{ label: 'Asignaciones', valor: '31' }, { label: 'Escalamientos', valor: '5' }] },
+  { id: 'auditor', titulo: 'Auditor Visual de evidencia', descripcion: 'Cierres validados por visión computacional.', icono: ScanEye,
+    kpis: [{ label: 'Cierres validados', valor: '212' }, { label: 'Disputas evitadas', valor: '38' }] },
+  { id: 'sla', titulo: 'Predicción de incumplimiento SLA', descripcion: 'Semáforo de tickets en riesgo.', icono: AlertTriangle,
+    kpis: [{ label: 'Tickets en rojo', valor: '4' }, { label: 'Semáforo', valor: 'Amarillo' }] },
 ];
 
 // Dashboard 1 — Operación interna (amarillo) · 10 módulos
@@ -50,7 +100,7 @@ export const modulosAdmin: Modulo[] = [
     kpis: [{ label: 'Paneles', valor: '288' }, { label: 'En alerta', valor: '7' }, { label: 'Niveles', valor: '6' }] },
   { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
     kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
-  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Vendedores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
+  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Compradores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
     kpis: [{ label: 'Ganancia total', valor: '$1.61M' }, { label: 'Pérdida evitada', valor: '$860K' }, { label: 'SLA Promedio', valor: '97.4%' }] },
 ];
 
@@ -74,8 +124,38 @@ export const modulosCliente: Modulo[] = [
     kpis: [{ label: 'Oportunidades', valor: '63' }] },
   { id: 'abastecimiento', titulo: 'Abastecimiento de Urgencia (IA)', descripcion: 'Optimiza la atención de requerimientos urgentes buscando proveedores.', icono: Cpu,
     kpis: [{ label: 'Respuesta', valor: '3.4 min' }, { label: 'Ahorro prom.', valor: '18.5%' }, { label: 'SLA Urgencias', valor: '98%' }] },
-  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Vendedores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
+  { id: 'rendimiento-vendedores', titulo: 'Rendimiento y Ranking de Compradores', descripcion: 'Eficiencia, ganancias, pérdidas y métricas de resolución por asignado.', icono: Trophy,
     kpis: [{ label: 'Ganancia total', valor: '$1.61M' }, { label: 'Pérdida evitada', valor: '$860K' }, { label: 'SLA Promedio', valor: '97.4%' }] },
+];
+
+// Sección 4: Módulos de Departamentos
+export const modulosDepartamentos: Modulo[] = [
+  { id: 'dept-administracion', titulo: 'Administración', descripcion: 'Consultoría estratégica, innovación empresarial y calidad ISO 9001.', icono: Building2,
+    kpis: [{ label: 'Proyectos', valor: '14' }, { label: 'Calidad ISO', valor: '98%' }] },
+  { id: 'dept-finanzas', titulo: 'Finanzas y Contabilidad', descripcion: 'Estados financieros, seguimiento presupuestal, flujo de caja y facturación.', icono: DollarSign,
+    kpis: [{ label: 'Balance general', valor: '$12.4M' }, { label: 'Flujo caja', valor: '+15.2%' }] },
+  { id: 'dept-operaciones', titulo: 'Operaciones', descripcion: 'Control de líneas de producción, gestión de almacén, logística y calidad.', icono: Wrench,
+    kpis: [{ label: 'Eficiencia op.', valor: '96.8%' }, { label: 'Calidad', valor: '99.1%' }] },
+  { id: 'dept-rh', titulo: 'Recursos Humanos', descripcion: 'Portal del empleado, reclutamiento inteligente, capacitación y nómina.', icono: Users,
+    kpis: [{ label: 'Personal activo', valor: '1,280' }, { label: 'Vacantes', valor: '8' }] },
+  { id: 'dept-ti', titulo: 'Tecnologías de la Información', descripcion: 'Infraestructura cloud, mesa de ayuda, desarrollo e ingeniería de datos.', icono: Cpu,
+    kpis: [{ label: 'Uptime red', valor: '99.9%' }, { label: 'Tickets res.', valor: '94.2%' }] },
+  { id: 'dept-ventas', titulo: 'Ventas y Marketing', descripcion: 'Estrategia comercial, campañas digitales, CRM y analítica predictiva.', icono: TrendingUp,
+    kpis: [{ label: 'Tasa conversión', valor: '18.4%' }, { label: 'Leads mes', valor: '340' }] },
+  { id: 'dept-playground', titulo: 'Playground & Innovación', descripcion: 'Testing de API, sandbox de código, IA generativa y automatización.', icono: Sparkles,
+    kpis: [{ label: 'Demos activos', valor: '24' }, { label: 'Modelos IA', valor: '8' }] },
+];
+
+// Sección 5 (Hasta el final en sección aparte): Ciberseguridad, Academia, Centro de Monitoreo y Mesa de Ayuda
+export const modulosEspeciales: Modulo[] = [
+  { id: 'dept-ciberseguridad', titulo: 'Ciberseguridad Avanzada', descripcion: 'Ciberresiliencia, monitoreo 24/7 en NOC IA y certificación ISO 27001.', icono: ShieldCheck,
+    kpis: [{ label: 'Amenazas bloq.', valor: '1,420' }, { label: 'ISO 27001', valor: '100%' }] },
+  { id: 'dept-academia', titulo: 'Academia MAYIA', descripcion: 'Plataforma de cursos de negocios, tecnología e IA aplicada.', icono: GraduationCap,
+    kpis: [{ label: 'Cursos activos', valor: '32+' }, { label: 'Certificados', valor: '450' }] },
+  { id: 'dept-monitoreo', titulo: 'Centro de Monitoreo & Sala Virtual', descripcion: 'Supervisión en vivo 24/7, orquestación de agentes IA y puente virtual de directores BESCO.', icono: Radio,
+    kpis: [{ label: 'Agentes IA', valor: '6 Activos' }, { label: 'Directores Sala', valor: '5 Conectados' }] },
+  { id: 'dept-mesa-ayuda', titulo: 'Mesa de Ayuda', descripcion: 'Gestión integral de tickets, matriz de escalamiento N1/N2/N3, SLA en tiempo real y respuesta Asistida por IA.', icono: Headphones,
+    kpis: [{ label: 'Tickets activos', valor: '18' }, { label: 'T. Respuesta', valor: '3.4 min' }] },
 ];
 
 export const modulosPorModo = (m: Modo): Modulo[] => (m === 'admin' ? modulosAdmin : modulosCliente);
@@ -98,11 +178,21 @@ export const alertasPorModo: Record<Modo, Alerta[]> = {
   admin: [
     { severidad: 'critico', titulo: 'Unidad 142 fuera de servicio · CDMX', hace: '8 min', accion: 'Reasignar ruta y agendar grúa.',
       detalle: 'La unidad 142 reporta falla de motor en zona Centro. Hay 2 servicios de mantenimiento asignados a su ruta de hoy.' },
-    { severidad: 'atencion', titulo: 'SLA en riesgo: 3 tickets por vencer', hace: '22 min', accion: 'Priorizar cuadrillas en zona Norte.',
+    { severidad: 'critico', titulo: 'Exceso de velocidad recurrente · Unidad 215', hace: '14 min', accion: 'Notificar a supervisor y citar a conductor.',
+      detalle: 'La unidad 215 superó 118 km/h en Periférico Sur (límite 80 km/h), acumulando 7 alertas de telemetría esta semana.' },
+    { severidad: 'critico', titulo: 'Caducidad de placas y verificación vehicular', hace: '20 min', accion: 'Agendar cita en verificentro CDMX.',
+      detalle: '6 unidades de la flota CDMX tienen trámite de emplacado y verificación venciendo este viernes. Riesgo de multa y corralón.' },
+    { severidad: 'critico', titulo: 'Órden de Compra Urgente pendiente de firma', hace: '32 min', accion: 'Aprobar ODC #BESCO-9418 inmediatamente.',
+      detalle: 'La ODC para refacciones de compresor HVAC de urgencia lleva 4 horas esperando firma de autorización.' },
+    { severidad: 'atencion', titulo: 'Vencimiento de acuerdo comercial con proveedor', hace: '45 min', accion: 'Iniciar renegociación de tarifa.',
+      detalle: 'El convenio de tarifa preferencial con Refacciones MX vence en 10 días. Posible incremento de 12% si no se renueva.' },
+    { severidad: 'atencion', titulo: 'Desviación en cotización vs. Presupuesto', hace: '1 h', accion: 'Evaluar proveedor alternativo en sistema.',
+      detalle: 'La cotización recibida para lote de llantas industriales excede el presupuesto autorizado por $68,400 MXN.' },
+    { severidad: 'atencion', titulo: 'SLA en riesgo: 3 tickets por vencer', hace: '2 h', accion: 'Priorizar cuadrillas en zona Norte.',
       detalle: 'Tres tickets de mantenimiento correctivo vencen en menos de 2 horas y aún no tienen cuadrilla en sitio.' },
-    { severidad: 'atencion', titulo: 'Anomalía de gasto en combustible (+18%)', hace: '1 h', accion: 'Auditar cargas de la región Bajío.',
+    { severidad: 'atencion', titulo: 'Anomalía de gasto en combustible (+18%)', hace: '3 h', accion: 'Auditar cargas de la región Bajío.',
       detalle: 'El gasto de combustible de la región Bajío subió 18% vs. el promedio mensual sin aumento de servicios.' },
-    { severidad: 'atencion', titulo: 'Pólizas de 9 unidades vencen esta semana', hace: '3 h', accion: 'Renovar antes del viernes.',
+    { severidad: 'atencion', titulo: 'Pólizas de 9 unidades vencen esta semana', hace: '4 h', accion: 'Renovar en bloque antes del viernes.',
       detalle: 'Nueve unidades de la flota tienen pólizas de seguro con vencimiento en los próximos 5 días.' },
     { severidad: 'ok', titulo: 'Mantenimiento preventivo completado · 12 unidades', hace: '5 h', accion: 'Sin acción requerida.',
       detalle: 'Se completó el mantenimiento preventivo programado de 12 unidades en el taller central.' },
@@ -137,10 +227,115 @@ export const serieTipo: Record<string, TipoGrafica> = {
   polizas: 'proporcion', gasto: 'proporcion', sla: 'proporcion', auditor: 'tendencia', 'ejecutivo-op': 'tendencia',
   cctv: 'proporcion', fuego: 'comparacion', health: 'proporcion', hvac: 'comparacion',
   energy: 'tendencia', reporte: 'tendencia', portal: 'tendencia', upsell: 'proporcion',
+  requisiciones: 'comparacion', proveedores: 'proporcion', cotizaciones: 'comparacion',
+  inventario: 'proporcion', aprobaciones: 'tendencia', presupuesto: 'tendencia',
+  'ordenes-compra': 'comparacion', 'impacto-sla': 'proporcion', auditoria: 'tendencia',
 };
 
 export const detalleModulos: Record<string, Detalle> = {
-  // ----- ADMIN -----
+  // ----- COMPRAS -----
+  requisiciones: {
+    insight: '42 requisiciones abiertas y 18 en proceso. El 64% corresponde a refacciones críticas para la operación.',
+    serie: { titulo: 'Requisiciones por departamento', datos: [
+      { label: 'Mantenimiento', valor: 28 }, { label: 'Flotas', valor: 18 }, { label: 'Pisos Técnicos', valor: 9 }, { label: 'Sistemas', valor: 5 } ] },
+    tabla: { titulo: 'Requisiciones activas', columnas: ['Folio', 'Departamento', 'Artículos', 'Prioridad', 'Estatus'], filas: [
+      ['REQ-4012', 'Mantenimiento', 'Refacciones Compresor', 'Alta', 'En proceso'],
+      ['REQ-4015', 'Flotas', 'Llantas industriales', 'Media', 'Aprobada'],
+      ['REQ-4019', 'Pisos Técnicos', 'Paneles de repuesto', 'Alta', 'Por revisar'],
+      ['REQ-4022', 'Sistemas', 'Switches PoE', 'Baja', 'En proceso'] ] },
+    lista: { titulo: 'Alertas de requisiciones', items: [
+      { texto: 'REQ-4012 requiere asignación de proveedor urgente', severidad: 'critico' },
+      { texto: '3 requisiciones con más de 48h sin movimiento', severidad: 'atencion' } ] },
+  },
+  proveedores: {
+    insight: '184 proveedores homologados en catálogo. Rating promedio de cumplimiento 4.8/5.0.',
+    serie: { titulo: 'Proveedores por categoría', datos: [
+      { label: 'Refacciones', valor: 68 }, { label: 'Servicios', valor: 45 }, { label: 'Logística', valor: 38 }, { label: 'Equipos', valor: 33 } ] },
+    tabla: { titulo: 'Proveedores principales', columnas: ['Proveedor', 'Categoría', 'Rating', 'Cumplimiento SLA', 'Convenio'], filas: [
+      ['Refacciones MX', 'Refacciones', '4.9', '98.5%', 'Vigente'],
+      ['Mantenimiento Pro', 'Servicios', '4.8', '97.2%', 'Por vencer'],
+      ['Logística Express', 'Logística', '4.6', '95.8%', 'Vigente'],
+      ['Equipos e Inmuebles', 'Equipos', '4.7', '96.4%', 'Vigente'] ] },
+    lista: { titulo: 'Acciones de convenio', items: [
+      { texto: 'Convenio tarifario con Mantenimiento Pro vence en 10 días', severidad: 'atencion' },
+      { texto: '3 proveedores requieren actualización de homologación', severidad: 'atencion' } ] },
+  },
+  cotizaciones: {
+    insight: '12 cotizaciones en revisión. La IA de BESCO identificó una oportunidad de ahorro del 15.4%.',
+    serie: { titulo: 'Ahorro estimado por categoría (MXN)', datos: [
+      { label: 'Refacciones', valor: 142000 }, { label: 'Llantas', valor: 98000 }, { label: 'Herramienta', valor: 54000 }, { label: 'Consumibles', valor: 42000 } ] },
+    tabla: { titulo: 'Comparativo por IA', columnas: ['Cotización', 'Proveedor A', 'Proveedor B', 'Diferencia', 'Sugerencia IA'], filas: [
+      ['COT-8821', '$210,000', '$184,000', '-12.3%', 'Proveedor B'],
+      ['COT-8829', '$95,000', '$82,500', '-13.1%', 'Proveedor B'],
+      ['COT-8834', '$340,000', '$295,000', '-13.2%', 'Proveedor B'],
+      ['COT-8840', '$78,000', '$68,000', '-12.8%', 'Proveedor B'] ] },
+    lista: { titulo: 'Desviaciones', items: [
+      { texto: 'Cotización Llantas Industriales excede presupuesto por $68,400', severidad: 'critico' } ] },
+  },
+  inventario: {
+    insight: 'Valuación total $4.2M MXN en 5 almacenes regionales. 5 artículos en stock crítico.',
+    serie: { titulo: 'Inventario por almacén (MXN)', datos: [
+      { label: 'CDMX', valor: 1850000 }, { label: 'MTY', valor: 940000 }, { label: 'GDL', valor: 680000 }, { label: 'Bajío', valor: 430000 }, { label: 'Sureste', valor: 300000 } ] },
+    tabla: { titulo: 'Artículos con stock crítico', columnas: ['Código', 'Descripción', 'Stock actual', 'Mínimo', 'Ubicación'], filas: [
+      ['REF-092', 'Filtro aceite diésel', '4 unidades', '15 unidades', 'CDMX'],
+      ['PAN-104', 'Panel piso técnico', '8 unidades', '30 unidades', 'GDL'],
+      ['SEN-441', 'Sensor HVAC', '2 unidades', '10 unidades', 'MTY'],
+      ['VAL-210', 'Válvula hidráulica', '3 unidades', '12 unidades', 'Bajío'] ] },
+    lista: { titulo: 'Reorden urgente', items: [
+      { texto: 'Stock de Filtros diésel por debajo del mínimo de seguridad', severidad: 'critico' } ] },
+  },
+  aprobaciones: {
+    insight: '7 solicitudes pendientes de aprobación. Tiempo promedio de firmas: 1.2 horas.',
+    serie: { titulo: 'Aprobaciones procesadas por día', datos: [
+      { label: 'Lun', valor: 14 }, { label: 'Mar', valor: 18 }, { label: 'Mié', valor: 22 }, { label: 'Jue', valor: 19 }, { label: 'Vie', valor: 25 } ] },
+    tabla: { titulo: 'Solicitudes pendientes', columnas: ['Solicitud', 'Monto', 'Solicitante', 'Nivel', 'Estatus'], filas: [
+      ['APR-901', '$148,000', 'Ing. R. Morales', 'Gerencia', 'En espera'],
+      ['APR-904', '$42,500', 'Lic. A. Vega', 'Jefatura', 'En espera'],
+      ['APR-908', '$310,000', 'Ing. C. Mendoza', 'Dirección', 'En espera'],
+      ['APR-912', '$18,900', 'Técnico H. Cruz', 'Supervisión', 'En espera'] ] },
+  },
+  presupuesto: {
+    insight: '68% del presupuesto anual ejecutado ($3.8M de $5.6M). $1.8M disponible.',
+    serie: { titulo: 'Ejecución por centro de costos (MXN)', datos: [
+      { label: 'Mantenimiento', valor: 1840000 }, { label: 'Flotas', valor: 1210000 }, { label: 'Refacciones', valor: 750000 }, { label: 'Servicios', valor: 420000 } ] },
+    tabla: { titulo: 'Estado de partidas', columnas: ['Centro de Costos', 'Presupuesto', 'Ejecutado', 'Disponible', 'Estatus'], filas: [
+      ['CC-101 Flotas', '$1,800,000', '$1,210,000', '$590,000', 'Verde'],
+      ['CC-102 Mantenimiento', '$2,200,000', '$1,840,000', '$360,000', 'Ámbar'],
+      ['CC-103 Pisos', '$900,000', '$520,000', '$380,000', 'Verde'],
+      ['CC-104 Administración', '$700,000', '$420,000', '$280,000', 'Verde'] ] },
+  },
+  'ordenes-compra': {
+    insight: '29 ODC emitidas hoy. 14 órdenes en tránsito con rastreo GPS activo.',
+    serie: { titulo: 'ODC emitidas por semana', datos: [
+      { label: 'S1', valor: 98 }, { label: 'S2', valor: 112 }, { label: 'S3', valor: 125 }, { label: 'S4', valor: 140 } ] },
+    tabla: { titulo: 'Órdenes de Compra activas', columnas: ['ODC', 'Proveedor', 'Monto', 'ETA Entrega', 'Estatus'], filas: [
+      ['ODC-9418', 'Refacciones MX', '$124,500', 'Hoy 16:30', 'En tránsito'],
+      ['ODC-9420', 'Logística Express', '$48,000', 'Mañana', 'En tránsito'],
+      ['ODC-9425', 'Mantenimiento Pro', '$86,200', '24 Jul', 'Emitida'],
+      ['ODC-9430', 'Equipos MX', '$210,000', '26 Jul', 'En proceso'] ] },
+  },
+  'impacto-sla': {
+    insight: '97.2% de SLA en entregas de insumos. Cero paros de planta por desabasto.',
+    serie: { titulo: 'Cumplimiento SLA por insumo (%)', datos: [
+      { label: 'Ene', valor: 95.8 }, { label: 'Feb', valor: 96.2 }, { label: 'Mar', valor: 96.9 }, { label: 'Abr', valor: 97.2 } ] },
+    tabla: { titulo: 'Monitoreo de suministro', columnas: ['Insumo', 'Servicio Afectado', 'SLA Cumplido', 'Riesgo Paro'], filas: [
+      ['Filtros diésel', 'Mantenimiento Flotas', '98.5%', 'Bajo'],
+      ['Paneles piso', 'Pisos Técnicos Site', '96.2%', 'Medio'],
+      ['Refacciones HVAC', 'Climatización Inmuebles', '97.8%', 'Bajo'],
+      ['Aceite sintético', 'Servicio Vehicular', '99.0%', 'Bajo'] ] },
+  },
+  auditoria: {
+    insight: '99.1% de facturas y entregas validadas sin discrepancias. 156 facturas auditadas por IA.',
+    serie: { titulo: 'Facturas auditadas por estatus', datos: [
+      { label: 'Sin error', valor: 154 }, { label: 'Discrepancia', valor: 2 } ] },
+    tabla: { titulo: 'Facturas auditadas', columnas: ['Factura', 'Proveedor', 'Monto', 'Resultado', 'Observaciones'], filas: [
+      ['FAC-7712', 'Refacciones MX', '$124,500', 'Validado', 'Coincide con ODC'],
+      ['FAC-7718', 'Logística Express', '$48,000', 'Validado', 'Coincide con ODC'],
+      ['FAC-7725', 'Proveedor X', '$15,400', 'Revisar', 'Diferencia en IVA $120'],
+      ['FAC-7730', 'Equipos MX', '$210,000', 'Validado', 'Coincide con ODC'] ] },
+  },
+
+  // ----- ADMIN (FLOTILLAS & OPERACIÓN) -----
   fleet: {
     insight: '352 de 400 unidades activas. 3 regiones concentran el 60% de las detenciones.',
     serie: { titulo: 'Unidades activas por región', datos: [
@@ -308,7 +503,7 @@ export const alertasVivoAdmin: ToastAlerta[] = [
   { severidad: 'ok', modulo: 'Análisis IA MAYIA', titulo: 'Optimización de Abastecimiento', mensaje: 'Evaluación completada: 3 proveedores homologados para cisterna Querétaro. Ahorro +22%.' },
   { severidad: 'atencion', modulo: 'Predictibilidad', titulo: 'Alerta Predictiva PRED-305', mensaje: 'Sobretemperatura en transformador Plaza Mayor León (+12°C). ETA preventivo: 75 min.' },
   { severidad: 'ok', modulo: 'Despacho Logístico', titulo: 'Técnico en Camino', mensaje: 'Proveedor Vidrios Templados del Centro despachado a Torre Reforma. ETA: 40 min.' },
-  { severidad: 'atencion', modulo: 'Ranking Vendedores', titulo: 'Actualización de Desempeño', mensaje: 'Ing. Carlos Mendoza resolvió URG-808 en Toluca alcanzando 98.8% de SLA.' },
+  { severidad: 'atencion', modulo: 'Ranking Compradores', titulo: 'Actualización de Desempeño', mensaje: 'Ing. Carlos Mendoza resolvió URG-808 en Toluca alcanzando 98.8% de SLA.' },
   { severidad: 'critico', modulo: 'Abastecimiento IA', titulo: 'Requisición OracleERP Importada', mensaje: 'Solicitud urgente de transformador de subestación en C.C. Santa Fe. Asignada a Lic. Sofía Ramírez.' },
   { severidad: 'ok', modulo: 'Análisis IA MAYIA', titulo: 'Análisis de Cotización en Vivo', mensaje: 'MAYIA seleccionó opción con mayor disponibilidad física y menor costo logístico en Monterrey.' },
   { severidad: 'atencion', modulo: 'Predictibilidad', titulo: 'Alerta Predictiva PRED-306', mensaje: 'Oscilación de voltaje en Tijuana Logística. Botón "Contactar cliente" disponible.' },
@@ -332,6 +527,107 @@ const extraFallback: ExtraModulo = {
 };
 
 export const extraModulos: Record<string, ExtraModulo> = {
+  // ----- COMPRAS -----
+  requisiciones: {
+    alertas: [
+      { severidad: 'critico', texto: 'REQ-4012 de refacciones HVAC lleva 48h sin proveedor', meta: 'Urgente' },
+      { severidad: 'atencion', texto: '3 requisiciones pendientes de visto bueno técnico', meta: 'Revisión' },
+    ],
+    recomendacion: 'Asigna proveedor homologado a REQ-4012 inmediatamente para evitar paro de climatización en Edificio Insurgentes.',
+    palancas: [
+      { label: 'Tiempo de procesamiento', impacto: '-36 min', nota: 'Aprobación digital', ajuste: 82 },
+      { label: 'Costo por requisición', impacto: '-12%', nota: 'Filtro automático', ajuste: 68 },
+    ],
+  },
+  proveedores: {
+    alertas: [
+      { severidad: 'atencion', texto: 'Convenio tarifario con Mantenimiento Pro vence en 10 días', meta: 'Renegociar' },
+      { severidad: 'atencion', texto: '3 proveedores requieren actualización de homologación', meta: 'Documentación' },
+    ],
+    recomendacion: 'Inicia la renovación consolidada del convenio con Mantenimiento Pro para blindar tarifas preferenciales este año.',
+    palancas: [
+      { label: 'Descuento por volumen', impacto: '-$320K/año', nota: 'Tarifas negociadas', ajuste: 78 },
+      { label: 'Cumplimiento de SLA', impacto: '+98.5%', nota: 'Monitoreo de proveedor', ajuste: 70 },
+    ],
+  },
+  cotizaciones: {
+    alertas: [
+      { severidad: 'critico', texto: 'Cotización Llantas Industriales excede presupuesto en $68,400', meta: 'En revisión' },
+      { severidad: 'atencion', texto: '12 cotizaciones listas para comparativo inteligente IA', meta: 'Optimizar' },
+    ],
+    recomendacion: 'Selecciona la sugerencia de la IA BESCO para la cotización COT-8821: ahorro directo de 12.3% sin alterar tiempo de entrega.',
+    palancas: [
+      { label: 'Ahorro por cotización', impacto: '-15.4%', nota: 'Comparativo automático', ajuste: 85 },
+      { label: 'Tiempo de adjudicación', impacto: '-4 horas', nota: 'Análisis asistido', ajuste: 62 },
+    ],
+  },
+  inventario: {
+    alertas: [
+      { severidad: 'critico', texto: 'Stock de Filtros diésel por debajo del mínimo de seguridad', meta: 'CDMX' },
+      { severidad: 'atencion', texto: '5 artículos en nivel de stock crítico', meta: 'Reorden' },
+    ],
+    recomendacion: 'Genera orden de reorden para los 4 filtros diésel en CDMX: previene paros de mantenimiento en la flota central.',
+    palancas: [
+      { label: 'Fuga por desabasto', impacto: '-$420K/año', nota: 'Stock de seguridad', ajuste: 76 },
+      { label: 'Rotación de inventario', impacto: '+18%', nota: 'Optimización de almacén', ajuste: 64 },
+    ],
+  },
+  aprobaciones: {
+    alertas: [
+      { severidad: 'atencion', texto: 'APR-901 de $148,000 en espera de firma gerencial', meta: '2.5h esperad.' },
+      { severidad: 'ok', texto: '7 solicitudes en flujo activo de firmas', meta: 'En proceso' },
+    ],
+    recomendacion: 'Autoriza la firma digital de APR-901 para liberar el despacho de refacciones de mantenimientos correctivos.',
+    palancas: [
+      { label: 'Tiempo de firma', impacto: '-1.2 horas', nota: 'Firma móvil BESCO', ajuste: 74 },
+      { label: 'Reprocesos por demora', impacto: '-14%', nota: 'Flujo directo', ajuste: 58 },
+    ],
+  },
+  presupuesto: {
+    alertas: [
+      { severidad: 'atencion', texto: 'CC-102 Mantenimiento al 83% de ejecución trimestral', meta: 'Vigilar' },
+      { severidad: 'ok', texto: '$1.8M disponible en partida presupuestal', meta: 'Dentro de rango' },
+    ],
+    recomendacion: 'Reasigna $120K de la partida CC-103 a CC-102 para balancear la carga presupuestal de mantenimientos preventivos.',
+    palancas: [
+      { label: 'Control presupuestal', impacto: '0% sobreejecución', nota: 'Alertas tempranas', ajuste: 80 },
+      { label: 'Optimización de partidas', impacto: '+$210K', nota: 'Rebalanceo por IA', ajuste: 66 },
+    ],
+  },
+  'ordenes-compra': {
+    alertas: [
+      { severidad: 'critico', texto: 'ODC #BESCO-9418 de urgencia lleva 4h esperando firma', meta: 'Urgente' },
+      { severidad: 'atencion', texto: '14 ODC en tránsito con monitoreo GPS activo', meta: 'En envío' },
+    ],
+    recomendacion: 'Libera la firma de ODC #BESCO-9418; la refacción llega en 3.4 min para atender la falla HVAC reportada.',
+    palancas: [
+      { label: 'Ciclo de emisión', impacto: '-6 horas', nota: 'Procesamiento express', ajuste: 88 },
+      { label: 'Efectividad de entrega', impacto: '98%', nota: 'Seguimiento en vivo', ajuste: 72 },
+    ],
+  },
+  'impacto-sla': {
+    alertas: [
+      { severidad: 'atencion', texto: 'Insumo Paneles piso en riesgo medio de retraso', meta: 'GDL' },
+      { severidad: 'ok', texto: '97.2% de cumplimiento SLA de suministros', meta: 'Cero paros' },
+    ],
+    recomendacion: 'Adelanta el envío de paneles desde el almacén CDMX a GDL para asegurar la meta de SLA del 98%.',
+    palancas: [
+      { label: 'Penalizaciones SLA', impacto: '-$280K/año', nota: 'Cero faltantes', ajuste: 79 },
+      { label: 'Confiabilidad cliente', impacto: '99%', nota: 'Disponibilidad total', ajuste: 68 },
+    ],
+  },
+  auditoria: {
+    alertas: [
+      { severidad: 'atencion', texto: 'FAC-7725 presenta diferencia en IVA ($120 MXN)', meta: 'Revisión' },
+      { severidad: 'ok', texto: '154 facturas validadas automáticamente sin error', meta: '99.1% éxito' },
+    ],
+    recomendacion: 'Acepta la reconciliación automática de la IA para FAC-7725 e ingresa la nota de aclaración al proveedor.',
+    palancas: [
+      { label: 'Fuga por facturación', impacto: '-$150K/año', nota: 'Validación por IA', ajuste: 72 },
+      { label: 'Horas de auditoría', impacto: '-85%', nota: 'Reconciliación auto', ajuste: 84 },
+    ],
+  },
+
   // ----- ADMIN -----
   abastecimiento: {
     alertas: [

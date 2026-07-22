@@ -8,7 +8,18 @@ import { ControladorPisos } from './besco/ControladorPisos';
 import { AbastecimientoInteligente } from './besco/AbastecimientoInteligente';
 import { RendimientoVendedores } from './besco/RendimientoVendedores';
 import { ToastAlertas } from './besco/ToastAlertas';
-import { modulosPorModo, type Modo } from './besco/bescoData';
+import { modulosPorModo, modulosCompras, modulosFlotillas, modulosAdmin, modulosCliente, modulosDepartamentos, modulosEspeciales, type Modo } from './besco/bescoData';
+import { Administracion } from './components/departamentos/Administracion';
+import { FinanzasContabilidad } from './components/departamentos/FinanzasContabilidad';
+import { Operaciones } from './components/departamentos/Operaciones';
+import { RecursosHumanos } from './components/departamentos/RecursosHumanos';
+import { TecnologiasInformacion } from './components/departamentos/TecnologiasInformacion';
+import { VentasMarketing } from './components/departamentos/VentasMarketing';
+import { Playground } from './components/departamentos/Playground';
+import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
+import { Academia } from './components/departamentos/Academia';
+import { CentroMonitoreo } from './components/departamentos/CentroMonitoreo';
+import { MesaAyuda } from './components/departamentos/MesaAyuda';
 import { brandingConfig } from './config/branding';
 
 // Credenciales dummy del acceso admin
@@ -105,14 +116,26 @@ function App() {
   };
   const loginOk = () => { setAdminAuth(true); setShowLogin(false); setModo('admin'); setActiveSection('dashboard'); };
 
-  const moduloActivo = modulosPorModo(modo).find(m => m.id === activeSection);
-  const getTitulo = () => activeSection === 'dashboard' ? 'Dashboard General' : (moduloActivo?.titulo ?? 'Dashboard');
+  const todosLosModulos = [...modulosCompras, ...modulosFlotillas, ...modulosAdmin, ...modulosCliente, ...modulosDepartamentos, ...modulosEspeciales];
+  const moduloActivo = todosLosModulos.find(m => m.id === activeSection);
+  const getTitulo = () => activeSection === 'dashboard' ? 'Comando Inteligente de Compras' : (moduloActivo?.titulo ?? 'Dashboard');
 
   const renderContent = () => {
     if (activeSection === 'dashboard') return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
     if (activeSection === 'pisos') return <ControladorPisos tema={tema} />;
     if (activeSection === 'abastecimiento') return <AbastecimientoInteligente tema={tema} modo={modo} onNavigateToRendimiento={irARendimientoVendedor} />;
     if (activeSection === 'rendimiento-vendedores') return <RendimientoVendedores tema={tema} modo={modo} initialSelectedSellerName={selectedSellerName} />;
+    if (activeSection === 'dept-administracion') return <Administracion />;
+    if (activeSection === 'dept-finanzas') return <FinanzasContabilidad />;
+    if (activeSection === 'dept-operaciones') return <Operaciones />;
+    if (activeSection === 'dept-rh') return <RecursosHumanos />;
+    if (activeSection === 'dept-ti') return <TecnologiasInformacion />;
+    if (activeSection === 'dept-ventas') return <VentasMarketing />;
+    if (activeSection === 'dept-playground') return <Playground />;
+    if (activeSection === 'dept-ciberseguridad') return <Ciberseguridad />;
+    if (activeSection === 'dept-academia') return <Academia />;
+    if (activeSection === 'dept-monitoreo') return <CentroMonitoreo />;
+    if (activeSection === 'dept-mesa-ayuda') return <MesaAyuda />;
     if (moduloActivo) return <ModuloBesco modulo={moduloActivo} tema={tema} />;
     return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
   };

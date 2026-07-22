@@ -2,7 +2,7 @@ import React from 'react';
 import { LayoutDashboard, Sparkles, Cpu, Trophy } from 'lucide-react';
 
 import { brandingConfig } from '../config/branding';
-import { modulosPorModo, type Modo, type Modulo } from '../besco/bescoData';
+import { modulosCompras, modulosFlotillas, modulosCliente, modulosEspeciales, type Modo, type Modulo } from '../besco/bescoData';
 
 interface SidebarProps {
   activeSection: string;
@@ -13,47 +13,30 @@ interface SidebarProps {
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, modo }) => {
   const { empresa, colores, temas } = brandingConfig;
   const tema = modo === 'admin' ? temas.admin : temas.cliente;
-  
-  const allModulos = modulosPorModo(modo);
 
-  // Agrupar los módulos en categorías limpias según el modo
-  const categorizarModulos = (modulos: Modulo[]) => {
-    const otros = modulos.filter(m => m.id !== 'abastecimiento');
-
-    if (modo === 'admin') {
-      return [
-        {
-          titulo: 'Operaciones y Flotas',
-          items: otros.filter(m => ['fleet', 'rutas', 'driver-risk'].includes(m.id))
-        },
-        {
-          titulo: 'Mantenimiento & Sitio',
-          items: otros.filter(m => ['mant-veh', 'pisos', 'auditor'].includes(m.id))
-        },
-        {
-          titulo: 'Gestión, Rendimiento & Finanzas',
-          items: otros.filter(m => ['rendimiento-vendedores', 'gasto', 'polizas', 'sla', 'copiloto', 'ejecutivo-op'].includes(m.id))
-        }
-      ];
-    } else {
-      return [
-        {
-          titulo: 'Seguridad & Analítica CCTV',
-          items: otros.filter(m => ['cctv', 'fuego', 'health'].includes(m.id))
-        },
-        {
-          titulo: 'Sistemas Críticos & Energía',
-          items: otros.filter(m => ['hvac', 'energy'].includes(m.id))
-        },
-        {
-          titulo: 'Gestión, Vendedores & Portal',
-          items: otros.filter(m => ['rendimiento-vendedores', 'reporte', 'portal', 'upsell'].includes(m.id))
-        }
-      ];
+  // Agrupar los módulos en secciones temáticas llamativas
+  const categorias = [
+    {
+      titulo: 'COMANDO INTELIGENTE DE COMPRAS',
+      color: '#DC2626',
+      items: modulosCompras
+    },
+    {
+      titulo: 'COMANDO INTELIGENTE DE FLOTILLAS',
+      color: '#1E40AF',
+      items: modulosFlotillas
+    },
+    {
+      titulo: 'NUEVOS NEGOCIOS & EDIFICIOS',
+      color: '#10B981',
+      items: modulosCliente.filter(m => m.id !== 'abastecimiento' && m.id !== 'rendimiento-vendedores')
+    },
+    {
+      titulo: 'CAPACITACIÓN & SEGURIDAD',
+      color: '#038CAE',
+      items: modulosEspeciales
     }
-  };
-
-  const categorias = categorizarModulos(allModulos);
+  ];
 
   return (
     <div 
@@ -107,22 +90,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         </div>
       </div>
 
-      {/* Label del modo activo */}
-      <div style={{ padding: '0 20px 12px 20px', flexShrink: 0 }}>
-        <span style={{
-          fontSize: '10px',
-          fontWeight: '700',
-          textTransform: 'uppercase',
-          letterSpacing: '0.08em',
-          color: tema.acentoOscuro,
-          background: tema.acentoSuave,
-          padding: '3px 8px',
-          borderRadius: '6px'
-        }}>
-          {tema.nombre}
-        </span>
-      </div>
-
       {/* Menú Principal — scrolleable */}
       <nav className="no-scrollbar" style={{
         flex: '1 1 0',
@@ -131,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         padding: '0 12px 20px 12px',
       }}>
         
-        {/* 1. PRIMER LUGAR: Dashboard General */}
+        {/* 1. PRIMER LUGAR: Control Inteligente de Compras */}
         <div style={{ marginBottom: '10px' }}>
           <button
             onClick={() => onSectionChange('dashboard')}
@@ -170,82 +137,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               <LayoutDashboard size={16} />
             </div>
             <span style={{ fontSize: '13.5px', fontWeight: '700' }}>
-              Dashboard General
+              Control Inteligente de Decisiones
             </span>
-          </button>
-        </div>
-
-        {/* 2. SEGUNDO LUGAR: Módulo de Abastecimiento de Urgencia */}
-        <div style={{ marginBottom: '16px' }}>
-          <div style={{
-            fontSize: '9px',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            color: '#EA580C',
-            marginBottom: '4px',
-            paddingLeft: '8px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px'
-          }}>
-            <Sparkles size={10} color="#EA580C" /> SOLUCIÓN DE PROBLEMAS
-          </div>
-
-          <button
-            onClick={() => onSectionChange('abastecimiento')}
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 12px',
-              borderRadius: '12px',
-              backgroundColor: activeSection === 'abastecimiento' ? tema.acento : `${tema.acento}1A`,
-              color: activeSection === 'abastecimiento' ? tema.sobreAcento : colores.textoClaro,
-              border: `1.5px solid ${activeSection === 'abastecimiento' ? tema.acento : `${tema.acento}50`}`,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              boxShadow: activeSection === 'abastecimiento' ? `0 4px 12px ${tema.acento}40` : 'none',
-              textAlign: 'left'
-            }}
-          >
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '8px',
-                backgroundColor: activeSection === 'abastecimiento' ? 'rgba(255,255,255,0.25)' : tema.acento,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <Cpu size={16} color={activeSection === 'abastecimiento' ? '#fff' : tema.sobreAcento} />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '13px', fontWeight: '700', lineHeight: 1.2 }}>
-                Abastecimiento IA
-              </div>
-              <div style={{ fontSize: '10px', opacity: 0.8, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                Gestión Logística
-              </div>
-            </div>
           </button>
         </div>
 
         {/* Módulos agrupados por categoría */}
         {categorias.map((cat, cIdx) => (
-          <div key={cIdx} style={{ marginBottom: '16px' }}>
+          <div key={cIdx} style={{ marginBottom: '18px' }}>
             <div style={{
               fontSize: '10px',
-              fontWeight: 700,
+              fontWeight: 800,
               textTransform: 'uppercase',
-              letterSpacing: '0.05em',
-              color: colores.textoOscuro,
-              marginBottom: '6px',
-              paddingLeft: '8px'
+              letterSpacing: '0.06em',
+              color: cat.color,
+              marginBottom: '8px',
+              paddingLeft: '8px',
+              borderLeft: `3px solid ${cat.color}`,
+              lineHeight: '1.2'
             }}>
               {cat.titulo}
             </div>
@@ -253,6 +162,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             {cat.items.map((item) => {
               const Icon = item.icono;
               const isActive = activeSection === item.id;
+              const itemColor = cat.color;
 
               return (
                 <button
@@ -266,15 +176,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                     padding: '8px 12px',
                     borderRadius: '10px',
                     marginBottom: '3px',
-                    backgroundColor: isActive ? tema.acento : 'transparent',
-                    color: isActive ? tema.sobreAcento : colores.textoMedio,
+                    backgroundColor: isActive ? itemColor : 'transparent',
+                    color: isActive ? '#FFFFFF' : colores.textoClaro,
                     border: 'none',
                     cursor: 'pointer',
                     transition: 'all 0.15s',
                     textAlign: 'left'
                   }}
                   onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.backgroundColor = colores.fondoTerciario;
+                    if (!isActive) e.currentTarget.style.backgroundColor = `${itemColor}15`;
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
@@ -285,16 +195,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                       width: '28px',
                       height: '28px',
                       borderRadius: '50%',
-                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : colores.fondoTerciario,
+                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}18`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       flexShrink: 0,
                     }}
                   >
-                    <Icon size={14} />
+                    <Icon size={14} color={isActive ? '#FFFFFF' : itemColor} />
                   </div>
-                  <span style={{ fontSize: '12.5px', fontWeight: '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <span style={{ fontSize: '12.5px', fontWeight: isActive ? '700' : '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                     {item.titulo}
                   </span>
                 </button>
@@ -307,4 +217,4 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
     </div>
   );
 };
-
+

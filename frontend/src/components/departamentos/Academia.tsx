@@ -14,7 +14,7 @@ export const Academia: React.FC = () => {
       duracion: '4 HORAS',
       nivel: 'PRINCIPIANTE',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso1.png',
+      mediaSrc: '/assets/academia/curso1.png',
     },
     {
       id: 2,
@@ -23,7 +23,7 @@ export const Academia: React.FC = () => {
       duracion: '25 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso2.png',
+      mediaSrc: '/assets/academia/curso2.png',
     },
     {
       id: 3,
@@ -32,7 +32,7 @@ export const Academia: React.FC = () => {
       duracion: '10 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso3.png',
+      mediaSrc: '/assets/academia/curso3.png',
     },
     {
       id: 4,
@@ -41,7 +41,7 @@ export const Academia: React.FC = () => {
       duracion: '10 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso4.png',
+      mediaSrc: '/assets/academia/curso4.png',
     },
     {
       id: 5,
@@ -50,7 +50,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso5.png',
+      mediaSrc: '/assets/academia/curso5.png',
     },
     {
       id: 6,
@@ -59,7 +59,7 @@ export const Academia: React.FC = () => {
       duracion: '15 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso6.png',
+      mediaSrc: '/assets/academia/curso6.png',
     },
     {
       id: 7,
@@ -68,7 +68,7 @@ export const Academia: React.FC = () => {
       duracion: '6 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso7.png',
+      mediaSrc: '/assets/academia/curso7.png',
     },
     {
       id: 8,
@@ -77,7 +77,7 @@ export const Academia: React.FC = () => {
       duracion: '12 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso8.png',
+      mediaSrc: '/assets/academia/curso8.png',
     },
     {
       id: 9,
@@ -86,7 +86,7 @@ export const Academia: React.FC = () => {
       duracion: '15 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso9.png',
+      mediaSrc: '/assets/academia/curso9.png',
     },
   ];
 
@@ -98,25 +98,25 @@ export const Academia: React.FC = () => {
       duracion: '20 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso10.png',
+      mediaSrc: '/assets/academia/curso10.png',
     },
     {
       id: 11,
-      titulo: 'Django REST Framework',
-      descripcion: 'Diseña APIs robustas con autenticación',
-      duracion: '40 HORAS',
+      titulo: 'Redes Neuronales y Deep Learning',
+      descripcion: 'Arquitecturas profundas, CNNs, RNNs y Transformers',
+      duracion: '35 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso11.png',
+      mediaSrc: '/assets/academia/curso11.png',
     },
     {
       id: 12,
-      titulo: 'Python Fundamentos',
-      descripcion: 'Sintaxis, bucles, funciones y proyectos reales',
+      titulo: 'Procesamiento de Lenguaje Natural',
+      descripcion: 'LLMs, embeddings, fine-tuning y análisis de texto',
       duracion: '30 HORAS',
-      nivel: 'PRINCIPIANTE',
+      nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso12.png',
+      mediaSrc: '/assets/academia/curso12.png',
     },
     {
       id: 13,
@@ -125,7 +125,7 @@ export const Academia: React.FC = () => {
       duracion: '20 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso13.png',
+      mediaSrc: '/assets/academia/curso13.png',
     },
     {
       id: 14,
@@ -134,7 +134,7 @@ export const Academia: React.FC = () => {
       duracion: '10 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso14.png',
+      mediaSrc: '/assets/academia/curso14.png',
     },
     {
       id: 15,
@@ -143,7 +143,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso15.png',
+      mediaSrc: '/assets/academia/curso15.png',
     },
     {
       id: 16,
@@ -152,7 +152,7 @@ export const Academia: React.FC = () => {
       duracion: '16 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso16.png',
+      mediaSrc: '/assets/academia/curso16.png',
     },
     {
       id: 17,
@@ -161,7 +161,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'PRINCIPIANTE',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso17.png',
+      mediaSrc: '/assets/academia/curso17.png',
     },
     {
       id: 18,
@@ -170,7 +170,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso18.png',
+      mediaSrc: '/assets/academia/curso18.png',
     },
     {
       id: 19,
@@ -179,7 +179,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso19.png',
+      mediaSrc: '/assets/academia/curso19.png',
     },
     {
       id: 20,
@@ -188,7 +188,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso20.png',
+      mediaSrc: '/assets/academia/curso20.png',
     },
     {
       id: 21,
@@ -197,7 +197,7 @@ export const Academia: React.FC = () => {
       duracion: '25 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso21.png',
+      mediaSrc: '/assets/academia/curso21.png',
     },
     {
       id: 22,
@@ -206,7 +206,7 @@ export const Academia: React.FC = () => {
       duracion: '25 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso22.png',
+      mediaSrc: '/assets/academia/curso22.png',
     },
     {
       id: 23,
@@ -215,7 +215,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso23.png',
+      mediaSrc: '/assets/academia/curso23.png',
     },
     {
       id: 24,
@@ -224,7 +224,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso24.png',
+      mediaSrc: '/assets/academia/curso24.png',
     },
     {
       id: 25,
@@ -233,7 +233,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso25.png',
+      mediaSrc: '/assets/academia/curso25.png',
     },
     {
       id: 26,
@@ -242,7 +242,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso26.png',
+      mediaSrc: '/assets/academia/curso26.png',
     },
     {
       id: 27,
@@ -251,7 +251,7 @@ export const Academia: React.FC = () => {
       duracion: '2.5 HORAS',
       nivel: 'PRINCIPIANTE',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso27.png',
+      mediaSrc: '/assets/academia/curso27.png',
     },
     {
       id: 28,
@@ -260,7 +260,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'INTERMEDIO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso28.png',
+      mediaSrc: '/assets/academia/curso28.png',
     },
     {
       id: 29,
@@ -269,7 +269,7 @@ export const Academia: React.FC = () => {
       duracion: '40 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso29.png',
+      mediaSrc: '/assets/academia/curso29.png',
     },
     {
       id: 30,
@@ -278,7 +278,7 @@ export const Academia: React.FC = () => {
       duracion: '32 HORAS',
       nivel: 'PRINCIPIANTE',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso30.png',
+      mediaSrc: '/assets/academia/curso30.png',
     },
     {
       id: 31,
@@ -287,7 +287,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso31.png',
+      mediaSrc: '/assets/academia/curso31.png',
     },
     {
       id: 32,
@@ -296,7 +296,7 @@ export const Academia: React.FC = () => {
       duracion: '30 HORAS',
       nivel: 'AVANZADO',
       mediaType: 'image',
-      mediaSrc: '../../../public/assets/academia/curso32.png',
+      mediaSrc: '/assets/academia/curso32.png',
     },
   ];
 
