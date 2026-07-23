@@ -57,9 +57,9 @@ export const AlertasElectoral: React.FC = () => {
         <SectionHero
           eyebrow="Sistema de Alerta"
           title={<>Focos de <strong style={{ fontWeight: 800 }}>Atención</strong></>}
-          subtitle={`Oaxaca · ${ULTIMO} · prioridades detectadas sobre la data real. Cada foco es accionable — MAYIA arma el plan.`}
+          subtitle={`${ULTIMO} · prioridades detectadas sobre la data real. Cada foco es accionable — MAYIA arma el plan.`}
           right={
-            <button onClick={() => push({ kind: 'info', title: 'Reporte exportado', msg: 'Focos de atención de Oaxaca 2010 listos para descarga.' })}
+            <button onClick={() => push({ kind: 'info', title: 'Reporte exportado', msg: 'Focos de atención listos para descarga.' })}
               style={{ display: 'inline-flex', alignItems: 'center', gap: 7, border: 'none', background: '#fff', color: colores.textoClaro, fontSize: 13, fontWeight: 700, padding: '10px 16px', borderRadius: 11, cursor: 'pointer' }}>
               <Download size={15} /> Exportar reporte
             </button>
@@ -68,7 +68,7 @@ export const AlertasElectoral: React.FC = () => {
             <Insight kind="Sugerencia" title={`${recuperablesCerca} municipios perdidos por 5 votos o menos`} plan={`Movilización focalizada en ${recuperablesCerca} municipios de margen mínimo.`}>
               MAYIA detectó {recuperablesCerca} municipios donde el PRI quedó a ≤5 votos de ganar. Un plan de movilización focalizada podría voltearlos.
             </Insight>
-            <Insight kind="Análisis" title={`Abstención ${D.abstProm}% en Oaxaca`} plan={`Refuerzo de estructura territorial en plazas de mayor abstención.`}>
+            <Insight kind="Análisis" title={`Abstención ${D.abstProm}%`} plan={`Refuerzo de estructura territorial en plazas de mayor abstención.`}>
               La abstención promedio de {ULTIMO} es {D.abstProm}%. MAYIA recomienda reforzar la estructura territorial en las plazas de mayor abstención.
             </Insight>
           </>}

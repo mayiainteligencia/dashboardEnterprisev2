@@ -55,7 +55,7 @@ export const ResumenElectoralCards: React.FC<{ onSectionChange?: (s: string) => 
   return (
     <>
       <Card
-        icon={Command} titulo="Comando Central" subtitulo={`Oaxaca · ${ULTIMO}`} seccion="comando" onGo={onSectionChange} cta="Abrir comando"
+        icon={Command} titulo="Comando Central" subtitulo={`México · ${ULTIMO}`} seccion="comando" onGo={onSectionChange} cta="Abrir comando"
         rows={[
           { label: 'Municipios ganados PRI', value: `${fmt(D.ganadosPRI)} / ${fmt(D.totalMunicipios)}` },
           { label: 'Votación PRI', value: `${D.sharePRI}%`, color: PARTIDO_COLOR.PRI },

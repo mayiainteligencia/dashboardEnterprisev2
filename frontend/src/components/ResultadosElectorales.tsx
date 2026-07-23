@@ -29,7 +29,7 @@ export const ResultadosElectorales: React.FC = () => {
         <SectionHero
           eyebrow="Análisis Electoral"
           title={<>Resultados <strong style={{ fontWeight: 800 }}>Electorales</strong></>}
-          subtitle="Oaxaca · elecciones municipales. Selecciona el año para comparar la evolución del voto."
+          subtitle="Elecciones municipales. Selecciona el año para comparar la evolución del voto."
           right={
             <div style={{ display: 'inline-flex', gap: 6, background: 'rgba(255,255,255,.12)', padding: 5, borderRadius: 12 }}>
               {ANIOS.map(a => {

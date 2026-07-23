@@ -11,17 +11,17 @@ const D = porAnio[ULTIMO];
 // Alertas del sistema derivadas de los datos
 const ALERTAS = [
   { tipo: 'Resultados',    nivel: 'OK',    fuente: ULTIMO, texto: `PRI ganó ${D.ganadosPRI} de ${D.totalMunicipios} municipios en ${ULTIMO}` },
-  { tipo: 'Competencia',   nivel: 'Alta',  fuente: 'Oaxaca', texto: `${D.segundaFuerza} es 2ª fuerza con ${D.ganadosSegunda} municipios` },
+  { tipo: 'Competencia',   nivel: 'Alta',  fuente: 'México', texto: `${D.segundaFuerza} es 2ª fuerza con ${D.ganadosSegunda} municipios` },
   { tipo: 'Plaza fuerte',  nivel: 'Info',  fuente: ULTIMO, texto: `Mayor votación PRI: ${D.topPRI[0].municipio} (${fmt(D.topPRI[0].votosPRI)})` },
-  { tipo: 'Participación', nivel: 'Alta',  fuente: 'Oaxaca', texto: `Abstención promedio ${D.abstProm}%` },
-  { tipo: 'Padrón',        nivel: 'Info',  fuente: 'Oaxaca', texto: `Lista nominal ${fmt(D.listaNominal)} · ${fmt(D.casillas)} casillas` },
+  { tipo: 'Participación', nivel: 'Alta',  fuente: 'México', texto: `Abstención promedio ${D.abstProm}%` },
+  { tipo: 'Padrón',        nivel: 'Info',  fuente: 'México', texto: `Lista nominal ${fmt(D.listaNominal)} · ${fmt(D.casillas)} casillas` },
 ];
 const NIVEL_COLOR: Record<string, string> = { OK: colores.exito, Alta: colores.advertencia, Info: '#0047AB' };
 
 const ACTIVIDAD = [
   { titulo: 'COMPILADO.xlsx procesado', meta: `${D.totalMunicipios} municipios · datalab`, cuando: 'hoy' },
   { titulo: 'Representantes extraídos', meta: `${REPRESENTANTES.municipios} registros · datalab`, cuando: 'hoy' },
-  { titulo: 'Cómputo de ganadores', meta: 'Oaxaca · sistema', cuando: 'hoy' },
+  { titulo: 'Cómputo de ganadores', meta: 'México · sistema', cuando: 'hoy' },
   { titulo: 'Perfilado de calidad', meta: 'NULLs conservados · datalab', cuando: 'hoy' },
 ];
 
@@ -42,11 +42,11 @@ export const ComandoCentral: React.FC = () => {
       <div style={inner}>
         <SectionHero
           eyebrow="Comando Central"
-          title={<>Cerebro <strong style={{ fontWeight: 800 }}>Electoral</strong> · Oaxaca</>}
-          subtitle="Vista de mando sobre los resultados municipales reales de Oaxaca. Esto es lo que hicimos con la data que nos compartieron — con más datos, MAYIA hace mucho más."
+          title={<>Cerebro <strong style={{ fontWeight: 800 }}>Electoral</strong> · México</>}
+          subtitle="Vista de mando sobre los resultados municipales reales. Esto es lo que hicimos con la data que nos compartieron — con más datos, MAYIA hace mucho más."
           insights={<>
             <Insight kind="Análisis" title={`PRI gobierna ${D.ganadosPRI} de ${D.totalMunicipios} municipios`}>
-              En {ULTIMO} el PRI ganó el {Math.round(D.ganadosPRI / D.totalMunicipios * 100)}% de los municipios de Oaxaca con {D.sharePRI}% de la votación.
+              En {ULTIMO} el PRI ganó el {Math.round(D.ganadosPRI / D.totalMunicipios * 100)}% de los municipios con {D.sharePRI}% de la votación.
             </Insight>
             <Insight kind="Análisis" title={`Plaza fuerte: ${D.topPRI[0].municipio}`}>
               {D.topPRI[0].municipio} aporta la mayor votación PRI ({fmt(D.topPRI[0].votosPRI)} votos). Núcleo a proteger.
@@ -59,7 +59,7 @@ export const ComandoCentral: React.FC = () => {
 
         {/* KPIs */}
         <div style={{ ...grid('repeat(5, 1fr)'), marginBottom: 22 }}>
-          <Kpi label={`Municipios ${ULTIMO}`} value={fmt(D.totalMunicipios)} sub="Oaxaca" up />
+          <Kpi label={`Municipios ${ULTIMO}`} value={fmt(D.totalMunicipios)} sub="México" up />
           <Kpi label="Municipios ganados PRI" value={fmt(D.ganadosPRI)} delta={`2ª: ${D.segundaFuerza} ${D.ganadosSegunda}`} up />
           <Kpi label="Votación PRI" value={`${D.sharePRI}%`} delta={`${fmt(D.votosPRI)} votos`} up />
           <Kpi label="Representantes" value={fmt(REPRESENTANTES.total)} delta={fmtMXN(REPRESENTANTES.presupuesto)} up />

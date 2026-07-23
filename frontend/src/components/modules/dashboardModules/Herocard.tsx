@@ -281,6 +281,8 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate }) => {
         }}
       >
         {/* Resplandor de fondo */}
+
+        
         <div 
           style={{ 
             position: 'absolute',

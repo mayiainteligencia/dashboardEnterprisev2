@@ -64,7 +64,7 @@ export function responder(texto: string): Respuesta {
     return { text: `Vas fuerte: el PRI ganó ${fmt(D.ganadosPRI)} de ${fmt(D.totalMunicipios)} municipios (${D.sharePRI}% de la votación, ${fmt(D.votosPRI)} votos). Hay ${D.recuperables.length} municipios recuperables por margen mínimo.` };
   }
   if (/(abstencion|participacion)/.test(t)) {
-    return { text: `La abstención promedio en Oaxaca es ${D.abstProm}%. Hay plazas con más de 90% de abstención histórica — foco de movilización en Alertas.` };
+    return { text: `La abstención promedio es ${D.abstProm}%. Hay plazas con más de 90% de abstención histórica — foco de movilización en Alertas.` };
   }
   if (/(competencia|segunda fuerza|rival|oposicion)/.test(t)) {
     return { text: `Tu segunda fuerza es ${D.segundaFuerza} con ${D.ganadosSegunda} municipios, ${D.ganadosPRI - D.ganadosSegunda} plazas por debajo del PRI.` };
