@@ -63,13 +63,13 @@ export async function buscarContextoEnDB(mensaje, departamento) {
       }
     }
 
-    // Buscar información de Honda
-    if (mensajeLower.includes('honda') || mensajeLower.includes('empresa') || mensajeLower.includes('automotriz') || mensajeLower.includes('motocicletas')) {
+    // Buscar información de Besco
+    if (mensajeLower.includes('besco') || mensajeLower.includes('empresa') || mensajeLower.includes('flotilla') || mensajeLower.includes('compras')) {
       const [info] = await pool.query(
         `SELECT empresa, descripcion, industria, fundacion, pais 
          FROM info_empresa 
          WHERE empresa = ?`,
-        ['Honda']
+        ['Besco']
       );
       if (info.length > 0) {
         resultados.push({ tipo: 'empresa', datos: info });

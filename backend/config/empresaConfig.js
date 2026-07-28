@@ -3,119 +3,118 @@
 
 export const EMPRESA_CONFIG = {
   // Información básica
-  nombre: 'Honda',
-  nombreCompleto: 'Honda México',
-  industria: 'Automotriz y Concesionarias',
-  fundacion: 1948,
+  nombre: 'Besco',
+  nombreCompleto: 'Besco México',
+  industria: 'Gestión de Flotillas, Instalaciones y Compras Empresariales',
+  fundacion: 2005,
   pais: 'México',
-  slogan: 'The Power of Dreams',
+  slogan: 'Operaciones que mueven tu empresa',
 
   // Descripción corporativa
-  descripcion: 'Fabricante de automóviles, motocicletas y equipos de energía de renombre mundial, enfocado en crear movilidad sustentable y tecnologías avanzadas como motores híbridos e:HEV y vehículos eléctricos para cumplir los sueños de las personas.',
+  descripcion: 'Empresa mexicana especializada en la gestión integral de flotillas vehiculares, administración de inmuebles y procesos de compras corporativas. Besco opera más de 400 unidades vehiculares, 7,000 inmuebles y 35 oficinas a nivel nacional, apoyada en tecnología e inteligencia artificial para optimizar la operación empresarial.',
 
   // Datos operativos
   operaciones: {
-    sucursales: '125+ agencias en México',
-    mercados: 'México, LATAM y Global',
-    empleados: '5,000+',
+    sucursales: '35 oficinas en México',
+    mercados: 'México y LATAM',
+    empleados: '2,500+',
     lineasNegocio: [
-      'Venta de vehículos nuevos (SUVs, Sedanes, Híbridos, Eléctricos)',
-      'Venta de motocicletas (Trabajo, Deportivas, Scooters)',
-      'Venta de vehículos seminuevos certificados',
-      'Servicio de mantenimiento y taller especializado',
-      'Venta de refacciones y accesorios originales',
-      'Financiamiento automotriz (Honda Finance)',
-      'Honda Care - Acompañamiento post-venta',
-      'HondaLink - Servicios conectados y asistencia inteligente'
+      'Gestión integral de flotillas vehiculares (400+ unidades)',
+      'Administración de inmuebles y facilities (7,000 inmuebles)',
+      'Procesos de compras corporativas y abastecimiento',
+      'Mantenimiento preventivo y correctivo de unidades',
+      'Optimización de rutas y logística de última milla',
+      'Control de presupuesto y gasto operativo',
+      'Gestión de pólizas y documentación vehicular',
+      'Auditoría visual y validación de evidencias'
     ]
   },
 
   // Marcas del portafolio
   marcas: [
-    'Honda',
-    'Honda e:HEV (Vehículos Híbridos)',
-    'Honda Finance',
-    'Honda Motos',
-    'Honda Seminuevos Certificados',
-    'Honda Care'
+    'Besco',
+    'Besco Fleet (Gestión de Flotillas)',
+    'Besco Facilities (Inmuebles)',
+    'Besco Compras (Abastecimiento)',
+    'Besco Analytics'
   ],
 
   // Servicios principales
   serviciosPrincipales: [
-    'Venta de autos nuevos y seminuevos',
-    'Pruebas de manejo (Test Drives)',
-    'Mantenimiento preventivo y correctivo',
-    'Venta de accesorios originales',
-    'Cotización y gestión de créditos automotrices',
-    'Asistencia en el camino',
-    'Honda Care - Acompañamiento post-venta',
-    'HondaLink - Experiencia de usuario conectada'
+    'Gestión y seguimiento de flotillas en tiempo real',
+    'Optimización inteligente de rutas con IA',
+    'Mantenimiento predictivo vehicular',
+    'Administración de inmuebles y espacios',
+    'Control de requisiciones y órdenes de compra',
+    'Auditoría de pólizas y documentos',
+    'Reportes de gasto operativo y presupuesto',
+    'Atención a incidentes y escalamientos 24/7'
   ],
 
   // Contactos corporativos
   contacto: {
-    sitioWeb: 'https://www.honda.mx',
-    simitel: '800 368 4663',
-    whatsapp: '55 1234 5678',
-    analisisClinicos: 'https://www.honda.mx/servicio.html',
-    appEntrega: 'HondaLink App'
+    sitioWeb: 'https://www.besco.mx',
+    simitel: '800 000 0000',
+    whatsapp: '55 0000 0000',
+    plataforma: 'https://app.besco.mx',
+    appEntrega: 'Besco App'
   },
 
   // Enfoque estratégico
   enfoqueEstrategico: [
-    'Innovación tecnológica y electrificación (e:HEV y Prologue EV)',
-    'Diseño, confiabilidad y durabilidad',
-    'Sostenibilidad ambiental',
-    'Experiencia de cliente digital y en concesionaria',
-    'Seguridad vehicular (Honda Sensing)'
+    'Automatización de procesos operativos con IA',
+    'Visibilidad total de la flota y activos en tiempo real',
+    'Reducción de costos mediante análisis predictivo',
+    'Cumplimiento de SLA y mejora continua',
+    'Seguridad de conductores y activos vehiculares'
   ],
 
-  // Servicios MAYIA prioritarios (según industria automotriz)
+  // Servicios MAYIA prioritarios (según operaciones de flotillas y compras)
   serviciosPrioritarios: {
     ventas: [
-      'Recomendador de Vehículos',
-      'WhatsApp Automatizado (Agendar Prueba de Manejo)',
-      'Analytics de Ventas y Conversión',
-      'Cotizador Inteligente'
+      'Recomendador de Servicios',
+      'WhatsApp Automatizado (Reportes y Escalamientos)',
+      'Analytics de Operaciones',
+      'Cotizador Inteligente de Compras'
     ],
     operaciones: [
-      'Control de Inventario de Autos y Refacciones',
-      'Análisis de Demanda por Modelo',
-      'Optimización de Taller y Citas de Servicio',
-      'Control de Agencias'
+      'Control de Flotillas y Unidades',
+      'Análisis de Demanda de Refacciones',
+      'Optimización de Rutas y SLA',
+      'Control de Inmuebles y Facilities'
     ],
     rh: [
-      'Reclutamiento Inteligente (Asesores de Venta, Técnicos)',
-      'Evaluación de Desempeño Comercial',
-      'Capacitación de personal sobre nuevos modelos'
+      'Reclutamiento Inteligente (Operadores, Supervisores)',
+      'Evaluación de Desempeño Operativo',
+      'Capacitación en procesos de flotillas y compras'
     ],
     atencionCliente: [
       'Agentes de Atención 24/7',
-      'WhatsApp Automatizado para Estatus de Reparación',
-      'Chatbots especializados en post-venta'
+      'WhatsApp Automatizado para Estatus de Tickets',
+      'Chatbots especializados en soporte operativo'
     ],
     ti: [
-      'Ciberseguridad de datos de clientes',
-      'Infraestructura Cloud para concesionarias',
-      'Gestión de CRM'
+      'Ciberseguridad de datos operativos',
+      'Infraestructura Cloud para oficinas',
+      'Gestión de CRM y plataformas'
     ],
     administracion: [
-      'Analytics de Negocios y Market Share',
-      'Optimización de Procesos de Agencia',
-      'Control de múltiples agencias'
+      'Analytics de Negocios y Eficiencia',
+      'Optimización de Procesos de Compras',
+      'Control de múltiples oficinas y regiones'
     ]
   },
 
-  // Cursos recomendados (según perfil automotriz)
+  // Cursos recomendados (según perfil de operaciones y compras)
   cursosRecomendados: {
     gerentes: [
-      'IA para Gerentes de Agencia',
-      'Analytics de Ventas',
-      'Optimización de Procesos de Taller',
+      'IA para Gerentes de Operaciones',
+      'Analytics de Flotillas',
+      'Optimización de Procesos de Compras',
       'Toma de Decisiones Estratégicas'
     ],
     ventas: [
-      'IA para Trabajo Inteligente en Piso de Ventas',
+      'IA para Trabajo Inteligente en Operaciones',
       'Comunicación Efectiva con Clientes',
       'Fundamentos del Prompting'
     ],
@@ -123,71 +122,71 @@ export const EMPRESA_CONFIG = {
       'Ciberseguridad',
       'Python Fundamentos',
       'SQL Básico',
-      'ML para Propensión de Compra'
+      'ML para Predicción de Demanda'
     ],
     operaciones: [
       'Series Temporales (pronósticos de demanda de refacciones)',
-      'Análisis Estadístico de Tiempos de Reparación',
+      'Análisis Estadístico de Tiempos de Mantenimiento',
       'Data Wrangling',
       'Tableau Visualización'
     ]
   },
 
-  // Casos de uso específicos de IA para retail automotriz
+  // Casos de uso específicos de IA para flotillas y compras
   casosDeUsoIA: {
-    inventario: 'Predecir demanda de refacciones y modelos más buscados',
-    recomendacion: 'Sugerir versiones o accesorios basados en el perfil del cliente',
-    atencion: 'Chatbot para agendar citas de servicio o pruebas de manejo',
-    logistica: 'Optimizar la entrega de vehículos nuevos a las agencias',
-    fraude: 'Detectar patrones anómalos en financiamiento',
-    precios: 'Análisis competitivo de precios en tiempo real vs otras marcas'
+    inventario: 'Predecir demanda de refacciones y piezas por tipo de unidad',
+    recomendacion: 'Sugerir rutas óptimas basadas en carga, tráfico y SLA',
+    atencion: 'Chatbot para reportar incidentes o solicitar mantenimiento',
+    logistica: 'Optimizar la distribución de unidades por región',
+    fraude: 'Detectar patrones anómalos en gasto de combustible y viáticos',
+    precios: 'Análisis competitivo de proveedores en tiempo real'
   },
 
-  // Servicios propios de la plataforma MAYIA activos para Honda
+  // Servicios propios de la plataforma MAYIA activos para Besco
   serviciosMayiaActivos: {
     medikalIA: {
-      nombre: 'Honda Assist',
-      nombreAlternativo: 'Honda-Assist',
-      tipo: 'Asistente de Productividad para Asesores',
-      descripcion: 'Agente disponible 24/7 para los asesores de ventas y técnicos. Ofrece apoyo rápido sobre especificaciones de modelos, procesos de crédito y manuales de reparación mediante IA.',
+      nombre: 'Besco Assist',
+      nombreAlternativo: 'Besco-Assist',
+      tipo: 'Asistente de Productividad para Operaciones',
+      descripcion: 'Agente disponible 24/7 para los operadores, supervisores y compradores. Ofrece apoyo rápido sobre estatus de unidades, procesos de compra y manuales operativos mediante IA.',
       beneficios: [
-        'Acceso inmediato a fichas técnicas',
+        'Acceso inmediato a fichas técnicas de unidades',
         'Disponibilidad inmediata 24/7',
-        'Soporte en dudas de financiamiento',
-        'Ayuda rápida en diagnósticos de taller',
-        'Mejora en tiempos de atención al cliente'
+        'Soporte en dudas de abastecimiento',
+        'Ayuda rápida en diagnósticos de flotilla',
+        'Mejora en tiempos de atención a incidentes'
       ],
-      audiencia: 'Asesores de venta y técnicos de servicio',
-      casoDeUso: 'Asesor en piso con cliente que necesita detalles específicos del motor de CR-V',
+      audiencia: 'Operadores, supervisores y compradores',
+      casoDeUso: 'Supervisor en campo que necesita detalles específicos del mantenimiento de una unidad',
       modulo: 'Dashboard MAYIA - columna derecha'
     },
     simiPromo: {
-      nombre: 'Promo Honda',
-      nombreAlternativo: 'Recomendador Honda',
-      tipo: 'Recomendador inteligente de promociones e inventario',
-      descripcion: 'Asistente inteligente diseñado para optimizar las ventas en agencias. Analiza inventario disponible, bonos activos y perfil del cliente para recomendar la mejor oferta.',
+      nombre: 'Promo Besco',
+      nombreAlternativo: 'Recomendador Besco',
+      tipo: 'Recomendador inteligente de proveedores y compras',
+      descripcion: 'Asistente inteligente diseñado para optimizar las compras corporativas. Analiza proveedores disponibles, presupuesto activo y perfil de requerimiento para recomendar la mejor opción.',
       beneficios: [
-        'Recomendaciones de venta cruzada (accesorios, garantías)',
-        'Alertas de bonos y tasas preferenciales',
-        'Gestión inteligente de leads',
-        'Maximiza el margen de venta',
-        'Reduce inventario estancado',
-        'Análisis de tendencias de color y versión'
+        'Recomendaciones de compra con mayor ahorro',
+        'Alertas de presupuesto y vencimientos',
+        'Gestión inteligente de requisiciones',
+        'Maximiza el ahorro por compra',
+        'Reduce tiempo de abastecimiento',
+        'Análisis de tendencias de precios y proveedores'
       ],
-      audiencia: 'Gerentes de ventas y asesores comerciales',
-      casoDeUso: 'Recomendar una CR-V equipada aprovechando tasa de 9.9% cuando el cliente duda',
+      audiencia: 'Gerentes de compras y compradores corporativos',
+      casoDeUso: 'Recomendar proveedor con mejor precio y tiempo de entrega para una requisición urgente',
       modulo: 'Dashboard MAYIA - columna izquierda'
     }
   },
 
   // Métricas clave del negocio
   metricasClave: [
-    'Unidades nuevas vendidas',
-    'Tasa de conversión de leads',
-    'NPS (Satisfacción en Ventas y Servicio)',
-    'Entradas al taller por mes',
-    'Ticket promedio de servicio',
-    'Penetración financiera (%)'
+    'Unidades activas en flota',
+    'Cumplimiento de SLA (%)',
+    'Ahorro en compras corporativas',
+    'Tiempo promedio de mantenimiento',
+    'Tickets resueltos en tiempo',
+    'Gasto operativo vs. presupuesto'
   ]
 };
 
@@ -200,9 +199,9 @@ export function getEmpresaInfo(campo) {
 export function getDescripcionContextual() {
   const { nombreCompleto, slogan, fundacion, operaciones } = EMPRESA_CONFIG;
   
-  return `${nombreCompleto} ("${slogan}") es una marca líder fundada en ${fundacion}, 
-con ${operaciones.sucursales} especializadas en innovación automotriz, 
-vehículos modernos y excelente servicio post-venta.`;
+  return `${nombreCompleto} ("${slogan}") es una empresa líder fundada en ${fundacion}, 
+con ${operaciones.sucursales} especializadas en gestión de flotillas, 
+inmuebles y compras corporativas con tecnología de vanguardia.`;
 }
 
 export default EMPRESA_CONFIG;

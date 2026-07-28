@@ -57,12 +57,12 @@ export async function getServiciosCorporativos(req, res) {
   }
 }
 
-// Obtener información de empresa (Honda)
+// Obtener información de empresa (Besco)
 export async function getInfoEmpresa(req, res) {
   try {
     const [info] = await pool.query(
       'SELECT * FROM info_empresa WHERE empresa = ?',
-      ['Honda']
+      ['Besco']
     );
     res.json({ success: true, data: info[0] || null });
   } catch (error) {
