@@ -56,47 +56,31 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div 
             style={{ 
-              width: '48px',
-              height: '48px',
+              width: '42px',
+              height: '42px',
               borderRadius: '12px',
-              background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 0%)`,
+              background: '#111827',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+              boxShadow: '0 4px 14px rgba(212, 0, 10, 0.25)',
+              border: '1px solid rgba(212, 0, 10, 0.25)',
               overflow: 'hidden',
               flexShrink: 0,
+              padding: '4px',
             }}
           >
             <img 
-              src="/assets/LogoForte.jpg"
+              src="/assets/LogoForte_clean.png"
               alt={empresa.nombre}
               style={{
                 width: '100%',
                 height: '100%',
                 objectFit: 'contain',
-                padding: '4px',
               }}
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                const container = target.parentElement;
-                if (container) {
-                  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                  svg.setAttribute('width', '24');
-                  svg.setAttribute('height', '24');
-                  svg.setAttribute('viewBox', '0 0 24 24');
-                  svg.setAttribute('fill', 'none');
-                  
-                  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                  path.setAttribute('d', 'M7 7L17 17M7 17L17 7');
-                  path.setAttribute('stroke', 'white');
-                  path.setAttribute('stroke-width', '2.5');
-                  path.setAttribute('stroke-linecap', 'round');
-                  
-                  svg.appendChild(path);
-                  container.appendChild(svg);
-                }
+                target.src = '/assets/LogoForte.jpg';
               }}
             />
           </div>

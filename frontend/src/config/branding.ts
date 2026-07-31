@@ -2,7 +2,7 @@ export const brandingConfig = {
   empresa: {
     nombre: "VitroForte",
     eslogan: "Vidrios Blindados Certificados",
-    logo: "/assets/LogoForte.jpg",
+    logo: "/assets/LogoForte_clean.png",
   },
 
   colores: {

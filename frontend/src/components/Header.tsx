@@ -177,44 +177,36 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
       <AsistenteBuscador />
 
       {/* CENTRO - Logo de la empresa (se oculta en móvil para dar espacio) */}
-      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
-        <img 
-          src={empresa.logo} 
-          alt={`${empresa.nombre} logo`}
-          style={{
-            height: '48px',
-            width: 'auto',
-            objectFit: 'contain',
-          }}
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
-            const fallback = (e.target as HTMLImageElement).nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'block';
-          }}
-        />
-        
-        <div style={{ display: 'none' }}>
-          <h1 
-            style={{ 
-              fontSize: '28px', 
-              fontWeight: 'bold',
-              background: `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              margin: 0,
+      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{
+          width: '38px',
+          height: '38px',
+          borderRadius: '10px',
+          background: '#111827',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: '0 3px 10px rgba(212, 0, 10, 0.2)',
+          border: '1px solid rgba(212, 0, 10, 0.25)',
+          padding: '4px',
+          flexShrink: 0,
+        }}>
+          <img 
+            src="/assets/LogoForte_clean.png" 
+            alt={`${empresa.nombre} logo`}
+            style={{
+              height: '100%',
+              width: '100%',
+              objectFit: 'contain',
             }}
-          >
-            {empresa.nombre}
-          </h1>
-          <p style={{ 
-            fontSize: '12px',
-            color: colores.textoMedio,
-            margin: '4px 0 0 0',
-          }}>
-            {empresa.eslogan}
-          </p>
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = '/assets/LogoForte.jpg';
+            }}
+          />
         </div>
+        <span style={{ fontSize: '18px', fontWeight: 800, color: colores.textoClaro, letterSpacing: '-0.5px' }}>
+          {empresa.nombre}
+        </span>
       </div>
 
       {/* DERECHA - Notificaciones y Perfil */}
@@ -434,31 +426,31 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
       {/* Perfil */}
         <button 
           style={{
-            width: '48px',
-            height: '48px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
-            border: 'none',
+            backgroundColor: '#111827',
+            border: '2px solid rgba(212, 0, 10, 0.3)',
             cursor: 'pointer',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+            boxShadow: '0 4px 12px rgba(212, 0, 10, 0.25)',
             transition: 'all 0.2s',
             overflow: 'hidden',
             padding: '4px',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
+            e.currentTarget.style.transform = 'scale(1.08)';
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(212, 0, 10, 0.4)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(212, 0, 10, 0.25)';
           }}
         >
           <img 
-            src="/assets/LogoForte.jpg"
+            src="/assets/LogoForte_clean.png"
             alt="Perfil"
             style={{
               width: '100%',
@@ -466,17 +458,8 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
               objectFit: 'contain',
             }}
             onError={(e) => {
-              // Fallback a la letra M si la imagen no carga
               const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const container = target.parentElement;
-              if (container) {
-                container.style.background = `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`;
-                container.style.fontSize = '18px';
-                container.style.fontWeight = 'bold';
-                container.style.color = '#FFFFFF';
-                container.textContent = 'VF';
-              }
+              target.src = '/assets/LogoForte.jpg';
             }}
           />
         </button>
