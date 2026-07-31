@@ -126,7 +126,7 @@ export const WelcomeHeader: React.FC = () => {
         <div style={{
           display: 'flex', alignItems: 'center', gap: '10px',
           padding: '10px 16px',
-          background: 'linear-gradient(90deg, #CC000008 0%, transparent 100%)',
+          background: 'linear-gradient(90deg, #d4000a08 0%, transparent 100%)',
           borderRadius: '10px',
           border: `1px solid ${colores.borde}`,
           overflow: 'hidden',
@@ -159,7 +159,7 @@ export const WelcomeHeader: React.FC = () => {
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes tickerPulse {
-          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 #CC000040; }
+          0%, 100% { opacity: 1; box-shadow: 0 0 0 0 #d4000a40; }
           50% { opacity: 0.7; box-shadow: 0 0 0 6px transparent; }
         }
       `}</style>

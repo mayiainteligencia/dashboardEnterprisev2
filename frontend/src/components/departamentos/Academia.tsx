@@ -6,10 +6,10 @@ import { DepartamentoShell } from './DepartamentoShell';
 const { colores } = brandingConfig;
 
 const courses = [
-  { title: 'Técnicas de cierre para Nexora', progress: 78, enrolled: 34, color: '#CC0000' },
-  { title: 'Manejo de objeciones de crédito', progress: 52, enrolled: 28, color: '#8B5CF6' },
+  { title: 'Técnicas de cierre para Paquete FULL', progress: 78, enrolled: 34, color: '#d4000a' },
+  { title: 'Manejo de objeciones de cotización', progress: 52, enrolled: 28, color: '#8B5CF6' },
   { title: 'WhatsApp IA — Protocolo de respuesta', progress: 91, enrolled: 41, color: '#10B981' },
-  { title: 'CRM avanzado: gestión de leads', progress: 35, enrolled: 19, color: '#F59E0B' },
+  { title: 'CRM avanzado: gestión de prospectos', progress: 35, enrolled: 19, color: '#F59E0B' },
 ];
 
 export const Academia: React.FC = () => {
@@ -23,14 +23,14 @@ export const Academia: React.FC = () => {
       kpis={[
         { label: 'Cursos activos', value: '4', delta: '+2 nuevos', deltaUp: true, color: '#8B5CF6' },
         { label: 'Empleados capacitados', value: '41', delta: '72% del equipo', deltaUp: true, color: '#10B981' },
-        { label: 'Completados este mes', value: '13', delta: '+8 vs anterior', deltaUp: true, color: '#CC0000' },
+        { label: 'Completados este mes', value: '13', delta: '+8 vs anterior', deltaUp: true, color: '#d4000a' },
         { label: 'Score promedio', value: '84%', delta: '+6 pts', deltaUp: true, color: '#F59E0B' },
       ]}
       agent={{ name: 'Academia IA', role: 'Coach personalizado', status: 'online', actionsToday: 29 }}
       actions={[
-        { text: 'Asignar curso Nexora a 8 asesores nuevos', priority: 'alta', assignee: 'Academia IA' },
+        { text: 'Asignar curso Paquete FULL a 8 asesores nuevos', priority: 'alta', assignee: 'Academia IA' },
         { text: 'Recordar a Tomás H. el módulo de cierre pendiente', priority: 'alta', assignee: 'Coach IA' },
-        { text: 'Publicar nuevo módulo: Kestra — Tecnología híbrida', priority: 'media', assignee: 'Contenidos' },
+        { text: 'Publicar nuevo módulo: Norma NIJ-0108.01 — Resistencia Balística 15mm', priority: 'media', assignee: 'Contenidos' },
         { text: 'Generar certificados Q1 completados', priority: 'baja', assignee: 'RRHH' },
       ]}
       recommendation="Los vendedores con > 2 cursos completados tienen 34% más conversiones. Raúl S. tiene 5 seguimientos vencidos y aún no completa el módulo de gestión de leads. Sugiero intervención del coach IA esta semana."

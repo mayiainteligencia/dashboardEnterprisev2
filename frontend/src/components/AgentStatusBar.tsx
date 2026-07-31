@@ -15,7 +15,7 @@ interface Agent {
 }
 
 const AGENTS: Agent[] = [
-  { id: 'mayia',    name: 'MAYIA',        role: 'Chat IA',        icon: Cpu,            color: '#CC0000', actionsToday: 0 },
+  { id: 'mayia',    name: 'MAYIA',        role: 'Chat IA',        icon: Cpu,            color: '#d4000a', actionsToday: 0 },
   { id: 'whatsapp', name: 'WA Agent',     role: 'Calificador',    icon: MessageCircle,  color: '#10B981', actionsToday: 0 },
   { id: 'copiloto', name: 'Copiloto',     role: 'Decisiones',     icon: Activity,       color: '#8B5CF6', actionsToday: 0 },
   { id: 'monitor',  name: 'Monitor',      role: 'Redes Sociales', icon: Shield,         color: '#F59E0B', actionsToday: 0 },

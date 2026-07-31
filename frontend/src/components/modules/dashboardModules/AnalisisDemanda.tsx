@@ -19,10 +19,10 @@ interface ModeloDemanda {
 }
 
 const modelos: ModeloDemanda[] = [
-  { id: 1, nombre: 'Nexora', color: '#003399', demandaActual: 87,  demandaPredicha: 112, stockActual: 34,  tendencia: 28.7, confianza: 94, historial: [54,61,58,72,68,81,87,112], alerta: true  },
-  { id: 2, nombre: 'Lumio',      color: '#C0392B', demandaActual: 63,  demandaPredicha: 58,  stockActual: 41,  tendencia: -7.9, confianza: 89, historial: [70,75,68,71,65,67,63,58],  alerta: false },
-  { id: 3, nombre: 'Kestra',      color: '#1D6A40', demandaActual: 142, demandaPredicha: 189, stockActual: 28,  tendencia: 33.1, confianza: 91, historial: [88,95,104,118,127,135,142,189], alerta: true },
-  { id: 4, nombre: 'Avenar',       color: '#6B7280', demandaActual: 210, demandaPredicha: 198, stockActual: 157, tendencia: -5.7, confianza: 96, historial: [195,203,218,225,211,208,210,198], alerta: false },
+  { id: 1, nombre: 'Paquete FULL',   color: '#003399', demandaActual: 87,  demandaPredicha: 112, stockActual: 34,  tendencia: 28.7, confianza: 94, historial: [54,61,58,72,68,81,87,112], alerta: true  },
+  { id: 2, nombre: 'Paquete BÁSICO', color: '#C0392B', demandaActual: 63,  demandaPredicha: 58,  stockActual: 41,  tendencia: -7.9, confianza: 89, historial: [70,75,68,71,65,67,63,58],  alerta: false },
+  { id: 3, nombre: 'Paquete ULTRA',  color: '#1D6A40', demandaActual: 142, demandaPredicha: 189, stockActual: 28,  tendencia: 33.1, confianza: 91, historial: [88,95,104,118,127,135,142,189], alerta: true },
+  { id: 4, nombre: 'Vidrio IIIA',    color: '#6B7280', demandaActual: 210, demandaPredicha: 198, stockActual: 157, tendencia: -5.7, confianza: 96, historial: [195,203,218,225,211,208,210,198], alerta: false },
 ];
 
 // ─── Sparkline SVG ────────────────────────────────────────────────────────────
@@ -92,9 +92,9 @@ export const AnalisisDemanda: React.FC = () => {
   const [sugIdx, setSugIdx]         = useState(0);
 
   const sugerencias = [
-    "Te recomiendo que incrementes el inventario del modelo Nexora en las próximas 2 semanas, ya que la intención de compra predictiva superará tu stock en un 40%.",
-    "Sugiero lanzar una campaña de financiamiento para Avenar, la demanda está bajando y hay sobrestock.",
-    "Considera reasignar leads de baja intención del modelo Kestra hacia Lumio para equilibrar la rotación."
+    "Te recomiendo que incrementes el inventario del Paquete FULL en las próximas 2 semanas, ya que la intención de compra predictiva superará tu stock en un 40%.",
+    "Sugiero lanzar una promoción comercial para Vidrio Nivel IIIA, la demanda está bajando y hay sobrestock en almacén.",
+    "Considera reasignar prospectos de baja intención del Paquete ULTRA hacia Paquete BÁSICO para equilibrar la rotación."
   ];
 
   useEffect(() => { const t = setTimeout(() => setMounted(true), 80); return () => clearTimeout(t); }, []);

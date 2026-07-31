@@ -15,7 +15,7 @@ const NAV: NavItem[] = [
   { id: 'operacion',  label: 'Operación',             icon: Store,      color: '#10B981', description: 'Piso, copiloto y financiamiento', kpi: '312 chats hoy' },
   { id: 'influencers',label: 'Radar Influencers',     icon: Radar,      color: '#F59E0B', description: 'Monitoreo de influencia digital', kpi: '24 monitoreados' },
   { id: 'ceo',        label: 'Vista CEO',             icon: Crown,      color: '#EF4444', description: '13 agencias en tiempo real', kpi: '1,426 ventas' },
-  { id: 'scoring',    label: 'Lead Scoring IA',       icon: Target,     color: '#CC0000', description: 'Intención de compra por IA', kpi: 'Score prom. 64' },
+  { id: 'scoring',    label: 'Lead Scoring IA',       icon: Target,     color: '#d4000a', description: 'Intención de compra por IA', kpi: 'Score prom. 64' },
   { id: 'campanias',  label: 'Campañas',              icon: Megaphone,  color: '#3B82F6', description: 'ROI y atribución de campañas', kpi: 'ROI ×4.2 activo' },
   { id: 'vendedores', label: 'Vendedores',            icon: Users,      color: '#06B6D4', description: 'Ranking y eficiencia del equipo', kpi: '5 vendedores' },
   { id: 'inventario', label: 'Inventario',            icon: Package,    color: '#84CC16', description: 'Stock, rotación y demanda', kpi: '172 unidades' },

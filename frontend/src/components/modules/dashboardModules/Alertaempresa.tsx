@@ -26,7 +26,7 @@ const INITIAL_ALERTAS: Alerta[] = [
   },
   {
     id: '2', tipo: 'advertencia',
-    titulo: 'Stock Kestra crítico — 12 días',
+    titulo: 'Stock Paquete ULTRA crítico — 12 días',
     mensaje: 'Solo 18 unidades. Al ritmo actual se agota en 9 días.',
     tiempo: 'Hace 20 min', departamento: 'Inventario',
     accion: 'Te recomiendo solicitar un traspaso inmediato entre agencias de la misma zona.',

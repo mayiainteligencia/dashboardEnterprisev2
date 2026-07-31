@@ -182,10 +182,10 @@ export const PaginaCEO: React.FC = () => {
   // ── Action items state ──
   const [accEstado, setAccEstado] = useState<Record<number, 'pending' | 'approved' | 'dismissed'>>({});
   const accionesEstrategicas = [
-    { titulo: 'Reasignar 40 leads VIP a Santa Fe', desc: 'Detecte que Santa Fe tiene la menor conversion. Mover leads de alta intencion desde Polanco y Guadalajara podria subir su conversion 3 puntos.', impacto: '+$2.1M ingreso potencial', prioridad: 'alta' as const },
-    { titulo: 'Activar promo Avenar fin de mes', desc: 'El modelo Avenar lleva 64 dias en lote (sobrestock). Una promo de arrendamiento con tasa preferencial reduciria inventario y mejoraria la rotacion.', impacto: '-18 unidades en piso', prioridad: 'media' as const },
-    { titulo: 'Coaching express para Lindavista', desc: 'Lindavista tiene 72 ventas vs meta de 110. Sugiero una sesion de coaching con el equipo enfocada en tecnicas de cierre y seguimientos pendientes.', impacto: '+15 ventas estimadas', prioridad: 'alta' as const },
-    { titulo: 'Escalar presupuesto Social Ads +20%', desc: 'El CPA de Social Ads es el mas bajo del trimestre ($84). Aumentar la inversion generaria ~600 leads adicionales con alto ROI.', impacto: '+600 leads, ROI x4.2', prioridad: 'media' as const },
+    { titulo: 'Reasignar 40 prospectos VIP a Santa Fe', desc: 'Detecté que Santa Fe tiene la menor conversión. Mover prospectos de alta intención desde Polanco y Guadalajara podría subir su conversión 3 puntos.', impacto: '+$2.1M ingreso potencial', prioridad: 'alta' as const },
+    { titulo: 'Activar paquete preferencial Vidrio IIIA fin de mes', desc: 'El kit de Vidrio Nivel IIIA lleva 64 días en almacén (sobrestock). Una promoción para flotas reduciría inventario y mejoraría la rotación.', impacto: '-18 kits en almacén', prioridad: 'media' as const },
+    { titulo: 'Coaching express para Lindavista', desc: 'Lindavista tiene 72 instalaciones vs meta de 110. Sugiero una sesión de coaching con el equipo enfocada en técnicas de cierre y seguimientos pendientes.', impacto: '+15 ventas estimadas', prioridad: 'alta' as const },
+    { titulo: 'Escalar presupuesto Social Ads +20%', desc: 'El CPA de Social Ads es el más bajo del trimestre ($84). Aumentar la inversión generaría ~600 prospectos adicionales con alto ROI.', impacto: '+600 prospectos, ROI x4.2', prioridad: 'media' as const },
   ];
 
   // ── Agency detail recommendation ──
@@ -669,9 +669,9 @@ export const PaginaVendedores: React.FC = () => {
       ];
     } else {
       return [
-        `Motiva a ${vendedor.nombre.split(' ')[0]} para aumentar su número de cotizaciones. Sugiero enviarle leads calificados del modelo Lumio.`,
-        `MAYIA sugiere enviarle este mensaje: 'Hola ${vendedor.nombre.split(' ')[0]}, el equipo está cerca de la meta. Te acabo de asignar 5 leads VIP, ¡ve por ellos!'`,
-        `Te sugiero invitar a ${vendedor.nombre.split(' ')[0]} a revisar el nuevo módulo de entrenamiento sobre el modelo Voltae EV.`
+        `Motiva a ${vendedor.nombre.split(' ')[0]} para aumentar su número de cotizaciones. Sugiero enviarle prospectos calificados del Paquete BÁSICO.`,
+        `MAYIA sugiere enviarle este mensaje: 'Hola ${vendedor.nombre.split(' ')[0]}, el equipo está cerca de la meta. Te acabo de asignar 5 prospectos VIP, ¡ve por ellos!'`,
+        `Te sugiero invitar a ${vendedor.nombre.split(' ')[0]} a revisar el nuevo módulo de entrenamiento sobre el Paquete FULL de 15mm.`
       ];
     }
   };
@@ -822,18 +822,18 @@ export const PaginaInventario: React.FC = () => {
 
   // ── Per-model detail data ──
   const modelDetail: Record<string, { proyeccion: string; agotamiento: string; velocidad: string; margen: string; tendencia: number[]; recomendacion: string }> = {
-    'Nexora':  { proyeccion: 'Alta demanda sostenida', agotamiento: '~9 dias', velocidad: '1.5 u./dia', margen: '$48K/u.', tendencia: [28, 30, 32, 34, 33, 34], recomendacion: 'Stock critico. Sugiero solicitar traspaso inmediato de 20 unidades desde zona Bajio y activar pre-venta digital para asegurar apartados.' },
-    'Lumio':   { proyeccion: 'Demanda estable', agotamiento: '~38 dias', velocidad: '1.1 u./dia', margen: '$35K/u.', tendencia: [40, 42, 41, 41, 40, 41], recomendacion: 'Inventario en rango optimo. Sugiero mantener nivel actual y monitorear la tendencia. Si baja la rotacion, considerar incentivo al equipo de ventas.' },
-    'Kestra':  { proyeccion: 'Pico de demanda', agotamiento: '~5 dias', velocidad: '2.1 u./dia', margen: '$52K/u.', tendencia: [22, 20, 19, 18, 17, 18], recomendacion: 'Alerta critica: al ritmo actual se agota antes del proximo reabasto. Sugiero activar pedido urgente a planta y redirigir 10 unidades de Monterrey.' },
-    'Avenar':  { proyeccion: 'Demanda en descenso', agotamiento: '~90 dias', velocidad: '0.4 u./dia', margen: '$29K/u.', tendencia: [30, 29, 28, 27, 27, 27], recomendacion: 'Sobrestock confirmado (64 dias). Sugiero lanzar promocion de arrendamiento con tasa preferencial y asignar bono SPIF de $2K a vendedores que muevan este modelo.' },
-    'Celix':   { proyeccion: 'Demanda moderada', agotamiento: '~52 dias', velocidad: '0.8 u./dia', margen: '$31K/u.', tendencia: [50, 51, 52, 52, 51, 52], recomendacion: 'Rotacion lenta pero estable. Sugiero crear un paquete "Celix Premium" con accesorios incluidos para aumentar el atractivo y reducir dias en piso un 20%.' },
+    'Paquete BÁSICO':   { proyeccion: 'Alta demanda sostenida', agotamiento: '~9 días', velocidad: '1.5 u./día', margen: '$18K/u.', tendencia: [28, 30, 32, 34, 33, 34], recomendacion: 'Stock crítico. Sugiero solicitar traspaso inmediato de 20 kits desde almacén Bajío y activar pre-venta digital para asegurar apartados.' },
+    'Paquete FULL':     { proyeccion: 'Demanda estable', agotamiento: '~38 días', velocidad: '1.1 u./día', margen: '$35K/u.', tendencia: [40, 42, 41, 41, 40, 41], recomendacion: 'Inventario en rango óptimo. Sugiero mantener nivel actual y monitorear la tendencia. Si baja la rotación, considerar incentivo al equipo de asesores.' },
+    'Paquete ULTRA':    { proyeccion: 'Pico de demanda', agotamiento: '~5 días', velocidad: '2.1 u./día', margen: '$52K/u.', tendencia: [22, 20, 19, 18, 17, 18], recomendacion: 'Alerta crítica: al ritmo actual se agota antes del próximo lote de fabricación. Sugiero activar pedido urgente a planta y redirigir 10 kits de Monterrey.' },
+    'Vidrio Nivel IIIA': { proyeccion: 'Demanda en descenso', agotamiento: '~90 días', velocidad: '0.4 u./día', margen: '$29K/u.', tendencia: [30, 29, 28, 27, 27, 27], recomendacion: 'Sobrestock confirmado (64 días). Sugiero lanzar promoción para flotillas comerciales y asignar bono SPIF de $2K a asesores que muevan este nivel.' },
+    'Parabrisas 15mm':   { proyeccion: 'Demanda moderada', agotamiento: '~52 días', velocidad: '0.8 u./día', margen: '$31K/u.', tendencia: [50, 51, 52, 52, 51, 52], recomendacion: 'Rotación lenta pero estable. Sugiero crear un paquete de mantenimiento con garantía extendida para aumentar el atractivo.' },
   };
 
   // ── MAYIA strategic insights ──
   const sugerenciasInventario = [
-    `El inventario general esta en ${totalU} unidades. Los modelos Nexora y Kestra requieren atencion inmediata por alta demanda y stock bajo. MAYIA recomienda priorizar reabastecimiento antes de que se pierdan ventas.`,
-    `El costo de oportunidad por sobrestock de Avenar es de ~$783K/mes en capital inmovilizado. Una promocion agresiva de fin de mes podria liberar 12 unidades y mejorar la rotacion general de la red.`,
-    `La rotacion promedio de ${rot} dias esta dentro del rango optimo (25-45d). Sin embargo, la dispersion es alta: Kestra a 12d vs Avenar a 64d. Sugiero balancear con traspasos entre agencias.`,
+    `El inventario general está en ${totalU} kits y cristales. Los paquetes BÁSICO y ULTRA requieren atención inmediata por alta demanda y stock bajo. MAYIA recomienda priorizar reabastecimiento antes de que se pierdan contratos.`,
+    `El costo de oportunidad por sobrestock de Vidrio Nivel IIIA es de ~$783K/mes en capital inmovilizado. Una promoción agresiva de fin de mes podría liberar 12 kits y mejorar la rotación general de la red.`,
+    `La rotación promedio de ${rot} días está dentro del rango óptimo (25-45d). Sin embargo, la dispersión es alta: Paquete ULTRA a 12d vs Vidrio Nivel IIIA a 64d. Sugiero balancear con traspasos entre sucursales.`,
   ];
 
   const getActionLabel = (it: typeof inventario[0]) => {

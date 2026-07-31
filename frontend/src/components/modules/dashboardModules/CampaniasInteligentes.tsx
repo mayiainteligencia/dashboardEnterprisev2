@@ -23,7 +23,7 @@ interface Campaign {
 }
 
 const campañas: Campaign[] = [
-  { id: 1, nombre: 'MAYIA Legend EV',    modelo: 'Legend EV',      estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#CC0000', canales: ['Social Ads', 'Video Ads', 'Banner Net'], fechaFin: '15 Abr' },
+  { id: 1, nombre: 'MAYIA Legend EV',    modelo: 'Legend EV',      estado: 'activa',     presupuesto: 280000, gastado: 187400, alcance: 1240000, conversiones: 342, roi: 3.8, color: '#d4000a', canales: ['Social Ads', 'Video Ads', 'Banner Net'], fechaFin: '15 Abr' },
   { id: 2, nombre: 'Velox-R Track Day', modelo: 'Velox-R',  estado: 'activa',     presupuesto: 320000, gastado: 210000, alcance: 980000,  conversiones: 289, roi: 4.2, color: '#003399', canales: ['Search Ads', 'Video Ads', 'Video Shorts'], fechaFin: '22 Abr' },
   { id: 3, nombre: 'Trekar Adventure', modelo: 'Trekar',  estado: 'programada', presupuesto: 190000, gastado: 0,      alcance: 0,       conversiones: 0,   roi: 0,   color: '#1D6A40', canales: ['Social Ads', 'Search Ads', 'Billboards'],  fechaFin: '01 May' },
   { id: 4, nombre: 'MAYIA Neo Sports',   modelo: 'Neo Sports',         estado: 'completada', presupuesto: 150000, gastado: 148200, alcance: 2100000, conversiones: 614, roi: 5.1, color: '#6B7280', canales: ['Social Ads', 'Video Shorts'],             fechaFin: '28 Feb' },

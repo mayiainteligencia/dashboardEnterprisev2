@@ -32,40 +32,40 @@ const notificacionesEstaticas: Notification[] = [
   {
     id: 1,
     tipo: 'alerta',
-    titulo: 'Mal comentario en red social',
-    mensaje: 'Se detectaron malos comentarios en Facebook',
+    titulo: 'Alerta de calidad en lote',
+    mensaje: 'Se detectó variación de espesor en lote VF-2024-087',
     tiempo: 'Hace 5 min',
     leida: false,
   },
   {
     id: 2,
     tipo: 'urgente',
-    titulo: 'Desabasto de modelo 34-12aw',
-    mensaje: 'En la sucursal 12 hay un desabasto del modelo 34-12aw',
+    titulo: 'Stock bajo: Vidrio Nivel IIIA',
+    mensaje: 'Inventario de vidrio blindado IIIA por debajo del mínimo en CDMX',
     tiempo: 'Hace 15 min',
     leida: false,
   },
   {
     id: 3,
     tipo: 'exito',
-    titulo: '50 personas activas en el selector',
-    mensaje: 'Realizar intervención humana',
+    titulo: 'Instalación completada #VF-1247',
+    mensaje: 'Paquete FULL instalado exitosamente - Toyota Camry 2024',
     tiempo: 'Hace 1 hora',
     leida: true,
   },
   {
     id: 4,
     tipo: 'info',
-    titulo: 'Lumel: Nueva Sesión',
-    mensaje: 'Un empleado solicitó apoyo psicológico',
+    titulo: 'Nuevo prospecto calificado',
+    mensaje: 'Cliente empresarial solicita cotización para flota de 12 unidades',
     tiempo: 'Hace 2 horas',
     leida: true,
   },
   {
     id: 5,
     tipo: 'exito',
-    titulo: 'Ventas: Meta Alcanzada',
-    mensaje: 'El equipo de ventas superó la meta mensual en un 15%',
+    titulo: 'Meta mensual superada',
+    mensaje: 'Se alcanzaron 45 instalaciones, 15% sobre la meta de julio',
     tiempo: 'Hace 3 horas',
     leida: true,
   },
@@ -458,7 +458,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
           }}
         >
           <img 
-            src="/assets/logosNativos/salesLogo.png"
+            src="/assets/LogoForte.jpg"
             alt="Perfil"
             style={{
               width: '100%',
@@ -475,7 +475,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu }) => {
                 container.style.fontSize = '18px';
                 container.style.fontWeight = 'bold';
                 container.style.color = '#FFFFFF';
-                container.textContent = 'M';
+                container.textContent = 'VF';
               }
             }}
           />

@@ -27,8 +27,8 @@ const LiveFeedContext = createContext<LiveFeedContextValue>({
 });
 
 const VENDEDORES = ['Carlos V.', 'Diana L.', 'Raúl S.', 'Paola M.', 'Tomás H.'];
-const AGENCIAS   = ['Polanco', 'Satélite', 'Coyoacán', 'Guadalajara', 'Monterrey', 'Querétaro', 'Santa Fe'];
-const MODELOS    = ['Nexora', 'Lumio', 'Kestra', 'Avenar', 'Celix'];
+const AGENCIAS   = ['CDMX (Polanco)', 'CDMX (Santa Fe)', 'Guadalajara', 'Monterrey', 'Querétaro', 'Puebla'];
+const MODELOS    = ['Paquete BÁSICO', 'Paquete FULL', 'Paquete ULTRA', 'Vidrio Nivel IIIA', 'Parabrisas 15mm'];
 const PROSPECTOS = ['María G.', 'Luis R.', 'Ana P.', 'Jorge M.', 'Sofía T.', 'Rodrigo M.', 'Valentina C.'];
 
 function rnd<T>(arr: T[]): T { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -41,38 +41,38 @@ function generateEvent(): Omit<LiveEvent, 'id' | 'time'> {
   const a = rnd(AGENCIAS);
   const m = rnd(MODELOS);
   const p = rnd(PROSPECTOS);
-  const valor = `$${(Math.floor(Math.random() * 600 + 300) * 1000).toLocaleString('es-MX')}`;
+  const valor = `$${(Math.floor(Math.random() * 80 + 35) * 1000).toLocaleString('es-MX')}`;
 
   switch (type) {
     case 'venta': return {
       type, agencia: a, vendedor: v, modelo: m, valor,
-      title: `[Nueva venta] — ${m}`,
+      title: `[Instalación Vendid] — ${m}`,
       body: `${v} cerró ${m} en ${a} · ${valor}`,
     };
     case 'seguimiento': return {
       type, agencia: a, vendedor: v, modelo: m,
-      title: `[Seguimiento urgente]`,
-      body: `${v}: dar seguimiento a ${p} — crédito en proceso`,
+      title: `[Seguimiento prospecto]`,
+      body: `${v}: dar seguimiento a ${p} — cotización de blindaje`,
     };
     case 'lead': return {
       type, agencia: a, modelo: m,
-      title: `[Lead calificado] — Score alto`,
+      title: `[Prospecto calificado] — Score alto`,
       body: `MAYIA calificó a ${p} · interés en ${m} · score 87`,
     };
     case 'alerta': return {
       type, agencia: a,
-      title: `[Alerta] en ${a}`,
-      body: `Stock de ${m} crítico — quedan ${Math.floor(Math.random() * 8 + 2)} unidades`,
+      title: `[Alerta de stock] en ${a}`,
+      body: `Inventario de ${m} crítico — quedan ${Math.floor(Math.random() * 8 + 2)} piezas`,
     };
     case 'cita': return {
       type, agencia: a, vendedor: v, modelo: m,
-      title: `[Cita agendada]`,
-      body: `${p} → prueba de manejo ${m} en ${a} · ${v}`,
+      title: `[Evaluación Vehículo]`,
+      body: `${p} → inspección para ${m} en ${a} · ${v}`,
     };
     case 'credito': return {
       type, agencia: a, vendedor: v, modelo: m, valor,
-      title: `[Crédito pre-aprobado]`,
-      body: `${p} pre-aprobado ${valor} · listo para entregar ${m}`,
+      title: `[Cotización aprobada]`,
+      body: `${p} aprobó cotización por ${valor} · listo para ${m}`,
     };
   }
 }

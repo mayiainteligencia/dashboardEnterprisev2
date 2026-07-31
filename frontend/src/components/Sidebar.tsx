@@ -22,19 +22,19 @@ interface SidebarProps {
 
 const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
-  { id: 'comercial', nombre: 'Inteligencia Comercial', icono: TrendingUp },
-  { id: 'leads', nombre: 'Leads', icono: UserPlus },
-  { id: 'operacion', nombre: 'Operación', icono: Store },
-  { id: 'influencers', nombre: 'Radar de Influencers', icono: Radar },
+  { id: 'comercial', nombre: 'Centro Comercial', icono: TrendingUp },
+  { id: 'leads', nombre: 'Prospectos', icono: UserPlus },
+  { id: 'operacion', nombre: 'Producción', icono: Store },
+  { id: 'influencers', nombre: 'Radar de Mercado', icono: Radar },
 ];
 
 const analisisItems = [
   { id: 'ceo', nombre: 'Vista CEO', icono: Crown },
   { id: 'scoring', nombre: 'Lead Scoring IA', icono: Target },
   { id: 'campanias', nombre: 'Campañas', icono: Megaphone },
-  { id: 'vendedores', nombre: 'Vendedores', icono: Users },
-  { id: 'inventario', nombre: 'Inventario', icono: Package },
-  { id: 'conversion', nombre: 'Conversión y Retención', icono: Repeat },
+  { id: 'vendedores', nombre: 'Asesores', icono: Users },
+  { id: 'inventario', nombre: 'Inventario Blindaje', icono: Package },
+  { id: 'conversion', nombre: 'Conversión', icono: Repeat },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
@@ -69,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             }}
           >
             <img 
-              src="/assets/logosNativos/salesLogo.png"
+              src="/assets/LogoForte.jpg"
               alt={empresa.nombre}
               style={{
                 width: '100%',
@@ -115,7 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           letterSpacing: '0.05em',
           color: colores.textoOscuro,
         }}>
-          DEPARTAMENTOS
+          OPERACIÓN
         </span>
       </div>
 
@@ -135,7 +135,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               {item.id === 'ceo' && (
                 <div style={{ padding: '12px 16px 6px' }}>
                   <span style={{ fontSize: '11px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: colores.textoOscuro }}>
-                    Análisis a Detalle
+                    ANÁLISIS VITROFORTE
                   </span>
                 </div>
               )}

@@ -310,7 +310,7 @@ export const PaginaLeads: React.FC = () => {
   return (
     <Shell icon={UserPlus} title="Leads y Adquisición" subtitle="Generación de demanda guiada por IA en tiempo real" badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Leads totales" value={totalLeads.toLocaleString()} delta={`${liveLeadsCount} live`} up accent="#CC0000" spark={[16, 17, 18, 19, 20, totalLeads / 1000]} />
+        <HeroKPI i={0} label="Leads totales" value={totalLeads.toLocaleString()} delta={`${liveLeadsCount} live`} up accent="#d4000a" spark={[16, 17, 18, 19, 20, totalLeads / 1000]} />
         <HeroKPI i={1} label="Conversión global" value={`${convTotal}%`} delta="en vivo" up accent="#10B981" spark={[6.8, 7.2, 7.6, 8.1, 8.4, +convTotal]} />
         <HeroKPI i={2} label="CPL promedio" value={`$${cplProm}`} delta="−6%" up accent="#2563EB" />
         <HeroKPI i={3} label="Mejor canal" value={mejorCanal.nombre} delta={`ROI ×${mejorCanal.roi}`} up accent="#7C3AED" />

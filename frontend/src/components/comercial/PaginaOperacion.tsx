@@ -142,8 +142,8 @@ const AgenteWA: React.FC = () => {
 
 // ── 3 · Financiamiento: simulador de crédito ─────────────────────────────────────
 const modelos = [
-  { nombre: 'Nexora', precio: 720000 }, { nombre: 'Lumio', precio: 550000 },
-  { nombre: 'Kestra', precio: 480000 }, { nombre: 'Avenar', precio: 850000 }, { nombre: 'Celix', precio: 380000 },
+  { nombre: 'Paquete BÁSICO', precio: 180000 }, { nombre: 'Paquete FULL', precio: 350000 },
+  { nombre: 'Paquete ULTRA', precio: 520000 }, { nombre: 'Vidrio Nivel IIIA', precio: 290000 }, { nombre: 'Parabrisas 15mm', precio: 120000 },
 ];
 const Financiamiento: React.FC = () => {
   const [mi, setMi] = useState(0);
@@ -289,7 +289,7 @@ export const PaginaOperacion: React.FC = () => {
   return (
     <Shell icon={Store} title="Operación · Piso, Producto y Conversión" subtitle="Copiloto · WhatsApp IA · financiamiento · postventa · B2B" badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Acciones IA hoy" value={String(4 + alertasCount)} delta={alertasCount > 0 ? `+${alertasCount} live` : 'prioridad'} up accent="#CC0000" />
+        <HeroKPI i={0} label="Acciones IA hoy" value={String(4 + alertasCount)} delta={alertasCount > 0 ? `+${alertasCount} live` : 'prioridad'} up accent="#d4000a" />
         <HeroKPI i={1} label="Chats WhatsApp" value="312" delta="24%" up accent="#10B981" spark={[180, 210, 240, 270, 300, 312]} />
         <HeroKPI i={2} label="Aprob. crédito" value="76%" delta="6%" up accent="#2563EB" />
         <HeroKPI i={3} label="Recompra pot." value="240" delta="alta" up accent="#7C3AED" />

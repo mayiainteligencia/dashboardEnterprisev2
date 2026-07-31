@@ -66,7 +66,7 @@ export const PaginaInfluencers: React.FC = () => {
   return (
     <Shell icon={Radar} title="Radar de Influencers" subtitle={`Web scraping de redes · marca detectada: ${marca}`} badge={badgeLive}
       kpis={<>
-        <HeroKPI i={0} label="Influencers hallados" value={`${influencers.length}`} delta={`con "${marca}"`} up accent="#CC0000" />
+        <HeroKPI i={0} label="Influencers hallados" value={`${influencers.length}`} delta={`con "${marca}"`} up accent="#d4000a" />
         <HeroKPI i={1} label="Alcance combinado" value={fmtK(reach)} delta="potencial" up accent="#10B981" spark={[0.6, 0.8, 0.9, 1.0, 1.05, reach / 1000000]} />
         <HeroKPI i={2} label="Engagement prom." value={`${engProm}%`} delta="sobre media" up accent="#2563EB" />
         <HeroKPI i={3} label="Sentimiento +" value={`${posPct}%`} delta="favorable" up accent="#7C3AED" />

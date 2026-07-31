@@ -26,12 +26,12 @@ export const Operaciones: React.FC = () => (
     ]}
     agent={{ name: 'Ops Agent', role: 'Logística IA', status: 'online', actionsToday: 18 }}
     actions={[
-      { text: 'Coordinar traspaso de Kestra: Guadalajara → Santa Fe', priority: 'alta', assignee: 'Logística' },
-      { text: 'Confirmar 6 entregas programadas para mañana', priority: 'alta', assignee: 'Ops Agent' },
-      { text: 'Actualizar ETA de 3 unidades en tránsito', priority: 'media', assignee: 'Coordinador' },
-      { text: 'Revisar proceso de PDI unidades nuevas', priority: 'baja', assignee: 'Calidad' },
+      { text: 'Coordinar traspaso de Paquete ULTRA: Guadalajara → Santa Fe', priority: 'alta', assignee: 'Logística' },
+      { text: 'Confirmar 6 instalaciones programadas para mañana', priority: 'alta', assignee: 'Ops Agent' },
+      { text: 'Actualizar ETA de 3 lotes de cristal en tránsito', priority: 'media', assignee: 'Coordinador' },
+      { text: 'Revisar proceso de prueba de calidad balística', priority: 'baja', assignee: 'Calidad' },
     ]}
-    recommendation="El modelo Kestra tiene stock crítico en Santa Fe (2 días). El traspaso desde Guadalajara puede resolverse en 48h. Priorizar la coordinación antes del fin de semana para no perder leads calificados."
+    recommendation="El Paquete ULTRA tiene stock crítico en Santa Fe (2 días). El traspaso desde Guadalajara puede resolverse en 48h. Priorizar la coordinación antes del fin de semana para no perder prospectos calificados."
   >
     <div style={{
       background: colores.fondoSecundario,

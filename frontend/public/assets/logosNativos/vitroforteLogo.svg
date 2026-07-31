@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <defs>
+    <linearGradient id="vf-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4000a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a30008;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Shield icon -->
+  <path d="M18 8 L38 8 L42 12 L42 36 Q42 52 28 60 Q14 52 14 36 L14 12 Z" fill="url(#vf-grad)" opacity="0.9"/>
+  <path d="M28 20 L28 44" stroke="white" stroke-width="3" stroke-linecap="round"/>
+  <path d="M22 32 L28 38 L34 26" stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Text VITRO -->
+  <text x="54" y="42" font-family="Montserrat, Arial, sans-serif" font-weight="800" font-size="30" fill="#1a1a1a" letter-spacing="1">VITRO</text>
+  <!-- Text FORTE -->
+  <text x="175" y="42" font-family="Montserrat, Arial, sans-serif" font-weight="800" font-size="30" fill="#d4000a" letter-spacing="1">FORTE</text>
+  <!-- Tagline -->
+  <text x="55" y="58" font-family="Montserrat, Arial, sans-serif" font-weight="500" font-size="9" fill="#4a5568" letter-spacing="2.5">VIDRIOS BLINDADOS CERTIFICADOS</text>
+</svg>

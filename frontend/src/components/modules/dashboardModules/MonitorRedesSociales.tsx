@@ -38,10 +38,10 @@ const redes: RedMetrica[] = [
 ];
 
 const posts: Post[] = [
-  { id: 1, red: 'Shorts',    usuario: '@mayiacars',   contenido: '¡El Voltae EV en la ciudad es simplemente BRUTAL 🔥', likes: 48200, sentimiento: 'positivo', modelo: 'Voltae', hace: '2h',  color: '#CC0000' },
-  { id: 2, red: 'Fotos', usuario: '@mayia_fans_cdmx', contenido: 'Test drive Lumio — el sonido del motor... 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Lumio', hace: '4h',  color: '#333333' },
-  { id: 3, red: 'Microblog',         usuario: '@auto_journalista', contenido: 'Precio Nexora alto vs competencia. ¿Lo justifica?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Nexora',    hace: '6h',  color: '#666666' },
-  { id: 4, red: 'Red Social',  usuario: 'Manejando por México',contenido: 'Problema con el servicio en el distribuidor 😞',  likes: 210,  sentimiento: 'negativo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
+  { id: 1, red: 'Shorts',    usuario: '@vitroforte_oficial', contenido: '¡La prueba de resistencia en el Paquete FULL es simplemente IMPRESIONANTE 🛡️', likes: 48200, sentimiento: 'positivo', modelo: 'Paquete FULL', hace: '2h',  color: '#d4000a' },
+  { id: 2, red: 'Fotos', usuario: '@blindados_mx', contenido: 'Test de visibilidad en vidrio de 15mm — ni te das cuenta que está blindado 🚗', likes: 12400, sentimiento: 'positivo', modelo: 'Paquete BÁSICO', hace: '4h',  color: '#333333' },
+  { id: 3, red: 'Microblog',         usuario: '@seguridad_auto', contenido: 'Cotización de blindaje Paquete ULTRA. ¿Vale la pena la inversión?',  likes: 340,  sentimiento: 'neutro',   modelo: 'Paquete ULTRA',    hace: '6h',  color: '#666666' },
+  { id: 4, red: 'Red Social',  usuario: 'Conductores CDMX', contenido: 'Excelente atención en la instalación de cristales blindados 👏',  likes: 210,  sentimiento: 'positivo', modelo: 'General',    hace: '1d',  color: '#6B7280' },
 ];
 
 // Sentiment 7 días
@@ -118,9 +118,9 @@ export const MonitorRedesSociales: React.FC = () => {
   const [sugIdx, setSugIdx]         = useState(0);
 
   const sugerencias = [
-    "Te recomiendo que capitalices el sentimiento positivo del Voltae EV creando una campaña de 'Video Ads' dirigida a prospectos jóvenes urbanos para agendar pruebas de manejo.",
-    "Sugiero amplificar los testimonios de usuarios satisfechos del modelo Lumio en 'Social Ads' para contrarrestar dudas sobre autonomía.",
-    "Activa una campaña de retargeting en 'Microblog' para usuarios que mostraron interés inicial en el modelo Nexora pero no agendaron cita."
+    "Te recomiendo que capitalices el sentimiento positivo del Paquete FULL creando una campaña de 'Video Ads' enfocada en la resistencia certificada de 15mm.",
+    "Sugiero amplificar los testimonios de usuarios satisfechos del Paquete BÁSICO en 'Social Ads' destacando la estética imperceptible.",
+    "Activa una campaña de retargeting en 'Microblog' para prospectos corporativos interesadas en blindaje de flotillas."
   ];
 
   useEffect(() => { const t = setTimeout(() => setMounted(true), 80); return () => clearTimeout(t); }, []);

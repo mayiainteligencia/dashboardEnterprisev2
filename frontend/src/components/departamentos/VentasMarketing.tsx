@@ -24,7 +24,7 @@ export const VentasMarketing: React.FC = () => (
       { label: 'Leads totales', value: '9,870', delta: '+12.8%', deltaUp: true, color: '#8B5CF6' },
       { label: 'Conversión', value: '9.3%', delta: '+1.2 pts', deltaUp: true, color: '#10B981' },
       { label: 'CPL promedio', value: '$74', delta: '-6%', deltaUp: true, color: '#F59E0B' },
-      { label: 'ROI mejor canal', value: '×6.1', delta: 'WhatsApp', deltaUp: true, color: '#CC0000' },
+      { label: 'ROI mejor canal', value: '×6.1', delta: 'WhatsApp', deltaUp: true, color: '#d4000a' },
     ]}
     agent={{ name: 'Marketing IA', role: 'Optimización de campañas', status: 'online', actionsToday: 42 }}
     actions={[

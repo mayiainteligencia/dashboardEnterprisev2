@@ -16,7 +16,7 @@ export const HeroCard: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
-      content: `¡Hola! Bienvenido al Sales Command Center, agencia de autos. ¿En qué podemos ayudarte?`,
+      content: `¡Hola! Bienvenido a VitroForte, tu sistema de gestión de vidrios blindados. ¿En qué podemos ayudarte?`,
       time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -338,7 +338,7 @@ export const HeroCard: React.FC = () => {
               letterSpacing: '-0.4px',
             }}
           >
-            Asistente Inteligente · Sales Command Center
+            Asistente Inteligente · VitroForte
           </h2>
 
           {/* Instrucción condensada */}

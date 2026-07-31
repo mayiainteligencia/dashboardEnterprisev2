@@ -21,21 +21,21 @@ export const RecursosHumanos: React.FC = () => {
       icon={Users}
       title="Recursos Humanos"
       subtitle="Gestión inteligente de personal y capital humano"
-      color="#CC0000"
+      color="#d4000a"
       kpis={[
-        { label: 'Total empleados', value: '568', delta: '+12 este mes', deltaUp: true, color: '#CC0000' },
+        { label: 'Total empleados', value: '85', delta: '+4 este mes', deltaUp: true, color: '#d4000a' },
         { label: 'Satisfacción', value: '87%', delta: '+3%', deltaUp: true, color: '#10B981' },
-        { label: 'Vacantes activas', value: '14', delta: '3 urgentes', color: '#F59E0B' },
-        { label: 'Rotación mensual', value: '2.1%', delta: 'dentro de meta', deltaUp: true, color: '#8B5CF6' },
+        { label: 'Vacantes activas', value: '5', delta: '2 urgentes', color: '#F59E0B' },
+        { label: 'Rotación mensual', value: '1.8%', delta: 'dentro de meta', deltaUp: true, color: '#8B5CF6' },
       ]}
       agent={{ name: 'RRHH Agent', role: 'Gestión de talento', status: 'online', actionsToday: 23 }}
       actions={[
         { text: 'Revisar 3 solicitudes de vacaciones pendientes', priority: 'alta', assignee: 'HR Manager' },
-        { text: 'Publicar vacante: Asesor de ventas Nexora', priority: 'alta', assignee: 'Reclutamiento' },
+        { text: 'Publicar vacante: Asesor de Ventas de Blindaje', priority: 'alta', assignee: 'Reclutamiento' },
         { text: 'Enviar encuesta de clima laboral trimestral', priority: 'media', assignee: 'RRHH Agent' },
         { text: 'Agendar evaluaciones de desempeño Q2', priority: 'media', assignee: 'Managers' },
       ]}
-      recommendation="El índice de satisfacción subió 3% este trimestre. Sugiero reforzar el programa de bonos por desempeño en el equipo de ventas — hay correlación directa con los cierres de Nexora y Kestra."
+      recommendation="El índice de satisfacción subió 3% este trimestre. Sugiero reforzar el programa de bonos por desempeño en el equipo comercial — hay correlación directa con los cierres de Paquete FULL y Paquete ULTRA."
     >
       {/* Agent cards */}
       <div style={{
@@ -55,23 +55,23 @@ export const RecursosHumanos: React.FC = () => {
                 onMouseLeave={() => setHovered(null)}
                 style={{
                   padding: '16px',
-                  background: isHov ? '#CC000010' : colores.fondoTerciario,
-                  border: `1px solid ${isHov ? '#CC000050' : colores.borde}`,
+                  background: isHov ? '#d4000a10' : colores.fondoTerciario,
+                  border: `1px solid ${isHov ? '#d4000a50' : colores.borde}`,
                   borderRadius: '14px',
                   cursor: 'pointer',
                   transition: 'all 0.25s cubic-bezier(0.34,1.56,0.64,1)',
                   transform: isHov ? 'translateY(-3px)' : 'translateY(0)',
-                  boxShadow: isHov ? '0 8px 20px #CC000025' : 'none',
+                  boxShadow: isHov ? '0 8px 20px #d4000a25' : 'none',
                   textAlign: 'center',
                 }}
               >
                 <div style={{
                   width: '40px', height: '40px', borderRadius: '10px',
-                  background: '#CC000015',
+                  background: '#d4000a15',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   margin: '0 auto 10px',
                 }}>
-                  <Icon size={20} color="#CC0000" />
+                  <Icon size={20} color="#d4000a" />
                 </div>
                 <p style={{ margin: 0, fontSize: '12px', fontWeight: 700, color: colores.textoClaro, lineHeight: 1.3 }}>{card.titulo}</p>
                 <p style={{ margin: '4px 0 0', fontSize: '10px', color: colores.textoMedio, lineHeight: 1.4 }}>{card.descripcion}</p>

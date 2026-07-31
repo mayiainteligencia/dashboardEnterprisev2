@@ -41,18 +41,18 @@ export const canales = [
 ];
 
 export const scoring = [
-  { nombre: 'María G.',   modelo: 'Nexora',   score: 92, intencion: 'alta' },
-  { nombre: 'Luis R.',    modelo: 'Lumio',  score: 81, intencion: 'alta' },
-  { nombre: 'Ana P.',     modelo: 'Kestra',   score: 67, intencion: 'media' },
-  { nombre: 'Jorge M.',   modelo: 'Avenar', score: 54, intencion: 'media' },
-  { nombre: 'Sofía T.',   modelo: 'Celix',   score: 38, intencion: 'baja' },
+  { nombre: 'María G.',   modelo: 'Paquete FULL',     score: 92, intencion: 'alta' },
+  { nombre: 'Luis R.',    modelo: 'Paquete BÁSICO',   score: 81, intencion: 'alta' },
+  { nombre: 'Ana P.',     modelo: 'Paquete ULTRA',    score: 67, intencion: 'media' },
+  { nombre: 'Jorge M.',   modelo: 'Vidrio Nivel IIIA', score: 54, intencion: 'media' },
+  { nombre: 'Sofía T.',   modelo: 'Parabrisas 15mm',  score: 38, intencion: 'baja' },
 ];
 
 export const campanias = [
-  { nombre: 'MAYIA Legend EV',  inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
-  { nombre: 'Velox Track',   inv: 210, ventas: 38, roi: 3.8, estado: 'Activa' },
-  { nombre: 'Trekar Adv.',  inv: 0,   ventas: 0,  roi: 0,   estado: 'Programada' },
-  { nombre: 'MAYIA Neo Sports', inv: 148, ventas: 51, roi: 5.1, estado: 'Completada' },
+  { nombre: 'Campaña Paquete FULL',    inv: 187, ventas: 42, roi: 4.4, estado: 'Activa' },
+  { nombre: 'Protección BÁSICO',      inv: 210, ventas: 38, roi: 3.8, estado: 'Activa' },
+  { nombre: 'Blindaje Flotas Corp.',  inv: 0,   ventas: 0,  roi: 0,   estado: 'Programada' },
+  { nombre: 'Paquete ULTRA Total',    inv: 148, ventas: 51, roi: 5.1, estado: 'Completada' },
 ];
 
 export const vendedores = [
@@ -64,33 +64,33 @@ export const vendedores = [
 ];
 
 export const inventario = [
-  { modelo: 'Nexora',   stock: 34, dias: 22, demanda: 'alta' },
-  { modelo: 'Lumio',  stock: 41, dias: 38, demanda: 'media' },
-  { modelo: 'Kestra',   stock: 18, dias: 12, demanda: 'alta' },
-  { modelo: 'Avenar', stock: 27, dias: 64, demanda: 'baja' },
-  { modelo: 'Celix',   stock: 52, dias: 47, demanda: 'media' },
+  { modelo: 'Paquete BÁSICO',  stock: 34, dias: 22, demanda: 'alta' },
+  { modelo: 'Paquete FULL',    stock: 41, dias: 38, demanda: 'media' },
+  { modelo: 'Paquete ULTRA',   stock: 18, dias: 12, demanda: 'alta' },
+  { modelo: 'Vidrio Nivel IIIA', stock: 27, dias: 64, demanda: 'baja' },
+  { modelo: 'Parabrisas 15mm', stock: 52, dias: 47, demanda: 'media' },
 ];
 
 export const acciones = [
-  { vendedor: 'Carlos V.', accion: 'Llamar a María G. — crédito pre-aprobado', prioridad: 'alta' },
-  { vendedor: 'Diana L.',  accion: 'Agendar prueba de manejo Nexora a Luis R.',   prioridad: 'alta' },
-  { vendedor: 'Raúl S.',   accion: '5 seguimientos vencidos — contactar hoy',   prioridad: 'media' },
-  { vendedor: 'Paola M.',  accion: 'Enviar cotización Kestra a Ana P.',           prioridad: 'media' },
+  { vendedor: 'Carlos V.', accion: 'Llamar a María G. — cotización de Paquete FULL aprobada', prioridad: 'alta' },
+  { vendedor: 'Diana L.',  accion: 'Agendar evaluación vehicular para Paquete BÁSICO a Luis R.', prioridad: 'alta' },
+  { vendedor: 'Raúl S.',   accion: '5 seguimientos vencidos — contactar hoy', prioridad: 'media' },
+  { vendedor: 'Paola M.',  accion: 'Enviar cotización Paquete ULTRA a Ana P.', prioridad: 'media' },
 ];
 
 export const alertas = [
   { txt: 'Santa Fe: conversión 9.7% bajo meta', tipo: 'rojo', hace: '5 min',
-    detalle: 'La agencia Santa Fe acumula 88 ventas vs meta de 140 (63%). La conversión cayó a 9.7% (promedio de la red: 13.6%). Principales causas detectadas: 14 cotizaciones sin seguimiento y 3 vendedores con seguimientos vencidos.',
-    accion: 'Reasignar leads de alta intención y activar copiloto comercial en la agencia.' },
-  { txt: 'Kestra: stock crítico (12 días en lote)', tipo: 'amarillo', hace: '20 min',
-    detalle: 'El modelo Kestra tiene solo 18 unidades con rotación de 12 días en lote y demanda alta. Al ritmo actual se agota en ~9 días, antes del próximo reabasto programado.',
-    accion: 'Solicitar traspaso entre agencias o adelantar pedido a planta.' },
-  { txt: 'Mensajería: 18 leads sin atender', tipo: 'amarillo', hace: '40 min',
-    detalle: 'El agente IA calificó 18 leads que llevan >2h sin respuesta humana. 6 son de intención alta (score >80). Riesgo de fuga estimado: 32%.',
+    detalle: 'La sucursal Santa Fe acumula 88 instalaciones vs meta de 140 (63%). La conversión cayó a 9.7% (promedio de la red: 13.6%). Principales causas detectadas: 14 cotizaciones sin seguimiento y 3 asesores con seguimientos vencidos.',
+    accion: 'Reasignar prospectos de alta intención y activar copiloto comercial en la sucursal.' },
+  { txt: 'Paquete ULTRA: stock crítico (12 días en almacén)', tipo: 'amarillo', hace: '20 min',
+    detalle: 'El Paquete ULTRA tiene solo 18 kits de cristales con rotación de 12 días en almacén y demanda alta. Al ritmo actual se agota en ~9 días, antes del próximo lote de fabricación.',
+    accion: 'Solicitar traspaso entre talleres o adelantar lote de producción.' },
+  { txt: 'Mensajería: 18 prospectos sin atender', tipo: 'amarillo', hace: '40 min',
+    detalle: 'El agente IA calificó 18 prospectos que llevan >2h sin respuesta humana. 6 son de intención alta (score >80). Riesgo de pérdida estimado: 32%.',
     accion: 'Encender intervención humana / round-robin de asesores.' },
   { txt: 'Guadalajara superó meta mensual', tipo: 'verde', hace: '1 h',
-    detalle: 'Guadalajara cerró 151 ventas vs meta de 145 (104%) con 5 días aún por delante. Mejor canal: Social Ads (ROI ×4.6). Buen caso para replicar playbook.',
-    accion: 'Documentar y replicar estrategia en agencias rezagadas.' },
+    detalle: 'Guadalajara cerró 151 instalaciones vs meta de 145 (104%) con 5 días aún por delante. Mejor canal: Social Ads (ROI ×4.6). Buen caso para replicar playbook.',
+    accion: 'Documentar y replicar estrategia en sucursales rezagadas.' },
 ];
 
 export const zonas = [
@@ -104,7 +104,7 @@ export const heatmap = [
 ];
 
 export const filtros = [
-  'Agencia', 'Fecha', 'Vendedor', 'Modelo', 'Canal',
+  'Sucursal', 'Fecha', 'Asesor', 'Paquete', 'Canal',
   'Campaña', 'Fuente del lead', 'Etapa del funnel', 'Zona', 'Tipo de venta',
 ];
 
@@ -121,10 +121,10 @@ export const scoringFactores: Record<string, { presupuesto: number; urgencia: nu
 
 // desglose de campañas
 export const campaniaDetalle = [
-  { nombre: 'MAYIA Legend EV',  alcance: 920000, conv: 42, cpa: 4452, canal: 'Social Ads' },
-  { nombre: 'Velox Track',   alcance: 680000, conv: 38, cpa: 5526, canal: 'Search Ads' },
-  { nombre: 'Trekar Adv.',  alcance: 0,      conv: 0,  cpa: 0,    canal: 'Video Shorts' },
-  { nombre: 'MAYIA Neo Sports', alcance: 640000, conv: 51, cpa: 2902, canal: 'Mensajería IA' },
+  { nombre: 'Campaña Paquete FULL', alcance: 920000, conv: 42, cpa: 4452, canal: 'Social Ads' },
+  { nombre: 'Protección BÁSICO',     alcance: 680000, conv: 38, cpa: 5526, canal: 'Search Ads' },
+  { nombre: 'Blindaje Flotas Corp.', alcance: 0,      conv: 0,  cpa: 0,    canal: 'Video Shorts' },
+  { nombre: 'Paquete ULTRA Total',   alcance: 640000, conv: 51, cpa: 2902, canal: 'Mensajería IA' },
 ];
 
 // eficiencia de vendedores por etapa del funnel (% de paso)

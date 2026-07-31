@@ -24,7 +24,7 @@ export const FinanzasContabilidad: React.FC = () => (
       { label: 'Ingresos mes', value: '$8.7M', delta: '+18%', deltaUp: true, color: '#10B981' },
       { label: 'Flujo de caja', value: '$4.2M', delta: 'saludable', deltaUp: true, color: '#3B82F6' },
       { label: 'Gastos op.', value: '$3.1M', delta: '-4%', deltaUp: true, color: '#F59E0B' },
-      { label: 'EBITDA', value: '$2.8M', delta: '+22%', deltaUp: true, color: '#CC0000' },
+      { label: 'EBITDA', value: '$2.8M', delta: '+22%', deltaUp: true, color: '#d4000a' },
     ]}
     agent={{ name: 'CFO Agent', role: 'Análisis financiero', status: 'online', actionsToday: 31 }}
     actions={[

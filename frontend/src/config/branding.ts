@@ -1,59 +1,59 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Sales Command Center",
-    eslogan: "Agencia de Autos",
-    logo: "/assets/logosNativos/salesLogo.png",
+    nombre: "VitroForte",
+    eslogan: "Vidrios Blindados Certificados",
+    logo: "/assets/LogoForte.jpg",
   },
 
   colores: {
-    // Paleta: dominancia de rojo, negro y gris, sobre fondos limpios blancos
-    primario: "#CC0000",           // Rojo (para botones principales, sidebar activo)
-    primarioOscuro: "#990000",     // Rojo oscuro
-    primarioClaro: "#FF3333",      // Rojo claro
+    // Paleta VitroForte: crimson red, charcoal, grises metálicos sobre fondos blancos
+    primario: "#d4000a",           // Crimson Red VitroForte (botones, sidebar activo)
+    primarioOscuro: "#a30008",     // Rojo oscuro
+    primarioClaro: "#ff1a24",      // Rojo claro
 
-    secundario: "#F4F4F4",         // Gris claro para fondos secundarios
-    acento: "#CC0000",             // Rojo (para detalles y badges)
-    acentoOscuro: "#990000",       // Rojo oscuro
+    secundario: "#f4f5f7",         // Gris metálico claro para fondos secundarios
+    acento: "#d4000a",             // Crimson Red (detalles y badges)
+    acentoOscuro: "#a30008",       // Rojo oscuro
     
     peligro: "#EF4444",            
     advertencia: "#F59E0B",        
     exito: "#10B981",              
     
-    // Fondos - muy limpios, blancos y grises
+    // Fondos - limpios, blancos y grises metálicos
     fondoPrincipal: "#FFFFFF",     // Blanco puro
-    fondoSecundario: "#FAFAFA",    // Gris casi blanco (ultra limpio)
-    fondoTerciario: "#F0F0F0",     // Gris claro para tarjetas o elementos inactivos
+    fondoSecundario: "#FAFAFA",    // Gris casi blanco
+    fondoTerciario: "#f0f1f3",     // Gris metálico claro para tarjetas
     fondoClaro: "#FFFFFF",         
     
     // Textos
     textoClaro: "#000000",         // Negro absoluto para alto contraste
-    textoMedio: "#555555",         // Gris medio para texto secundario
-    textoOscuro: "#888888",        // Gris claro para notas o placeholders
-    textoEnOscuro: "#FFFFFF",      // Blanco puro sobre fondos negros o rojos
+    textoMedio: "#4a5568",         // Slate gris para texto secundario
+    textoOscuro: "#8a8f98",        // Gris metálico para notas o placeholders
+    textoEnOscuro: "#FFFFFF",      // Blanco puro sobre fondos oscuros o rojos
     
     // Bordes
-    borde: "#E5E5E5",              // Gris muy sutil para bordes
-    bordeHover: "#CC0000",         // Bordes rojos al hacer hover
+    borde: "#e2e8f0",              // Gris sutil metálico para bordes
+    bordeHover: "#d4000a",         // Bordes crimson al hacer hover
     
-    // Gradientes - Eliminamos gradientes pesados para mantener el minimalismo
-    gradientePrimario: "linear-gradient(135deg, #CC0000 0%, #990000 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #F9F9F9 0%, #F0F0F0 100%)",
-    gradienteAcento: "linear-gradient(135deg, #CC0000 0%, #FF3333 100%)",
+    // Gradientes - VitroForte identity
+    gradientePrimario: "linear-gradient(135deg, #d4000a 0%, #a30008 100%)",
+    gradienteSecundario: "linear-gradient(135deg, #f9fafb 0%, #f0f1f3 100%)",
+    gradienteAcento: "linear-gradient(135deg, #d4000a 0%, #ff1a24 100%)",
     
     // Glass effect
     fondoGlass: "rgba(255, 255, 255, 0.8)", // Clean glass
     
-    // Sombras (más sutiles y elegantes)
+    // Sombras (sutiles y elegantes)
     sombra: "0 2px 8px rgba(0, 0, 0, 0.04)",
     sombraMedia: "0 8px 16px rgba(0, 0, 0, 0.06)",
     sombraGrande: "0 16px 32px rgba(0, 0, 0, 0.08)",
   },
   
   metricas: {
-    empleados: 568,
-    departamentos: 9,
-    tareasCompletadas: 13,
-    progreso: 70,
+    empleados: 85,
+    departamentos: 6,
+    tareasCompletadas: 24,
+    progreso: 78,
   },
   
   ia: {

@@ -16,38 +16,38 @@ interface EstadoInfo {
 }
 
 const estadosData: Record<string, EstadoInfo> = {
-  MX_AG: { id: 'MX_AG', nombre: 'Aguascalientes',      leads: 312,  ventas: 41,  tendencia: +8,  modeloTop: 'Nexora',   region: 'Centro-Norte' },
-  MX_BC: { id: 'MX_BC', nombre: 'Baja California',     leads: 587,  ventas: 76,  tendencia: +12, modeloTop: 'Lumio',  region: 'Noroeste' },
-  MX_BS: { id: 'MX_BS', nombre: 'Baja California Sur',  leads: 198,  ventas: 26,  tendencia: -4,  modeloTop: 'Kestra',   region: 'Noroeste' },
-  MX_CM: { id: 'MX_CM', nombre: 'Campeche',             leads: 224,  ventas: 29,  tendencia: +6,  modeloTop: 'Celix',   region: 'Sureste' },
-  MX_CS: { id: 'MX_CS', nombre: 'Chiapas',              leads: 743,  ventas: 97,  tendencia: +21, modeloTop: 'BR-V',   region: 'Sur' },
-  MX_CH: { id: 'MX_CH', nombre: 'Chihuahua',            leads: 612,  ventas: 80,  tendencia: +14, modeloTop: 'Nexora',   region: 'Norte' },
-  MX_CO: { id: 'MX_CO', nombre: 'Coahuila',             leads: 534,  ventas: 69,  tendencia: +9,  modeloTop: 'Lumio',  region: 'Norte' },
-  MX_CL: { id: 'MX_CL', nombre: 'Colima',               leads: 187,  ventas: 24,  tendencia: -2,  modeloTop: 'Celix',   region: 'Occidente' },
-  MX_DF: { id: 'MX_DF', nombre: 'Ciudad de México',     leads: 1820, ventas: 237, tendencia: +18, modeloTop: 'Nexora',   region: 'Centro' },
-  MX_DG: { id: 'MX_DG', nombre: 'Durango',              leads: 298,  ventas: 39,  tendencia: +5,  modeloTop: 'Kestra',   region: 'Norte' },
-  MX_GT: { id: 'MX_GT', nombre: 'Guanajuato',           leads: 876,  ventas: 114, tendencia: +16, modeloTop: 'Lumio',  region: 'Bajío' },
-  MX_GR: { id: 'MX_GR', nombre: 'Guerrero',             leads: 654,  ventas: 85,  tendencia: +11, modeloTop: 'Celix',   region: 'Sur' },
-  MX_HG: { id: 'MX_HG', nombre: 'Hidalgo',              leads: 487,  ventas: 63,  tendencia: +8,  modeloTop: 'Kestra',   region: 'Centro' },
-  MX_JA: { id: 'MX_JA', nombre: 'Jalisco',              leads: 1243, ventas: 162, tendencia: +22, modeloTop: 'Nexora',   region: 'Occidente' },
-  MX_EM: { id: 'MX_EM', nombre: 'Estado de México',     leads: 1987, ventas: 258, tendencia: +28, modeloTop: 'Nexora',   region: 'Centro' },
-  MX_MI: { id: 'MX_MI', nombre: 'Michoacán',            leads: 712,  ventas: 93,  tendencia: +13, modeloTop: 'Lumio',  region: 'Occidente' },
-  MX_MO: { id: 'MX_MO', nombre: 'Morelos',              leads: 387,  ventas: 50,  tendencia: +7,  modeloTop: 'Kestra',   region: 'Centro' },
-  MX_NA: { id: 'MX_NA', nombre: 'Nayarit',              leads: 243,  ventas: 32,  tendencia: -3,  modeloTop: 'Celix',   region: 'Occidente' },
-  MX_NL: { id: 'MX_NL', nombre: 'Nuevo León',           leads: 934,  ventas: 121, tendencia: +17, modeloTop: 'Avenar', region: 'Norte' },
-  MX_OA: { id: 'MX_OA', nombre: 'Oaxaca',               leads: 567,  ventas: 74,  tendencia: +9,  modeloTop: 'BR-V',   region: 'Sur' },
-  MX_PU: { id: 'MX_PU', nombre: 'Puebla',               leads: 987,  ventas: 128, tendencia: +19, modeloTop: 'Lumio',  region: 'Centro' },
-  MX_QT: { id: 'MX_QT', nombre: 'Querétaro',            leads: 423,  ventas: 55,  tendencia: +10, modeloTop: 'Nexora',   region: 'Bajío' },
-  MX_QR: { id: 'MX_QR', nombre: 'Quintana Roo',         leads: 334,  ventas: 43,  tendencia: +6,  modeloTop: 'Kestra',   region: 'Sureste' },
-  MX_SL: { id: 'MX_SL', nombre: 'San Luis Potosí',      leads: 478,  ventas: 62,  tendencia: +8,  modeloTop: 'Celix',   region: 'Centro-Norte' },
-  MX_SI: { id: 'MX_SI', nombre: 'Sinaloa',              leads: 543,  ventas: 71,  tendencia: +11, modeloTop: 'Lumio',  region: 'Noroeste' },
-  MX_SO: { id: 'MX_SO', nombre: 'Sonora',               leads: 498,  ventas: 65,  tendencia: +9,  modeloTop: 'Nexora',   region: 'Noroeste' },
-  MX_TB: { id: 'MX_TB', nombre: 'Tabasco',              leads: 412,  ventas: 54,  tendencia: +14, modeloTop: 'BR-V',   region: 'Sureste' },
-  MX_TM: { id: 'MX_TM', nombre: 'Tamaulipas',           leads: 623,  ventas: 81,  tendencia: +12, modeloTop: 'Lumio',  region: 'Norte' },
-  MX_TL: { id: 'MX_TL', nombre: 'Tlaxcala',             leads: 267,  ventas: 35,  tendencia: +5,  modeloTop: 'Celix',   region: 'Centro' },
-  MX_VE: { id: 'MX_VE', nombre: 'Veracruz',             leads: 1842, ventas: 239, tendencia: +34, modeloTop: 'Nexora',   region: 'Sur' },
-  MX_YU: { id: 'MX_YU', nombre: 'Yucatán',              leads: 312,  ventas: 41,  tendencia: -5,  modeloTop: 'Kestra',   region: 'Sureste' },
-  MX_ZA: { id: 'MX_ZA', nombre: 'Zacatecas',            leads: 287,  ventas: 37,  tendencia: +4,  modeloTop: 'Celix',   region: 'Centro-Norte' },
+  MX_AG: { id: 'MX_AG', nombre: 'Aguascalientes',      leads: 312,  ventas: 41,  tendencia: +8,  modeloTop: 'Paquete FULL',   region: 'Centro-Norte' },
+  MX_BC: { id: 'MX_BC', nombre: 'Baja California',     leads: 587,  ventas: 76,  tendencia: +12, modeloTop: 'Paquete BÁSICO', region: 'Noroeste' },
+  MX_BS: { id: 'MX_BS', nombre: 'Baja California Sur',  leads: 198,  ventas: 26,  tendencia: -4,  modeloTop: 'Paquete ULTRA',  region: 'Noroeste' },
+  MX_CM: { id: 'MX_CM', nombre: 'Campeche',             leads: 224,  ventas: 29,  tendencia: +6,  modeloTop: 'Parabrisas 15mm', region: 'Sureste' },
+  MX_CS: { id: 'MX_CS', nombre: 'Chiapas',              leads: 743,  ventas: 97,  tendencia: +21, modeloTop: 'Vidrio Nivel IIIA', region: 'Sur' },
+  MX_CH: { id: 'MX_CH', nombre: 'Chihuahua',            leads: 612,  ventas: 80,  tendencia: +14, modeloTop: 'Paquete FULL',   region: 'Norte' },
+  MX_CO: { id: 'MX_CO', nombre: 'Coahuila',             leads: 534,  ventas: 69,  tendencia: +9,  modeloTop: 'Paquete BÁSICO', region: 'Norte' },
+  MX_CL: { id: 'MX_CL', nombre: 'Colima',               leads: 187,  ventas: 24,  tendencia: -2,  modeloTop: 'Parabrisas 15mm', region: 'Occidente' },
+  MX_DF: { id: 'MX_DF', nombre: 'Ciudad de México',     leads: 1820, ventas: 237, tendencia: +18, modeloTop: 'Paquete FULL',   region: 'Centro' },
+  MX_DG: { id: 'MX_DG', nombre: 'Durango',              leads: 298,  ventas: 39,  tendencia: +5,  modeloTop: 'Paquete ULTRA',  region: 'Norte' },
+  MX_GT: { id: 'MX_GT', nombre: 'Guanajuato',           leads: 876,  ventas: 114, tendencia: +16, modeloTop: 'Paquete BÁSICO', region: 'Bajío' },
+  MX_GR: { id: 'MX_GR', nombre: 'Guerrero',             leads: 654,  ventas: 85,  tendencia: +11, modeloTop: 'Parabrisas 15mm', region: 'Sur' },
+  MX_HG: { id: 'MX_HG', nombre: 'Hidalgo',              leads: 487,  ventas: 63,  tendencia: +8,  modeloTop: 'Paquete ULTRA',  region: 'Centro' },
+  MX_JA: { id: 'MX_JA', nombre: 'Jalisco',              leads: 1243, ventas: 162, tendencia: +22, modeloTop: 'Paquete FULL',   region: 'Occidente' },
+  MX_EM: { id: 'MX_EM', nombre: 'Estado de México',     leads: 1987, ventas: 258, tendencia: +28, modeloTop: 'Paquete FULL',   region: 'Centro' },
+  MX_MI: { id: 'MX_MI', nombre: 'Michoacán',            leads: 712,  ventas: 93,  tendencia: +13, modeloTop: 'Paquete BÁSICO', region: 'Occidente' },
+  MX_MO: { id: 'MX_MO', nombre: 'Morelos',              leads: 387,  ventas: 50,  tendencia: +7,  modeloTop: 'Paquete ULTRA',  region: 'Centro' },
+  MX_NA: { id: 'MX_NA', nombre: 'Nayarit',              leads: 243,  ventas: 32,  tendencia: -3,  modeloTop: 'Parabrisas 15mm', region: 'Occidente' },
+  MX_NL: { id: 'MX_NL', nombre: 'Nuevo León',           leads: 934,  ventas: 121, tendencia: +17, modeloTop: 'Vidrio Nivel IIIA', region: 'Norte' },
+  MX_OA: { id: 'MX_OA', nombre: 'Oaxaca',               leads: 567,  ventas: 74,  tendencia: +9,  modeloTop: 'Paquete BÁSICO', region: 'Sur' },
+  MX_PU: { id: 'MX_PU', nombre: 'Puebla',               leads: 987,  ventas: 128, tendencia: +19, modeloTop: 'Paquete BÁSICO', region: 'Centro' },
+  MX_QT: { id: 'MX_QT', nombre: 'Querétaro',            leads: 423,  ventas: 55,  tendencia: +10, modeloTop: 'Paquete FULL',   region: 'Bajío' },
+  MX_QR: { id: 'MX_QR', nombre: 'Quintana Roo',         leads: 334,  ventas: 43,  tendencia: +6,  modeloTop: 'Paquete ULTRA',  region: 'Sureste' },
+  MX_SL: { id: 'MX_SL', nombre: 'San Luis Potosí',      leads: 478,  ventas: 62,  tendencia: +8,  modeloTop: 'Parabrisas 15mm', region: 'Centro-Norte' },
+  MX_SI: { id: 'MX_SI', nombre: 'Sinaloa',              leads: 543,  ventas: 71,  tendencia: +11, modeloTop: 'Paquete BÁSICO', region: 'Noroeste' },
+  MX_SO: { id: 'MX_SO', nombre: 'Sonora',               leads: 498,  ventas: 65,  tendencia: +9,  modeloTop: 'Paquete FULL',   region: 'Noroeste' },
+  MX_TB: { id: 'MX_TB', nombre: 'Tabasco',              leads: 412,  ventas: 54,  tendencia: +14, modeloTop: 'Vidrio Nivel IIIA', region: 'Sureste' },
+  MX_TM: { id: 'MX_TM', nombre: 'Tamaulipas',           leads: 623,  ventas: 81,  tendencia: +12, modeloTop: 'Paquete BÁSICO', region: 'Norte' },
+  MX_TL: { id: 'MX_TL', nombre: 'Tlaxcala',             leads: 267,  ventas: 35,  tendencia: +5,  modeloTop: 'Parabrisas 15mm', region: 'Centro' },
+  MX_VE: { id: 'MX_VE', nombre: 'Veracruz',             leads: 1842, ventas: 239, tendencia: +34, modeloTop: 'Paquete FULL',   region: 'Sur' },
+  MX_YU: { id: 'MX_YU', nombre: 'Yucatán',              leads: 312,  ventas: 41,  tendencia: -5,  modeloTop: 'Paquete ULTRA',  region: 'Sureste' },
+  MX_ZA: { id: 'MX_ZA', nombre: 'Zacatecas',            leads: 287,  ventas: 37,  tendencia: +4,  modeloTop: 'Parabrisas 15mm', region: 'Centro-Norte' },
 };
 
 // ── Color por intensidad (según leads) ─────────────────────────────────────────
@@ -55,9 +55,9 @@ const estadosData: Record<string, EstadoInfo> = {
 const getColor = (leads: number, max: number, hovered: boolean, selected: boolean): string => {
   const t = leads / max;
   if (selected) return '#7F0000';
-  if (hovered)  return '#FF3333';
-  if (t > 0.8)  return '#990000';
-  if (t > 0.6)  return '#CC0000';
+  if (hovered)  return '#ff1a24';
+  if (t > 0.8)  return '#a30008';
+  if (t > 0.6)  return '#d4000a';
   if (t > 0.4)  return '#E53935';
   if (t > 0.2)  return '#F26D6D';
   return '#FBC4C4';
@@ -398,7 +398,7 @@ export const MapaCalorEstados: React.FC = () => {
           {/* Leyenda escala */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '8px' }}>
             <span style={{ fontSize: '10px', color: colores.textoMedio }}>Bajo</span>
-            {['#FBC4C4', '#F26D6D', '#E53935', '#CC0000', '#990000'].map(c => (
+            {['#FBC4C4', '#F26D6D', '#E53935', '#d4000a', '#a30008'].map(c => (
               <div key={c} style={{ flex: 1, height: '6px', borderRadius: '3px', background: c }} />
             ))}
             <span style={{ fontSize: '10px', color: colores.textoMedio }}>Alto</span>

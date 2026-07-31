@@ -11,7 +11,7 @@ const tools = [
   { id: 3, title: 'IA Generativa', desc: 'Modelos de lenguaje y prompts', icon: Brain, color: '#8B5CF6' },
   { id: 4, title: 'Visualización', desc: 'Gráficos y dashboards interactivos', icon: BarChart, color: '#F59E0B' },
   { id: 5, title: 'Automatización', desc: 'Scripts y flujos de trabajo', icon: Zap, color: '#EF4444' },
-  { id: 6, title: 'Agentes Custom', desc: 'Construye tu propio agente IA', icon: Bot, color: '#CC0000' },
+  { id: 6, title: 'Agentes Custom', desc: 'Construye tu propio agente IA', icon: Bot, color: '#d4000a' },
 ];
 
 export const Playground: React.FC = () => {
@@ -122,7 +122,7 @@ export const Playground: React.FC = () => {
             onClick={simulateQuery}
             style={{
               marginLeft: 'auto', padding: '4px 12px', borderRadius: '8px',
-              border: 'none', background: '#CC0000', color: '#fff',
+              border: 'none', background: '#d4000a', color: '#fff',
               fontSize: '11px', fontWeight: 700, cursor: 'pointer',
             }}
           >
