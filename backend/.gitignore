@@ -1,7 +1,10 @@
+# Environment variables
 .env
-monitorsol/
+.env.local
+.env.*.local
 
-# datalab: solo se sube uploads/ (Excel fuente). El resto (datos derivados,
-# scripts, reportes, venv) tiene informacion sensible → NO subir.
-datalab/*
-!datalab/uploads/
+# Dependencies
+node_modules/
+
+# Logs
+*.log
