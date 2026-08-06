@@ -58,7 +58,7 @@ const data: Record<TabCamp, {
     campañas: [
       { nombre: 'Verano Activo', canal: 'Digital + OOH', avance: 0, badge: 'Jun 2025', color: '#F59E0B' },
       { nombre: 'Diabetes en Control', canal: 'TV + Redes', avance: 0, badge: 'Jul 2025', color: '#F59E0B' },
-      { nombre: 'Aniversario San Fer', canal: 'Todos los canales', avance: 0, badge: 'Ago 2025', color: '#F59E0B' },
+      { nombre: 'Aniversario Sanfer', canal: 'Todos los canales', avance: 0, badge: 'Ago 2025', color: '#F59E0B' },
     ],
   },
 };
@@ -124,7 +124,7 @@ export const MarketingCampañasModule: React.FC<MarketingCampañasModuleProps> =
             Campañas de Marketing
           </h3>
           <p style={{ fontSize: '10px', color: colores.textoMedio, margin: 0 }}>
-            Farmacias San Fer ·{' '}
+            Laboratorios Sanfer ·{' '}
             <span style={{ color: COLOR_A, fontWeight: 600 }}>
               {data.activas.campañas.length} activas
             </span>

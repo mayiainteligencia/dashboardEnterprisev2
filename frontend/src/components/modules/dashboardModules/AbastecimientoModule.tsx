@@ -66,7 +66,7 @@ export const AbastecimientoModule: React.FC<AbastecimientoModuleProps> = ({
             <BarChart2 size={22} color="white" />
           </div>
           <div>
-            <h3 style={{ fontSize: '15px', fontWeight: 'bold', color: colores.textoClaro, margin: 0, lineHeight: 1.2 }}>Farmacias San Fer Inteligencia de Demanda</h3>
+            <h3 style={{ fontSize: '15px', fontWeight: 'bold', color: colores.textoClaro, margin: 0, lineHeight: 1.2 }}>Laboratorios Sanfer Inteligencia de Demanda</h3>
             <p style={{ fontSize: '11px', color: colores.textoMedio, margin: 0 }}>
               y Abastecimiento · <span style={{ color: '#10B981', fontWeight: 600 }}>● Activo</span>
             </p>
@@ -131,7 +131,7 @@ export const AbastecimientoModule: React.FC<AbastecimientoModuleProps> = ({
         <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', backgroundColor: '#000', flexShrink: 0 }}>
           {enableVideo ? (
             <video
-              src={videoStreamUrl || '/assets/sanferAbastecimiento.mp4'}
+              src={videoStreamUrl || '/assets/sanferDoctor.mp4'}
               autoPlay muted loop playsInline
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
@@ -213,7 +213,7 @@ export const AbastecimientoModule: React.FC<AbastecimientoModuleProps> = ({
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 2000 }} onClick={() => setShowInfo(false)}>
           <div style={{ backgroundColor: colores.fondoSecundario, borderRadius: '20px', padding: '24px', maxWidth: '400px', width: '90%' }} onClick={e => e.stopPropagation()}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro, margin: 0 }}>Acerca de Farmacias San Fer Inteligencia de Demanda</h3>
+              <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro, margin: 0 }}>Acerca de Laboratorios Sanfer Inteligencia de Demanda</h3>
               <button onClick={() => setShowInfo(false)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: colores.textoMedio }}><X size={24} /></button>
             </div>
             <div style={{ padding: '16px', backgroundColor: colores.fondoTerciario, borderRadius: '12px', marginBottom: '16px' }}>
@@ -221,7 +221,7 @@ export const AbastecimientoModule: React.FC<AbastecimientoModuleProps> = ({
                 <BarChart2 size={28} color="white" />
               </div>
               <p style={{ fontSize: '14px', color: colores.textoClaro, lineHeight: '1.6', marginBottom: '12px' }}>
-                <strong>Farmacias San Fer Inteligencia de Demanda</strong> es tu motor de abastecimiento predictivo para optimizar el inventario de la red Farmacias San Fer.
+                <strong>Laboratorios Sanfer Inteligencia de Demanda</strong> es tu motor de abastecimiento predictivo para optimizar el inventario de la red Laboratorios Sanfer.
               </p>
               <div style={{ borderTop: `1px solid ${colores.borde}`, paddingTop: '12px' }}>
                 {['Predicción de demanda por zona y temporada', 'Alertas de quiebre de stock anticipadas', 'Programación inteligente de reabastecimiento', 'Optimización de inventario con IA'].map(item => (

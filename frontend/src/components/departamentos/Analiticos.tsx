@@ -89,7 +89,7 @@ export const Analiticos: React.FC = () => {
         </div>
 
         <p style={{ fontSize: '13px', color: colores.textoMedio, margin: '0 0 12px 0' }}>
-          Plataforma de inteligencia epidemiológica y operativa · Farmacias San Fer
+          Plataforma de inteligencia epidemiológica y operativa · Laboratorios Sanfer
         </p>
 
         {/* Indicadores globales — scroll horizontal en móvil */}

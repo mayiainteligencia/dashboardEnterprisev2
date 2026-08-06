@@ -1,6 +1,6 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "Farmacias San Fer",
+    nombre: "Laboratorios Sanfer",
     eslogan: "Cuidamos tu salud",
     logo: "/assets/logosNativos/sanferLogo.png",
   },
