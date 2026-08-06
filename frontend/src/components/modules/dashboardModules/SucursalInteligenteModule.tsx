@@ -311,7 +311,7 @@ export const SucursalInteligenteModule: React.FC<SucursalInteligenteModuleProps>
           <video
             key={selectedSucursal}
             ref={videoRef}
-            src={"/assets/sanferDoctor.mp4"}
+            src={`/assets/sucursalInteligente${selectedSucursal}.mp4`}
             autoPlay
             muted
             loop
