@@ -12,6 +12,7 @@ import { brandingConfig } from '../config/branding';
 import { AlertasHeader } from './comercial/AlertasHeader';
 import { AsistenteBuscador } from './AsistenteBuscador';
 import { notifsPorModo, colorSeveridad, type Notif, type Modo } from '../besco/bescoData';
+import { KnowledgeGraph } from './common/KnowledgeGraph';
 
 interface HeaderProps {
   title: string;
@@ -26,6 +27,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
   const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notif[]>(notifsPorModo[modo]);
+  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
   useEffect(() => { setNotificaciones(notifsPorModo[modo]); }, [modo]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -67,6 +69,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
   };
 
   return (
+    <>
     <header 
       style={{ 
         height: '80px',
@@ -124,12 +127,19 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
       <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
         <img 
           src={empresa.logo} 
-          alt={`${empresa.nombre} logo`}
+          alt={`${empresa.nombre} logo — Knowledge Graph`}
+          title="Ver Knowledge Graph de BESCO"
+          onClick={() => setShowKnowledgeGraph(true)}
           style={{
             height: '80px',
             width: 'auto',
             objectFit: 'contain',
+            cursor: 'pointer',
+            transition: 'filter 0.25s, transform 0.25s',
+            filter: 'drop-shadow(0 0 0px transparent)',
           }}
+          onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 8px #E2B71470)'; (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.filter = 'none'; (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'; }}
           onError={(e) => {
             (e.target as HTMLImageElement).style.display = 'none';
             const fallback = (e.target as HTMLImageElement).nextElementSibling as HTMLElement;
@@ -446,5 +456,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
         </button>
       </div>
     </header>
+    {showKnowledgeGraph && <KnowledgeGraph onClose={() => setShowKnowledgeGraph(false)} />}
+  </>
   );
 };

@@ -1,502 +1,457 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Headphones, AlertCircle, Clock, CheckCircle2, UserCheck, 
-  Search, Filter, ArrowUpRight, MessageSquare, Send, Zap, 
-  FileText, ShieldAlert, Sparkles, ChevronRight, Layers, User
+  LifeBuoy, MessageSquare, Clock, CheckCircle2, AlertCircle, 
+  Search, Filter, Sparkles, User, Tag, ChevronRight, BarChart2,
+  ThumbsUp, Zap, Server, Activity, ShieldAlert, Cpu, Calendar,
+  MoreVertical, Paperclip, Send, AlertTriangle, CornerDownRight,
+  Database, Network
 } from 'lucide-react';
+import { 
+  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
+  ComposedChart, Area
+} from 'recharts';
 import { brandingConfig } from '../../config/branding';
 
-interface Ticket {
-  id: string;
-  folio: string;
-  solicitante: string;
-  departamento: string;
-  asunto: string;
-  descripcion: string;
-  prioridad: 'critica' | 'alta' | 'media' | 'baja';
-  estatus: 'abierto' | 'en_proceso' | 'escalado' | 'resuelto';
-  nivel: 'Nivel 1 (IA)' | 'Nivel 2 (Técnico Sitio)' | 'Nivel 3 (Proveedor Expert)';
-  tiempoSla: string;
-  creadoHace: string;
-  agenteAsignado: string;
-  solucionSugeridaIA: string;
-}
+const { colores } = brandingConfig;
 
-const ticketsIniciales: Ticket[] = [
-  {
-    id: 't1',
-    folio: 'TCK-2026-9410',
-    solicitante: 'Ing. Roberto Morales',
-    departamento: 'Flotas & Logística CDMX',
-    asunto: 'Falla en GPS y telemetría de Unidad 142 en Periférico Sur',
-    descripcion: 'La unidad 142 dejó de transmitir señal de velocidad y ubicación GPS hace 15 minutos. Requiere reasignación urgente de ruta.',
-    prioridad: 'critica',
-    estatus: 'escalado',
-    nivel: 'Nivel 2 (Técnico Sitio)',
-    tiempoSla: '12 min restantes',
-    creadoHace: '18 min',
-    agenteAsignado: 'Téc. Héctor Cruz (Asignado por IA)',
-    solucionSugeridaIA: 'Reiniciar módulo OBD-II en remoto o despachar cuadrilla de taller móvil CDMX Centro.',
-  },
-  {
-    id: 't2',
-    folio: 'TCK-2026-9412',
-    solicitante: 'Lic. Sofía Ramírez',
-    departamento: 'Dirección Comercial Centro',
-    asunto: 'Sobretemperatura en Chiller HVAC - Polanco 04 (Nivel 3)',
-    descripcion: 'El sistema HVAC reporta 28°C bajo piso técnico en el Nivel 3 del edificio Polanco 04.',
-    prioridad: 'critica',
-    estatus: 'en_proceso',
-    nivel: 'Nivel 3 (Proveedor Expert)',
-    tiempoSla: '28 min restantes',
-    creadoHace: '32 min',
-    agenteAsignado: 'Mantenimiento Pro (Proveedor Homologado)',
-    solucionSugeridaIA: 'Ajustar válvula de derivación #4 y enviar técnico con repuesto de compresor rotativo.',
-  },
-  {
-    id: 't3',
-    folio: 'TCK-2026-9415',
-    solicitante: 'Mtro. Fernando Silva',
-    departamento: 'Administración & Finanzas MTY',
-    asunto: 'Discrepancia en Factura FAC-7725 vs Orden de Compra ODC-9418',
-    descripcion: 'La factura del proveedor incluye un cargo diferido de $120 MXN no presupuestado.',
-    prioridad: 'alta',
-    estatus: 'abierto',
-    nivel: 'Nivel 1 (IA)',
-    tiempoSla: '1h 15m restantes',
-    creadoHace: '45 min',
-    agenteAsignado: 'MAYIA Auditor IA',
-    solucionSugeridaIA: 'Aplicar nota de crédito automática de $120 MXN bajo convenio marco vigente.',
-  },
-  {
-    id: 't4',
-    folio: 'TCK-2026-9418',
-    solicitante: 'Arq. Roberto Gómez',
-    departamento: 'Operaciones Inmuebles Santa Fe',
-    asunto: 'Cámara CCTV #12 desconectada en estacionamiento subterráneo',
-    descripcion: 'Pérdida de enlace IP de cámara analítica en la zona de carga de C.C. Santa Fe.',
-    prioridad: 'media',
-    estatus: 'en_proceso',
-    nivel: 'Nivel 2 (Técnico Sitio)',
-    tiempoSla: '2h 40m restantes',
-    creadoHace: '1h 10m',
-    agenteAsignado: 'Téc. Javier Ortiz',
-    solucionSugeridaIA: 'Reiniciar puerto PoE del switch Cisco en MDF-02.',
-  },
-  {
-    id: 't5',
-    folio: 'TCK-2026-9422',
-    solicitante: 'Dra. Elena Blancas',
-    departamento: 'Recursos Humanos Corporativo',
-    asunto: 'Acceso a módulo de capacitaciones en Academia MAYIA para nuevos ingresos',
-    descripcion: 'Solicitud de enrolamiento masivo para 15 nuevos ingenieros en el diplomado de Prompting.',
-    prioridad: 'baja',
-    estatus: 'resuelto',
-    nivel: 'Nivel 1 (IA)',
-    tiempoSla: 'Completado',
-    creadoHace: '3h 20m',
-    agenteAsignado: 'MAYIA Auto-Enroll Agent',
-    solucionSugeridaIA: 'Enrolamiento completado automáticamente vía API de LDAP.',
-  },
+const tema = {
+  acento: '#F59E0B',
+  acentoOscuro: '#B45309',
+  acentoSuave: '#FEF3C7',
+  sobreAcento: '#1F2937'
+};
+
+const mockTickets = [
+  { id: 'T-8492', titulo: 'Acceso denegado a VPN ERP (Error 403)', usuario: 'Maria G.', email: 'maria.g@besco.mx', depto: 'Finanzas', prioridad: 'Alta', status: 'Abierto', tiempo: '10 min', asignado: 'Soporte N2', categoria: 'Accesos', sla: 'Riesgo Alto', description: 'Desde esta mañana no puedo ingresar al ERP usando la VPN corporativa. Me muestra un error 403 de permisos. Urge para el cierre mensual.' },
+  { id: 'T-8491', titulo: 'Solicitud nuevo monitor secundario', usuario: 'Carlos M.', email: 'carlos.m@besco.mx', depto: 'Ventas', prioridad: 'Baja', status: 'En Proceso', tiempo: '2 horas', asignado: 'Hardware IT', categoria: 'Hardware', sla: 'En Tiempo', description: 'Solicito un segundo monitor para mi estación de trabajo para poder revisar los dashboards de ventas mientras atiendo llamadas.' },
+  { id: 'T-8490', titulo: 'Caída de base de datos de Nómina', usuario: 'Ana R.', email: 'ana.r@besco.mx', depto: 'RRHH', prioridad: 'Crítica', status: 'Escalado', tiempo: '45 min', asignado: 'DevOps', categoria: 'Software', sla: 'Vencido', description: 'El sistema de nómina principal está arrojando Timeout Exceptions a todos los usuarios del departamento. No podemos procesar pagos.' },
+  { id: 'T-8489', titulo: 'Reset de contraseña de Portal Interno', usuario: 'Luis P.', email: 'luis.p@besco.mx', depto: 'Operaciones', prioridad: 'Media', status: 'Resuelto (IA)', tiempo: '2 min', asignado: 'MAYIA Auto', categoria: 'Accesos', sla: 'Cumplido', description: 'Olvidé mi contraseña del portal y la cuenta se bloqueó tras 3 intentos fallidos.' },
+  { id: 'T-8488', titulo: 'Impresora P2 (Piso 4) sin tóner', usuario: 'Elena S.', email: 'elena.s@besco.mx', depto: 'Admin', prioridad: 'Baja', status: 'En Proceso', tiempo: '1 día', asignado: 'Soporte N1', categoria: 'Hardware', sla: 'En Tiempo', description: 'La impresora central del piso 4 marca error de tóner vacío y está manchando las hojas.' },
+  { id: 'T-8487', titulo: 'Lentitud extrema en red Wi-Fi Invitados', usuario: 'Roberto D.', email: 'roberto.d@besco.mx', depto: 'TI', prioridad: 'Media', status: 'Abierto', tiempo: '3 horas', asignado: 'Redes', categoria: 'Redes', sla: 'En Tiempo', description: 'Varios visitantes se quejan de que no pueden navegar ni abrir correos en la red Guest_BESCO.' },
+  { id: 'T-8486', titulo: 'Licencia de AutoCAD expirada', usuario: 'Sofia T.', email: 'sofia.t@besco.mx', depto: 'Ingeniería', prioridad: 'Alta', status: 'Abierto', tiempo: '30 min', asignado: 'Soporte N2', categoria: 'Software', sla: 'En Tiempo', description: 'Al abrir el programa me indica que la licencia anual expiró ayer.' }
 ];
 
+const mockTendencia = [
+  { dia: 'Lun', resolucion: 4.2, tickets: 145, autoResueltos: 30 },
+  { dia: 'Mar', resolucion: 3.8, tickets: 152, autoResueltos: 42 },
+  { dia: 'Mie', resolucion: 3.4, tickets: 138, autoResueltos: 45 },
+  { dia: 'Jue', resolucion: 3.1, tickets: 141, autoResueltos: 50 },
+  { dia: 'Vie', resolucion: 3.5, tickets: 148, autoResueltos: 55 },
+  { dia: 'Sab', resolucion: 2.1, tickets: 45, autoResueltos: 20 },
+  { dia: 'Dom', resolucion: 2.0, tickets: 30, autoResueltos: 15 }
+];
+
+const mockCategorias = [
+  { name: 'Accesos/Cuentas', value: 35 },
+  { name: 'Hardware & Equipos', value: 25 },
+  { name: 'Software / ERP', value: 20 },
+  { name: 'Redes y VPN', value: 15 },
+  { name: 'Consultas Generales', value: 5 }
+];
+
+const COLORS = ['#F59E0B', '#3B82F6', '#10B981', '#EF4444', '#8B5CF6'];
+
+const mockRespuestasIA = [
+  "He verificado los logs de la VPN y el usuario Maria G. tiene el certificado expirado. Para solucionarlo, debemos revocar el actual y emitir uno nuevo usando el script Revoke-VPNCert.",
+  "Parece un problema general. Según Datadog, el clúster de base de datos de RRHH alcanzó el 100% de CPU. Sugiero escalar de inmediato al equipo de infraestructura para hacer un scale-out.",
+  "Problema frecuente detectado. Puedo enviar automáticamente el enlace de auto-servicio de recuperación de contraseñas de Active Directory. ¿Deseas que lo envíe en tu nombre?"
+];
+
+const useAnimations = () => {
+  useEffect(() => {
+    const id = 'mesa-ayuda-animations-v2';
+    if (document.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = `
+      @keyframes fadeSlideUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+      @keyframes pulseAlert { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+      .ticket-row { transition: all 0.2s ease; cursor: pointer; }
+      .ticket-row:hover { background-color: ${colores.fondoSecundario} !important; transform: translateX(4px); }
+      .btn-action:hover { opacity: 0.9; transform: translateY(-1px); }
+      .tab-hover:hover { color: ${tema.acentoOscuro} !important; background: ${tema.acentoSuave}20; }
+    `;
+    document.head.appendChild(style);
+  }, []);
+};
+
 export const MesaAyuda: React.FC = () => {
-  const { colores, temas } = brandingConfig;
-  const tema = temas.admin;
+  useAnimations();
+  const [activeTab, setActiveTab] = useState('tickets');
+  const [selectedTicket, setSelectedTicket] = useState(mockTickets[0]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [ticketFilter, setTicketFilter] = useState('Todos');
 
-  const [tickets, setTickets] = useState<Ticket[]>(ticketsIniciales);
-  const [filtroEstado, setFiltroEstado] = useState<string>('todos');
-  const [filtroPrioridad, setFiltroPrioridad] = useState<string>('todos');
-  const [busqueda, setBusqueda] = useState('');
-  const [ticketSeleccionado, setTicketSeleccionado] = useState<Ticket | null>(ticketsIniciales[0]);
-  const [nuevaRespuesta, setNuevaRespuesta] = useState('');
-
-  // Filtrado de tickets
-  const ticketsFiltrados = tickets.filter(t => {
-    const coincideEstado = filtroEstado === 'todos' || t.estatus === filtroEstado;
-    const coincidePrioridad = filtroPrioridad === 'todos' || t.prioridad === filtroPrioridad;
-    const coincideBusqueda = 
-      t.folio.toLowerCase().includes(busqueda.toLowerCase()) ||
-      t.asunto.toLowerCase().includes(busqueda.toLowerCase()) ||
-      t.solicitante.toLowerCase().includes(busqueda.toLowerCase());
-    return coincideEstado && coincidePrioridad && coincideBusqueda;
+  const filteredTickets = mockTickets.filter(t => {
+    const matchSearch = t.titulo.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                        t.usuario.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        t.id.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchFilter = ticketFilter === 'Todos' || t.status === ticketFilter || t.prioridad === ticketFilter;
+    return matchSearch && matchFilter;
   });
 
-  const getBadgesPrioridad = (p: string) => {
-    switch (p) {
-      case 'critica': return { label: 'CRÍTICA', bg: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', border: 'rgba(239, 68, 68, 0.3)' };
-      case 'alta': return { label: 'ALTA', bg: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', border: 'rgba(245, 158, 11, 0.3)' };
-      case 'media': return { label: 'MEDIA', bg: 'rgba(59, 130, 246, 0.15)', color: '#3B82F6', border: 'rgba(59, 130, 246, 0.3)' };
-      default: return { label: 'BAJA', bg: 'rgba(16, 185, 129, 0.15)', color: '#10B981', border: 'rgba(16, 185, 129, 0.3)' };
-    }
+  const getPriorityColor = (pri: string) => {
+    if (pri === 'Crítica') return '#EF4444';
+    if (pri === 'Alta') return '#F97316';
+    if (pri === 'Media') return '#F59E0B';
+    return '#3B82F6';
+  };
+  
+  const getStatusColor = (stat: string) => {
+    if (stat === 'Abierto') return '#3B82F6';
+    if (stat === 'En Proceso') return '#F59E0B';
+    if (stat === 'Escalado') return '#EF4444';
+    if (stat.includes('Resuelto')) return '#10B981';
+    return colores.textoMedio;
   };
 
-  const getBadgeEstatus = (e: string) => {
-    switch (e) {
-      case 'abierto': return { label: 'Abierto', color: '#F59E0B' };
-      case 'en_proceso': return { label: 'En Proceso', color: '#3B82F6' };
-      case 'escalado': return { label: 'Escalado N2/N3', color: '#EF4444' };
-      case 'resuelto': return { label: 'Resuelto', color: '#10B981' };
-      default: return { label: e, color: colores.textoMedio };
-    }
+  const getSLAColor = (sla: string) => {
+    if (sla === 'Vencido') return '#EF4444';
+    if (sla === 'Riesgo Alto') return '#F59E0B';
+    return '#10B981';
   };
 
-  const responderTicket = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!nuevaRespuesta.trim() || !ticketSeleccionado) return;
-    alert(`Respuesta enviada al ticket ${ticketSeleccionado.folio}: "${nuevaRespuesta}"`);
-    setNuevaRespuesta('');
-  };
-
-  const escalamientoManual = (ticketId: string) => {
-    setTickets(prev => prev.map(t => {
-      if (t.id === ticketId) {
-        const nuevoNivel = t.nivel === 'Nivel 1 (IA)' ? 'Nivel 2 (Técnico Sitio)' : 'Nivel 3 (Proveedor Expert)';
-        return { ...t, nivel: nuevoNivel, estatus: 'escalado' };
-      }
-      return t;
-    }));
-    if (ticketSeleccionado && ticketSeleccionado.id === ticketId) {
-      setTicketSeleccionado(prev => prev ? { ...prev, estatus: 'escalado' } : null);
-    }
-  };
+  const currentIAResponse = 
+    selectedTicket.prioridad === 'Alta' ? mockRespuestasIA[0] : 
+    selectedTicket.prioridad === 'Crítica' ? mockRespuestasIA[1] : 
+    mockRespuestasIA[2];
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%', color: colores.textoClaro }}>
+    <div style={{ maxWidth: 1300, margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px', fontFamily: 'system-ui, sans-serif' }}>
       
-      {/* 🎧 HEADER MESA DE AYUDA */}
+      {/* HEADER SECTION */}
       <div style={{
-        background: `linear-gradient(135deg, ${colores.fondoSecundario} 0%, ${colores.fondoTerciario} 100%)`,
-        borderRadius: '20px',
-        padding: '24px',
-        border: `1px solid ${colores.borde}`,
-        boxShadow: colores.sombra,
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '16px'
+        background: '#fff', borderRadius: '20px', padding: '24px', display: 'flex', alignItems: 'center', gap: '24px',
+        boxShadow: colores.sombra, border: `1px solid ${colores.borde}`, borderLeft: `6px solid ${tema.acento}`,
+        animation: 'fadeSlideUp 0.6s ease-out'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{
-            width: '52px', height: '52px', borderRadius: '16px',
-            background: 'linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 8px 20px rgba(220, 38, 38, 0.35)'
-          }}>
-            <Headphones size={28} color="#FFFFFF" />
-          </div>
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <h1 style={{ margin: 0, fontSize: '24px', fontWeight: 800 }}>
-                Mesa de Ayuda & Service Desk Enterprise
-              </h1>
-              <span style={{
-                fontSize: '11px', fontWeight: 800, textTransform: 'uppercase', padding: '4px 10px',
-                borderRadius: '999px', background: 'rgba(220, 38, 38, 0.15)', color: '#EF4444',
-                border: '1px solid rgba(220, 38, 38, 0.3)'
-              }}>
-                Gestión SLA • Nivel 1, 2 y 3
-              </span>
-            </div>
-            <p style={{ margin: '4px 0 0', fontSize: '14px', color: colores.textoMedio }}>
-              Consola unificada de atención de incidentes, solicitudes de soporte técnico y resolución asistida por IA.
-            </p>
-          </div>
+        <div style={{
+          width: '72px', height: '72px', borderRadius: '18px',
+          background: `linear-gradient(135deg, ${tema.acento}20, ${tema.acento}50)`,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', color: tema.acentoOscuro
+        }}>
+          <LifeBuoy size={40} strokeWidth={1.5} />
         </div>
-
-        {/* KPIs de la Mesa de Ayuda */}
-        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <div style={{ background: colores.fondoPrincipal, padding: '10px 16px', borderRadius: '12px', border: `1px solid ${colores.borde}`, textAlign: 'center' }}>
-            <span style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: 600 }}>Tickets Activos</span>
-            <p style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#EF4444' }}>18 Abiertos</p>
-          </div>
-          <div style={{ background: colores.fondoPrincipal, padding: '10px 16px', borderRadius: '12px', border: `1px solid ${colores.borde}`, textAlign: 'center' }}>
-            <span style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: 600 }}>Tiempo Respuesta</span>
-            <p style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#10B981' }}>3.4 min</p>
-          </div>
-          <div style={{ background: colores.fondoPrincipal, padding: '10px 16px', borderRadius: '12px', border: `1px solid ${colores.borde}`, textAlign: 'center' }}>
-            <span style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: 600 }}>Cumplimiento SLA</span>
-            <p style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#3B82F6' }}>98.2%</p>
-          </div>
-        </div>
-      </div>
-
-      {/* 🔍 BARRA DE FILTROS & BUSCADOR */}
-      <div style={{
-        background: colores.fondoSecundario,
-        borderRadius: '16px',
-        padding: '16px 20px',
-        border: `1px solid ${colores.borde}`,
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        gap: '14px'
-      }}>
-        {/* Buscador */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '1 1 280px', background: colores.fondoPrincipal, padding: '8px 14px', borderRadius: '10px', border: `1px solid ${colores.borde}` }}>
-          <Search size={16} color={colores.textoMedio} />
-          <input
-            type="text"
-            placeholder="Buscar por folio, solicitante o asunto..."
-            value={busqueda}
-            onChange={e => setBusqueda(e.target.value)}
-            style={{ width: '100%', border: 'none', background: 'transparent', outline: 'none', color: colores.textoClaro, fontSize: '13px' }}
-          />
-        </div>
-
-        {/* Filtro Estado */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '12px', color: colores.textoMedio, fontWeight: 600 }}>Estado:</span>
-          {['todos', 'abierto', 'en_proceso', 'escalado', 'resuelto'].map(st => (
-            <button
-              key={st}
-              onClick={() => setFiltroEstado(st)}
-              style={{
-                padding: '6px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '11.5px', fontWeight: 700,
-                backgroundColor: filtroEstado === st ? tema.acento : colores.fondoPrincipal,
-                color: filtroEstado === st ? tema.sobreAcento : colores.textoMedio,
-                textTransform: 'capitalize'
-              }}
-            >
-              {st.replace('_', ' ')}
-            </button>
-          ))}
-        </div>
-
-        {/* Filtro Prioridad */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <span style={{ fontSize: '12px', color: colores.textoMedio, fontWeight: 600 }}>Prioridad:</span>
-          {['todos', 'critica', 'alta', 'media', 'baja'].map(pr => (
-            <button
-              key={pr}
-              onClick={() => setFiltroPrioridad(pr)}
-              style={{
-                padding: '6px 12px', borderRadius: '8px', border: 'none', cursor: 'pointer', fontSize: '11.5px', fontWeight: 700,
-                backgroundColor: filtroPrioridad === pr ? colores.fondoTerciario : colores.fondoPrincipal,
-                color: filtroPrioridad === pr ? colores.textoClaro : colores.textoMedio,
-                textTransform: 'capitalize'
-              }}
-            >
-              {pr}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* 💼 CONTENEDOR SPLIT: LISTA DE TICKETS + DETALLE COMPLETO */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 1fr)', gap: '20px', alignItems: 'start' }}>
-        
-        {/* COLUMNA IZQUIERDA: LISTADO METICULOSO DE TICKETS */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 4px' }}>
-            <span style={{ fontSize: '14px', fontWeight: 700, color: colores.textoClaro }}>
-              Tickets Registrados ({ticketsFiltrados.length})
-            </span>
-            <span style={{ fontSize: '12px', color: colores.textoMedio }}>Ordenado por prioridad y SLA</span>
-          </div>
-
-          {ticketsFiltrados.map(t => {
-            const badgePr = getBadgesPrioridad(t.prioridad);
-            const badgeSt = getBadgeEstatus(t.estatus);
-            const isSelected = ticketSeleccionado?.id === t.id;
-
-            return (
-              <div
-                key={t.id}
-                onClick={() => setTicketSeleccionado(t)}
-                style={{
-                  background: isSelected ? colores.fondoTerciario : colores.fondoSecundario,
-                  borderRadius: '16px',
-                  padding: '16px',
-                  border: isSelected ? `2px solid ${colores.primario}` : `1px solid ${colores.borde}`,
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '10px',
-                  boxShadow: isSelected ? colores.sombraMedia : 'none'
-                }}
-              >
-                {/* Header Card */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span style={{ fontSize: '12px', fontWeight: 800, color: colores.primario }}>{t.folio}</span>
-                    <span style={{
-                      fontSize: '10px', fontWeight: 800, padding: '2px 8px', borderRadius: '6px',
-                      background: badgePr.bg, color: badgePr.color, border: `1px solid ${badgePr.border}`
-                    }}>
-                      {badgePr.label}
-                    </span>
-                  </div>
-                  <span style={{ fontSize: '11px', fontWeight: 700, color: badgeSt.color, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    ● {badgeSt.label}
-                  </span>
-                </div>
-
-                {/* Asunto */}
-                <h3 style={{ margin: 0, fontSize: '14.5px', fontWeight: 700, color: colores.textoClaro, lineHeight: 1.3 }}>
-                  {t.asunto}
-                </h3>
-
-                {/* Solicitante y Depto */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '12px', color: colores.textoMedio }}>
-                  <span>👤 {t.solicitante} • <span style={{ color: colores.textoOscuro }}>{t.departamento}</span></span>
-                  <span style={{ fontSize: '11px', color: colores.textoOscuro }}>Hace {t.creadoHace}</span>
-                </div>
-
-                {/* Footer Card: SLA Timer & Nivel */}
-                <div style={{
-                  display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  paddingTop: '8px', borderTop: `1px solid ${colores.borde}`, fontSize: '11.5px'
-                }}>
-                  <span style={{ color: '#F59E0B', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '4px' }}>
-                    <Clock size={13} /> SLA: {t.tiempoSla}
-                  </span>
-                  <span style={{ background: colores.fondoPrincipal, padding: '3px 8px', borderRadius: '6px', fontSize: '11px', color: colores.textoClaro, border: `1px solid ${colores.borde}` }}>
-                    🛡️ {t.nivel}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* COLUMNA DERECHA: DETALLE INTERACTIVO Y SOLUCIÓN IA DEL TICKET */}
-        {ticketSeleccionado ? (
-          <div style={{
-            background: colores.fondoSecundario,
-            borderRadius: '20px',
-            padding: '24px',
-            border: `1px solid ${colores.borde}`,
-            boxShadow: colores.sombra,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '20px',
-            position: 'sticky',
-            top: '20px'
-          }}>
-            {/* Header del Ticket Seleccionado */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '16px', fontWeight: 800, color: colores.primario }}>{ticketSeleccionado.folio}</span>
-                  <span style={{
-                    fontSize: '11px', fontWeight: 800, padding: '3px 10px', borderRadius: '999px',
-                    background: getBadgesPrioridad(ticketSeleccionado.prioridad).bg,
-                    color: getBadgesPrioridad(ticketSeleccionado.prioridad).color
-                  }}>
-                    {ticketSeleccionado.prioridad.toUpperCase()}
-                  </span>
-                </div>
-                <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: colores.textoClaro }}>
-                  {ticketSeleccionado.asunto}
-                </h2>
-              </div>
-
-              <button
-                onClick={() => escalamientoManual(ticketSeleccionado.id)}
-                style={{
-                  padding: '8px 14px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-                  background: 'linear-gradient(135deg, #DC2626 0%, #991B1B 100%)', color: '#FFF',
-                  fontSize: '12px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px'
-                }}
-              >
-                <ArrowUpRight size={14} /> Escalar Nivel ({ticketSeleccionado.nivel})
-              </button>
-            </div>
-
-            {/* Info Solicitante */}
-            <div style={{ background: colores.fondoPrincipal, padding: '14px', borderRadius: '12px', border: `1px solid ${colores.borde}`, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px' }}>
-                <span style={{ color: colores.textoMedio }}>Solicitante:</span>
-                <span style={{ fontWeight: 700, color: colores.textoClaro }}>{ticketSeleccionado.solicitante}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px' }}>
-                <span style={{ color: colores.textoMedio }}>Departamento / Área:</span>
-                <span style={{ fontWeight: 600, color: colores.textoClaro }}>{ticketSeleccionado.departamento}</span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12.5px' }}>
-                <span style={{ color: colores.textoMedio }}>Asignado actual:</span>
-                <span style={{ fontWeight: 700, color: colores.primario }}>{ticketSeleccionado.agenteAsignado}</span>
-              </div>
-            </div>
-
-            {/* Descripción del Incidente */}
-            <div>
-              <span style={{ fontSize: '12px', fontWeight: 700, color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                Descripción del requerimiento:
-              </span>
-              <p style={{ margin: '6px 0 0', fontSize: '13.5px', color: colores.textoClaro, lineHeight: 1.5, background: colores.fondoPrincipal, padding: '12px', borderRadius: '10px', border: `1px solid ${colores.borde}` }}>
-                {ticketSeleccionado.descripcion}
-              </p>
-            </div>
-
-            {/* Sugerencia de Solución por Inteligencia Artificial (MAYIA Assist) */}
-            <div style={{
-              background: 'linear-gradient(135deg, rgba(3, 140, 174, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)',
-              borderRadius: '14px',
-              padding: '16px',
-              border: '1px solid rgba(3, 140, 174, 0.3)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '8px'
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '6px' }}>
+            <h1 style={{ margin: 0, fontSize: '26px', color: colores.textoClaro, fontWeight: '700' }}>Mesa de Ayuda y Soporte (ITSM)</h1>
+            <span style={{
+              background: `${tema.acento}15`, color: tema.acentoOscuro, padding: '6px 12px', borderRadius: '16px',
+              fontSize: '12px', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#038CAE', fontWeight: 700, fontSize: '13px' }}>
-                <Sparkles size={16} /> Solución Sugerida por MAYIA AI Assist:
-              </div>
-              <p style={{ margin: 0, fontSize: '13px', color: colores.textoClaro, lineHeight: 1.4 }}>
-                {ticketSeleccionado.solucionSugeridaIA}
-              </p>
-              <button
-                onClick={() => setNuevaRespuesta(ticketSeleccionado.solucionSugeridaIA)}
-                style={{
-                  alignSelf: 'flex-start', marginTop: '4px', padding: '5px 10px', borderRadius: '6px',
-                  border: 'none', background: '#038CAE', color: '#FFF', fontSize: '11px', fontWeight: 700, cursor: 'pointer'
-                }}
-              >
-                Usar esta respuesta rápida
-              </button>
-            </div>
+              <Sparkles size={14}/> MAYIA Copilot Activo
+            </span>
+          </div>
+          <p style={{ margin: 0, color: colores.textoMedio, fontSize: '15px' }}>
+            Gestión centralizada de tickets de servicio técnico. Asignación, triaje y auto-resolución impulsados por IA generativa.
+          </p>
+        </div>
+        <div>
+           <button className="btn-action" style={{ padding: '12px 20px', background: tema.acento, color: '#fff', border: 'none', borderRadius: '10px', display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontWeight: 600, boxShadow: `0 4px 12px ${tema.acento}40` }}>
+             Nuevo Ticket
+           </button>
+        </div>
+      </div>
 
-            {/* Formulario de Respuesta / Resolución */}
-            <form onSubmit={responderTicket} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <label style={{ fontSize: '12px', fontWeight: 700, color: colores.textoMedio }}>
-                Agregar Respuesta o Nota de Atención:
-              </label>
-              <textarea
-                rows={3}
-                placeholder="Escribe la solución o instrucciones para el usuario..."
-                value={nuevaRespuesta}
-                onChange={e => setNuevaRespuesta(e.target.value)}
-                style={{
-                  width: '100%', padding: '12px', borderRadius: '10px', border: `1px solid ${colores.borde}`,
-                  background: colores.fondoPrincipal, color: colores.textoClaro, fontSize: '13px', outline: 'none', resize: 'vertical'
-                }}
-              />
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-                <button
-                  type="submit"
-                  style={{
-                    padding: '10px 18px', borderRadius: '10px', border: 'none', cursor: 'pointer',
-                    background: tema.acento, color: tema.sobreAcento, fontWeight: 700, fontSize: '13px',
-                    display: 'flex', alignItems: 'center', gap: '6px'
+      {/* KPIs GRID */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px' }}>
+        {[
+          { label: 'TICKETS ABIERTOS', valor: '67', desc: 'Cola global activa', icono: MessageSquare, color: '#3B82F6', trend: '12 críticos / 8 vencidos' },
+          { label: 'TIEMPO MEDIO RES.', valor: '3.4 hrs', desc: 'Promedio semanal', icono: Clock, color: '#10B981', trend: 'Mejoró 15% vs mes ant.' },
+          { label: 'SATISFACCIÓN (CSAT)', valor: '98.2%', desc: 'Calificación usuarios', icono: ThumbsUp, color: tema.acento, trend: 'Excelente nivel' },
+          { label: 'AUTO-RESUELTOS IA', valor: '42%', desc: 'Sin intervención humana', icono: Zap, color: '#8B5CF6', trend: 'Ahorro: 145 hrs/mes' }
+        ].map((kpi, i) => (
+          <div key={i} style={{
+            background: '#fff', borderRadius: '20px', padding: '24px',
+            border: `1px solid ${colores.borde}`, borderTop: `4px solid ${kpi.color}`, boxShadow: colores.sombra,
+            position: 'relative', overflow: 'hidden', animation: `fadeSlideUp 0.6s ease-out ${i * 0.1}s backwards`
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div>
+                <div style={{ fontSize: '12px', fontWeight: 'bold', color: colores.textoOscuro, letterSpacing: '0.05em', textTransform: 'uppercase' }}>{kpi.label}</div>
+                <div style={{ fontSize: '32px', fontWeight: '800', color: colores.textoClaro, marginTop: '8px' }}>{kpi.valor}</div>
+                <div style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '4px' }}>{kpi.desc}</div>
+              </div>
+              <div style={{ padding: '12px', borderRadius: '16px', background: `${kpi.color}15`, color: kpi.color }}>
+                <kpi.icono size={24} />
+              </div>
+            </div>
+            <div style={{ marginTop: '16px', fontSize: '13px', color: colores.textoMedio, background: colores.fondoSecundario, padding: '8px 12px', borderRadius: '8px', display: 'inline-block' }}>
+              {kpi.trend}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* TABS NAVIGATION */}
+      <div style={{ display: 'flex', gap: '8px', borderBottom: `1px solid ${colores.borde}` }}>
+        {[
+          { id: 'tickets', label: 'Centro de Resolución', icon: Server },
+          { id: 'metricas', label: 'Métricas e Informes', icon: BarChart2 },
+          { id: 'auto-ia', label: 'Flujos Auto-Resolución (IA)', icon: Zap },
+          { id: 'knowledge-base', label: 'Base de Conocimientos', icon: Database }
+        ].map(tab => {
+          const active = activeTab === tab.id;
+          return (
+            <button key={tab.id} onClick={() => setActiveTab(tab.id)} className="tab-hover"
+              style={{
+                background: active ? `${tema.acento}10` : 'transparent', border: 'none', padding: '14px 20px',
+                fontSize: '14px', fontWeight: active ? 'bold' : '600', color: active ? tema.acentoOscuro : colores.textoMedio,
+                borderBottom: active ? `3px solid ${tema.acento}` : '3px solid transparent',
+                cursor: 'pointer', transition: 'all 0.2s ease', marginBottom: '-1px', display: 'flex', alignItems: 'center', gap: '8px', borderRadius: '8px 8px 0 0'
+              }}
+            >
+              <tab.icon size={18}/> {tab.label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* TAB CONTENT: TICKETS MASTER-DETAIL */}
+      {activeTab === 'tickets' && (
+        <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: '24px', animation: 'fadeSlideUp 0.4s ease-out', minHeight: '750px' }}>
+          
+          {/* LEFT PANEL: TICKET LIST */}
+          <div style={{ background: '#fff', borderRadius: '20px', border: `1px solid ${colores.borde}`, boxShadow: colores.sombra, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            
+            {/* Toolbar Filters */}
+            <div style={{ padding: '20px', borderBottom: `1px solid ${colores.borde}`, background: colores.fondoSecundario }}>
+              <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', color: colores.textoClaro }}>Bandeja de Entrada</h3>
+              
+              <div style={{ position: 'relative', marginBottom: '12px' }}>
+                <Search size={18} color={colores.textoOscuro} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)' }} />
+                <input 
+                  type="text" placeholder="Buscar por ID, título, usuario..." 
+                  value={searchTerm} onChange={e => setSearchTerm(e.target.value)}
+                  style={{ width: '100%', padding: '12px 12px 12px 40px', borderRadius: '10px', border: `1px solid ${colores.borde}`, outline: 'none', fontSize: '14px' }}
+                />
+              </div>
+
+              <div style={{ display: 'flex', gap: '8px', overflowX: 'auto', paddingBottom: '4px' }}>
+                {['Todos', 'Abierto', 'Crítica', 'En Proceso', 'Resuelto (IA)'].map(f => (
+                  <button key={f} onClick={() => setTicketFilter(f)}
+                    style={{
+                      padding: '6px 12px', borderRadius: '16px', fontSize: '12px', fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap',
+                      background: ticketFilter === f ? tema.acento : '#fff',
+                      color: ticketFilter === f ? '#fff' : colores.textoMedio,
+                      border: ticketFilter === f ? `1px solid ${tema.acento}` : `1px solid ${colores.borde}`
+                    }}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            {/* Ticket List */}
+            <div style={{ overflowY: 'auto', flex: 1, padding: '12px' }}>
+              {filteredTickets.map(ticket => (
+                <div 
+                  key={ticket.id} 
+                  onClick={() => setSelectedTicket(ticket)}
+                  className="ticket-row"
+                  style={{ 
+                    padding: '16px', borderRadius: '12px', marginBottom: '8px',
+                    background: selectedTicket.id === ticket.id ? `${tema.acento}10` : '#fff',
+                    border: selectedTicket.id === ticket.id ? `1px solid ${tema.acento}50` : `1px solid ${colores.borde}`,
+                    borderLeft: selectedTicket.id === ticket.id ? `4px solid ${tema.acento}` : `1px solid ${colores.borde}`
                   }}
                 >
-                  <Send size={14} /> Responder & Actualizar Ticket
-                </button>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: 'bold', color: colores.textoOscuro }}>{ticket.id}</span>
+                    <span style={{ fontSize: '12px', color: colores.textoMedio, display: 'flex', alignItems: 'center', gap: '4px' }}><Clock size={12}/> {ticket.tiempo}</span>
+                  </div>
+                  
+                  <h4 style={{ margin: '0 0 12px 0', fontSize: '15px', color: colores.textoClaro, lineHeight: '1.4' }}>{ticket.titulo}</h4>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '13px', color: colores.textoMedio }}>
+                      <User size={14}/> {ticket.usuario} ({ticket.depto})
+                    </div>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <span style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: 600, background: `${getPriorityColor(ticket.prioridad)}15`, color: getPriorityColor(ticket.prioridad) }}>
+                        P: {ticket.prioridad}
+                      </span>
+                      <span style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: 600, background: `${getStatusColor(ticket.status)}15`, color: getStatusColor(ticket.status) }}>
+                        {ticket.status}
+                      </span>
+                      {ticket.sla === 'Vencido' && (
+                        <span style={{ padding: '2px 8px', borderRadius: '12px', fontSize: '11px', fontWeight: 600, background: '#EF444415', color: '#EF4444', animation: 'pulseAlert 2s infinite' }}>SLA Vencido</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+              
+              {filteredTickets.length === 0 && (
+                <div style={{ textAlign: 'center', padding: '40px 20px', color: colores.textoMedio }}>
+                  <Search size={32} style={{ opacity: 0.3, marginBottom: '12px' }} />
+                  <p>No se encontraron tickets con esos filtros.</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* RIGHT PANEL: INSPECTOR & RESOLUTION */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            
+            {/* TICKET HEADER DETAILS */}
+            <div style={{ background: '#fff', borderRadius: '20px', border: `1px solid ${colores.borde}`, boxShadow: colores.sombra, padding: '32px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+                <div>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '15px', color: colores.textoOscuro, fontWeight: 'bold', fontFamily: 'monospace', background: colores.fondoSecundario, padding: '4px 10px', borderRadius: '8px' }}>{selectedTicket.id}</span>
+                    <span style={{ padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 600, background: `${getPriorityColor(selectedTicket.prioridad)}20`, color: getPriorityColor(selectedTicket.prioridad) }}>Prioridad: {selectedTicket.prioridad}</span>
+                    <span style={{ padding: '4px 12px', borderRadius: '12px', fontSize: '12px', fontWeight: 600, background: `${getStatusColor(selectedTicket.status)}20`, color: getStatusColor(selectedTicket.status) }}>{selectedTicket.status}</span>
+                  </div>
+                  <h2 style={{ margin: 0, fontSize: '24px', color: colores.textoClaro, fontWeight: '700', lineHeight: '1.3' }}>{selectedTicket.titulo}</h2>
+                </div>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <button style={{ padding: '8px', background: 'transparent', border: `1px solid ${colores.borde}`, borderRadius: '8px', cursor: 'pointer', color: colores.textoMedio }}><MoreVertical size={20}/></button>
+                </div>
               </div>
-            </form>
+
+              {/* TICKET METADATA GRID */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', background: colores.fondoSecundario, padding: '20px', borderRadius: '16px', marginBottom: '24px' }}>
+                <div>
+                  <div style={{ fontSize: '12px', color: colores.textoMedio, marginBottom: '4px' }}>Solicitante</div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: colores.textoClaro }}>{selectedTicket.usuario}</div>
+                  <div style={{ fontSize: '12px', color: colores.textoOscuro }}>{selectedTicket.email}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: colores.textoMedio, marginBottom: '4px' }}>Departamento</div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: colores.textoClaro }}>{selectedTicket.depto}</div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: colores.textoMedio, marginBottom: '4px' }}>Asignado a</div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: colores.textoClaro, display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: selectedTicket.asignado.includes('MAYIA') ? '#8B5CF6' : '#3B82F6' }}/>
+                    {selectedTicket.asignado}
+                  </div>
+                </div>
+                <div>
+                  <div style={{ fontSize: '12px', color: colores.textoMedio, marginBottom: '4px' }}>Estado SLA</div>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: getSLAColor(selectedTicket.sla) }}>{selectedTicket.sla}</div>
+                </div>
+              </div>
+
+              <div style={{ marginBottom: '32px' }}>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '15px', color: colores.textoClaro }}>Descripción del Reporte</h4>
+                <p style={{ margin: 0, fontSize: '15px', color: colores.textoMedio, lineHeight: '1.6', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                  {selectedTicket.description}
+                </p>
+              </div>
+
+              {/* MAYIA AI Assistant Box */}
+              <div style={{ 
+                background: `linear-gradient(to right, ${tema.acento}10, transparent)`, border: `1px solid ${tema.acento}30`,
+                borderLeft: `4px solid ${tema.acento}`, padding: '24px', borderRadius: '16px', marginBottom: '32px' 
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: tema.acentoOscuro, fontWeight: '700', marginBottom: '12px', fontSize: '16px' }}>
+                  <Sparkles size={20}/> Análisis y Sugerencia de MAYIA Copilot
+                </div>
+                <p style={{ margin: '0 0 20px 0', fontSize: '14px', color: colores.textoClaro, lineHeight: '1.6' }}>
+                  {currentIAResponse}
+                </p>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button className="btn-action" style={{ padding: '10px 20px', background: tema.acento, color: '#fff', border: 'none', borderRadius: '10px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <CornerDownRight size={16}/> Aplicar Solución Sugerida
+                  </button>
+                  <button className="btn-action" style={{ padding: '10px 20px', background: '#fff', color: colores.textoMedio, border: `1px solid ${colores.borde}`, borderRadius: '10px', fontSize: '13px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    Modificar Respuesta
+                  </button>
+                </div>
+              </div>
+
+              {/* Action Box / Reply */}
+              <div>
+                <h4 style={{ margin: '0 0 12px 0', fontSize: '15px', color: colores.textoClaro }}>Responder al Usuario</h4>
+                <div style={{ border: `1px solid ${colores.borde}`, borderRadius: '16px', overflow: 'hidden' }}>
+                  <textarea 
+                    placeholder="Escribe tu respuesta aquí. Puedes usar plantillas o la respuesta de IA..." 
+                    style={{ width: '100%', minHeight: '120px', border: 'none', padding: '16px', fontSize: '14px', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }}
+                  />
+                  <div style={{ background: colores.fondoSecundario, padding: '12px 16px', borderTop: `1px solid ${colores.borde}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: colores.textoMedio }}><Paperclip size={18}/></button>
+                      <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: colores.textoMedio }}><Tag size={18}/></button>
+                    </div>
+                    <div style={{ display: 'flex', gap: '12px' }}>
+                      <button className="btn-action" style={{ padding: '8px 24px', background: '#10B981', color: '#fff', border: 'none', borderRadius: '8px', fontSize: '14px', fontWeight: 600, cursor: 'pointer' }}>
+                        Resolver
+                      </button>
+                      <button className="btn-action" style={{ padding: '8px 24px', background: tema.acentoOscuro, color: '#fff', border: 'none', borderRadius: '8px', fontSize: '14px', fontWeight: 600, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        Enviar <Send size={14}/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TAB CONTENT: METRICAS */}
+      {activeTab === 'metricas' && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', animation: 'fadeSlideUp 0.4s ease-out' }}>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '24px' }}>
+            
+            <div style={{ background: '#fff', borderRadius: '20px', padding: '24px', border: `1px solid ${colores.borde}`, boxShadow: colores.sombra }}>
+              <h3 style={{ margin: '0 0 20px 0', fontSize: '16px', color: colores.textoClaro }}>Volumen de Tickets vs Tiempo de Resolución</h3>
+              <div style={{ height: 350 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <ComposedChart data={mockTendencia} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={colores.borde} />
+                    <XAxis dataKey="dia" stroke={colores.textoOscuro} fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis yAxisId="left" stroke={colores.textoOscuro} fontSize={12} tickLine={false} axisLine={false} />
+                    <YAxis yAxisId="right" orientation="right" stroke={colores.textoOscuro} fontSize={12} tickLine={false} axisLine={false} />
+                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: colores.sombraMedia }} />
+                    <Legend wrapperStyle={{ paddingTop: '20px', fontSize: '12px' }}/>
+                    
+                    <Bar yAxisId="left" dataKey="tickets" name="Tickets Totales" fill={colores.fondoTerciario} radius={[4, 4, 0, 0]} barSize={30} />
+                    <Bar yAxisId="left" dataKey="autoResueltos" name="Resueltos por IA" fill={tema.acento} radius={[4, 4, 0, 0]} barSize={30} />
+                    <Line yAxisId="right" type="monotone" dataKey="resolucion" name="Tiempo Medio (hrs)" stroke="#3B82F6" strokeWidth={3} dot={{ r: 5 }} activeDot={{ r: 8 }} />
+                  </ComposedChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+
+            <div style={{ background: '#fff', borderRadius: '20px', padding: '24px', border: `1px solid ${colores.borde}`, boxShadow: colores.sombra }}>
+              <h3 style={{ margin: '0 0 20px 0', fontSize: '16px', color: colores.textoClaro }}>Categorización de Incidentes</h3>
+              <div style={{ height: 350 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie data={mockCategorias} cx="50%" cy="45%" innerRadius={70} outerRadius={110} paddingAngle={5} dataKey="value" label={false}>
+                      {mockCategorias.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: colores.sombraMedia }} />
+                    <Legend verticalAlign="bottom" height={80} wrapperStyle={{ fontSize: '12px' }}/>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
 
           </div>
-        ) : (
-          <div style={{ background: colores.fondoSecundario, borderRadius: '20px', padding: '40px', textAlign: 'center', color: colores.textoMedio }}>
-            Selecciona un ticket de la lista para ver el detalle y resolución.
-          </div>
-        )}
+        </div>
+      )}
 
-      </div>
+      {/* PLACEHOLDERS PARA OTRAS TABS */}
+      {(activeTab === 'auto-ia' || activeTab === 'knowledge-base') && (
+        <div style={{ background: '#fff', padding: '80px 40px', borderRadius: '20px', border: `1px solid ${colores.borde}`, textAlign: 'center', color: colores.textoMedio, animation: 'fadeSlideUp 0.4s ease-out' }}>
+          {activeTab === 'auto-ia' ? <Zap size={72} color={tema.acento} style={{ marginBottom: '24px', opacity: 0.5 }} /> : <Database size={72} color={tema.acento} style={{ marginBottom: '24px', opacity: 0.5 }} />}
+          <h3 style={{ margin: '0 0 16px 0', color: colores.textoClaro, fontSize: '24px' }}>Módulo Avanzado: {activeTab.replace('-', ' ').toUpperCase()}</h3>
+          <p style={{ fontSize: '16px', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
+            Aquí podrás configurar los árboles de decisión de MAYIA, subir nuevos documentos para entrenamiento de la Base de Conocimiento (RAG) y establecer reglas automáticas de escalamiento.
+          </p>
+          <button style={{ marginTop: '24px', padding: '12px 24px', background: colores.fondoSecundario, border: `1px solid ${colores.borde}`, borderRadius: '10px', fontWeight: 600, color: colores.textoClaro, cursor: 'pointer' }}>Explorar Documentación</button>
+        </div>
+      )}
 
     </div>
   );

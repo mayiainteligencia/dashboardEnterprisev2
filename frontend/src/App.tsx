@@ -20,7 +20,41 @@ import { Ciberseguridad } from './components/departamentos/Ciberseguridad';
 import { Academia } from './components/departamentos/Academia';
 import { CentroMonitoreo } from './components/departamentos/CentroMonitoreo';
 import { MesaAyuda } from './components/departamentos/MesaAyuda';
+
+// Módulos Compras
+import { Requisiciones } from './components/modules/compras/Requisiciones';
+import { Proveedores } from './components/modules/compras/Proveedores';
+import { Cotizaciones } from './components/modules/compras/Cotizaciones';
+import { Inventario } from './components/modules/compras/Inventario';
+import { Aprobaciones } from './components/modules/compras/Aprobaciones';
+import { Presupuesto } from './components/modules/compras/Presupuesto';
+import { OrdenesCompra } from './components/modules/compras/OrdenesCompra';
+import { ImpactoSLA } from './components/modules/compras/ImpactoSLA';
+import { Auditoria } from './components/modules/compras/Auditoria';
+
+// Módulos Flotillas
+import { FleetCommand } from './components/modules/flotillas/FleetCommand';
+import { FleetRutas } from './components/modules/flotillas/FleetRutas';
+import { FleetMantenimiento } from './components/modules/flotillas/FleetMantenimiento';
+import { FleetSpeed } from './components/modules/flotillas/FleetSpeed';
+import { FleetPolizas } from './components/modules/flotillas/FleetPolizas';
+import { FleetGasto } from './components/modules/flotillas/FleetGasto';
+import { FleetSupervisor } from './components/modules/flotillas/FleetSupervisor';
+import { FleetAuditor } from './components/modules/flotillas/FleetAuditor';
+import { FleetSLA } from './components/modules/flotillas/FleetSLA';
+
+// Módulos Edificios & Nuevos Negocios
+import { CCTVInteligente } from './components/modules/edificios/CCTVInteligente';
+import { DeteccionEmergencias } from './components/modules/edificios/DeteccionEmergencias';
+import { BuildingHealth } from './components/modules/edificios/BuildingHealth';
+import { HVACPredictivo } from './components/modules/edificios/HVACPredictivo';
+import { EnergyRisk } from './components/modules/edificios/EnergyRisk';
+import { ReporteEjecutivo } from './components/modules/edificios/ReporteEjecutivo';
+import { FacilityPortal } from './components/modules/edificios/FacilityPortal';
+import { UpsellScoring } from './components/modules/edificios/UpsellScoring';
+
 import { brandingConfig } from './config/branding';
+import { AIChatProvider, useAIChat } from './context/AIChatContext';
 
 // Credenciales dummy del acceso admin
 const ADMIN_USER = 'bescouser';
@@ -90,7 +124,7 @@ const LoginModal: React.FC<{ onClose: () => void; onOk: () => void }> = ({ onClo
   );
 };
 
-function App() {
+function AppInner() {
   const [modo, setModo] = useState<Modo>('cliente');
   const [adminAuth, setAdminAuth] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -99,32 +133,81 @@ function App() {
   const [selectedSellerName, setSelectedSellerName] = useState<string | null>(null);
   const isMobile = useIsMobile();
   const { colores, temas } = brandingConfig;
+  const { setActiveSectionContext } = useAIChat();
 
   const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const selectSection = (s: string) => { setActiveSection(s); setDrawerOpen(false); };
 
   const irARendimientoVendedor = (sellerName?: string) => {
     setSelectedSellerName(sellerName || null);
-    setActiveSection('rendimiento-vendedores');
-    setDrawerOpen(false);
+    selectSection('rendimiento-vendedores');
   };
 
-  const irCliente = () => { setModo('cliente'); setActiveSection('dashboard'); };
   const irAdmin = () => {
-    if (adminAuth) { setModo('admin'); setActiveSection('dashboard'); }
+    if (adminAuth) setModo('admin');
     else setShowLogin(true);
   };
-  const loginOk = () => { setAdminAuth(true); setShowLogin(false); setModo('admin'); setActiveSection('dashboard'); };
+  const irCliente = () => setModo('cliente');
+  const loginOk = () => { setAdminAuth(true); setModo('admin'); setShowLogin(false); };
 
-  const todosLosModulos = [...modulosCompras, ...modulosFlotillas, ...modulosAdmin, ...modulosCliente, ...modulosDepartamentos, ...modulosEspeciales];
-  const moduloActivo = todosLosModulos.find(m => m.id === activeSection);
-  const getTitulo = () => activeSection === 'dashboard' ? 'Comando Inteligente de Compras' : (moduloActivo?.titulo ?? 'Dashboard');
+  const modulosArray = modulosPorModo(modo);
+  const moduloActivo = modulosArray.find(m => m.id === activeSection);
+
+  const getTitulo = () => {
+    if (activeSection === 'dashboard') return 'Dashboard Enterprise';
+    if (activeSection === 'controlador-pisos') return 'Controlador de Pisos';
+    if (activeSection === 'abastecimiento-inteligente') return 'Abastecimiento Inteligente';
+    if (activeSection === 'rendimiento-vendedores') return selectedSellerName ? `Rendimiento: ${selectedSellerName}` : 'Rendimiento por Vendedor';
+    if (activeSection === 'asistente-ia-chat') return 'Asistente IA Chat';
+
+    const todos = [...modulosCompras, ...modulosFlotillas, ...modulosAdmin, ...modulosCliente, ...modulosDepartamentos, ...modulosEspeciales];
+    const enc = todos.find(m => m.id === activeSection);
+    return enc ? enc.titulo : 'Dashboard Enterprise';
+  };
+
+  useEffect(() => {
+    setActiveSectionContext(activeSection, getTitulo());
+  }, [activeSection, modo]);
 
   const renderContent = () => {
     if (activeSection === 'dashboard') return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
-    if (activeSection === 'pisos') return <ControladorPisos tema={tema} />;
-    if (activeSection === 'abastecimiento') return <AbastecimientoInteligente tema={tema} modo={modo} onNavigateToRendimiento={irARendimientoVendedor} />;
+    if (activeSection === 'controlador-pisos') return <ControladorPisos tema={tema} />;
+    if (activeSection === 'abastecimiento-inteligente') return <AbastecimientoInteligente tema={tema} modo={modo} onNavigateToRendimiento={irARendimientoVendedor} />;
     if (activeSection === 'rendimiento-vendedores') return <RendimientoVendedores tema={tema} modo={modo} initialSelectedSellerName={selectedSellerName} />;
+
+    // Compras & Abastecimiento
+    if (activeSection === 'requisiciones') return <Requisiciones />;
+    if (activeSection === 'proveedores') return <Proveedores />;
+    if (activeSection === 'cotizaciones') return <Cotizaciones />;
+    if (activeSection === 'inventario') return <Inventario />;
+    if (activeSection === 'aprobaciones') return <Aprobaciones />;
+    if (activeSection === 'presupuesto') return <Presupuesto />;
+    if (activeSection === 'ordenes-compra') return <OrdenesCompra />;
+    if (activeSection === 'impacto-sla') return <ImpactoSLA />;
+    if (activeSection === 'auditoria') return <Auditoria />;
+
+    // Flotillas
+    if (activeSection === 'fleet') return <FleetCommand />;
+    if (activeSection === 'rutas') return <FleetRutas />;
+    if (activeSection === 'mant-veh') return <FleetMantenimiento />;
+    if (activeSection === 'driver-risk') return <FleetSpeed />;
+    if (activeSection === 'polizas') return <FleetPolizas />;
+    if (activeSection === 'gasto') return <FleetGasto />;
+    if (activeSection === 'copiloto') return <FleetSupervisor />;
+    if (activeSection === 'auditor') return <FleetAuditor />;
+    if (activeSection === 'sla') return <FleetSLA />;
+
+    // Edificios & Nuevos Negocios
+    if (activeSection === 'cctv') return <CCTVInteligente />;
+    if (activeSection === 'fuego') return <DeteccionEmergencias />;
+    if (activeSection === 'health') return <BuildingHealth />;
+    if (activeSection === 'hvac') return <HVACPredictivo />;
+    if (activeSection === 'energy') return <EnergyRisk />;
+    if (activeSection === 'reporte') return <ReporteEjecutivo />;
+    if (activeSection === 'portal') return <FacilityPortal />;
+    if (activeSection === 'upsell') return <UpsellScoring />;
+
+    // Departamentos
     if (activeSection === 'dept-administracion') return <Administracion />;
     if (activeSection === 'dept-finanzas') return <FinanzasContabilidad />;
     if (activeSection === 'dept-operaciones') return <Operaciones />;
@@ -132,10 +215,13 @@ function App() {
     if (activeSection === 'dept-ti') return <TecnologiasInformacion />;
     if (activeSection === 'dept-ventas') return <VentasMarketing />;
     if (activeSection === 'dept-playground') return <Playground />;
+
+    // Especiales / Capacitación & Seguridad
     if (activeSection === 'dept-ciberseguridad') return <Ciberseguridad />;
     if (activeSection === 'dept-academia') return <Academia />;
     if (activeSection === 'dept-monitoreo') return <CentroMonitoreo />;
     if (activeSection === 'dept-mesa-ayuda') return <MesaAyuda />;
+
     if (moduloActivo) return <ModuloBesco modulo={moduloActivo} tema={tema} />;
     return <BescoDashboard modo={modo} tema={tema} onOpen={selectSection} />;
   };
@@ -189,6 +275,14 @@ function App() {
       {/* Alertas al momento (toaster) — solo admin */}
       <ToastAlertas modo={modo} />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AIChatProvider>
+      <AppInner />
+    </AIChatProvider>
   );
 }
 

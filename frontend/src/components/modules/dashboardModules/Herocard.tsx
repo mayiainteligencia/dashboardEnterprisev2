@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
 import { brandingConfig, type TemaBesco } from '../../../config/branding';
 import { BrainCanvas } from './BrainCanvas';
+import { useAIChat } from '../../../context/AIChatContext';
+import { MarkdownRenderer } from '../../common/MarkdownRenderer';
 
 type ChatMessage = {
   role: 'user' | 'assistant';
@@ -34,6 +36,7 @@ interface HeroCardProps {
 
 export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones = [] }) => {
   const { colores, ia, empresa } = brandingConfig;
+  const { messages: globalMessages, loading: globalLoading, sendMessage: sendGlobalLLMMessage } = useAIChat();
   const acc = tema ? tema.acento : '#374151';
   const accDark = tema ? tema.acentoOscuro : '#1F2937';
   const sobre = tema ? tema.sobreAcento : '#ffffff';
@@ -220,28 +223,14 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
   };
 
   const sendMessage = async () => {
-    if (!input.trim() || loading) return;
+    if (!input.trim() || globalLoading) return;
     await sendMessageWithText(input);
   };
 
   const sendMessageWithText = async (messageText: string) => {
-    if (!messageText.trim() || loading) return;
+    if (!messageText.trim() || globalLoading) return;
 
-    const now = new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-    });
-
-    const userMessage: ChatMessage = {
-      role: 'user',
-      content: messageText,
-      time: now,
-    };
-
-    setMessages((prev) => [...prev, userMessage]);
-    setInput('');
-
-    // Modo navegación por voz: intenta navegar; si no, responde local (sin backend)
+    // Modo navegación por voz: intenta navegar si se detecta una sección
     if (onNavigate && secciones.length) {
       const destino = matchSeccion(messageText, secciones);
       if (destino) {
@@ -249,53 +238,10 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         handleCloseModal();
         return;
       }
-      setMessages((prev) => [...prev, {
-        role: 'assistant',
-        content: `Puedo llevarte a una sección. Di o escribe, por ejemplo: "ve a ${secciones[0].titulo}".`,
-        time: now,
-      }]);
-      return;
     }
 
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/chat/message', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          mensaje: userMessage.content,
-          departamento: 'General',
-        }),
-      });
-
-      if (!response.ok) throw new Error('Error IA');
-
-      const data = await response.json();
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: data.respuesta,
-          time: new Date().toLocaleTimeString([], {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-        },
-      ]);
-    } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: 'assistant',
-          content: 'No fue posible conectar con el asistente. Por favor intenta de nuevo.',
-          time: now,
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
+    setInput('');
+    await sendGlobalLLMMessage(messageText);
   };
 
   const handleCloseModal = () => {
@@ -532,9 +478,9 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                 backgroundColor: colores.fondoPrincipal,
               }}
             >
-              {messages.map((m, i) => (
+              {globalMessages.map((m) => (
                 <div
-                  key={i}
+                  key={m.id}
                   style={{
                     display: 'flex',
                     gap: '12px',
@@ -574,9 +520,11 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                         boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
                       }}
                     >
-                      <div style={{ fontSize: '15px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
-                        {m.content}
-                      </div>
+                      {m.content ? (
+                        <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={acc} />
+                      ) : (
+                        globalLoading && m.role === 'assistant' ? 'Generando respuesta...' : ''
+                      )}
                     </div>
                     <div
                       style={{
@@ -586,13 +534,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                         textAlign: m.role === 'user' ? 'right' : 'left',
                       }}
                     >
-                      {m.time}
+                      {m.timestamp}
                     </div>
                   </div>
                 </div>
               ))}
 
-              {loading && (
+              {globalLoading && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div
                     style={{
