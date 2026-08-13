@@ -1,102 +1,119 @@
-import logoBesco55aniv from '../besco/logoBesco55aniv.png';
-
 export const brandingConfig = {
   empresa: {
-    nombre: "BESCO",
-    eslogan: "Facility Services · Piso Técnico",
-    logo: logoBesco55aniv,
+    nombre: "TOTALPLAY",
+    razonSocial: "Total Play Telecomunicaciones, S.A.P.I. de C.V.",
+    grupo: "Grupo Salinas",
+    eslogan: "Transformación Inteligente M2C · Puntos de Venta",
+    logo: "/assets/logosNativos/TotalPlay.png",
   },
 
   colores: {
-    // Paleta neutral (sin rojo). Los acentos de color viven en `temas` (verde cliente / ámbar admin).
-    primario: "#374151",           // Slate neutro (chrome genérico)
-    primarioOscuro: "#1F2937",     // Slate oscuro
-    primarioClaro: "#6B7280",      // Slate claro
+    // ── Paleta oficial Totalplay (5 colores de igual relevancia) ──
+    magenta:  "#A61C5C",   // Rosa/Magenta fuerte
+    purpura:  "#732D67",   // Púrpura oscuro
+    celeste:  "#73B1BF",   // Azul-turquesa (NUEVO)
+    lima:     "#BBBF41",   // Olivo/Lima
+    ambar:    "#D9933D",   // Ámbar/Naranja
 
-    secundario: "#F4F4F4",         // Gris claro para fondos secundarios
-    acento: "#374151",             // Slate neutro
-    acentoOscuro: "#1F2937",       // Slate oscuro
+    // ── Roles de color en la UI ──
+    // El primario principal cambia a turquesa para reducir dominancia morada
+    primario:       "#73B1BF",   // Turquesa Totalplay → encabezados, nav activa
+    primarioOscuro: "#4E848F",   // Turquesa oscuro
+    primarioClaro:  "#A3D0D9",   // Turquesa claro
 
-    peligro: "#EA580C",            // Naranja (severidad crítica, sin rojo)
-    advertencia: "#F59E0B",
-    exito: "#10B981",
-    
-    // Fondos - muy limpios, blancos y grises
-    fondoPrincipal: "#FFFFFF",     // Blanco puro
-    fondoSecundario: "#FAFAFA",    // Gris casi blanco (ultra limpio)
-    fondoTerciario: "#F0F0F0",     // Gris claro para tarjetas o elementos inactivos
-    fondoClaro: "#FFFFFF",         
-    
-    // Textos
-    textoClaro: "#000000",         // Negro absoluto para alto contraste
-    textoMedio: "#555555",         // Gris medio para texto secundario
-    textoOscuro: "#888888",        // Gris claro para notas o placeholders
-    textoEnOscuro: "#FFFFFF",      // Blanco puro sobre fondos negros o rojos
-    
-    // Bordes
-    borde: "#E5E5E5",              // Gris muy sutil para bordes
-    bordeHover: "#9CA3AF",         // Borde gris al hacer hover
+    secundario:     "#A61C5C",   // Magenta → badges, CTA, alertas
+    acento:         "#D9933D",   // Ámbar → acciones secundarias / highlights
+    acentoOscuro:   "#A36618",   // Ámbar oscuro
 
-    // Gradientes neutros
-    gradientePrimario: "linear-gradient(135deg, #374151 0%, #1F2937 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #F9F9F9 0%, #F0F0F0 100%)",
-    gradienteAcento: "linear-gradient(135deg, #4B5563 0%, #374151 100%)",
-    
-    // Glass effect
-    fondoGlass: "rgba(255, 255, 255, 0.8)", // Clean glass
-    
-    // Sombras (más sutiles y elegantes)
-    sombra: "0 2px 8px rgba(0, 0, 0, 0.04)",
-    sombraMedia: "0 8px 16px rgba(0, 0, 0, 0.06)",
-    sombraGrande: "0 16px 32px rgba(0, 0, 0, 0.08)",
+    peligro:     "#A61C5C",   // Magenta para errores críticos
+    advertencia: "#D9933D",   // Ámbar para advertencias
+    exito:       "#BBBF41",   // Lima para éxitos / OK
+
+    // ── Fondos (Blanco puro como requerido) ──
+    fondoPrincipal:  "#FFFFFF",
+    fondoSecundario: "#F8F9FA",
+    fondoTerciario:  "#F1F3F5",
+    fondoClaro:      "#FFFFFF",
+
+    // ── Textos ──
+    textoClaro:    "#1A1A1A",
+    textoMedio:    "#4A4A4A",
+    textoOscuro:   "#777777",
+    textoEnOscuro: "#FFFFFF",
+
+    // ── Bordes ──
+    borde:      "#E2E8F0",
+    bordeHover: "#73B1BF",   // Turquesa en hover
+
+    // ── Gradientes ──
+    gradientePrimario:   "linear-gradient(135deg, #73B1BF 0%, #4E848F 100%)",
+    gradienteSecundario: "linear-gradient(135deg, #A61C5C 0%, #732D67 100%)",
+    gradienteAcento:     "linear-gradient(135deg, #D9933D 0%, #BBBF41 100%)",
+
+    // ── Glass / Sombras ──
+    fondoGlass:    "rgba(255, 255, 255, 0.95)",
+    sombra:        "0 2px 8px rgba(0, 0, 0, 0.04)",
+    sombraMedia:   "0 8px 20px rgba(115, 177, 191, 0.12)",
+    sombraGrande:  "0 16px 32px rgba(115, 177, 191, 0.18)",
   },
-  
+
   metricas: {
-    empleados: 568,
-    departamentos: 9,
-    tareasCompletadas: 13,
-    progreso: 70,
+    hogaresPasados: "19M+",
+    suscriptores: "5.5M",
+    puntosVenta: 112,
+    ciudades: 87,
+    fibraOpticaKm: "164,000 km",
+    arpuPromedio: "$588",
+    empleados: 5500,
   },
-  
+
   ia: {
     nombre: "MAYIA",
     modelo: "Gemini 3.5 Flash",
     habilitado: true,
+    empresaCliente: "Totalplay Telecomunicaciones",
   },
 
-  // Acentos por modo/sección
+  // ── Temas por sección distribuidos entre los 5 colores ──
   temas: {
     admin: {
-      nombre: "Operación interna",
-      acento: "#F59E0B",        // amarillo
-      acentoOscuro: "#B45309",
-      acentoSuave: "#FEF3C7",
-      sobreAcento: "#1F2937",   // texto sobre amarillo (contraste AA)
+      nombre: "Operación de Tiendas e Islas",
+      acento:       "#73B1BF",   // Turquesa
+      acentoOscuro: "#4E848F",
+      acentoSuave:  "#EAF5F7",
+      sobreAcento:  "#FFFFFF",
     },
     cliente: {
-      nombre: "Control Inteligente de Nuevos Negocios",
-      acento: "#10B981",        // verde
-      acentoOscuro: "#047857",
-      acentoSuave: "#D1FAE5",
-      sobreAcento: "#FFFFFF",
+      nombre: "Atención al Cliente Residencial",
+      acento:       "#BBBF41",   // Lima
+      acentoOscuro: "#8B8F26",
+      acentoSuave:  "#F7F8E2",
+      sobreAcento:  "#1A1A1A",
     },
     compras: {
-      nombre: "Comando Inteligente de Compras",
-      acento: "#DC2626",        // rojo
-      acentoOscuro: "#991B1B",
-      acentoSuave: "#FEE2E2",
-      sobreAcento: "#FFFFFF",
+      nombre: "Ventas y Contratación",
+      acento:       "#A61C5C",   // Magenta
+      acentoOscuro: "#751240",
+      acentoSuave:  "#FCE7F1",
+      sobreAcento:  "#FFFFFF",
     },
     flotillas: {
-      nombre: "Comando Inteligente de Flotillas",
-      acento: "#1E40AF",        // azul marino
-      acentoOscuro: "#0F172A",
-      acentoSuave: "#DBEAFE",
-      sobreAcento: "#FFFFFF",
+      nombre: "Infraestructura y Cobertura",
+      acento:       "#D9933D",   // Ámbar
+      acentoOscuro: "#A36618",
+      acentoSuave:  "#FDF4E7",
+      sobreAcento:  "#FFFFFF",
+    },
+    tecnologia: {
+      nombre: "Tecnología y Datos",
+      acento:       "#732D67",   // Púrpura
+      acentoOscuro: "#4A1B43",
+      acentoSuave:  "#F5E8F3",
+      sobreAcento:  "#FFFFFF",
     },
   },
 };
 
 export type TemaBesco = typeof brandingConfig.temas.admin;
-
+export type TemaTotalplay = typeof brandingConfig.temas.admin;
 export type BrandingConfig = typeof brandingConfig;

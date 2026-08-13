@@ -180,7 +180,7 @@ export const ReporteEjecutivo: React.FC = () => {
              <div style={{ textAlign: 'right', color: colores.textoOscuro, fontSize: 14 }}>
                <div>Fecha: {new Date().toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
                <div>Periodo: Q2 2026</div>
-               <div style={{ marginTop: 8, fontWeight: 600, color: tema.acento }}>BESCO Facility Management</div>
+               <div style={{ marginTop: 8, fontWeight: 600, color: tema.acento }}>Totalplay Facility Management</div>
              </div>
           </div>
 

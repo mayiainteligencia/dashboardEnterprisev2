@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 * {
   margin: 0;
@@ -12,80 +10,268 @@ html, body, #root {
   width: 100%;
   height: 100%;
   overflow: hidden;
-}
-
-/* Oculta la barra de scroll pero conserva el scroll */
-.no-scrollbar {
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* IE/Edge */
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;                /* Chrome/Safari */
-  width: 0;
-  height: 0;
-}
-
-/* Rejillas de 2 columnas que se apilan en móvil */
-.row2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
-.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
-@media (max-width: 880px) {
-  .row2, .row2-rev { grid-template-columns: 1fr; }
-}
-
-/* Mapa + panel lateral */
-.row-map { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
-@media (max-width: 880px) {
-  .row-map { grid-template-columns: 1fr; }
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-  font-family: inherit;
+/* ── Scrollbar styling ── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.no-scrollbar::-webkit-scrollbar { display: none; width: 0; height: 0; }
+
+.styled-scroll { scrollbar-width: thin; scrollbar-color: #D1C4D6 transparent; }
+.styled-scroll::-webkit-scrollbar { width: 5px; }
+.styled-scroll::-webkit-scrollbar-track { background: transparent; }
+.styled-scroll::-webkit-scrollbar-thumb { background: #D1C4D6; border-radius: 999px; }
+
+/* ── Grid layouts ── */
+.row2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
+.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
+@media (max-width: 880px) { .row2, .row2-rev { grid-template-columns: 1fr; } }
+.row-map { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
+@media (max-width: 880px) { .row-map { grid-template-columns: 1fr; } }
+
+button { font-family: inherit; }
+
+/* ═══════════════════════════════════════
+   KEYFRAME ANIMATIONS
+═══════════════════════════════════════ */
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.typing-dots span {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 0 2px;
-  background: #038CAE;
-  border-radius: 50%;
-  animation: blink 1.4s infinite both;
+@keyframes slideInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.typing-dots span:nth-child(2) {
-  animation-delay: 0.2s;
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
-.typing-dots span:nth-child(3) {
-  animation-delay: 0.4s;
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1); opacity: 0.8; }
+  60%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(166, 28, 92, 0.3); }
+  50%       { box-shadow: 0 0 0 8px rgba(166, 28, 92, 0); }
+}
+
+@keyframes glowPulseGreen {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(187, 191, 65, 0.35); }
+  50%       { box-shadow: 0 0 0 8px rgba(187, 191, 65, 0); }
 }
 
 @keyframes blink {
-  0%,
-  80%,
-  100% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 1;
-  }
+  0%, 80%, 100% { opacity: 0; }
+  40%           { opacity: 1; }
 }
+
+@keyframes waveFlow {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.12); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.08); }
+  70%       { transform: scale(1); }
+}
+
+@keyframes bellShake {
+  0%, 100% { transform: rotate(0deg); }
+  15%       { transform: rotate(15deg); }
+  30%       { transform: rotate(-13deg); }
+  45%       { transform: rotate(11deg); }
+  60%       { transform: rotate(-9deg); }
+  75%       { transform: rotate(7deg); }
+  90%       { transform: rotate(-5deg); }
+}
+
+@keyframes progressFill {
+  from { width: 0%; }
+}
+
+@keyframes dashOffset {
+  from { stroke-dashoffset: 251; }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes barGrow {
+  from { height: 0%; transform-origin: bottom; }
+}
+
+@keyframes funnelFill {
+  from { opacity: 0; transform: scaleX(0); transform-origin: left; }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes tickerScroll {
+  0%   { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+/* ═══════════════════════════════════════
+   REUSABLE CLASSES
+═══════════════════════════════════════ */
+
+.animate-slide-up   { animation: slideInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-scale { animation: fadeInScale 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-slide-left { animation: slideInLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.delay-1 { animation-delay: 0.05s; }
+.delay-2 { animation-delay: 0.10s; }
+.delay-3 { animation-delay: 0.15s; }
+.delay-4 { animation-delay: 0.20s; }
+.delay-5 { animation-delay: 0.25s; }
+.delay-6 { animation-delay: 0.30s; }
+.delay-7 { animation-delay: 0.35s; }
+.delay-8 { animation-delay: 0.40s; }
+.delay-9 { animation-delay: 0.45s; }
+.delay-10 { animation-delay: 0.50s; }
+
+.card-hover {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.2s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px) scale(1.005);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #A61C5C, #D9933D);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-cool {
+  background: linear-gradient(135deg, #732D67, #A61C5C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shimmer-bg {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite linear;
+}
+
+.badge-pulse {
+  animation: glowPulse 2s infinite;
+}
+
+.badge-pulse-green {
+  animation: glowPulseGreen 2s infinite;
+}
+
+.progress-bar-animated {
+  animation: progressFill 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.live-dot {
+  position: relative;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #A61C5C;
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-color: #A61C5C;
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.live-dot-green {
+  background-color: #5B8F20;
+}
+.live-dot-green::after {
+  background-color: #5B8F20;
+}
+
+.live-dot-amber {
+  background-color: #D9933D;
+}
+.live-dot-amber::after {
+  background-color: #D9933D;
+}
+
+.bell-shake {
+  animation: bellShake 1s ease both;
+}
+
+.heartbeat-icon {
+  animation: heartbeat 1.5s ease infinite;
+}
+
+.spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+/* ── Typing dots ── */
+.typing-dots span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  margin: 0 2px;
+  background: #A61C5C;
+  border-radius: 50%;
+  animation: blink 1.4s infinite both;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Equalizer bars ── */
+.eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
+.eq-bar {
+  width: 4px;
+  border-radius: 2px;
+  background: #BBBF41;
+  animation: barGrow 0.8s ease infinite alternate;
+}
+.eq-bar:nth-child(1) { animation-duration: 0.6s; }
+.eq-bar:nth-child(2) { animation-duration: 0.8s; animation-delay: 0.1s; }
+.eq-bar:nth-child(3) { animation-duration: 0.5s; animation-delay: 0.2s; }
+.eq-bar:nth-child(4) { animation-duration: 0.7s; animation-delay: 0.05s; }
+
+/* ── Ticker ── */
+.ticker-wrapper { overflow: hidden; white-space: nowrap; }
+.ticker-content { display: inline-block; animation: tickerScroll 30s linear infinite; }
+
+/* ── SVG Ring progress ── */
+.ring-progress { transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1); }

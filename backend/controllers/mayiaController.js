@@ -57,12 +57,12 @@ export async function getServiciosCorporativos(req, res) {
   }
 }
 
-// Obtener información de empresa (Besco)
+// Obtener información de empresa (Totalplay)
 export async function getInfoEmpresa(req, res) {
   try {
     const [info] = await pool.query(
       'SELECT * FROM info_empresa WHERE empresa = ?',
-      ['Besco']
+      ['Totalplay']
     );
     res.json({ success: true, data: info[0] || null });
   } catch (error) {

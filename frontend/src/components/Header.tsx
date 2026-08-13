@@ -9,26 +9,44 @@ import {
   Lock
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { AlertasHeader } from './comercial/AlertasHeader';
 import { AsistenteBuscador } from './AsistenteBuscador';
-import { notifsPorModo, colorSeveridad, type Notif, type Modo } from '../besco/bescoData';
-import { KnowledgeGraph } from './common/KnowledgeGraph';
+import { AlertasHeader } from './comercial/AlertasHeader';
+
+export type Modo = 'admin' | 'cliente';
+export interface Notif {
+  id: number;
+  titulo: string;
+  texto: string;
+  tiempo: string;
+  severidad: 'critico' | 'warning' | 'ok';
+  leida?: boolean;
+}
+
+const colorSeveridad = {
+  critico: '#A61C5C',
+  warning: '#D9933D',
+  ok: '#BBBF41'
+};
+
+const defaultNotifs: Notif[] = [
+  { id: 1, titulo: 'Alta Conversión en Isla Santa Fe', texto: '+18% en capturas de lead consentidos.', tiempo: '10 min', severidad: 'ok', leida: false },
+  { id: 2, titulo: 'Alerta de Exhibidor en Soriana', texto: 'Auditoría IA detectó iluminación apagada.', tiempo: '25 min', severidad: 'critico', leida: false },
+];
 
 interface HeaderProps {
   title: string;
   onMenu?: () => void;
-  modo: Modo;
+  modo?: Modo;
   onCliente?: () => void;
   onAdmin?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, onAdmin }) => {
+export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', onCliente, onAdmin }) => {
   const { colores, empresa, temas } = brandingConfig;
-  const tema = modo === 'admin' ? temas.admin : temas.cliente;
+  const tema = temas.admin;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notif[]>(notifsPorModo[modo]);
+  const [notificaciones, setNotificaciones] = useState<Notif[]>(defaultNotifs);
   const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
-  useEffect(() => { setNotificaciones(notifsPorModo[modo]); }, [modo]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fecha = new Date();
@@ -123,51 +141,26 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
       {/* Asistente IA tipo buscador */}
       <AsistenteBuscador modo={modo} />
 
-      {/* CENTRO - Logo de la empresa (se oculta en móvil para dar espacio) */}
-      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '16px' }}>
-        <img 
-          src={empresa.logo} 
-          alt={`${empresa.nombre} logo — Knowledge Graph`}
-          title="Ver Knowledge Graph de BESCO"
-          onClick={() => setShowKnowledgeGraph(true)}
-          style={{
-            height: '80px',
-            width: 'auto',
-            objectFit: 'contain',
-            cursor: 'pointer',
-            transition: 'filter 0.25s, transform 0.25s',
-            filter: 'drop-shadow(0 0 0px transparent)',
-          }}
-          onMouseEnter={e => { (e.currentTarget as HTMLImageElement).style.filter = 'drop-shadow(0 0 8px #E2B71470)'; (e.currentTarget as HTMLImageElement).style.transform = 'scale(1.04)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLImageElement).style.filter = 'none'; (e.currentTarget as HTMLImageElement).style.transform = 'scale(1)'; }}
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.display = 'none';
-            const fallback = (e.target as HTMLImageElement).nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'block';
-          }}
-        />
-        
-        <div style={{ display: 'none' }}>
-          <h1 
-            style={{ 
-              fontSize: '28px', 
-              fontWeight: 'bold',
-              background: `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-              margin: 0,
-            }}
-          >
-            {empresa.nombre}
-          </h1>
-          <p style={{ 
-            fontSize: '12px',
-            color: colores.textoMedio,
-            margin: '4px 0 0 0',
-          }}>
-            {empresa.eslogan}
-          </p>
+      {/* CENTRO - Branding Totalplay */}
+      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '12px' }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '6px 14px',
+          borderRadius: '20px',
+          backgroundColor: '#FFFFFF',
+          border: `1px solid ${colores.borde}`,
+          boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+        }}>
+          <img
+            src="/assets/logosNativos/TotalPlay.png"
+            alt="Totalplay Logo"
+            style={{ height: '26px', objectFit: 'contain' }}
+          />
+          <span style={{ fontSize: '11px', fontWeight: '700', color: '#732D67', backgroundColor: '#F5E8F3', padding: '2px 8px', borderRadius: '10px' }}>
+            M2C
+          </span>
         </div>
       </div>
 
@@ -364,7 +357,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
                           color: colores.textoMedio,
                           lineHeight: '1.4',
                         }}>
-                          {notif.mensaje}
+                          {notif.texto}
                         </p>
                         <span style={{
                           fontSize: '11px',
@@ -408,55 +401,24 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo, onCliente, 
       {/* Perfil */}
         <button 
           style={{
-            width: '48px',
-            height: '48px',
+            width: '40px',
+            height: '40px',
             borderRadius: '50%',
-            backgroundColor: '#FFFFFF',
+            backgroundColor: '#A61C5C',
             border: 'none',
-            cursor: 'pointer',
+            color: '#FFFFFF',
+            fontWeight: '800',
+            fontSize: '15px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            transition: 'all 0.2s',
-            overflow: 'hidden',
-            padding: '4px',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.3)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)';
+            boxShadow: '0 2px 8px rgba(166,28,92,0.3)',
           }}
         >
-          <img
-            src={empresa.logo}
-            alt="Perfil"
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'contain',
-            }}
-            onError={(e) => {
-              // Fallback a la letra M si la imagen no carga
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const container = target.parentElement;
-              if (container) {
-                container.style.background = `linear-gradient(135deg, ${colores.primario} 100%, ${colores.secundario} 100%)`;
-                container.style.fontSize = '18px';
-                container.style.fontWeight = 'bold';
-                container.style.color = '#FFFFFF';
-                container.textContent = 'M';
-              }
-            }}
-          />
+          TP
         </button>
       </div>
     </header>
-    {showKnowledgeGraph && <KnowledgeGraph onClose={() => setShowKnowledgeGraph(false)} />}
   </>
   );
 };

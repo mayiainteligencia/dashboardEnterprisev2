@@ -1,207 +1,137 @@
 // config/empresaConfig.js
-// Configuración de la empresa cliente actual de la plataforma MAYIA
+// Configuración de la empresa cliente actual de la plataforma MAYIA: Totalplay Telecomunicaciones
 
 export const EMPRESA_CONFIG = {
   // Información básica
-  nombre: 'Besco',
-  nombreCompleto: 'Besco México',
-  industria: 'Gestión de Flotillas, Instalaciones y Compras Empresariales',
-  fundacion: 2005,
+  nombre: 'Totalplay',
+  nombreCompleto: 'Total Play Telecomunicaciones, S.A.P.I. de C.V.',
+  grupoEmpresarial: 'Grupo Salinas',
+  directorGeneral: 'Eduardo Kuri Romo',
+  industria: 'Telecomunicaciones, Conectividad y Entretenimiento',
+  fundacion: 2010,
   pais: 'México',
-  slogan: 'Operaciones que mueven tu empresa',
+  slogan: 'Puntos de Venta Inteligentes M2C · Powered by MAYIA & Retail Innova',
 
-  // Descripción corporativa
-  descripcion: 'Empresa mexicana especializada en la gestión integral de flotillas vehiculares, administración de inmuebles y procesos de compras corporativas. Besco opera más de 400 unidades vehiculares, 7,000 inmuebles y 35 oficinas a nivel nacional, apoyada en tecnología e inteligencia artificial para optimizar la operación empresarial.',
+  // Descripción corporativa extraída del documento prospecto 2026
+  descripcion: 'Empresa mexicana de telecomunicaciones perteneciente a Grupo Salinas, líder en internet de fibra óptica (FTTH), televisión digital, telefonía y entretenimiento. Totalplay opera una red nacional de más de 164,000 km de fibra óptica en 87 ciudades, alcanzando a más de 19 millones de hogares pasados y 5.5 millones de suscriptores. A través de la iniciativa M2C (MAYIA + Retail Innova), transforma sus islas, corners y puntos de venta en puntos inteligentes de atracción, asesoría y conversión.',
 
-  // Datos operativos
+  // Datos operativos 1T26
   operaciones: {
-    sucursales: '35 oficinas en México',
-    mercados: 'México y LATAM',
-    empleados: '2,500+',
+    puntosVenta: '112+ puntos oficiales (Islas Mall, Corners Autoservicio, Tiendas Premium)',
+    ciudades: '87 ciudades en México',
+    suscriptores: '5,554,374 (incluyendo 67,856 PyMEs)',
+    hogaresPasados: '19.5+ millones',
+    fibraOptica: '164,000+ km de red FTTH',
+    ingresos2025: '$45,550 millones de pesos',
+    ebitda2025: '$20,608 millones de pesos (45% margen)',
     lineasNegocio: [
-      'Gestión integral de flotillas vehiculares (400+ unidades)',
-      'Administración de inmuebles y facilities (7,000 inmuebles)',
-      'Procesos de compras corporativas y abastecimiento',
-      'Mantenimiento preventivo y correctivo de unidades',
-      'Optimización de rutas y logística de última milla',
-      'Control de presupuesto y gasto operativo',
-      'Gestión de pólizas y documentación vehicular',
-      'Auditoría visual y validación de evidencias'
+      'Totalplay Residencial (FTTH, Paquetes Doble y Triple Play)',
+      'Totalplay TV y Bang & Olufsen Surround',
+      'Totalplay Empresarial (Conectividad, Nube, Ciberseguridad)',
+      'Hogar Seguro y soluciones IoT',
+      'Transformación M2C para Puntos de Venta Físicos'
     ]
   },
 
   // Marcas del portafolio
   marcas: [
-    'Besco',
-    'Besco Fleet (Gestión de Flotillas)',
-    'Besco Facilities (Inmuebles)',
-    'Besco Compras (Abastecimiento)',
-    'Besco Analytics'
+    'Totalplay',
+    'Totalplay TV',
+    'Totalplay Surround',
+    'Totalplay Empresarial',
+    'MAYIA Retail Innova (Puntos Inteligentes)'
   ],
 
   // Servicios principales
   serviciosPrincipales: [
-    'Gestión y seguimiento de flotillas en tiempo real',
-    'Optimización inteligente de rutas con IA',
-    'Mantenimiento predictivo vehicular',
-    'Administración de inmuebles y espacios',
-    'Control de requisiciones y órdenes de compra',
-    'Auditoría de pólizas y documentos',
-    'Reportes de gasto operativo y presupuesto',
-    'Atención a incidentes y escalamientos 24/7'
+    'Internet simétrico de fibra óptica directo al hogar',
+    'Televisión interactiva con plataformas de streaming integradas',
+    'Totalplay Surround 2026 en alianza con Bang & Olufsen',
+    'Telefonía fija HD',
+    'Extensores WiFi y redes Mesh',
+    'Soluciones de ciberseguridad y nube para PyMEs',
+    'Captura consentida de leads y recomendador de paquetes en punto de venta',
+    'Atención comercial y copiloto inteligente para ejecutivos'
   ],
 
   // Contactos corporativos
   contacto: {
-    sitioWeb: 'https://www.besco.mx',
-    simitel: '800 000 0000',
-    whatsapp: '55 0000 0000',
-    plataforma: 'https://app.besco.mx',
-    appEntrega: 'Besco App'
+    sitioWeb: 'https://www.totalplay.com.mx',
+    atencionCliente: '800 510 0510',
+    whatsapp: '55 1579 8000',
+    plataforma: 'https://app.totalplay.com.mx',
+    appEntrega: 'App Totalplay'
   },
 
-  // Enfoque estratégico
+  // Enfoque estratégico M2C
   enfoqueEstrategico: [
-    'Automatización de procesos operativos con IA',
-    'Visibilidad total de la flota y activos en tiempo real',
-    'Reducción de costos mediante análisis predictivo',
-    'Cumplimiento de SLA y mejora continua',
-    'Seguridad de conductores y activos vehiculares'
+    'Aumento de productividad comercial sobre la cobertura de fibra existente',
+    'Elevación del ARPU mediante paquetes premium y Totalplay Surround',
+    'Medición con Computer Vision anónimo en islas y tiendas físicas',
+    'Asistencia inteligente en tótem y copiloto comercial para ejecutivos',
+    'Trazabilidad omnicanal entre la visita física y la activación en la App Totalplay'
   ],
 
-  // Servicios MAYIA prioritarios (según operaciones de flotillas y compras)
+  // Servicios MAYIA prioritarios para Totalplay
   serviciosPrioritarios: {
     ventas: [
-      'Recomendador de Servicios',
-      'WhatsApp Automatizado (Reportes y Escalamientos)',
-      'Analytics de Operaciones',
-      'Cotizador Inteligente de Compras'
+      'Asesor Inteligente Totalplay (Tótem/Pantalla)',
+      'Copiloto del Vendedor en Cierre de Contratos',
+      'Configurador Inteligente de Paquetes Residenciales/PyME',
+      'Captura y Calificación Automatizada de Leads'
     ],
     operaciones: [
-      'Control de Flotillas y Unidades',
-      'Análisis de Demanda de Refacciones',
-      'Optimización de Rutas y SLA',
-      'Control de Inmuebles y Facilities'
+      'Computer Vision Comercial (Tráfico y Permanencia)',
+      'Auditoría Visual IA para Exhibidores e Islas',
+      'Monitoreo y Salud de Sensores/Pantallas',
+      'Scorecard Ejecutivo de Puntos de Venta'
     ],
     rh: [
-      'Reclutamiento Inteligente (Operadores, Supervisores)',
-      'Evaluación de Desempeño Operativo',
-      'Capacitación en procesos de flotillas y compras'
+      'Academia MAYIA para Capacitación de Vendedores',
+      'Evaluación de Desempeño por Turno y Ubicación'
     ],
     atencionCliente: [
-      'Agentes de Atención 24/7',
-      'WhatsApp Automatizado para Estatus de Tickets',
-      'Chatbots especializados en soporte operativo'
-    ],
-    ti: [
-      'Ciberseguridad de datos operativos',
-      'Infraestructura Cloud para oficinas',
-      'Gestión de CRM y plataformas'
-    ],
-    administracion: [
-      'Analytics de Negocios y Eficiencia',
-      'Optimización de Procesos de Compras',
-      'Control de múltiples oficinas y regiones'
+      'Validación Inmediata de Cobertura por Código Postal',
+      'Agentes Virtuales 24/7 en App y Puntos Físicos'
     ]
   },
 
-  // Cursos recomendados (según perfil de operaciones y compras)
-  cursosRecomendados: {
-    gerentes: [
-      'IA para Gerentes de Operaciones',
-      'Analytics de Flotillas',
-      'Optimización de Procesos de Compras',
-      'Toma de Decisiones Estratégicas'
-    ],
-    ventas: [
-      'IA para Trabajo Inteligente en Operaciones',
-      'Comunicación Efectiva con Clientes',
-      'Fundamentos del Prompting'
-    ],
-    ti: [
-      'Ciberseguridad',
-      'Python Fundamentos',
-      'SQL Básico',
-      'ML para Predicción de Demanda'
-    ],
-    operaciones: [
-      'Series Temporales (pronósticos de demanda de refacciones)',
-      'Análisis Estadístico de Tiempos de Mantenimiento',
-      'Data Wrangling',
-      'Tableau Visualización'
-    ]
-  },
-
-  // Casos de uso específicos de IA para flotillas y compras
-  casosDeUsoIA: {
-    inventario: 'Predecir demanda de refacciones y piezas por tipo de unidad',
-    recomendacion: 'Sugerir rutas óptimas basadas en carga, tráfico y SLA',
-    atencion: 'Chatbot para reportar incidentes o solicitar mantenimiento',
-    logistica: 'Optimizar la distribución de unidades por región',
-    fraude: 'Detectar patrones anómalos en gasto de combustible y viáticos',
-    precios: 'Análisis competitivo de proveedores en tiempo real'
-  },
-
-  // Servicios propios de la plataforma MAYIA activos para Besco
+  // Servicios propios MAYIA activos en Totalplay
   serviciosMayiaActivos: {
-    medikalIA: {
-      nombre: 'Besco Assist',
-      nombreAlternativo: 'Besco-Assist',
-      tipo: 'Asistente de Productividad para Operaciones',
-      descripcion: 'Agente disponible 24/7 para los operadores, supervisores y compradores. Ofrece apoyo rápido sobre estatus de unidades, procesos de compra y manuales operativos mediante IA.',
+    totalplayAssist: {
+      nombre: 'Totalplay Assist',
+      nombreAlternativo: 'Asistente MAYIA Totalplay',
+      tipo: 'Asistente Virtual e Inteligencia Comercial M2C',
+      descripcion: 'Agente inteligente en tiempo real para clientes y ejecutivos de Totalplay. Permite consultar cobertura por zona, comparar paquetes Doble/Triple Play, simular configuraciones para el hogar y calificar leads en tienda.',
       beneficios: [
-        'Acceso inmediato a fichas técnicas de unidades',
-        'Disponibilidad inmediata 24/7',
-        'Soporte en dudas de abastecimiento',
-        'Ayuda rápida en diagnósticos de flotilla',
-        'Mejora en tiempos de atención a incidentes'
+        'Consulta instantánea de cobertura por código postal',
+        'Recomendación inteligente de paquetes según presupuesto',
+        'Capacitación y copiloto en tiempo real para vendedores',
+        'Integración con CRM y seguimiento de instalación'
       ],
-      audiencia: 'Operadores, supervisores y compradores',
-      casoDeUso: 'Supervisor en campo que necesita detalles específicos del mantenimiento de una unidad',
-      modulo: 'Dashboard MAYIA - columna derecha'
-    },
-    simiPromo: {
-      nombre: 'Promo Besco',
-      nombreAlternativo: 'Recomendador Besco',
-      tipo: 'Recomendador inteligente de proveedores y compras',
-      descripcion: 'Asistente inteligente diseñado para optimizar las compras corporativas. Analiza proveedores disponibles, presupuesto activo y perfil de requerimiento para recomendar la mejor opción.',
-      beneficios: [
-        'Recomendaciones de compra con mayor ahorro',
-        'Alertas de presupuesto y vencimientos',
-        'Gestión inteligente de requisiciones',
-        'Maximiza el ahorro por compra',
-        'Reduce tiempo de abastecimiento',
-        'Análisis de tendencias de precios y proveedores'
-      ],
-      audiencia: 'Gerentes de compras y compradores corporativos',
-      casoDeUso: 'Recomendar proveedor con mejor precio y tiempo de entrega para una requisición urgente',
-      modulo: 'Dashboard MAYIA - columna izquierda'
+      audiencia: 'Visitantes de tienda, prospectos y asesores comerciales',
+      casoDeUso: 'Cliente en una isla de centro comercial consultando paquete con Totalplay Surround'
     }
   },
 
-  // Métricas clave del negocio
+  // Métricas clave del negocio Totalplay
   metricasClave: [
-    'Unidades activas en flota',
-    'Cumplimiento de SLA (%)',
-    'Ahorro en compras corporativas',
-    'Tiempo promedio de mantenimiento',
-    'Tickets resueltos en tiempo',
-    'Gasto operativo vs. presupuesto'
+    'Tráfico frente al punto y Tasa de Atracción (%)',
+    'Permanencia e Interacciones con Pantalla',
+    'Leads Calificados por Isla / Tienda',
+    'Tasa de Conversión Visita-Lead y Lead-Contrato',
+    'ARPU Promedio por Cliente Captado ($588 l.b.)',
+    'Disponibilidad del Equipamiento Inteligente (%)'
   ]
 };
 
-// Función helper para obtener información de la empresa
 export function getEmpresaInfo(campo) {
   return EMPRESA_CONFIG[campo] || null;
 }
 
-// Función para generar descripción contextual
 export function getDescripcionContextual() {
-  const { nombreCompleto, slogan, fundacion, operaciones } = EMPRESA_CONFIG;
-  
-  return `${nombreCompleto} ("${slogan}") es una empresa líder fundada en ${fundacion}, 
-con ${operaciones.sucursales} especializadas en gestión de flotillas, 
-inmuebles y compras corporativas con tecnología de vanguardia.`;
+  const { nombreCompleto, slogan, operaciones } = EMPRESA_CONFIG;
+  return `${nombreCompleto} ("${slogan}") opera una red nacional de ${operaciones.fibraOptica} alcanzando ${operaciones.hogaresPasados} hogares pasados en ${operaciones.ciudades}. Con la solución M2C powered by MAYIA & Retail Innova, transforma sus islas y corners en puntos inteligentes de alta conversión.`;
 }
 
 export default EMPRESA_CONFIG;

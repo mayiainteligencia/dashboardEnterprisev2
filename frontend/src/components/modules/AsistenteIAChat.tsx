@@ -30,10 +30,10 @@ export const AsistenteIAChat: React.FC = () => {
   };
 
   const quickPrompts = [
-    `Estado de ${activeSectionTitle}`,
-    '¿Qué alertas requieren atención inmediata?',
-    'Generar informe de eficiencia operativa',
-    'Optimizar procesos de este módulo'
+    `Verificar cobertura FTTH Totalplay`,
+    'Comparar paquetes Doble Play vs Triple Play',
+    'Sugerencias del Copiloto para elevar ARPU',
+    'Métricas de atracción y permanencia en islas'
   ];
 
   return (

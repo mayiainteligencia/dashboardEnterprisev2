@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Sparkles, ArrowUp, X, Trash2, Send } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import type { Modo } from '../besco/bescoData';
 import { useAIChat } from '../context/AIChatContext';
 import { MarkdownRenderer } from './common/MarkdownRenderer';
 
+export type Modo = 'admin' | 'cliente';
+
 const { colores, ia, temas } = brandingConfig;
 
-export const AsistenteBuscador: React.FC<{ modo: Modo }> = ({ modo }) => {
+export const AsistenteBuscador: React.FC<{ modo?: Modo }> = ({ modo = 'admin' }) => {
   const tema = modo === 'admin' ? temas.admin : temas.cliente;
   const {
     messages,

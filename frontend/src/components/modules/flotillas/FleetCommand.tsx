@@ -157,7 +157,7 @@ export const FleetCommand: React.FC = () => {
             {/* MAPA DE MÉXICO RECONSTRUIDO */}
             <div style={{ background: '#FFFFFF', borderRadius: '20px', border: `1px solid ${colores.borde}`, height: '500px', position: 'relative', overflow: 'hidden', padding: '16px', display: 'flex', flexDirection: 'column', boxShadow: '0 4px 16px rgba(0,0,0,0.02)' }}>
               <div style={{ position: 'absolute', top: '16px', left: '20px', zIndex: 10 }}>
-                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: colores.textoClaro }}>Cobertura Logística Satelital BESCO</h4>
+                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: 700, color: colores.textoClaro }}>Cobertura Logística Satelital Totalplay</h4>
                 <p style={{ margin: '2px 0 0 0', fontSize: '12px', color: colores.textoMedio }}>Mapa TopoJSON interactivo de los estados de México</p>
               </div>
               <MapaMexico />

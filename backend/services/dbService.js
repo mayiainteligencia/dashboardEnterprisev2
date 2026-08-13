@@ -63,16 +63,24 @@ export async function buscarContextoEnDB(mensaje, departamento) {
       }
     }
 
-    // Buscar información de Besco
-    if (mensajeLower.includes('besco') || mensajeLower.includes('empresa') || mensajeLower.includes('flotilla') || mensajeLower.includes('compras')) {
-      const [info] = await pool.query(
-        `SELECT empresa, descripcion, industria, fundacion, pais 
-         FROM info_empresa 
-         WHERE empresa = ?`,
-        ['Besco']
-      );
-      if (info.length > 0) {
-        resultados.push({ tipo: 'empresa', datos: info });
+    // Buscar información de Totalplay
+    if (mensajeLower.includes('totalplay') || mensajeLower.includes('empresa') || mensajeLower.includes('cobertura') || mensajeLower.includes('isla') || mensajeLower.includes('paquete')) {
+      try {
+        const [info] = await pool.query(
+          `SELECT empresa, descripcion, industria, fundacion, pais 
+           FROM info_empresa 
+           WHERE empresa = ?`,
+          ['Totalplay']
+        );
+        if (info && info.length > 0) {
+          resultados.push({ tipo: 'empresa', datos: info });
+        }
+      } catch (err) {
+        // Mock fallback en caso de no tener DB SQL activa
+        resultados.push({
+          tipo: 'empresa',
+          datos: [{ empresa: 'Totalplay', descripcion: 'Telecomunicaciones y fibra óptica FTTH' }]
+        });
       }
     }
 

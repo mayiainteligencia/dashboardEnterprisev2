@@ -1,166 +1,165 @@
-import React from 'react';
-import { LayoutDashboard, Sparkles, Cpu, Trophy } from 'lucide-react';
-
+import React, { useState } from 'react';
+import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { modulosCompras, modulosFlotillas, modulosCliente, modulosEspeciales, type Modo, type Modulo } from '../besco/bescoData';
+import { MODULOS_TOTALPLAY } from '../totalplay/totalplayData';
+
+const iconMap: Record<string, any> = {
+  Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass,
+};
 
 interface SidebarProps {
   activeSection: string;
   onSectionChange: (section: string) => void;
-  modo: Modo;
+  modo?: string;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange, modo }) => {
-  const { empresa, colores, temas } = brandingConfig;
-  const tema = modo === 'admin' ? temas.admin : temas.cliente;
+export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
+  const { colores } = brandingConfig;
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  // Agrupar los módulos en secciones temáticas llamativas
+  const totalAlerts = MODULOS_TOTALPLAY.reduce((acc, m) => acc + m.alertas, 0);
+
   const categorias = [
     {
-      titulo: 'COMANDO INTELIGENTE DE COMPRAS',
-      color: '#DC2626',
-      items: modulosCompras
+      titulo: 'INTELIGENCIA COMERCIAL',
+      color: '#A61C5C',
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial')
     },
     {
-      titulo: 'COMANDO INTELIGENTE DE FLOTILLAS',
-      color: '#1E40AF',
-      items: modulosFlotillas
+      titulo: 'OPERACIONES M2C',
+      color: '#732D67',
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones')
     },
     {
-      titulo: 'NUEVOS NEGOCIOS & EDIFICIOS',
-      color: '#10B981',
-      items: modulosCliente.filter(m => m.id !== 'abastecimiento' && m.id !== 'rendimiento-vendedores')
+      titulo: 'EXPERIENCIA & DISPLAYS',
+      color: '#D9933D',
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia')
     },
     {
-      titulo: 'CAPACITACIÓN & SEGURIDAD',
-      color: '#038CAE',
-      items: modulosEspeciales
+      titulo: 'TECNOLOGÍA & CRM',
+      color: '#73B1BF',
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia')
     }
   ];
 
   return (
-    <div 
-      style={{ 
-        width: '240px',
+    <div
+      style={{
+        width: '250px',
         height: '100vh',
-        backgroundColor: colores.fondoSecundario,
+        backgroundColor: '#FDFAFB',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
-        borderRight: `1px solid ${colores.borde}`
+        borderRight: `1px solid ${colores.borde}`,
+        position: 'relative',
       }}
     >
-      {/* Logo */}
-      <div style={{ padding: '20px 20px 12px 20px', flexShrink: 0 }}>
+      {/* Subtle gradient overlay */}
+      <div style={{
+        position: 'absolute', inset: 0, pointerEvents: 'none',
+        background: 'linear-gradient(180deg, rgba(115,177,191,0.05) 0%, rgba(255,255,255,0) 40%)',
+        zIndex: 0
+      }} />
+
+      {/* ── Logo Header ── */}
+      <div style={{
+        padding: '16px 18px',
+        flexShrink: 0,
+        borderBottom: `1px solid ${colores.borde}`,
+        position: 'relative', zIndex: 1,
+        background: '#FFFFFF',
+      }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img
-            src={empresa.logo}
-            alt={empresa.nombre}
-            style={{
-              height: '38px',
-              width: 'auto',
-              objectFit: 'contain',
-              flexShrink: 0,
-            }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const container = target.parentElement;
-              if (container) {
-                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-                svg.setAttribute('width', '24');
-                svg.setAttribute('height', '24');
-                svg.setAttribute('viewBox', '0 0 24 24');
-                svg.setAttribute('fill', 'none');
-                
-                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                path.setAttribute('d', 'M7 7L17 17M7 17L17 7');
-                path.setAttribute('stroke', 'white');
-                path.setAttribute('stroke-width', '2.5');
-                path.setAttribute('stroke-linecap', 'round');
-                
-                svg.appendChild(path);
-                container.appendChild(svg);
-              }
-            }}
+            src="/assets/logosNativos/TotalPlay.png"
+            alt="Totalplay Logo"
+            style={{ height: '36px', objectFit: 'contain' }}
           />
-          <span style={{ fontSize: '18px', fontWeight: 'bold', color: colores.textoClaro }}>
-            {empresa.nombre}
-          </span>
+          <div>
+            <div style={{ fontSize: '10px', color: '#73B1BF', fontWeight: '800', letterSpacing: '0.05em' }}>
+              Plataforma M2C
+            </div>
+          </div>
+          {totalAlerts > 0 && (
+            <div className="badge-pulse" style={{
+              marginLeft: 'auto',
+              backgroundColor: '#A61C5C', color: '#FFFFFF',
+              fontSize: '10px', fontWeight: '900',
+              width: '20px', height: '20px', borderRadius: '50%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              {totalAlerts}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Menú Principal — scrolleable */}
-      <nav className="no-scrollbar" style={{
-        flex: '1 1 0',
-        minHeight: 0,
-        overflowY: 'auto',
-        padding: '0 12px 20px 12px',
-      }}>
-        
-        {/* 1. PRIMER LUGAR: Control Inteligente de Compras */}
-        <div style={{ marginBottom: '10px' }}>
+      {/* ── Navigation ── */}
+      <nav
+        className="styled-scroll"
+        style={{
+          flex: '1 1 0', minHeight: 0, overflowY: 'auto',
+          padding: '16px 10px 20px 10px', position: 'relative', zIndex: 1,
+        }}
+      >
+        {/* Dashboard principal */}
+        <div style={{ marginBottom: '16px' }}>
           <button
             onClick={() => onSectionChange('dashboard')}
             style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              padding: '10px 12px',
-              borderRadius: '12px',
-              backgroundColor: activeSection === 'dashboard' ? tema.acento : 'transparent',
-              color: activeSection === 'dashboard' ? tema.sobreAcento : colores.textoClaro,
-              border: activeSection === 'dashboard' ? `1px solid ${tema.acento}` : '1px solid transparent',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
+              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
+              padding: '10px 12px', borderRadius: '12px', border: 'none', cursor: 'pointer',
+              backgroundColor: activeSection === 'dashboard' ? '#73B1BF' : 'transparent',
+              color: activeSection === 'dashboard' ? '#FFFFFF' : colores.textoClaro,
+              transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
+              textAlign: 'left',
+              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(115,177,191,0.35)' : 'none',
             }}
-            onMouseEnter={(e) => {
-              if (activeSection !== 'dashboard') e.currentTarget.style.backgroundColor = colores.fondoTerciario;
+            onMouseEnter={e => {
+              if (activeSection !== 'dashboard') {
+                e.currentTarget.style.backgroundColor = '#EAF5F7';
+                e.currentTarget.style.color = '#73B1BF';
+              }
             }}
-            onMouseLeave={(e) => {
-              if (activeSection !== 'dashboard') e.currentTarget.style.backgroundColor = 'transparent';
+            onMouseLeave={e => {
+              if (activeSection !== 'dashboard') {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = colores.textoClaro;
+              }
             }}
           >
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.25)' : colores.fondoTerciario,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-              }}
-            >
-              <LayoutDashboard size={16} />
+            <div style={{
+              width: '30px', height: '30px', borderRadius: '9px', flexShrink: 0,
+              backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#E6F4F6',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#73B1BF'} />
             </div>
-            <span style={{ fontSize: '13.5px', fontWeight: '700' }}>
-              Control Inteligente de Decisiones
+            <span style={{ fontSize: '13px', fontWeight: '700', flex: 1 }}>
+              Dashboard Totalplay
             </span>
+            {activeSection === 'dashboard' && (
+              <div style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.6)' }} />
+            )}
           </button>
         </div>
 
-        {/* Módulos agrupados por categoría */}
+        {/* Category groups */}
         {categorias.map((cat, cIdx) => (
-          <div key={cIdx} style={{ marginBottom: '18px' }}>
+          <div key={cIdx} style={{ marginBottom: '20px' }}>
             <div style={{
-              fontSize: '10px',
-              fontWeight: 800,
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em',
-              color: cat.color,
-              marginBottom: '8px',
-              paddingLeft: '8px',
-              borderLeft: `3px solid ${cat.color}`,
-              lineHeight: '1.2'
+              fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
+              letterSpacing: '0.08em', color: cat.color,
+              marginBottom: '8px', paddingLeft: '10px',
+              display: 'flex', alignItems: 'center', gap: '6px'
             }}>
+              <div style={{ width: '16px', height: '2px', backgroundColor: cat.color, borderRadius: '1px', flexShrink: 0 }} />
               {cat.titulo}
             </div>
 
             {cat.items.map((item) => {
-              const Icon = item.icono;
+              const IconComp = iconMap[item.iconoName] || Activity;
               const isActive = activeSection === item.id;
               const itemColor = cat.color;
 
@@ -168,53 +167,64 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 <button
                   key={item.id}
                   onClick={() => onSectionChange(item.id)}
+                  onMouseEnter={() => setHoveredItem(item.id)}
+                  onMouseLeave={() => setHoveredItem(null)}
                   style={{
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px',
-                    padding: '8px 12px',
-                    borderRadius: '10px',
-                    marginBottom: '3px',
-                    backgroundColor: isActive ? itemColor : 'transparent',
-                    color: isActive ? '#FFFFFF' : colores.textoClaro,
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'all 0.15s',
-                    textAlign: 'left'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.backgroundColor = `${itemColor}15`;
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) e.currentTarget.style.backgroundColor = 'transparent';
+                    width: '100%', display: 'flex', alignItems: 'center', gap: '9px',
+                    padding: '8px 12px', borderRadius: '10px', marginBottom: '2px',
+                    backgroundColor: isActive ? itemColor : hoveredItem === item.id ? `${itemColor}12` : 'transparent',
+                    color: isActive ? '#FFFFFF' : hoveredItem === item.id ? itemColor : colores.textoClaro,
+                    border: 'none', cursor: 'pointer', textAlign: 'left',
+                    transition: 'all 0.18s cubic-bezier(0.22, 1, 0.36, 1)',
+                    boxShadow: isActive ? `0 3px 10px ${itemColor}40` : 'none',
+                    position: 'relative',
                   }}
                 >
-                  <div
-                    style={{
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}18`,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={14} color={isActive ? '#FFFFFF' : itemColor} />
+                  <div style={{
+                    width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
+                    backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : `${itemColor}15`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'all 0.18s',
+                  }}>
+                    <IconComp size={14} color={isActive ? '#FFFFFF' : itemColor} />
                   </div>
-                  <span style={{ fontSize: '12.5px', fontWeight: isActive ? '700' : '500', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <span style={{
+                    fontSize: '12.5px', fontWeight: isActive ? '700' : '500',
+                    flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                  }}>
                     {item.titulo}
                   </span>
+                  {item.alertas > 0 && (
+                    <span style={{
+                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}20`,
+                      color: isActive ? '#FFFFFF' : itemColor,
+                      fontSize: '10px', fontWeight: '800',
+                      padding: '1px 6px', borderRadius: '8px', flexShrink: 0,
+                    }}>
+                      {item.alertas}
+                    </span>
+                  )}
                 </button>
               );
             })}
           </div>
         ))}
-
       </nav>
+
+      {/* ── Bottom Status Bar ── */}
+      <div style={{
+        padding: '12px 16px',
+        borderTop: `1px solid ${colores.borde}`,
+        backgroundColor: '#FFFFFF',
+        flexShrink: 0, zIndex: 1, position: 'relative',
+        display: 'flex', alignItems: 'center', gap: '8px',
+      }}>
+        <Wifi size={14} color="#5B8F20" />
+        <span style={{ fontSize: '11px', fontWeight: '600', color: '#5B8F20' }}>
+          Sistema en línea
+        </span>
+        <span className="live-dot live-dot-green" style={{ width: '7px', height: '7px', marginLeft: 'auto' }} />
+      </div>
     </div>
   );
 };
-

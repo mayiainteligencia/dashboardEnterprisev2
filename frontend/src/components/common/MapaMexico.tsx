@@ -10,8 +10,8 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/mexico/mexico-states.json";
 
-// Hubs logísticos de BESCO en México
-const bescoHubs = [
+// Hubs logísticos de Totalplay en México
+const totalplayHubs = [
   { name: "CDMX - Central Hub", coords: [-99.1332, 19.4326] as [number, number], color: "#DC2626", units: 142 },
   { name: "Monterrey - CEDIS Norte", coords: [-100.3161, 25.6866] as [number, number], color: "#1E40AF", units: 88 },
   { name: "Guadalajara - Hub Occidente", coords: [-103.3496, 20.6597] as [number, number], color: "#10B981", units: 64 },
@@ -46,7 +46,7 @@ const MapaMexico = () => {
                     setTooltip({
                       show: true,
                       name,
-                      details: "Estado monitoreado por telemetría BESCO",
+                      details: "Estado monitoreado por telemetría Totalplay",
                       x: clientX,
                       y: clientY,
                     });
@@ -78,8 +78,8 @@ const MapaMexico = () => {
           }
         </Geographies>
 
-        {/* Marcadores BESCO */}
-        {bescoHubs.map((hub) => (
+        {/* Marcadores Totalplay */}
+        {totalplayHubs.map((hub) => (
           <Marker
             key={hub.name}
             coordinates={hub.coords}
