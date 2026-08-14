@@ -41,9 +41,9 @@ export const DisenioFabricacionModule: React.FC = () => {
     {
       nombre: 'Isla Comercial Mall (4×3m)', unidades: u1, raw: 48,
       arpuProm: '$642 MXN', arpuNum: 642, atraccion: '31.2%',
-      desc: 'Isla de alto impacto visual con tótem interactivo y espacio Bang & Olufsen Surround.',
+      desc: 'Isla de alto impacto visual con tótem interactivo y espacio Sonido Hi-Fi Surround.',
       color: '#A61C5C', icon: Box,
-      tags: ['Alto Impacto', 'B&O Integrado', 'Tótem IA'],
+      tags: ['Alto Impacto', 'Sound Hi-Fi', 'Tótem IA'],
     },
     {
       nombre: 'Corner Autoservicio (Soriana / Walmart / Chedraui)', unidades: u2, raw: 42,

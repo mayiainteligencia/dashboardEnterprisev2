@@ -42,7 +42,7 @@ const SYSTEM_PROMPT = `Eres MAYIA, la plataforma de Inteligencia Artificial M2C 
 
 # TU ROL
 Asistir en tiempo real a ejecutivos comerciales, gerentes de retail, supervisores de tienda y clientes de Totalplay.
-Proporcionas análisis de tráfico en puntos de venta, recomendaciones de paquetes (Doble Play, Triple Play, Totalplay TV, Bang & Olufsen Surround), apoyo al vendedor en cierre de ventas (Copiloto), verificación de cobertura FTTH y scorecards ejecutivos M2C.
+Proporcionas análisis de tráfico en puntos de venta, recomendaciones de paquetes (Doble Play, Triple Play, Totalplay TV, Sonido Hi-Fi Surround), apoyo al vendedor en cierre de ventas (Copiloto), verificación de cobertura FTTH y scorecards ejecutivos M2C.
 
 # DATOS GENERALES DE TOTALPLAY (1T26)
 - Red FTTH nacional con +164,000 km de fibra óptica en 87 ciudades.
@@ -55,7 +55,7 @@ Proporcionas análisis de tráfico en puntos de venta, recomendaciones de paquet
 2. **Computer Vision Comercial**: Conteo de tráfico anónimo, permanencia, tasa de atracción y mapa de interacción.
 3. **Asesor Inteligente Totalplay**: Tótem/Pantalla para resolver dudas, consultar cobertura y capturar leads consentidos.
 4. **Copiloto del Vendedor**: Asistencia en tiempo real para el ejecutivo comercial en argumentación y cierre.
-5. **Displays Inteligentes**: Exhibidores dinámicos e inmersivos (Totalplay TV & Bang & Olufsen Surround).
+5. **Displays Inteligentes**: Exhibidores dinámicos e inmersivos (Totalplay TV & Audio Hi-Fi Surround).
 6. **Auditoría Visual IA**: Control de calidad y estandarización de islas y exhibidores a nivel nacional.
 7. **Gobierno de Datos & CRM**: Atribución omnicanal de visitas en punto físico a contratación e instalación.
 8. **Academia MAYIA**: Capacitación continua y adopción para la fuerza de ventas.
@@ -144,9 +144,9 @@ Actualmente estás explorando el módulo de **${moduleContext || 'Puntos Intelig
     return `📡 **Oferta Comercial Totalplay & Cobertura FTTH**
 
 • **Doble Play:** Internet de Fibra Óptica simétrica de ultra alta velocidad (hasta 1,000 Mbps) + Telefonía HD.
-• **Triple Play Premium:** Incluye Totalplay TV 4K y experiencia inmersiva de audioBang & Olufsen Surround 2026.
+• **Triple Play Premium:** Incluye Totalplay TV 4K y experiencia inmersiva de audio Surround Hi-Fi 2026.
 • **Verificación de Cobertura:** Cobertura activa en 87 ciudades y +19.5M de hogares pasados.
-• **Tip para el Vendedor:** Al ofrecer el paquete Triple Play en islas, utiliza la demo interactiva del display inteligente para mostrar el sonido Surround Bang & Olufsen.`;
+• **Tip para el Vendedor:** Al ofrecer el paquete Triple Play en islas, utiliza la demo interactiva del display inteligente para mostrar el sonido Surround Hi-Fi.`;
   }
 
   if (p.includes('trafico') || p.includes('tráfico') || p.includes('isla') || p.includes('corner') || p.includes('vision') || p.includes('cámara')) {

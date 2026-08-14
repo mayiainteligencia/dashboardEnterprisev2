@@ -80,7 +80,7 @@ export const MODULOS_TOTALPLAY: ModuloTotalplay[] = [
       { label: 'Dwell Time Sound', valor: '2.5 min', cambio: '+40s' },
     ],
     alertas: 0,
-    descripcion: 'Gestión dinámica de contenido inmersivo para la experiencia Totalplay TV y sonido Bang & Olufsen Surround.',
+    descripcion: 'Gestión dinámica de contenido inmersivo para la experiencia Totalplay TV y sonido Hi-Fi Premium Surround.',
     categoria: 'experiencia',
   },
   {
@@ -173,6 +173,21 @@ export const MODULOS_TOTALPLAY: ModuloTotalplay[] = [
     descripcion: 'Evaluación estratégica de oportunidades para maximizar el retorno sobre la infraestructura de fibra desplegada.',
     categoria: 'operaciones',
   },
+  {
+    id: 'vista-gerente-movil',
+    titulo: 'Vista Móvil Gerente',
+    subtitulo: 'Copiloto de Celular, Monitoreo & Mapa por Estado',
+    iconoName: 'Smartphone',
+    color: '#A61C5C', // Magenta
+    kpis: [
+      { label: 'Gente Impactada', valor: '4.85M', cambio: '+24%' },
+      { label: 'Retorno Inversión (ROI)', valor: '284%', cambio: '+18 pts' },
+      { label: 'Plazas Monitoreo', valor: '340 en vivo', cambio: '98.5%' },
+    ],
+    alertas: 2,
+    descripcion: 'Vista móvil del Gerente de Ventas para administración de sucursales, mapa interactivo con zoom, semáforo de inversión y copiloto de celular.',
+    categoria: 'comercial',
+  },
 ];
 
 export const ALERTAS_TOTALPLAY: AlertaTotalplay[] = [
@@ -188,7 +203,7 @@ export const ALERTAS_TOTALPLAY: AlertaTotalplay[] = [
   {
     id: 'alt-2',
     titulo: 'Desviación de exhibidor detectada en Corner Soriana Coyoacán',
-    descripcion: 'Auditoría visual IA detectó que el display de Bang & Olufsen Surround no tiene encendida la iluminación decorativa.',
+    descripcion: 'Auditoría visual IA detectó que el display de Audio Hi-Fi Surround no tiene encendida la iluminación decorativa.',
     gravedad: 'critica',
     moduloId: 'auditoria-visual',
     hora: '09:45 AM',
@@ -205,7 +220,7 @@ export const ALERTAS_TOTALPLAY: AlertaTotalplay[] = [
   },
   {
     id: 'alt-4',
-    titulo: 'Oportunidad de Upsell: Paquete Triple Play Bang & Olufsen',
+    titulo: 'Oportunidad de Upsell: Paquete Triple Play Sound Premium',
     descripcion: 'El Copiloto del Vendedor sugiere promover la experiencia Surround a clientes con paquetes residenciales mayores a $999.',
     gravedad: 'info',
     moduloId: 'copiloto-vendedor',

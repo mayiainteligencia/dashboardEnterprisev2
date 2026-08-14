@@ -65,8 +65,8 @@ export const CopilotoVendedorModule: React.FC = () => {
     {
       id: 'precio',
       titulo: 'El cliente dice que el precio es alto en comparación con la competencia',
-      respuestaIA: 'Destaca que Totalplay incluye Fibra Óptica simétrica real hasta el hogar (no cobre degradado) y que con Totalplay TV incluye el sistema Bang & Olufsen Surround sin costo extra de equipamiento.',
-      paqueteSugerido: 'Triple Play 150 Mbps + Bang & Olufsen',
+      respuestaIA: 'Destaca que Totalplay incluye Fibra Óptica simétrica real hasta el hogar (no cobre degradado) y que con Totalplay TV incluye el sistema de Sonido Hi-Fi Surround sin costo extra de equipamiento.',
+      paqueteSugerido: 'Triple Play 150 Mbps + Sound Hi-Fi',
       arpuEstimado: '$749 MXN/mes',
       arpuNum: 749,
       arpu7d: [680, 700, 710, 720, 735, 742, 749],

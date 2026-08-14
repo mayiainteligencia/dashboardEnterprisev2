@@ -126,7 +126,7 @@ export const DisplaysInteligentesModule: React.FC = () => {
 
   const eventosVivo = [
     { id: 'ev-1', hora: 'Hace 15 seg', cam: camActual.nombre, tipo: 'Venta Detectada', desc: 'Firma digital de contrato Triple Play 300 Mbps en tablet', icon: DollarSign, color: '#5B8F20' },
-    { id: 'ev-2', hora: 'Hace 1 min', cam: camActual.nombre, tipo: 'Demografía Registrada', desc: 'Cliente Femenino (32-35 años) - Permanencia 3.4 min en display B&O', icon: Users, color: '#A61C5C' },
+    { id: 'ev-2', hora: 'Hace 1 min', cam: camActual.nombre, tipo: 'Demografía Registrada', desc: 'Cliente Femenino (32-35 años) - Permanencia 3.4 min en display Sound Hi-Fi', icon: Users, color: '#A61C5C' },
     { id: 'ev-3', hora: 'Hace 3 min', cam: camActual.nombre, tipo: 'Verificación Limpieza', desc: 'Mostrador 1 inspeccionado por IA: 98% Libre de residuos', icon: Sparkles, color: '#BBBF41' },
     { id: 'ev-4', hora: 'Hace 5 min', cam: camActual.nombre, tipo: 'Control de Asistencia', desc: 'Presentismo 100%: 4 ejecutivos activos con gafete visible', icon: UserCheck, color: '#732D67' },
     { id: 'ev-5', hora: 'Hace 8 min', cam: camActual.nombre, tipo: 'Seguridad Operativa', desc: 'Zona tras mostrador despejada sin bolsas ni objetos anómalos', icon: Shield, color: '#D9933D' },
@@ -619,7 +619,7 @@ export const DisplaysInteligentesModule: React.FC = () => {
             </div>
           </div>
           <p style={{ fontSize: '12px', color: colores.textoMedio, lineHeight: 1.5, marginBottom: '12px' }}>
-            Alertas inmediatas si una persona no autorizada accede a la zona trasera del mostrador, si se olvida un objeto/mochila o si un display Bang & Olufsen es manipulado sin permiso.
+            Alertas inmediatas si una persona no autorizada accede a la zona trasera del mostrador, si se olvida un objeto/mochila o si un display inteligente de Audio Surround es manipulado sin permiso.
           </p>
           <div style={{ fontSize: '11px', fontWeight: '700', color: '#A61C5C', backgroundColor: '#FEF0F7', padding: '6px 10px', borderRadius: '8px' }}>
             ● Zona Trasera Protegida · Perímetro Seguro

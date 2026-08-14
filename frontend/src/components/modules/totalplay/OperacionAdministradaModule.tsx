@@ -71,7 +71,7 @@ export const OperacionAdministradaModule: React.FC = () => {
       status: '100% Online', color: '#5B8F20', icon: Radio
     },
     {
-      tipo: 'Sistemas Audio Bang & Olufsen', total: 112, online: 110,
+      tipo: 'Sistemas Audio Surround Hi-Fi', total: 112, online: 110,
       status: '2 Requieren Revisión', color: '#D9933D', icon: Activity
     },
     {

@@ -11,6 +11,7 @@ import { AcademiaMayiaModule } from './components/modules/totalplay/AcademiaMayi
 import { DisenioFabricacionModule } from './components/modules/totalplay/DisenioFabricacionModule';
 import { OperacionAdministradaModule } from './components/modules/totalplay/OperacionAdministradaModule';
 import { DiscoveryRetailModule } from './components/modules/totalplay/DiscoveryRetailModule';
+import { VistaGerenteMovilModule } from './components/modules/totalplay/VistaGerenteMovilModule';
 import { AsistenteIAChat } from './components/modules/AsistenteIAChat';
 import { MODULOS_TOTALPLAY } from './totalplay/totalplayData';
 import { brandingConfig } from './config/branding';
@@ -52,6 +53,8 @@ function AppInner() {
     switch (activeSection) {
       case 'dashboard':
         return <TotalplayDashboard onSelectModulo={selectSection} />;
+      case 'vista-gerente-movil':
+        return <VistaGerenteMovilModule />;
       case 'computer-vision':
         return <ComputerVisionModule />;
       case 'asesor-inteligente':

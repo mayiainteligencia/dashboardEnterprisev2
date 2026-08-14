@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi } from 'lucide-react';
+import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi, Smartphone } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 import { MODULOS_TOTALPLAY } from '../totalplay/totalplayData';
 
 const iconMap: Record<string, any> = {
-  Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass,
+  Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Smartphone,
 };
 
 interface SidebarProps {
@@ -23,22 +23,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
     {
       titulo: 'INTELIGENCIA COMERCIAL',
       color: '#A61C5C',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial')
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'OPERACIONES M2C',
       color: '#732D67',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones')
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'EXPERIENCIA & DISPLAYS',
       color: '#D9933D',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia')
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'TECNOLOGÍA & CRM',
       color: '#73B1BF',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia')
+      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia' && m.id !== 'vista-gerente-movil')
     }
   ];
 
@@ -209,6 +209,62 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             })}
           </div>
         ))}
+
+        {/* ── OPCIÓN ESPECIAL AL FINAL DEL SIDEBAR ── */}
+        <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: `1px dashed ${colores.borde}` }}>
+          <div style={{
+            fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
+            letterSpacing: '0.08em', color: '#A61C5C',
+            marginBottom: '8px', paddingLeft: '8px',
+            display: 'flex', alignItems: 'center', gap: '6px'
+          }}>
+            <div style={{ width: '12px', height: '2px', backgroundColor: '#A61C5C', borderRadius: '1px', flexShrink: 0 }} />
+            OPCIÓN ESPECIAL
+          </div>
+
+          <button
+            onClick={() => onSectionChange('vista-gerente-movil')}
+            onMouseEnter={() => setHoveredItem('vista-gerente-movil')}
+            onMouseLeave={() => setHoveredItem(null)}
+            style={{
+              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
+              padding: '10px 12px', borderRadius: '14px', cursor: 'pointer',
+              background: activeSection === 'vista-gerente-movil'
+                ? 'linear-gradient(135deg, #A61C5C 0%, #732D67 100%)'
+                : hoveredItem === 'vista-gerente-movil' ? '#FCE7F1' : '#FFF1F7',
+              color: activeSection === 'vista-gerente-movil' ? '#FFFFFF' : '#A61C5C',
+              border: `1.5px solid ${activeSection === 'vista-gerente-movil' ? '#A61C5C' : '#F5B8D0'}`,
+              boxShadow: activeSection === 'vista-gerente-movil'
+                ? '0 6px 20px rgba(166,28,92,0.35)'
+                : '0 2px 8px rgba(166,28,92,0.08)',
+              transition: 'all 0.22s cubic-bezier(0.22, 1, 0.36, 1)',
+              textAlign: 'left'
+            }}
+          >
+            <div style={{
+              width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0,
+              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <Smartphone size={16} color="#FFFFFF" />
+            </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ fontSize: '12.5px', fontWeight: '900', lineHeight: 1.2 }}>
+                Vista Móvil Gerente
+              </div>
+              <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: '700' }}>
+                Copiloto &amp; Monitoreo
+              </div>
+            </div>
+            <span style={{
+              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
+              color: '#FFFFFF', fontSize: '9px', fontWeight: '900',
+              padding: '2px 7px', borderRadius: '10px', flexShrink: 0
+            }}>
+              PRO
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* ── Bottom Status Bar ── */}

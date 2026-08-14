@@ -38,18 +38,18 @@ export const AuditoriaVisualModule: React.FC = () => {
   const fotos = [
     {
       punto: 'Isla 1 - Santa Fe', fecha: 'Hoy 09:15 AM', estado: 'Conforme', score: 98,
-      imagen: 'Isla limpia, displays encendidos y exhibición oficial Bang & Olufsen.', color: '#5B8F20',
-      items: ['Planograma ✓', 'Iluminación ✓', 'B&O Display ✓', 'Limpieza ✓']
+      imagen: 'Isla limpia, displays encendidos y exhibición oficial Sound Hi-Fi.', color: '#5B8F20',
+      items: ['Planograma ✓', 'Iluminación ✓', 'Sound Display ✓', 'Limpieza ✓']
     },
     {
       punto: 'Corner 2 - Soriana Coyoacán', fecha: 'Hoy 09:45 AM', estado: 'Desviación', score: 82,
       imagen: 'Iluminación decorativa apagada. Requiere reinicio de pastilla eléctrica.', color: '#D9933D',
-      items: ['Planograma ✓', 'Iluminación ✗', 'B&O Display ✓', 'Limpieza ✓']
+      items: ['Planograma ✓', 'Iluminación ✗', 'Sound Display ✓', 'Limpieza ✓']
     },
     {
       punto: 'Tienda Perisur', fecha: 'Hoy 08:30 AM', estado: 'Conforme', score: 100,
       imagen: 'Planograma y limpieza al 100% de cumplimiento.', color: '#5B8F20',
-      items: ['Planograma ✓', 'Iluminación ✓', 'B&O Display ✓', 'Limpieza ✓']
+      items: ['Planograma ✓', 'Iluminación ✓', 'Sound Display ✓', 'Limpieza ✓']
     },
   ];
 

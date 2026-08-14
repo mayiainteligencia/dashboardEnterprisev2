@@ -5,7 +5,7 @@ import { brandingConfig } from '../../config/branding';
 // ── Datos dummy comerciales por estado ─────────────────────────────────────────
 // leads = prospectos generados · ventas = unidades vendidas · modeloTop = modelo más vendido
 
-interface EstadoInfo {
+export interface EstadoInfo {
   id: string;
   nombre: string;
   leads: number;
@@ -15,7 +15,7 @@ interface EstadoInfo {
   region: string;
 }
 
-const estadosData: Record<string, EstadoInfo> = {
+export const estadosData: Record<string, EstadoInfo> = {
   MX_AG: { id: 'MX_AG', nombre: 'Aguascalientes',      leads: 312,  ventas: 41,  tendencia: +8,  modeloTop: 'Nexora',   region: 'Centro-Norte' },
   MX_BC: { id: 'MX_BC', nombre: 'Baja California',     leads: 587,  ventas: 76,  tendencia: +12, modeloTop: 'Lumio',  region: 'Noroeste' },
   MX_BS: { id: 'MX_BS', nombre: 'Baja California Sur',  leads: 198,  ventas: 26,  tendencia: -4,  modeloTop: 'Kestra',   region: 'Noroeste' },
@@ -52,7 +52,7 @@ const estadosData: Record<string, EstadoInfo> = {
 
 // ── Color por intensidad (según leads) ─────────────────────────────────────────
 
-const getColor = (leads: number, max: number, hovered: boolean, selected: boolean): string => {
+export const getColor = (leads: number, max: number, hovered: boolean, selected: boolean): string => {
   const t = leads / max;
   if (selected) return '#7F0000';
   if (hovered)  return '#FF3333';
@@ -66,7 +66,7 @@ const getColor = (leads: number, max: number, hovered: boolean, selected: boolea
 // ── Paths SVG reales de México (jqvmap mex_es) ────────────────────────────────
 // El viewBox original del mapa es "0 0 959 593"
 
-const estadosPaths: { id: string; path: string; label: string }[] = [
+export const estadosPaths: { id: string; path: string; label: string }[] = [
   {
     id: 'MX_AG',
     label: 'Aguascalientes',
