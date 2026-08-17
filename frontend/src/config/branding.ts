@@ -1,119 +1,116 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "TOTALPLAY",
-    razonSocial: "Total Play Telecomunicaciones, S.A.P.I. de C.V.",
-    grupo: "Grupo Salinas",
-    eslogan: "Transformación Inteligente M2C · Puntos de Venta",
-    logo: "/assets/logosNativos/TotalPlay.png",
+    nombre: "RISKO AI",
+    razonSocial: "RISKO AI Platform S.A.P.I. de C.V.",
+    grupo: "Gestión & Medición del Riesgo Inmobiliario",
+    eslogan: "Plataforma Agéntica de Inteligencia para Gestión y Medición del Riesgo Inmobiliario",
+    logo: "", // Usaremos icono genérico de lucide-react por especificación
   },
 
   colores: {
-    // ── Paleta oficial Totalplay (5 colores de igual relevancia) ──
-    magenta:  "#A61C5C",   // Rosa/Magenta fuerte
-    purpura:  "#732D67",   // Púrpura oscuro
-    celeste:  "#73B1BF",   // Azul-turquesa (NUEVO)
-    lima:     "#BBBF41",   // Olivo/Lima
-    ambar:    "#D9933D",   // Ámbar/Naranja
+    // ── Paleta Oficial RISKO AI (Estética Corporativa Limpia sobre Fondo Blanco) ──
+    primario:       "#2563EB",   // Azul Cobalto / IA Accent
+    primarioOscuro: "#1E40AF",   // Azul Marino Profundo
+    primarioClaro:  "#EFF6FF",   // Azul Hielo Suave
 
-    // ── Roles de color en la UI ──
-    // El primario principal cambia a turquesa para reducir dominancia morada
-    primario:       "#73B1BF",   // Turquesa Totalplay → encabezados, nav activa
-    primarioOscuro: "#4E848F",   // Turquesa oscuro
-    primarioClaro:  "#A3D0D9",   // Turquesa claro
+    secundario:     "#4F46E5",   // Indigo agéntico
+    acento:         "#0EA5E9",   // Cyan geoespacial
+    acentoOscuro:   "#0369A1",
 
-    secundario:     "#A61C5C",   // Magenta → badges, CTA, alertas
-    acento:         "#D9933D",   // Ámbar → acciones secundarias / highlights
-    acentoOscuro:   "#A36618",   // Ámbar oscuro
+    // Indicadores Normativos de Riesgo Inmobiliario
+    critico:        "#EF4444",   // Rojo (Riesgo Crítico 81-100 / Clase F)
+    alto:           "#F97316",   // Naranja (Riesgo Alto 61-80 / Clase E)
+    moderado:       "#F59E0B",   // Ámbar (Riesgo Moderado 41-60 / Clase C-D)
+    bajo:           "#10B981",   // Verde Esmeralda (Riesgo Bajo 0-40 / Clase B)
+    preferente:     "#3B82F6",   // Azul (Clase A Preferente)
 
-    peligro:     "#A61C5C",   // Magenta para errores críticos
-    advertencia: "#D9933D",   // Ámbar para advertencias
-    exito:       "#BBBF41",   // Lima para éxitos / OK
+    peligro:        "#EF4444",
+    advertencia:    "#F59E0B",
+    exito:          "#10B981",
 
     // ── Fondos (Blanco puro como requerido) ──
     fondoPrincipal:  "#FFFFFF",
-    fondoSecundario: "#F8F9FA",
-    fondoTerciario:  "#F1F3F5",
+    fondoSecundario: "#F8FAFC",
+    fondoTerciario:  "#F1F5F9",
     fondoClaro:      "#FFFFFF",
 
     // ── Textos ──
-    textoClaro:    "#1A1A1A",
-    textoMedio:    "#4A4A4A",
-    textoOscuro:   "#777777",
+    textoClaro:    "#0F172A",   // Slate 900
+    textoMedio:    "#334155",   // Slate 700
+    textoOscuro:   "#64748B",   // Slate 500
     textoEnOscuro: "#FFFFFF",
 
-    // ── Bordes ──
+    // ── Bordes y Separadores ──
     borde:      "#E2E8F0",
-    bordeHover: "#73B1BF",   // Turquesa en hover
+    bordeHover: "#2563EB",
 
-    // ── Gradientes ──
-    gradientePrimario:   "linear-gradient(135deg, #73B1BF 0%, #4E848F 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #A61C5C 0%, #732D67 100%)",
-    gradienteAcento:     "linear-gradient(135deg, #D9933D 0%, #BBBF41 100%)",
+    // ── Gradientes Elegantes ──
+    gradientePrimario:   "linear-gradient(135deg, #2563EB 0%, #1E40AF 100%)",
+    gradienteSecundario: "linear-gradient(135deg, #4F46E5 0%, #3730A3 100%)",
+    gradienteAcento:     "linear-gradient(135deg, #0EA5E9 0%, #0284C7 100%)",
 
-    // ── Glass / Sombras ──
-    fondoGlass:    "rgba(255, 255, 255, 0.95)",
-    sombra:        "0 2px 8px rgba(0, 0, 0, 0.04)",
-    sombraMedia:   "0 8px 20px rgba(115, 177, 191, 0.12)",
-    sombraGrande:  "0 16px 32px rgba(115, 177, 191, 0.18)",
+    // ── Sombras y Glassmorphism Suave ──
+    fondoGlass:    "rgba(255, 255, 255, 0.96)",
+    sombra:        "0 1px 3px rgba(15, 23, 42, 0.08)",
+    sombraMedia:   "0 4px 14px rgba(37, 99, 235, 0.10)",
+    sombraGrande:  "0 12px 28px rgba(15, 23, 42, 0.12)",
   },
 
   metricas: {
-    hogaresPasados: "19M+",
-    suscriptores: "5.5M",
-    puntosVenta: 112,
-    ciudades: 87,
-    fibraOpticaKm: "164,000 km",
-    arpuPromedio: "$588",
-    empleados: 5500,
+    inmueblesEvaluados: 1450,
+    sumaAseguradaTotal: "$45.8B USD",
+    aalPromedio: "0.18%",
+    pmlMaximo: "$420M USD",
+    inspeccionesEmitidas: 842,
+    hallazgosMitigados: "94.2%",
+    agentesActivos: 16,
   },
 
   ia: {
-    nombre: "MAYIA",
-    modelo: "Gemini 3.5 Flash",
+    nombre: "RISKO Copilot",
+    modelo: "Gemini 3.5 Pro (Risk Engine)",
     habilitado: true,
-    empresaCliente: "Totalplay Telecomunicaciones",
+    empresaCliente: "RISKO AI Real Estate Risk Platform",
   },
 
-  // ── Temas por sección distribuidos entre los 5 colores ──
   temas: {
     admin: {
-      nombre: "Operación de Tiendas e Islas",
-      acento:       "#73B1BF",   // Turquesa
-      acentoOscuro: "#4E848F",
-      acentoSuave:  "#EAF5F7",
+      nombre: "Command Center Ejecutivo",
+      acento:       "#2563EB",
+      acentoOscuro: "#1E40AF",
+      acentoSuave:  "#EFF6FF",
       sobreAcento:  "#FFFFFF",
     },
     cliente: {
-      nombre: "Atención al Cliente Residencial",
-      acento:       "#BBBF41",   // Lima
-      acentoOscuro: "#8B8F26",
-      acentoSuave:  "#F7F8E2",
-      sobreAcento:  "#1A1A1A",
+      nombre: "Expediente Digital & GeoRisk",
+      acento:       "#0EA5E9",
+      acentoOscuro: "#0369A1",
+      acentoSuave:  "#F0F9FF",
+      sobreAcento:  "#FFFFFF",
     },
     compras: {
-      nombre: "Ventas y Contratación",
-      acento:       "#A61C5C",   // Magenta
-      acentoOscuro: "#751240",
-      acentoSuave:  "#FCE7F1",
+      nombre: "Ingeniería de Riesgo & Inspección",
+      acento:       "#F59E0B",
+      acentoOscuro: "#D97706",
+      acentoSuave:  "#FFFBEB",
       sobreAcento:  "#FFFFFF",
     },
     flotillas: {
-      nombre: "Infraestructura y Cobertura",
-      acento:       "#D9933D",   // Ámbar
-      acentoOscuro: "#A36618",
-      acentoSuave:  "#FDF4E7",
+      nombre: "Valuación & Coberturas",
+      acento:       "#10B981",
+      acentoOscuro: "#047857",
+      acentoSuave:  "#ECFDF5",
       sobreAcento:  "#FFFFFF",
     },
     tecnologia: {
-      nombre: "Tecnología y Datos",
-      acento:       "#732D67",   // Púrpura
-      acentoOscuro: "#4A1B43",
-      acentoSuave:  "#F5E8F3",
+      nombre: "Motor de Riesgo & Agentes IA",
+      acento:       "#4F46E5",
+      acentoOscuro: "#3730A3",
+      acentoSuave:  "#EEF2FF",
       sobreAcento:  "#FFFFFF",
     },
   },
 };
 
-export type TemaBesco = typeof brandingConfig.temas.admin;
-export type TemaTotalplay = typeof brandingConfig.temas.admin;
+export type TemaRisko = typeof brandingConfig.temas.admin;
 export type BrandingConfig = typeof brandingConfig;

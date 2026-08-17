@@ -1,22 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Sparkles, Send, Trash2, Bot } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Sparkles, Send, Trash2, ShieldCheck, Building2, Cpu, CheckCircle, AlertTriangle } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 import { useAIChat } from '../../context/AIChatContext';
 import { MarkdownRenderer } from '../common/MarkdownRenderer';
 
-const { colores, ia } = brandingConfig;
-
 export const AsistenteIAChat: React.FC = () => {
-  const {
-    messages,
-    loading,
-    sendMessage,
-    clearHistory,
-    activeSectionTitle,
-  } = useAIChat();
-
+  const { colores } = brandingConfig;
+  const { messages, loading, sendMessage, clearHistory } = useAIChat();
   const [input, setInput] = useState('');
-  const endRef = useRef<HTMLDivElement | null>(null);
+  const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,254 +16,251 @@ export const AsistenteIAChat: React.FC = () => {
 
   const handleSend = () => {
     if (!input.trim() || loading) return;
-    const prompt = input.trim();
+    const msg = input.trim();
     setInput('');
-    sendMessage(prompt);
+    sendMessage(msg);
   };
-
-  const quickPrompts = [
-    `Verificar cobertura FTTH Totalplay`,
-    'Comparar paquetes Doble Play vs Triple Play',
-    'Sugerencias del Copiloto para elevar ARPU',
-    'Métricas de atracción y permanencia en islas'
-  ];
 
   return (
     <div
       style={{
-        height: '100%',
-        backgroundColor: colores.fondoPrincipal,
-        borderRadius: 18,
+        maxWidth: '1200px',
+        margin: '0 auto',
+        padding: '24px',
         display: 'flex',
         flexDirection: 'column',
-        border: `1px solid ${colores.borde}`,
-        boxShadow: '0 8px 32px rgba(0,0,0,0.06)',
-        overflow: 'hidden',
+        height: 'calc(100vh - 120px)',
+        gap: '16px'
       }}
     >
-      {/* Header del Chat en Dashboard */}
+      {/* HEADER DE MÓDULO */}
       <div
         style={{
-          padding: '16px 20px',
-          borderBottom: `1px solid ${colores.borde}`,
+          padding: '20px 24px',
+          backgroundColor: '#FFFFFF',
+          borderRadius: '16px',
+          border: `1px solid ${colores.borde}`,
+          boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          background: colores.fondoSecundario,
+          justifyContent: 'space-between'
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <div
             style={{
-              width: 40,
-              height: 40,
+              width: '48px',
+              height: '48px',
               borderRadius: '12px',
-              background: `linear-gradient(135deg, ${colores.primario}, ${colores.secundario})`,
+              background: colores.gradientePrimario,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff',
+              color: '#FFFFFF',
+              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)'
             }}
           >
-            <Bot size={22} />
+            <ShieldCheck size={26} />
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: colores.textoClaro }}>
-                {ia.nombre} · Asistente IA Corporativo
-              </h3>
-              <span
-                style={{
-                  fontSize: 10,
-                  background: '#10B98120',
-                  color: '#10B981',
-                  padding: '2px 8px',
-                  borderRadius: 999,
-                  fontWeight: 600,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 4,
-                }}
-              >
-                <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#10B981' }} />
-                LLM Conectado
-              </span>
-            </div>
-            <p style={{ margin: '2px 0 0 0', fontSize: 12, color: colores.textoMedio }}>
-              Contexto activo: <strong style={{ color: colores.primario }}>{activeSectionTitle}</strong>
+            <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: colores.textoClaro }}>
+              RISKO Copilot · Asistente Agéntico Conversacional
+            </h2>
+            <p style={{ margin: 0, fontSize: '13px', color: colores.textoOscuro }}>
+              Inteligencia Artificial Multiamenaza & Suscripción Inmobiliaria
             </p>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button
-            onClick={clearHistory}
-            title="Limpiar chat"
-            style={{
-              padding: '8px 12px',
-              borderRadius: 8,
-              background: 'transparent',
-              border: `1px solid ${colores.borde}`,
-              fontSize: 12,
-              color: colores.textoMedio,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-            }}
-          >
-            <Trash2 size={15} />
-            Limpiar
-          </button>
-        </div>
+        <button
+          onClick={clearHistory}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '8px 14px',
+            borderRadius: '10px',
+            border: `1px solid ${colores.borde}`,
+            backgroundColor: '#FFFFFF',
+            color: colores.textoOscuro,
+            fontSize: '13px',
+            fontWeight: '600',
+            cursor: 'pointer'
+          }}
+        >
+          <Trash2 size={16} />
+          Limpiar Conversación
+        </button>
       </div>
 
-      {/* Mensajes del Chat */}
+      {/* ÁREA DE CHAT */}
       <div
         style={{
           flex: 1,
-          overflowY: 'auto',
-          padding: 20,
+          backgroundColor: '#FFFFFF',
+          borderRadius: '16px',
+          border: `1px solid ${colores.borde}`,
+          boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 16,
-          background: colores.fondoSecundario,
+          overflow: 'hidden'
         }}
       >
-        {messages.map((m) => (
-          <div
-            key={m.id}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: m.role === 'user' ? 'flex-end' : 'flex-start',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                gap: 12,
-                maxWidth: '85%',
-                flexDirection: m.role === 'user' ? 'row-reverse' : 'row',
-              }}
-            >
-              {m.role === 'assistant' && (
-                <div
-                  style={{
-                    width: 34,
-                    height: 34,
-                    borderRadius: '10px',
-                    background: colores.primario,
-                    color: '#fff',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 800,
-                    fontSize: 12,
-                    flexShrink: 0,
-                  }}
-                >
-                  <Sparkles size={18} />
-                </div>
-              )}
-              <div
-                style={{
-                  background: m.role === 'user' ? colores.primario : colores.fondoPrincipal,
-                  color: m.role === 'user' ? '#FFFFFF' : colores.textoClaro,
-                  padding: '14px 18px',
-                  borderRadius: m.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                  border: m.role === 'user' ? 'none' : `1px solid ${colores.borde}`,
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                }}
-              >
-                {m.content ? (
-                  <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={colores.primario} />
-                ) : (
-                  loading && m.role === 'assistant' ? 'MAYIA está procesando la consulta...' : ''
-                )}
-              </div>
-            </div>
-            <span style={{ fontSize: 11, color: colores.textoMedio, marginTop: 4, margin: '4px 12px' }}>
-              {m.timestamp} {m.moduleContext ? `• ${m.moduleContext}` : ''}
-            </span>
-          </div>
-        ))}
-        <div ref={endRef} />
-      </div>
-
-      {/* Sugerencias Rápidas */}
-      <div style={{ padding: '10px 16px', background: colores.fondoPrincipal, borderTop: `1px solid ${colores.borde}`, display: 'flex', gap: 8, overflowX: 'auto' }}>
-        {quickPrompts.map((qp, idx) => (
-          <button
-            key={idx}
-            onClick={() => { setInput(qp); handleSend(); }}
-            style={{
-              padding: '6px 12px',
-              borderRadius: 999,
-              background: colores.fondoTerciario,
-              border: `1px solid ${colores.borde}`,
-              fontSize: 12,
-              color: colores.textoMedio,
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = colores.primario; e.currentTarget.style.color = colores.primario; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = colores.borde; e.currentTarget.style.color = colores.textoMedio; }}
-          >
-            {qp}
-          </button>
-        ))}
-      </div>
-
-      {/* Input de Mensaje */}
-      <div
-        style={{
-          padding: 16,
-          background: colores.fondoPrincipal,
-          borderTop: `1px solid ${colores.borde}`,
-          display: 'flex',
-          gap: 12,
-          alignItems: 'center',
-        }}
-      >
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder={`Escribe tu consulta para ${ia.nombre} (Módulo: ${activeSectionTitle})…`}
+        <div
           style={{
             flex: 1,
-            padding: '12px 18px',
-            borderRadius: 12,
-            border: `1px solid ${colores.borde}`,
-            fontSize: 14,
-            outline: 'none',
-            background: colores.fondoSecundario,
-            color: colores.textoClaro,
-          }}
-        />
-        <button
-          onClick={handleSend}
-          disabled={loading || !input.trim()}
-          style={{
-            padding: '12px 20px',
-            borderRadius: 12,
-            background: input.trim() ? colores.primario : colores.borde,
-            color: '#fff',
-            border: 'none',
-            fontWeight: 600,
-            fontSize: 14,
-            cursor: input.trim() ? 'pointer' : 'default',
+            overflowY: 'auto',
+            padding: '24px',
             display: 'flex',
-            alignItems: 'center',
-            gap: 8,
-            transition: 'background 0.2s',
+            flexDirection: 'column',
+            gap: '16px'
           }}
         >
-          <Send size={16} />
-          Enviar
-        </button>
+          {messages.length === 0 ? (
+            <div style={{ textAlign: 'center', margin: 'auto', maxWidth: '540px' }}>
+              <div
+                style={{
+                  width: '64px',
+                  height: '64px',
+                  borderRadius: '50%',
+                  backgroundColor: '#EFF6FF',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: colores.primario,
+                  margin: '0 auto 16px'
+                }}
+              >
+                <Cpu size={32} />
+              </div>
+              <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: '800', color: colores.textoClaro }}>
+                Asistente RISKO Copilot Listo
+              </h3>
+              <p style={{ margin: '0 0 20px', fontSize: '14px', color: colores.textoMedio, lineHeight: '1.5' }}>
+                Puedo ayudarte a analizar la vulnerabilidad sísmica, riesgos de inundación, sistemas NFPA contra incendio, cálculo de AAL/PML y planes de mitigación CAPEX.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', textAlign: 'left' }}>
+                {[
+                  '¿Cuál es la aceleración sismica pico (PGA) en Cuauhtémoc CDMX?',
+                  'Revisa si la bomba de incendio cumple con norma NFPA 20',
+                  'Simula el escenario de pérdida máxima (PML) en Parque Apodaca',
+                  'Genera un plan de acción CAPEX para reducir score de 64 a 35'
+                ].map((prompt, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => sendMessage(prompt)}
+                    style={{
+                      padding: '12px',
+                      borderRadius: '10px',
+                      border: `1px solid ${colores.borde}`,
+                      backgroundColor: '#F8FAFC',
+                      color: colores.textoClaro,
+                      fontSize: '12px',
+                      fontWeight: '500',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s ease'
+                    }}
+                  >
+                    👉 {prompt}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : (
+            messages.map((m) => (
+              <div
+                key={m.id}
+                style={{
+                  alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
+                  maxWidth: '80%',
+                  backgroundColor: m.sender === 'user' ? colores.primario : '#F8FAFC',
+                  color: m.sender === 'user' ? '#FFFFFF' : colores.textoClaro,
+                  padding: '14px 18px',
+                  borderRadius: '14px',
+                  fontSize: '14px',
+                  lineHeight: '1.5',
+                  border: m.sender === 'ai' ? `1px solid ${colores.borde}` : 'none'
+                }}
+              >
+                {m.sender === 'ai' ? (
+                  <MarkdownRenderer content={m.text} />
+                ) : (
+                  <div>{m.text}</div>
+                )}
+                <span
+                  style={{
+                    fontSize: '11px',
+                    opacity: 0.7,
+                    display: 'block',
+                    marginTop: '6px',
+                    textAlign: 'right'
+                  }}
+                >
+                  {m.timestamp}
+                </span>
+              </div>
+            ))
+          )}
+          {loading && (
+            <div style={{ alignSelf: 'flex-start', backgroundColor: '#EFF6FF', padding: '10px 16px', borderRadius: '12px', fontSize: '13px', color: colores.primario, fontWeight: '600' }}>
+              ⚡ RISKO Copilot procesando datos de cartera...
+            </div>
+          )}
+          <div ref={endRef} />
+        </div>
+
+        {/* INPUT DE CHAT */}
+        <div
+          style={{
+            padding: '16px 20px',
+            backgroundColor: '#F8FAFC',
+            borderTop: `1px solid ${colores.borde}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+          }}
+        >
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSend();
+            }}
+            placeholder="Pregunta a RISKO Copilot sobre el riesgo de cualquier inmueble..."
+            style={{
+              flex: 1,
+              padding: '12px 16px',
+              borderRadius: '10px',
+              border: `1px solid ${colores.borde}`,
+              fontSize: '14px',
+              outline: 'none',
+              backgroundColor: '#FFFFFF',
+              color: colores.textoClaro
+            }}
+          />
+          <button
+            onClick={handleSend}
+            disabled={loading || !input.trim()}
+            style={{
+              backgroundColor: colores.primario,
+              color: '#FFFFFF',
+              border: 'none',
+              borderRadius: '10px',
+              padding: '12px 20px',
+              fontSize: '14px',
+              fontWeight: '700',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              opacity: loading || !input.trim() ? 0.6 : 1
+            }}
+          >
+            <Send size={16} />
+            <span>Enviar</span>
+          </button>
+        </div>
       </div>
     </div>
   );

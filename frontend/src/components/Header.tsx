@@ -6,11 +6,13 @@ import {
   AlertTriangle,
   CheckCircle,
   X,
-  Lock
+  Building2,
+  ShieldCheck,
+  BrainCircuit,
+  Activity
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 import { AsistenteBuscador } from './AsistenteBuscador';
-import { AlertasHeader } from './comercial/AlertasHeader';
 
 export type Modo = 'admin' | 'cliente';
 export interface Notif {
@@ -23,14 +25,15 @@ export interface Notif {
 }
 
 const colorSeveridad = {
-  critico: '#A61C5C',
-  warning: '#D9933D',
-  ok: '#BBBF41'
+  critico: '#EF4444',
+  warning: '#F59E0B',
+  ok: '#10B981'
 };
 
 const defaultNotifs: Notif[] = [
-  { id: 1, titulo: 'Alta Conversión en Isla Santa Fe', texto: '+18% en capturas de lead consentidos.', tiempo: '10 min', severidad: 'ok', leida: false },
-  { id: 2, titulo: 'Alerta de Exhibidor en Soriana', texto: 'Auditoría IA detectó iluminación apagada.', tiempo: '25 min', severidad: 'critico', leida: false },
+  { id: 1, titulo: 'Alerta Sísmica Mw 6.8', texto: 'Evaluación rápida activada en 42 inmuebles.', tiempo: '10 min', severidad: 'critico', leida: false },
+  { id: 2, titulo: 'Inspección NFPA Aprobada', texto: 'Parque Industrial Apodaca actualizó dictamen.', tiempo: '25 min', severidad: 'ok', leida: false },
+  { id: 3, titulo: 'Infraseguro Detectado', texto: 'Torre Reforma 222 requiere actualización de VRN.', tiempo: '1 hora', severidad: 'warning', leida: false },
 ];
 
 interface HeaderProps {
@@ -41,12 +44,10 @@ interface HeaderProps {
   onAdmin?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', onCliente, onAdmin }) => {
-  const { colores, empresa, temas } = brandingConfig;
-  const tema = temas.admin;
+export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin' }) => {
+  const { colores, empresa } = brandingConfig;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notif[]>(defaultNotifs);
-  const [showKnowledgeGraph, setShowKnowledgeGraph] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const fecha = new Date();
@@ -57,14 +58,12 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
   };
   const fechaFormateada = fecha.toLocaleDateString('es-ES', opciones);
 
-  // Cerrar dropdown al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setNotificacionesAbiertas(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
@@ -87,338 +86,215 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
   };
 
   return (
-    <>
     <header 
       style={{ 
-        height: '80px',
-        backgroundColor: colores.fondoSecundario,
+        height: '76px',
+        backgroundColor: '#FFFFFF',
         borderBottom: `1px solid ${colores.borde}`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '0 clamp(14px, 3vw, 32px)',
-        gap: '12px',
-        flexShrink: 0,
+        padding: '0 28px',
+        gap: '16px',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        boxShadow: '0 1px 4px rgba(15, 23, 42, 0.05)'
       }}
     >
-      {/* Hamburguesa (solo móvil) */}
-      {onMenu && (
-        <button
-          onClick={onMenu}
-          aria-label="Abrir menú"
-          style={{
-            width: '44px', height: '44px', borderRadius: '12px', flexShrink: 0,
-            backgroundColor: colores.fondoTerciario, border: 'none', cursor: 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}
-        >
-          <Menu size={20} color={colores.textoClaro} />
-        </button>
-      )}
+      {/* IZQUIERDA - Menú Hamburguesa en móvil y Branding RISKO AI */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        {onMenu && (
+          <button 
+            onClick={onMenu}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '8px',
+              border: 'none',
+              borderRadius: '8px',
+              backgroundColor: colores.fondoTerciario,
+              color: colores.textoClaro,
+              cursor: 'pointer',
+            }}
+          >
+            <Menu size={20} />
+          </button>
+        )}
 
-      {/* IZQUIERDA - Fecha (estática, se actualiza con el día) */}
-      <div
-        style={{
-          display: onMenu ? 'none' : 'flex',
-          alignItems: 'center',
-          gap: '8px',
-          padding: '10px 16px',
-          borderRadius: '12px',
-          backgroundColor: colores.fondoTerciario,
-          flexShrink: 0,
-        }}
-      >
-        <Calendar size={18} style={{ color: colores.textoClaro }} />
-        <span style={{
-          fontSize: '14px',
-          fontWeight: '500',
-          color: colores.textoClaro
-        }}>
-          {fechaFormateada}
-        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div 
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              background: colores.gradientePrimario,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#FFFFFF',
+              boxShadow: '0 4px 10px rgba(37, 99, 235, 0.25)'
+            }}
+          >
+            <Building2 size={24} />
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '18px', fontWeight: '800', color: colores.textoClaro, letterSpacing: '-0.02em' }}>
+                RISKO AI
+              </span>
+              <span style={{ 
+                fontSize: '11px', 
+                fontWeight: '700', 
+                backgroundColor: '#EFF6FF', 
+                color: colores.primario, 
+                padding: '2px 8px', 
+                borderRadius: '999px',
+                border: '1px solid #BFDBFE'
+              }}>
+                v1.0 Real Estate
+              </span>
+            </div>
+            <p style={{ margin: 0, fontSize: '11px', color: colores.textoOscuro, fontWeight: '500' }}>
+              Riesgo Inmobiliario & Copiloto Agéntico
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Asistente IA tipo buscador */}
-      <AsistenteBuscador modo={modo} />
+      {/* CENTRO - Buscador / Asistente RAG */}
+      <div style={{ flex: 1, maxWidth: '520px', margin: '0 16px' }}>
+        <AsistenteBuscador modo={modo} />
+      </div>
 
-      {/* CENTRO - Branding Totalplay */}
-      <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '12px' }}>
+      {/* DERECHA - Fecha, Estado del Motor & Notificaciones */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        {/* Badge Motor IA Activo */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          padding: '6px 14px',
+          padding: '6px 12px',
           borderRadius: '20px',
-          backgroundColor: '#FFFFFF',
-          border: `1px solid ${colores.borde}`,
-          boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
+          backgroundColor: '#ECFDF5',
+          border: '1px solid #A7F3D0',
+          color: '#047857',
+          fontSize: '12px',
+          fontWeight: '600'
         }}>
-          <img
-            src="/assets/logosNativos/TotalPlay.png"
-            alt="Totalplay Logo"
-            style={{ height: '26px', objectFit: 'contain' }}
-          />
-          <span style={{ fontSize: '11px', fontWeight: '700', color: '#732D67', backgroundColor: '#F5E8F3', padding: '2px 8px', borderRadius: '10px' }}>
-            M2C
-          </span>
+          <BrainCircuit size={16} />
+          <span>Motor Agéntico 16/16 Activo</span>
         </div>
-      </div>
 
-      {/* DERECHA - Notificaciones y Perfil */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-        {/* Toggle Cliente / Admin */}
-        {modo && (
-          <div style={{ display: 'flex', gap: '4px', padding: '4px', background: colores.fondoTerciario, borderRadius: '999px', flexShrink: 0 }}>
-            <button
-              onClick={onCliente}
-              style={{ border: 'none', cursor: 'pointer', padding: '7px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: 600, transition: 'all .2s',
-                background: modo === 'cliente' ? temas.cliente.acento : 'transparent', color: modo === 'cliente' ? temas.cliente.sobreAcento : colores.textoMedio }}
-            >
-              Cliente
-            </button>
-            <button
-              onClick={onAdmin}
-              style={{ border: 'none', cursor: 'pointer', padding: '7px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: 600, transition: 'all .2s', display: 'flex', alignItems: 'center', gap: '5px',
-                background: modo === 'admin' ? temas.admin.acento : 'transparent', color: modo === 'admin' ? temas.admin.sobreAcento : colores.textoMedio }}
-            >
-              <Lock size={12} /> Admin
-            </button>
-          </div>
-        )}
+        {/* Fecha */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '6px 12px',
+          borderRadius: '8px',
+          backgroundColor: colores.fondoTerciario,
+          color: colores.textoMedio,
+          fontSize: '13px',
+          fontWeight: '500'
+        }}>
+          <Calendar size={15} />
+          <span>{fechaFormateada}</span>
+        </div>
 
-        {/* Alertas de la operación / inmuebles */}
-        <AlertasHeader modo={modo} />
-
-        {/* Notificaciones con Dropdown */}
-        <div ref={dropdownRef} style={{ position: 'relative' }}>
+        {/* Notificaciones */}
+        <div style={{ position: 'relative' }} ref={dropdownRef}>
           <button 
             onClick={() => setNotificacionesAbiertas(!notificacionesAbiertas)}
             style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '50%',
-              backgroundColor: colores.fondoTerciario,
-              border: 'none',
-              cursor: 'pointer',
+              position: 'relative',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              position: 'relative',
-              transition: 'all 0.2s',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.1)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              width: '40px',
+              height: '40px',
+              borderRadius: '10px',
+              border: `1px solid ${colores.borde}`,
+              backgroundColor: '#FFFFFF',
+              color: colores.textoClaro,
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
             }}
           >
-            <Bell size={20} style={{ color: colores.textoClaro }} />
+            <Bell size={18} />
             {notificacionesNoLeidas > 0 && (
-              <span 
-                style={{
-                  position: 'absolute',
-                  top: '8px',
-                  right: '8px',
-                  minWidth: '18px',
-                  height: '18px',
-                  borderRadius: '10px',
-                  backgroundColor: colores.peligro,
-                  border: `2px solid ${colores.fondoSecundario}`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  color: '#FFFFFF',
-                  padding: '0 4px',
-                }}
-              >
+              <span style={{
+                position: 'absolute',
+                top: '-4px',
+                right: '-4px',
+                width: '18px',
+                height: '18px',
+                borderRadius: '50%',
+                backgroundColor: colores.critico,
+                color: '#FFFFFF',
+                fontSize: '11px',
+                fontWeight: '700',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
                 {notificacionesNoLeidas}
               </span>
             )}
           </button>
 
-          {/* Dropdown de Notificaciones */}
+          {/* Modal de Notificaciones */}
           {notificacionesAbiertas && (
-            <div
-              style={{
-                position: 'absolute',
-                top: '60px',
-                right: '0',
-                width: 'min(380px, calc(100vw - 24px))',
-                maxHeight: '500px',
-                backgroundColor: colores.fondoSecundario,
-                borderRadius: '16px',
-                border: `1px solid ${colores.borde}`,
-                boxShadow: '0 8px 32px rgba(0,0,0,0.3)',
-                overflow: 'hidden',
-                zIndex: 1000,
-              }}
-            >
-              {/* Header del dropdown */}
-              <div 
-                style={{
-                  padding: '16px 20px',
-                  borderBottom: `1px solid ${colores.borde}`,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <div>
-                  <h3 style={{ 
-                    margin: 0, 
-                    fontSize: '16px', 
-                    fontWeight: 'bold',
-                    color: colores.textoClaro 
-                  }}>
-                    Notificaciones
-                  </h3>
-                  <p style={{ 
-                    margin: '4px 0 0 0', 
-                    fontSize: '12px',
-                    color: colores.textoMedio 
-                  }}>
-                    Tienes {notificacionesNoLeidas} sin leer
-                  </p>
-                </div>
-                {notificacionesNoLeidas > 0 && (
-                  <button
-                    onClick={marcarTodasComoLeidas}
-                    style={{
-                      background: 'none',
-                      border: 'none',
-                      color: tema.acentoOscuro,
-                      fontSize: '12px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      padding: '4px 8px',
-                    }}
-                  >
-                    Marcar todas
-                  </button>
-                )}
+            <div style={{
+              position: 'absolute',
+              right: 0,
+              top: '48px',
+              width: '360px',
+              backgroundColor: '#FFFFFF',
+              borderRadius: '14px',
+              boxShadow: '0 10px 30px rgba(15, 23, 42, 0.15)',
+              border: `1px solid ${colores.borde}`,
+              padding: '16px',
+              zIndex: 200,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                <span style={{ fontWeight: '700', fontSize: '14px', color: colores.textoClaro }}>
+                  Alertas & Alertas NatCat ({notificacionesNoLeidas})
+                </span>
+                <button 
+                  onClick={marcarTodasComoLeidas}
+                  style={{ border: 'none', background: 'none', color: colores.primario, fontSize: '12px', cursor: 'pointer', fontWeight: '600' }}
+                >
+                  Marcar leídas
+                </button>
               </div>
-
-              {/* Lista de notificaciones */}
-              <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                {notificaciones.map((notif) => (
-                  <div
-                    key={notif.id}
-                    onClick={() => marcarComoLeida(notif.id)}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {notificaciones.map(n => (
+                  <div 
+                    key={n.id}
+                    onClick={() => marcarComoLeida(n.id)}
                     style={{
-                      padding: '16px 20px',
-                      borderBottom: `1px solid ${colores.borde}`,
-                      backgroundColor: notif.leida ? 'transparent' : colores.fondoTerciario + '40',
-                      cursor: 'pointer',
-                      transition: 'background-color 0.2s',
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = colores.fondoTerciario;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = notif.leida 
-                        ? 'transparent' 
-                        : colores.fondoTerciario + '40';
+                      padding: '10px',
+                      borderRadius: '8px',
+                      backgroundColor: n.leida ? '#F8FAFC' : '#EFF6FF',
+                      borderLeft: `4px solid ${colorSeveridad[n.severidad]}`,
+                      cursor: 'pointer'
                     }}
                   >
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <div style={{ flexShrink: 0, marginTop: '2px' }}>
-                        {getIconoPorSeveridad(notif.severidad)}
-                      </div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', marginBottom: '4px' }}>
-                          <h4 style={{
-                            margin: 0,
-                            fontSize: '13px',
-                            fontWeight: notif.leida ? '500' : '700',
-                            color: colores.textoClaro,
-                          }}>
-                            {notif.titulo}
-                          </h4>
-                          {!notif.leida && (
-                            <div 
-                              style={{
-                                width: '8px',
-                                height: '8px',
-                                borderRadius: '50%',
-                                backgroundColor: tema.acento,
-                                flexShrink: 0,
-                                marginLeft: '8px',
-                                marginTop: '4px',
-                              }}
-                            />
-                          )}
-                        </div>
-                        <p style={{
-                          margin: '4px 0',
-                          fontSize: '12px',
-                          color: colores.textoMedio,
-                          lineHeight: '1.4',
-                        }}>
-                          {notif.texto}
-                        </p>
-                        <span style={{
-                          fontSize: '11px',
-                          color: colores.textoOscuro,
-                        }}>
-                          {notif.tiempo}
-                        </span>
-                      </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      {getIconoPorSeveridad(n.severidad)}
+                      <span style={{ fontWeight: '600', fontSize: '13px', color: colores.textoClaro }}>{n.titulo}</span>
                     </div>
+                    <p style={{ margin: 0, fontSize: '12px', color: colores.textoMedio }}>{n.texto}</p>
+                    <span style={{ fontSize: '10px', color: colores.textoOscuro }}>{n.tiempo}</span>
                   </div>
                 ))}
-              </div>
-
-              {/* Footer del dropdown */}
-              <div 
-                style={{
-                  padding: '12px 20px',
-                  borderTop: `1px solid ${colores.borde}`,
-                  textAlign: 'center',
-                }}
-              >
-                <button
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    color: tema.acentoOscuro,
-                    fontSize: '13px',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    width: '100%',
-                    padding: '8px',
-                  }}
-                >
-                  Ver todas las notificaciones
-                </button>
               </div>
             </div>
           )}
         </div>
-
-      {/* Perfil */}
-        <button 
-          style={{
-            width: '40px',
-            height: '40px',
-            borderRadius: '50%',
-            backgroundColor: '#A61C5C',
-            border: 'none',
-            color: '#FFFFFF',
-            fontWeight: '800',
-            fontSize: '15px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(166,28,92,0.3)',
-          }}
-        >
-          TP
-        </button>
       </div>
     </header>
-  </>
   );
 };

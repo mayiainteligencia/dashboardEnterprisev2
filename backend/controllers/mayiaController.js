@@ -1,109 +1,70 @@
-import pool from '../config/database.js';
-import { buscarServicioPorNombre, buscarCursos, obtenerEstadisticasServicios } from '../services/dbService.js';
+import { empresaConfig } from '../config/empresaConfig.js';
 
-// Obtener todos los departamentos
-export async function getDepartamentos(req, res) {
-  try {
-    const [departamentos] = await pool.query(
-      'SELECT * FROM departamentos ORDER BY nombre'
-    );
-    res.json({ success: true, data: departamentos });
-  } catch (error) {
-    console.error('❌ Error obteniendo departamentos:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+export function getDepartamentos(req, res) {
+  res.json({
+    success: true,
+    modulos: empresaConfig.modulos
+  });
 }
 
-// Obtener servicios por departamento
-export async function getServiciosPorDepartamento(req, res) {
-  try {
-    const { departamento } = req.params;
-    const [servicios] = await pool.query(
-      `SELECT s.* FROM servicios s 
-       JOIN departamentos d ON s.departamento_id = d.id 
-       WHERE d.nombre LIKE ? AND s.disponible = ?`,
-      [`%${departamento}%`, true]
-    );
-    res.json({ success: true, data: servicios });
-  } catch (error) {
-    console.error('❌ Error obteniendo servicios:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+export function getServiciosPorDepartamento(req, res) {
+  const { departamento } = req.params;
+  res.json({
+    success: true,
+    departamento,
+    servicios: [
+      'Análisis de vulnerabilidad multiamenaza',
+      'Modelación de pérdidas AAL/PML/EML',
+      'Auditoría de póliza vs. valor de reposición',
+      'Priorización CAPEX por reducción de riesgo'
+    ]
+  });
 }
 
-// Obtener todos los cursos
-export async function getCursos(req, res) {
-  try {
-    const { nivel, categoria, limit } = req.query;
-    const cursos = await buscarCursos({ nivel, categoria, limit });
-    res.json({ success: true, data: cursos });
-  } catch (error) {
-    console.error('❌ Error obteniendo cursos:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+export function getCursos(req, res) {
+  res.json({
+    success: true,
+    capacitaciones: [
+      { id: 1, titulo: 'Inspección NFPA 25 contra Incendio', duracion: '4 horas' },
+      { id: 2, titulo: 'Evaluación Rápida Post-Sismo de Inmuebles', duracion: '6 horas' },
+      { id: 3, titulo: 'Gestión de Continuidad de Negocio (BI / ISO 22301)', duracion: '8 horas' }
+    ]
+  });
 }
 
-// Obtener servicios corporativos (Grid 3x3)
-export async function getServiciosCorporativos(req, res) {
-  try {
-    const [servicios] = await pool.query(
-      'SELECT * FROM servicios_corporativos WHERE disponible = ? ORDER BY posicion',
-      [true]
-    );
-    res.json({ success: true, data: servicios });
-  } catch (error) {
-    console.error('❌ Error obteniendo servicios corporativos:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+export function getServiciosCorporativos(req, res) {
+  res.json({
+    success: true,
+    servicios: empresaConfig.asistenteIA.capacidades
+  });
 }
 
-// Obtener información de empresa (Totalplay)
-export async function getInfoEmpresa(req, res) {
-  try {
-    const [info] = await pool.query(
-      'SELECT * FROM info_empresa WHERE empresa = ?',
-      ['Totalplay']
-    );
-    res.json({ success: true, data: info[0] || null });
-  } catch (error) {
-    console.error('❌ Error obteniendo info empresa:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+export function getInfoEmpresa(req, res) {
+  res.json({
+    success: true,
+    empresa: empresaConfig
+  });
 }
 
-// Buscar servicio específico
-export async function buscarServicio(req, res) {
-  try {
-    const { nombre } = req.query;
-    if (!nombre) {
-      return res.status(400).json({ success: false, error: 'Nombre es requerido' });
+export function buscarServicio(req, res) {
+  const { q } = req.query;
+  res.json({
+    success: true,
+    query: q,
+    resultados: [
+      { modulo: 'GeoRisk Studio', coincidencia: 'Capas sísmicas e hidrometeorológicas' },
+      { modulo: 'Fire & Explosion Risk', coincidencia: 'Cálculo de carga de fuego y rociadores' }
+    ]
+  });
+}
+
+export function getEstadisticasMayia(req, res) {
+  res.json({
+    success: true,
+    estadisticas: {
+      inmueblesAuditados: 1450,
+      hallazgosMitigados: '94.2%',
+      agentesActivos: 16
     }
-    const servicio = await buscarServicioPorNombre(nombre);
-    res.json({ success: true, data: servicio });
-  } catch (error) {
-    console.error('❌ Error buscando servicio:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
-}
-
-// Estadísticas generales
-export async function getEstadisticasMayia(req, res) {
-  try {
-    const stats = await obtenerEstadisticasServicios();
-    const [totalCursos] = await pool.query(
-      'SELECT COUNT(*) as total FROM cursos_academia WHERE disponible = ?',
-      [true]
-    );
-    
-    res.json({
-      success: true,
-      data: {
-        ...stats,
-        total_cursos: totalCursos[0].total
-      }
-    });
-  } catch (error) {
-    console.error('❌ Error obteniendo estadísticas:', error);
-    res.status(500).json({ success: false, error: error.message });
-  }
+  });
 }

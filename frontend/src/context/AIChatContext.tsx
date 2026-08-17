@@ -1,125 +1,70 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import type { LLMMessage, LLMConfig } from '../services/aiChatService';
-import { getStoredLLMConfig, saveLLMConfig, sendLLMMessage } from '../services/aiChatService';
+import React, { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
+import { sendChatMessage } from '../services/aiChatService';
+import type { ChatMessage } from '../services/aiChatService';
 
 interface AIChatContextType {
-  messages: LLMMessage[];
+  messages: ChatMessage[];
   loading: boolean;
   activeSection: string;
   activeSectionTitle: string;
-  setActiveSectionContext: (id: string, title: string) => void;
-  sendMessage: (prompt: string, customContext?: string) => Promise<void>;
-  clearHistory: () => void;
-  config: LLMConfig;
-  updateConfig: (newConfig: Partial<LLMConfig>) => void;
   isChatOpen: boolean;
   setIsChatOpen: (open: boolean) => void;
-  isSettingsOpen: boolean;
-  setIsSettingsOpen: (open: boolean) => void;
+  setActiveSectionContext: (id: string, title: string) => void;
+  sendMessage: (text: string) => Promise<void>;
+  clearHistory: () => void;
 }
 
 const AIChatContext = createContext<AIChatContextType | undefined>(undefined);
 
-const INITIAL_MESSAGES: LLMMessage[] = [
-  {
-    id: 'welcome-1',
-    role: 'assistant',
-    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Corporativa de Totalplay. Estoy conectada en tiempo real con todos los módulos operacionales M2C (Computer Vision, Displays Inteligentes, Copiloto de Ventas y Gobierno de Datos). ¿En qué proceso te puedo asistir hoy?',
-    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-  }
-];
-
-export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [messages, setMessages] = useState<LLMMessage[]>(() => {
-    try {
-      const saved = localStorage.getItem('MAYIA_CHAT_HISTORY');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Clean any legacy BESCO occurrences in saved chat history
-        const cleaned = parsed.map((m: LLMMessage) => ({
-          ...m,
-          content: m.content.replace(/BESCO/gi, 'Totalplay')
-        }));
-        return cleaned;
-      }
-    } catch (e) {
-      console.warn('Error reading saved chat history:', e);
+export const AIChatProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    {
+      id: 'welcome',
+      sender: 'ai',
+      text: '🤖 ¡Hola! Soy **RISKO Copilot**, el Asistente Agéntico de Inteligencia para Gestión y Medición del Riesgo Inmobiliario. Estoy conectado con los 16 módulos operacionales de la plataforma (GeoRisk GIS, Evidence Vault, RAG Extractor, NFPA Fire, Continuidad BI y Motor de Riesgo AAL/PML). ¿En qué expediente o análisis de cartera puedo asistirte hoy?',
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
-    return INITIAL_MESSAGES;
-  });
-
+  ]);
   const [loading, setLoading] = useState(false);
-  const [activeSection, setActiveSection] = useState('dashboard');
-  const [activeSectionTitle, setActiveSectionTitle] = useState('Dashboard Enterprise');
-  const [config, setConfigState] = useState<LLMConfig>(getStoredLLMConfig());
+  const [activeSection, setActiveSection] = useState('command-center');
+  const [activeSectionTitle, setActiveSectionTitle] = useState('Command Center Ejecutivo');
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem('MAYIA_CHAT_HISTORY', JSON.stringify(messages));
-    } catch (e) {
-      console.warn('Error saving chat history:', e);
-    }
-  }, [messages]);
 
   const setActiveSectionContext = (id: string, title: string) => {
     setActiveSection(id);
     setActiveSectionTitle(title);
   };
 
-  const updateConfig = (newConfig: Partial<LLMConfig>) => {
-    const updated = { ...config, ...newConfig };
-    setConfigState(updated);
-    saveLLMConfig(updated);
-  };
-
-  const sendMessage = async (prompt: string, customContext?: string) => {
-    if (!prompt.trim() || loading) return;
-
-    const userTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    const userMsg: LLMMessage = {
-      id: `user-${Date.now()}`,
-      role: 'user',
-      content: prompt.trim(),
-      timestamp: userTime,
-      moduleContext: customContext || activeSectionTitle,
+  const sendMessage = async (text: string) => {
+    const userMsg: ChatMessage = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     };
 
-    const assistantId = `assistant-${Date.now()}`;
-    const assistantMsg: LLMMessage = {
-      id: assistantId,
-      role: 'assistant',
-      content: '',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      moduleContext: customContext || activeSectionTitle,
-    };
-
-    setMessages(prev => [...prev, userMsg, assistantMsg]);
+    setMessages(prev => [...prev, userMsg]);
     setLoading(true);
 
     try {
-      const contextName = customContext || `${activeSectionTitle} (sección: ${activeSection})`;
-      await sendLLMMessage(
-        messages,
-        prompt.trim(),
-        contextName,
-        (partialText) => {
-          setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: partialText } : m));
-        }
-      );
-    } catch (err: any) {
-      setMessages(prev => prev.map(m => m.id === assistantId ? {
-        ...m,
-        content: `⚠️ No fue posible procesar la consulta con el LLM: ${err.message || 'Error de conexión'}. Verifica tu conexión o configura una API Key de Gemini.`
-      } : m));
+      const responseText = await sendChatMessage(text, activeSectionTitle);
+      const aiMsg: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: 'ai',
+        text: responseText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, aiMsg]);
+    } catch (e) {
+      console.error(e);
     } finally {
       setLoading(false);
     }
   };
 
   const clearHistory = () => {
-    setMessages(INITIAL_MESSAGES);
+    setMessages([]);
   };
 
   return (
@@ -129,15 +74,11 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         loading,
         activeSection,
         activeSectionTitle,
-        setActiveSectionContext,
-        sendMessage,
-        clearHistory,
-        config,
-        updateConfig,
         isChatOpen,
         setIsChatOpen,
-        isSettingsOpen,
-        setIsSettingsOpen,
+        setActiveSectionContext,
+        sendMessage,
+        clearHistory
       }}
     >
       {children}
@@ -145,10 +86,10 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   );
 };
 
-export function useAIChat() {
+export const useAIChat = () => {
   const context = useContext(AIChatContext);
   if (!context) {
-    throw new Error('useAIChat must be used within an AIChatProvider');
+    throw new Error('useAIChat debe usarse dentro de un AIChatProvider');
   }
   return context;
-}
+};

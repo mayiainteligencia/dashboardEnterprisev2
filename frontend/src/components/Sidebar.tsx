@@ -1,286 +1,161 @@
-import React, { useState } from 'react';
-import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi, Smartphone } from 'lucide-react';
+import React from 'react';
+import { MODULOS_RISKO } from '../risko/riskoData';
 import { brandingConfig } from '../config/branding';
-import { MODULOS_TOTALPLAY } from '../totalplay/totalplayData';
-
-const iconMap: Record<string, any> = {
-  Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Smartphone,
-};
+import { Building2, ShieldCheck, Sparkles, LogOut, Layers } from 'lucide-react';
 
 interface SidebarProps {
   activeSection: string;
-  onSectionChange: (section: string) => void;
-  modo?: string;
+  onSectionChange: (sectionId: string) => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange }) => {
   const { colores } = brandingConfig;
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const totalAlerts = MODULOS_TOTALPLAY.reduce((acc, m) => acc + m.alertas, 0);
-
-  const categorias = [
-    {
-      titulo: 'INTELIGENCIA COMERCIAL',
-      color: '#A61C5C',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial' && m.id !== 'vista-gerente-movil')
-    },
-    {
-      titulo: 'OPERACIONES M2C',
-      color: '#732D67',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones' && m.id !== 'vista-gerente-movil')
-    },
-    {
-      titulo: 'EXPERIENCIA & DISPLAYS',
-      color: '#D9933D',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia' && m.id !== 'vista-gerente-movil')
-    },
-    {
-      titulo: 'TECNOLOGÍA & CRM',
-      color: '#73B1BF',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia' && m.id !== 'vista-gerente-movil')
-    }
-  ];
 
   return (
-    <div
+    <aside
       style={{
-        width: '250px',
+        width: '260px',
         height: '100vh',
-        backgroundColor: '#FDFAFB',
+        backgroundColor: '#FFFFFF',
+        borderRight: `1px solid ${colores.borde}`,
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden',
-        borderRight: `1px solid ${colores.borde}`,
         position: 'relative',
+        zIndex: 90,
+        boxShadow: '1px 0 8px rgba(15, 23, 42, 0.03)'
       }}
     >
-      {/* Subtle gradient overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'linear-gradient(180deg, rgba(115,177,191,0.05) 0%, rgba(255,255,255,0) 40%)',
-        zIndex: 0
-      }} />
-
-      {/* ── Logo Header ── */}
-      <div style={{
-        padding: '16px 18px',
-        flexShrink: 0,
-        borderBottom: `1px solid ${colores.borde}`,
-        position: 'relative', zIndex: 1,
-        background: '#FFFFFF',
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img
-            src="/assets/logosNativos/TotalPlay.png"
-            alt="Totalplay Logo"
-            style={{ height: '36px', objectFit: 'contain' }}
-          />
-          <div>
-            <div style={{ fontSize: '10px', color: '#73B1BF', fontWeight: '800', letterSpacing: '0.05em' }}>
-              Plataforma M2C
-            </div>
-          </div>
-          {totalAlerts > 0 && (
-            <div className="badge-pulse" style={{
-              marginLeft: 'auto',
-              backgroundColor: '#A61C5C', color: '#FFFFFF',
-              fontSize: '10px', fontWeight: '900',
-              width: '20px', height: '20px', borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              {totalAlerts}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── Navigation ── */}
-      <nav
-        className="styled-scroll"
+      {/* Encabezado Sidebar */}
+      <div
         style={{
-          flex: '1 1 0', minHeight: 0, overflowY: 'auto',
-          padding: '16px 10px 20px 10px', position: 'relative', zIndex: 1,
+          padding: '20px 20px',
+          borderBottom: `1px solid ${colores.borde}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px'
         }}
       >
-        {/* Dashboard principal */}
-        <div style={{ marginBottom: '16px' }}>
-          <button
-            onClick={() => onSectionChange('dashboard')}
-            style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '10px 12px', borderRadius: '12px', border: 'none', cursor: 'pointer',
-              backgroundColor: activeSection === 'dashboard' ? '#73B1BF' : 'transparent',
-              color: activeSection === 'dashboard' ? '#FFFFFF' : colores.textoClaro,
-              transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
-              textAlign: 'left',
-              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(115,177,191,0.35)' : 'none',
-            }}
-            onMouseEnter={e => {
-              if (activeSection !== 'dashboard') {
-                e.currentTarget.style.backgroundColor = '#EAF5F7';
-                e.currentTarget.style.color = '#73B1BF';
-              }
-            }}
-            onMouseLeave={e => {
-              if (activeSection !== 'dashboard') {
-                e.currentTarget.style.backgroundColor = 'transparent';
-                e.currentTarget.style.color = colores.textoClaro;
-              }
-            }}
-          >
-            <div style={{
-              width: '30px', height: '30px', borderRadius: '9px', flexShrink: 0,
-              backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#E6F4F6',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#73B1BF'} />
-            </div>
-            <span style={{ fontSize: '13px', fontWeight: '700', flex: 1 }}>
-              Dashboard Totalplay
-            </span>
-            {activeSection === 'dashboard' && (
-              <div style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.6)' }} />
-            )}
-          </button>
+        <div
+          style={{
+            width: '36px',
+            height: '36px',
+            borderRadius: '10px',
+            background: colores.gradientePrimario,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#FFFFFF'
+          }}
+        >
+          <ShieldCheck size={22} />
+        </div>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '16px', fontWeight: '800', color: colores.textoClaro, letterSpacing: '-0.02em' }}>
+            RISKO AI
+          </h1>
+          <p style={{ margin: 0, fontSize: '11px', color: colores.textoOscuro, fontWeight: '500' }}>
+            Plataforma Agéntica
+          </p>
+        </div>
+      </div>
+
+      {/* Lista de los 16 Módulos */}
+      <div
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: '12px 10px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '4px'
+        }}
+      >
+        <div style={{ padding: '6px 12px', fontSize: '11px', fontWeight: '700', color: colores.textoOscuro, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          Módulos de Riesgo (16)
         </div>
 
-        {/* Category groups */}
-        {categorias.map((cat, cIdx) => (
-          <div key={cIdx} style={{ marginBottom: '20px' }}>
-            <div style={{
-              fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
-              letterSpacing: '0.08em', color: cat.color,
-              marginBottom: '8px', paddingLeft: '10px',
-              display: 'flex', alignItems: 'center', gap: '6px'
-            }}>
-              <div style={{ width: '16px', height: '2px', backgroundColor: cat.color, borderRadius: '1px', flexShrink: 0 }} />
-              {cat.titulo}
-            </div>
+        {MODULOS_RISKO.map((modulo) => {
+          const Icono = modulo.icono;
+          const isActive = activeSection === modulo.id;
 
-            {cat.items.map((item) => {
-              const IconComp = iconMap[item.iconoName] || Activity;
-              const isActive = activeSection === item.id;
-              const itemColor = cat.color;
-
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => onSectionChange(item.id)}
-                  onMouseEnter={() => setHoveredItem(item.id)}
-                  onMouseLeave={() => setHoveredItem(null)}
+          return (
+            <button
+              key={modulo.id}
+              onClick={() => onSectionChange(modulo.id)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: '100%',
+                padding: '10px 12px',
+                borderRadius: '10px',
+                border: 'none',
+                backgroundColor: isActive ? '#EFF6FF' : 'transparent',
+                color: isActive ? colores.primario : colores.textoMedio,
+                cursor: 'pointer',
+                textAlign: 'left',
+                transition: 'all 0.2s ease',
+                fontWeight: isActive ? '700' : '500',
+                borderLeft: isActive ? `4px solid ${colores.primario}` : '4px solid transparent'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Icono size={18} color={isActive ? colores.primario : colores.textoOscuro} />
+                <span style={{ fontSize: '13px', lineHeight: '1.2' }}>{modulo.titulo}</span>
+              </div>
+              {modulo.codigo && (
+                <span
                   style={{
-                    width: '100%', display: 'flex', alignItems: 'center', gap: '9px',
-                    padding: '8px 12px', borderRadius: '10px', marginBottom: '2px',
-                    backgroundColor: isActive ? itemColor : hoveredItem === item.id ? `${itemColor}12` : 'transparent',
-                    color: isActive ? '#FFFFFF' : hoveredItem === item.id ? itemColor : colores.textoClaro,
-                    border: 'none', cursor: 'pointer', textAlign: 'left',
-                    transition: 'all 0.18s cubic-bezier(0.22, 1, 0.36, 1)',
-                    boxShadow: isActive ? `0 3px 10px ${itemColor}40` : 'none',
-                    position: 'relative',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    padding: '2px 6px',
+                    borderRadius: '4px',
+                    backgroundColor: isActive ? colores.primario : '#F1F5F9',
+                    color: isActive ? '#FFFFFF' : colores.textoOscuro
                   }}
                 >
-                  <div style={{
-                    width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
-                    backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : `${itemColor}15`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.18s',
-                  }}>
-                    <IconComp size={14} color={isActive ? '#FFFFFF' : itemColor} />
-                  </div>
-                  <span style={{
-                    fontSize: '12.5px', fontWeight: isActive ? '700' : '500',
-                    flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                  }}>
-                    {item.titulo}
-                  </span>
-                  {item.alertas > 0 && (
-                    <span style={{
-                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}20`,
-                      color: isActive ? '#FFFFFF' : itemColor,
-                      fontSize: '10px', fontWeight: '800',
-                      padding: '1px 6px', borderRadius: '8px', flexShrink: 0,
-                    }}>
-                      {item.alertas}
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        ))}
+                  {modulo.codigo}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
 
-        {/* ── OPCIÓN ESPECIAL AL FINAL DEL SIDEBAR ── */}
-        <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: `1px dashed ${colores.borde}` }}>
-          <div style={{
-            fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
-            letterSpacing: '0.08em', color: '#A61C5C',
-            marginBottom: '8px', paddingLeft: '8px',
-            display: 'flex', alignItems: 'center', gap: '6px'
-          }}>
-            <div style={{ width: '12px', height: '2px', backgroundColor: '#A61C5C', borderRadius: '1px', flexShrink: 0 }} />
-            OPCIÓN ESPECIAL
-          </div>
-
-          <button
-            onClick={() => onSectionChange('vista-gerente-movil')}
-            onMouseEnter={() => setHoveredItem('vista-gerente-movil')}
-            onMouseLeave={() => setHoveredItem(null)}
+      {/* Pie del Sidebar - Estado Copiloto */}
+      <div
+        style={{
+          padding: '14px 16px',
+          borderTop: `1px solid ${colores.borde}`,
+          backgroundColor: '#F8FAFC'
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div
             style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '10px 12px', borderRadius: '14px', cursor: 'pointer',
-              background: activeSection === 'vista-gerente-movil'
-                ? 'linear-gradient(135deg, #A61C5C 0%, #732D67 100%)'
-                : hoveredItem === 'vista-gerente-movil' ? '#FCE7F1' : '#FFF1F7',
-              color: activeSection === 'vista-gerente-movil' ? '#FFFFFF' : '#A61C5C',
-              border: `1.5px solid ${activeSection === 'vista-gerente-movil' ? '#A61C5C' : '#F5B8D0'}`,
-              boxShadow: activeSection === 'vista-gerente-movil'
-                ? '0 6px 20px rgba(166,28,92,0.35)'
-                : '0 2px 8px rgba(166,28,92,0.08)',
-              transition: 'all 0.22s cubic-bezier(0.22, 1, 0.36, 1)',
-              textAlign: 'left'
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              backgroundColor: '#DBEAFE',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: colores.primario
             }}
           >
-            <div style={{
-              width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0,
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <Smartphone size={16} color="#FFFFFF" />
+            <Sparkles size={16} />
+          </div>
+          <div>
+            <div style={{ fontSize: '12px', fontWeight: '700', color: colores.textoClaro }}>
+              RISKO Copilot Live
             </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '12.5px', fontWeight: '900', lineHeight: 1.2 }}>
-                Vista Móvil Gerente
-              </div>
-              <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: '700' }}>
-                Copiloto &amp; Monitoreo
-              </div>
+            <div style={{ fontSize: '11px', color: '#10B981', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
+              IA Lista para Consultas
             </div>
-            <span style={{
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
-              color: '#FFFFFF', fontSize: '9px', fontWeight: '900',
-              padding: '2px 7px', borderRadius: '10px', flexShrink: 0
-            }}>
-              PRO
-            </span>
-          </button>
+          </div>
         </div>
-      </nav>
-
-      {/* ── Bottom Status Bar ── */}
-      <div style={{
-        padding: '12px 16px',
-        borderTop: `1px solid ${colores.borde}`,
-        backgroundColor: '#FFFFFF',
-        flexShrink: 0, zIndex: 1, position: 'relative',
-        display: 'flex', alignItems: 'center', gap: '8px',
-      }}>
-        <Wifi size={14} color="#5B8F20" />
-        <span style={{ fontSize: '11px', fontWeight: '600', color: '#5B8F20' }}>
-          Sistema en línea
-        </span>
-        <span className="live-dot live-dot-green" style={{ width: '7px', height: '7px', marginLeft: 'auto' }} />
       </div>
-    </div>
+    </aside>
   );
 };
