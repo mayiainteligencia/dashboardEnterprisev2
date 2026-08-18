@@ -1,13 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Sparkles, Send, Trash2, ShieldCheck, Building2, Cpu, CheckCircle, AlertTriangle } from 'lucide-react';
+import { Sparkles, Send, Trash2, ShieldCheck, Cpu, CheckCircle, AlertTriangle, BrainCircuit, Zap, Building2, Activity, Bot, User, MessageSquare } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
 import { useAIChat } from '../../context/AIChatContext';
 import { MarkdownRenderer } from '../common/MarkdownRenderer';
 
 export const AsistenteIAChat: React.FC = () => {
   const { colores } = brandingConfig;
-  const { messages, loading, sendMessage, clearHistory } = useAIChat();
+  const { messages, sendMessage, loading, clearHistory, activeSectionTitle } = useAIChat();
   const [input, setInput] = useState('');
+  const [inputFocused, setInputFocused] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -15,253 +16,262 @@ export const AsistenteIAChat: React.FC = () => {
   }, [messages, loading]);
 
   const handleSend = () => {
-    if (!input.trim() || loading) return;
-    const msg = input.trim();
-    setInput('');
-    sendMessage(msg);
+    if (input.trim() && !loading) {
+      sendMessage(input.trim());
+      setInput('');
+    }
   };
 
+  const capabilities = [
+    { icon: Activity, title: 'Análisis NatCat & GIS', desc: 'Simula escenarios de sismo, inundación y huracán por coordenadas' },
+    { icon: ShieldCheck, title: 'Auditoría de Pólizas', desc: 'Detecta brechas de infraseguro, sublímites y exclusiones' },
+    { icon: BrainCircuit, title: 'Simulación de Score', desc: 'Proyecta impacto en asegurabilidad A–F tras CAPEX' },
+    { icon: Building2, title: 'Optimización CAPEX', desc: 'Calcula ROI en prima de mitigaciones prioritarias' }
+  ];
+
+  const quickPrompts = [
+    '¿Cuál es la brecha de infraseguro en Torre Reforma 222?',
+    'Simular impacto de sismo Mw 7.2 en cartera CDMX',
+    'Resumen de recomendaciones CAPEX prioritarias',
+    'Auditar cumplimiento de red de rociadores NFPA 25'
+  ];
+
   return (
-    <div
-      style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '24px',
-        display: 'flex',
-        flexDirection: 'column',
-        height: 'calc(100vh - 120px)',
-        gap: '16px'
-      }}
-    >
-      {/* HEADER DE MÓDULO */}
-      <div
-        style={{
-          padding: '20px 24px',
-          backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          border: `1px solid ${colores.borde}`,
-          boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between'
-        }}
-      >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div
-            style={{
-              width: '48px',
-              height: '48px',
-              borderRadius: '12px',
-              background: colores.gradientePrimario,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#FFFFFF',
-              boxShadow: '0 4px 14px rgba(37, 99, 235, 0.25)'
-            }}
-          >
-            <ShieldCheck size={26} />
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: '85vh', backgroundColor: '#FFFFFF', borderRadius: '16px', border: `1px solid ${colores.borde}`, overflow: 'hidden', boxShadow: '0 2px 8px rgba(15,23,42,0.04)' }}>
+      
+      {/* Header */}
+      <div style={{ padding: '16px 24px', borderBottom: `1px solid ${colores.borde}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#F8FAFC' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ width: '42px', height: '42px', borderRadius: '12px', background: colores.gradientePrimario, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'pulseGlow 2s infinite' }}>
+            <BrainCircuit color="#FFFFFF" size={24} />
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '800', color: colores.textoClaro }}>
-              RISKO Copilot · Asistente Agéntico Conversacional
-            </h2>
-            <p style={{ margin: 0, fontSize: '13px', color: colores.textoOscuro }}>
-              Inteligencia Artificial Multiamenaza & Suscripción Inmobiliaria
-            </p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <h3 style={{ margin: 0, fontSize: '17px', fontWeight: '800', color: colores.textoClaro }}>RISKO Copilot</h3>
+              <span style={{ fontSize: '11px', color: colores.primario, backgroundColor: '#EFF6FF', border: '1px solid #BFDBFE', padding: '2px 8px', borderRadius: '6px', fontWeight: '700' }}>
+                {brandingConfig.ia.modelo}
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '3px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#10B981', animation: 'pulseGlow 2s infinite' }} />
+                <span style={{ fontSize: '11px', color: '#047857', fontWeight: '700' }}>Sistema Agéntico Activo</span>
+              </div>
+              <span style={{ fontSize: '11px', color: colores.textoOscuro }}>· Contexto: {activeSectionTitle}</span>
+            </div>
           </div>
         </div>
 
-        <button
-          onClick={clearHistory}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            padding: '8px 14px',
-            borderRadius: '10px',
-            border: `1px solid ${colores.borde}`,
-            backgroundColor: '#FFFFFF',
-            color: colores.textoOscuro,
-            fontSize: '13px',
+        <button 
+          onClick={clearHistory} 
+          style={{ 
+            background: 'none', 
+            border: `1px solid ${colores.borde}`, 
+            color: colores.textoOscuro, 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '6px', 
+            fontSize: '12px', 
             fontWeight: '600',
-            cursor: 'pointer'
+            padding: '7px 14px', 
+            borderRadius: '8px',
+            backgroundColor: '#FFFFFF',
+            transition: 'all 0.15s ease'
           }}
+          onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#FEF2F2'; e.currentTarget.style.color = '#EF4444'; e.currentTarget.style.borderColor = '#FECACA'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#FFFFFF'; e.currentTarget.style.color = colores.textoOscuro; e.currentTarget.style.borderColor = colores.borde; }}
         >
-          <Trash2 size={16} />
+          <Trash2 size={14} />
           Limpiar Conversación
         </button>
       </div>
 
-      {/* ÁREA DE CHAT */}
-      <div
-        style={{
-          flex: 1,
-          backgroundColor: '#FFFFFF',
-          borderRadius: '16px',
-          border: `1px solid ${colores.borde}`,
-          boxShadow: '0 2px 8px rgba(15, 23, 42, 0.04)',
-          display: 'flex',
-          flexDirection: 'column',
-          overflow: 'hidden'
-        }}
-      >
-        <div
-          style={{
-            flex: 1,
-            overflowY: 'auto',
-            padding: '24px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px'
-          }}
-        >
-          {messages.length === 0 ? (
-            <div style={{ textAlign: 'center', margin: 'auto', maxWidth: '540px' }}>
-              <div
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  backgroundColor: '#EFF6FF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: colores.primario,
-                  margin: '0 auto 16px'
-                }}
-              >
-                <Cpu size={32} />
+      {/* Chat Area */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '24px', display: 'flex', flexDirection: 'column', gap: '18px', backgroundColor: '#FAFAFA' }}>
+        {messages.length === 0 ? (
+          <div style={{ margin: 'auto', maxWidth: '640px', width: '100%', animation: 'fadeSlideUp 0.4s ease-out' }}>
+            <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+              <div style={{ width: '56px', height: '56px', borderRadius: '16px', backgroundColor: '#EFF6FF', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 16px' }}>
+                <Sparkles size={30} color={colores.primario} />
               </div>
-              <h3 style={{ margin: '0 0 8px', fontSize: '18px', fontWeight: '800', color: colores.textoClaro }}>
-                Asistente RISKO Copilot Listo
-              </h3>
-              <p style={{ margin: '0 0 20px', fontSize: '14px', color: colores.textoMedio, lineHeight: '1.5' }}>
-                Puedo ayudarte a analizar la vulnerabilidad sísmica, riesgos de inundación, sistemas NFPA contra incendio, cálculo de AAL/PML y planes de mitigación CAPEX.
+              <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.textoClaro, margin: '0 0 6px' }}>
+                ¿En qué análisis de riesgo puedo asistirte?
+              </h2>
+              <p style={{ color: colores.textoOscuro, fontSize: '13px', margin: 0 }}>
+                Copilot agéntico conectado a los 16 módulos operacionales de RISKO Platform.
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', textAlign: 'left' }}>
-                {[
-                  '¿Cuál es la aceleración sismica pico (PGA) en Cuauhtémoc CDMX?',
-                  'Revisa si la bomba de incendio cumple con norma NFPA 20',
-                  'Simula el escenario de pérdida máxima (PML) en Parque Apodaca',
-                  'Genera un plan de acción CAPEX para reducir score de 64 a 35'
-                ].map((prompt, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => sendMessage(prompt)}
-                    style={{
-                      padding: '12px',
-                      borderRadius: '10px',
-                      border: `1px solid ${colores.borde}`,
-                      backgroundColor: '#F8FAFC',
-                      color: colores.textoClaro,
-                      fontSize: '12px',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease'
-                    }}
-                  >
-                    👉 {prompt}
-                  </button>
-                ))}
-              </div>
             </div>
-          ) : (
-            messages.map((m) => (
-              <div
-                key={m.id}
-                style={{
-                  alignSelf: m.sender === 'user' ? 'flex-end' : 'flex-start',
-                  maxWidth: '80%',
-                  backgroundColor: m.sender === 'user' ? colores.primario : '#F8FAFC',
-                  color: m.sender === 'user' ? '#FFFFFF' : colores.textoClaro,
-                  padding: '14px 18px',
-                  borderRadius: '14px',
-                  fontSize: '14px',
-                  lineHeight: '1.5',
-                  border: m.sender === 'ai' ? `1px solid ${colores.borde}` : 'none'
-                }}
-              >
-                {m.sender === 'ai' ? (
-                  <MarkdownRenderer content={m.text} />
-                ) : (
-                  <div>{m.text}</div>
-                )}
-                <span
-                  style={{
-                    fontSize: '11px',
-                    opacity: 0.7,
-                    display: 'block',
-                    marginTop: '6px',
-                    textAlign: 'right'
-                  }}
-                >
-                  {m.timestamp}
-                </span>
-              </div>
-            ))
-          )}
-          {loading && (
-            <div style={{ alignSelf: 'flex-start', backgroundColor: '#EFF6FF', padding: '10px 16px', borderRadius: '12px', fontSize: '13px', color: colores.primario, fontWeight: '600' }}>
-              ⚡ RISKO Copilot procesando datos de cartera...
+            
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '24px' }}>
+              {capabilities.map((cap, i) => {
+                const Icon = cap.icon;
+                return (
+                  <div key={i} style={{ backgroundColor: '#FFFFFF', border: `1px solid ${colores.borde}`, borderRadius: '12px', padding: '14px', display: 'flex', alignItems: 'flex-start', gap: '10px', boxShadow: '0 1px 3px rgba(15,23,42,0.03)' }}>
+                    <div style={{ padding: '8px', backgroundColor: '#EFF6FF', borderRadius: '8px', color: colores.primario }}>
+                      <Icon size={18} />
+                    </div>
+                    <div>
+                      <h4 style={{ margin: '0 0 2px', fontSize: '13px', fontWeight: '700', color: colores.textoClaro }}>{cap.title}</h4>
+                      <p style={{ margin: 0, fontSize: '11px', color: colores.textoOscuro, lineHeight: 1.3 }}>{cap.desc}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          )}
-          <div ref={endRef} />
-        </div>
 
-        {/* INPUT DE CHAT */}
-        <div
-          style={{
-            padding: '16px 20px',
-            backgroundColor: '#F8FAFC',
-            borderTop: `1px solid ${colores.borde}`,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-          }}
-        >
-          <input
-            type="text"
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
+              {quickPrompts.map((prompt, i) => (
+                <button 
+                  key={i} 
+                  onClick={() => sendMessage(prompt)} 
+                  style={{ 
+                    backgroundColor: '#FFFFFF', 
+                    border: `1px solid ${colores.borde}`, 
+                    borderRadius: '20px', 
+                    padding: '8px 16px', 
+                    fontSize: '12px', 
+                    fontWeight: '600',
+                    color: colores.textoClaro, 
+                    cursor: 'pointer', 
+                    transition: 'all 0.15s ease', 
+                    boxShadow: '0 1px 2px rgba(15,23,42,0.02)' 
+                  }} 
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = colores.primario; e.currentTarget.style.color = colores.primario; e.currentTarget.style.backgroundColor = '#EFF6FF'; }} 
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = colores.borde; e.currentTarget.style.color = colores.textoClaro; e.currentTarget.style.backgroundColor = '#FFFFFF'; }}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          messages.map((msg) => {
+            const isUser = msg.sender === 'user';
+            return (
+              <div key={msg.id} style={{ display: 'flex', justifyContent: isUser ? 'flex-end' : 'flex-start', animation: 'fadeSlideUp 0.3s ease-out' }}>
+                <div style={{ 
+                  maxWidth: '82%', 
+                  padding: '16px 20px', 
+                  borderRadius: '16px',
+                  borderTopRightRadius: isUser ? '4px' : '16px',
+                  borderTopLeftRadius: !isUser ? '4px' : '16px',
+                  background: isUser ? colores.gradientePrimario : '#FFFFFF',
+                  color: isUser ? '#FFFFFF' : colores.textoClaro,
+                  boxShadow: '0 2px 8px rgba(15,23,42,0.05)',
+                  border: isUser ? 'none' : `1px solid ${colores.borde}`,
+                  borderLeft: !isUser ? `4px solid ${colores.primario}` : 'none'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px', opacity: isUser ? 0.85 : 0.7, fontSize: '11px', fontWeight: '700' }}>
+                    {isUser ? <User size={13} /> : <Bot size={13} />}
+                    <span>{isUser ? 'Tú (Risk Manager)' : 'RISKO Copilot'}</span>
+                    <span>·</span>
+                    <span>{msg.timestamp}</span>
+                  </div>
+
+                  {!isUser ? (
+                    <MarkdownRenderer content={msg.text} />
+                  ) : (
+                    <div style={{ fontSize: '14px', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>{msg.text}</div>
+                  )}
+                </div>
+              </div>
+            );
+          })
+        )}
+        
+        {loading && (
+          <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{ padding: '16px 20px', backgroundColor: '#FFFFFF', borderRadius: '16px', borderTopLeftRadius: '4px', border: `1px solid ${colores.borde}`, borderLeft: `4px solid ${colores.primario}`, display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <div style={{ width: '8px', height: '8px', backgroundColor: colores.primario, borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '-0.32s' }} />
+              <div style={{ width: '8px', height: '8px', backgroundColor: colores.primario, borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both', animationDelay: '-0.16s' }} />
+              <div style={{ width: '8px', height: '8px', backgroundColor: colores.primario, borderRadius: '50%', animation: 'bounce 1.4s infinite ease-in-out both' }} />
+              <span style={{ fontSize: '12px', fontWeight: '600', color: colores.textoOscuro, marginLeft: '6px' }}>Consultando Red de Agentes RISKO...</span>
+            </div>
+          </div>
+        )}
+        <div ref={endRef} />
+      </div>
+
+      {/* Input Area */}
+      <div style={{ padding: '20px 24px', borderTop: `1px solid ${colores.borde}`, backgroundColor: '#FFFFFF' }}>
+        <div style={{ 
+          display: 'flex', 
+          alignItems: 'flex-end', 
+          backgroundColor: '#F8FAFC', 
+          borderRadius: '14px', 
+          padding: '8px 14px', 
+          border: `1px solid ${inputFocused ? colores.primario : colores.borde}`,
+          boxShadow: inputFocused ? '0 0 0 3px rgba(37,99,235,0.1)' : 'none',
+          transition: 'all 0.15s ease'
+        }}>
+          <textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') handleSend();
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSend();
+              }
             }}
-            placeholder="Pregunta a RISKO Copilot sobre el riesgo de cualquier inmueble..."
-            style={{
-              flex: 1,
-              padding: '12px 16px',
-              borderRadius: '10px',
-              border: `1px solid ${colores.borde}`,
-              fontSize: '14px',
+            placeholder="Escribe tu consulta sobre activos, pólizas, mapas o scores de riesgo..."
+            rows={Math.min(Math.max(input.split('\n').length, 1), 4)}
+            style={{ 
+              flex: 1, 
+              border: 'none', 
+              background: 'transparent', 
+              resize: 'none', 
+              padding: '8px 4px', 
+              fontSize: '14px', 
+              fontFamily: 'inherit',
+              color: colores.textoClaro,
               outline: 'none',
-              backgroundColor: '#FFFFFF',
-              color: colores.textoClaro
+              lineHeight: '1.5'
             }}
           />
           <button
             onClick={handleSend}
-            disabled={loading || !input.trim()}
-            style={{
-              backgroundColor: colores.primario,
-              color: '#FFFFFF',
+            disabled={!input.trim() || loading}
+            style={{ 
+              background: input.trim() && !loading ? colores.primario : '#E2E8F0',
+              color: input.trim() && !loading ? '#FFFFFF' : '#94A3B8',
               border: 'none',
               borderRadius: '10px',
-              padding: '12px 20px',
-              fontSize: '14px',
-              fontWeight: '700',
-              cursor: 'pointer',
+              width: '38px',
+              height: '38px',
               display: 'flex',
               alignItems: 'center',
-              gap: '8px',
-              opacity: loading || !input.trim() ? 0.6 : 1
+              justifyContent: 'center',
+              cursor: input.trim() && !loading ? 'pointer' : 'not-allowed',
+              transition: 'all 0.15s ease',
+              marginBottom: '2px',
+              flexShrink: 0,
             }}
           >
             <Send size={16} />
-            <span>Enviar</span>
           </button>
         </div>
+        <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '11px', color: colores.textoOscuro }}>
+          RISKO Copilot v3.5 · Asistente IA especializado en suscripción, peritajes e ingeniería de riesgos inmobiliarios.
+        </div>
       </div>
+
+      <style>{`
+        @keyframes fadeSlideUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(37,99,235, 0.4); }
+          50% { box-shadow: 0 0 0 6px rgba(37,99,235, 0); }
+        }
+        @keyframes bounce {
+          0%, 80%, 100% { transform: scale(0); }
+          40% { transform: scale(1); }
+        }
+      `}</style>
     </div>
   );
 };
