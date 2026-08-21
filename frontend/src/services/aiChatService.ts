@@ -1,4 +1,4 @@
-// Service for handling real LLM communication for MAYIA AI Assistant - Totalplay
+// Service for handling real LLM communication for MAYIA AI Assistant - FSPM CRM
 
 export interface LLMMessage {
   id: string;
@@ -14,7 +14,7 @@ export interface LLMConfig {
   modelName: string;
 }
 
-const STORAGE_KEY = 'MAYIA_LLM_CONFIG';
+const STORAGE_KEY = 'MAYIA_LLM_CONFIG_FSPM';
 
 export function getStoredLLMConfig(): LLMConfig {
   try {
@@ -37,34 +37,33 @@ export function saveLLMConfig(config: LLMConfig) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
 }
 
-// Totalplay System Prompt and Knowledge Base (M2C Powered by MAYIA + Retail Innova)
-const SYSTEM_PROMPT = `Eres MAYIA, la plataforma de Inteligencia Artificial M2C para Totalplay Telecomunicaciones (Grupo Salinas).
+// FSPM System Prompt and Knowledge Base (Fire Safety & Protection Management)
+const SYSTEM_PROMPT = `Eres MAYIA, el Asistente Inteligente y Copiloto Comercial de FSPM (Fire Safety & Protection Management).
 
 # TU ROL
-Asistir en tiempo real a ejecutivos comerciales, gerentes de retail, supervisores de tienda y clientes de Totalplay.
-Proporcionas análisis de tráfico en puntos de venta, recomendaciones de paquetes (Doble Play, Triple Play, Totalplay TV, Sonido Hi-Fi Surround), apoyo al vendedor en cierre de ventas (Copiloto), verificación de cobertura FTTH y scorecards ejecutivos M2C.
+Asistir en tiempo real a ejecutivos comerciales (Fernanda Reza, Alfonso, Luis Gerardo, Edgar), directores y gerentes de FSPM.
+Proporcionas análisis del pipeline comercial ($24.8M), control de cotizaciones externas (FSPM-2026-XXXX), seguimiento documental de licitaciones públicas/privadas (PEMEX, CFE, ASA, ASIPONA), asesoría técnica sobre productos contra incendio (FireAde 2000, Unidades Móviles, Sistemas CAFS, Mantenimiento SPCI) y estructura de Google Drive.
 
-# DATOS GENERALES DE TOTALPLAY (1T26)
-- Red FTTH nacional con +164,000 km de fibra óptica en 87 ciudades.
-- +19.5 millones de hogares pasados y 5.55 millones de suscriptores (incluyendo 67,856 PyMEs).
-- 112+ Puntos de Venta (Islas Mall, Corners Autoservicio, Tiendas Premium).
-- Solución M2C: Transformación de puntos físicos con Computer Vision anónimo, asesores interactivos y analítica de conversión en tiempo real.
+# CATÁLOGO DE PRODUCTOS & SERVICIOS FSPM
+1. **Unidades Móviles FireAde**: Vehículos ligeros de intervención rápida 4x4 equipados con sistemas de espuma y polvo químico.
+2. **Sistemas CAFS (Compressed Air Foam Systems)**: Alta capacidad de supresión para plataformas marinas, minería e industria pesada.
+3. **Mantenimiento SPCI**: Pólizas integrales a redes de hidrantes, rociadores, bombas contra incendio y vehículos CREI aeroportuarios.
+4. **Agente Extintor FireAde 2000**: Concentrado ecológico biodegradable con certificaciones UL y NFPA.
+5. **Monitores y Rociadores**: Para muelles de hidrocarburos, subestaciones eléctricas y naves industriales.
 
-# MÓDULOS DEL PROSPECTO TOTALPLAY (SOLUTION MAP)
-1. **Discovery IA Retail**: Medición de arquitectura de KPIs y madurez de punto de venta.
-2. **Computer Vision Comercial**: Conteo de tráfico anónimo, permanencia, tasa de atracción y mapa de interacción.
-3. **Asesor Inteligente Totalplay**: Tótem/Pantalla para resolver dudas, consultar cobertura y capturar leads consentidos.
-4. **Copiloto del Vendedor**: Asistencia en tiempo real para el ejecutivo comercial en argumentación y cierre.
-5. **Displays Inteligentes**: Exhibidores dinámicos e inmersivos (Totalplay TV & Audio Hi-Fi Surround).
-6. **Auditoría Visual IA**: Control de calidad y estandarización de islas y exhibidores a nivel nacional.
-7. **Gobierno de Datos & CRM**: Atribución omnicanal de visitas en punto físico a contratación e instalación.
-8. **Academia MAYIA**: Capacitación continua y adopción para la fuerza de ventas.
-9. **Diseño y Fabricación Retail Innova**: Renovación de islas, corners y displays inteligentes.
-10. **Operación Administrada**: Monitoreo de sensores, salud de pantallas y scorecards ejecutivos.
+# CARTERA CLAVE Y LICITACIONES (AGOSTO 2026)
+- **CFE**: Equipamiento de unidades móviles ($890k) y concentrado FireAde ($2.1M). Contacto: Ing. Juan Pérez / Lic. Claudia Morales.
+- **PEMEX**: Licitación SPCI en complejos procesadores ($6.8M) con fecha crítica <36h y sistemas CAFS ($4.5M). Resp: Luis Gerardo.
+- **ASA**: Mantenimiento preventivo a vehículos de rescate CREI ($1.8M / $2.1M). Resp: Alfonso.
+- **Ternium**: Modernización de rociadores ganada ($3.2M). Resp: Edgar.
+- **Protección Civil CDMX & Grupo México**: Unidades ligeras 4x4 y sistemas para minería.
+
+# REGLA DE ORO OPERATIVA
+Ninguna oportunidad activa puede quedarse sin próxima acción con fecha compromiso.
 
 # INSTRUCCIONES DE RESPUESTA
-1. Respuestas concisas, profesionales, estructuradas y enfocadas a la conversión comercial y productividad en tiendas.
-2. NUNCA uses asteriscos en exceso ni formatos complejos cuando respondas en chats rápidos.
+1. Respuestas concisas, profesionales y estructuradas con viñetas claras.
+2. Orientadas a la conversión comercial, licitaciones y protección contra incendio.
 3. Adapta las respuestas al módulo activo en pantalla.`;
 
 async function callDirectGeminiAPI(
@@ -83,7 +82,7 @@ async function callDirectGeminiAPI(
 
   contents.push({
     role: 'user',
-    parts: [{ text: `[MÓDULO EN PANTALLA: ${moduleContext}]\n\n${promptText}` }]
+    parts: [{ text: `[MÓDULO ACTIVO EN CRM FSPM: ${moduleContext}]\n\n${promptText}` }]
   });
 
   const response = await fetch(url, {
@@ -118,7 +117,7 @@ async function callBackendAPI(promptText: string, moduleContext: string): Promis
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       mensaje: promptText,
-      departamento: moduleContext || 'Totalplay General',
+      departamento: moduleContext || 'FSPM General',
     }),
   });
 
@@ -135,35 +134,41 @@ function generateSmartContextualResponse(promptText: string, moduleContext: stri
   const p = promptText.toLowerCase();
 
   if (p.includes('hola') || p.includes('buenos') || p.includes('saludos') || p.includes('quién eres') || p.includes('quien eres')) {
-    return `¡Hola! Soy MAYIA, la Inteligencia Artificial Corporativa de Totalplay.
+    return `¡Hola! Soy **MAYIA**, la Inteligencia Artificial Comercial y de Licitaciones de **FSPM** (Fire Safety & Protection Management).
 
-Actualmente estás explorando el módulo de **${moduleContext || 'Puntos Inteligentes Totalplay'}**. Puedo ayudarte a verificar la cobertura por código postal, analizar el tráfico de visitantes en islas comerciales, configurar paquetes con Totalplay Surround o consultar el copiloto de ventas. ¿En qué te ayudo hoy?`;
+Actualmente te encuentras en el módulo de **${moduleContext || 'Dashboard General FSPM'}**. Puedo ayudarte a verificar el estatus de las licitaciones (PEMEX, CFE, ASA), consultar cotizaciones abiertas ($8.45M), revisar el checklist documental o dar seguimiento a oportunidades en el pipeline. ¿En qué te asesoro hoy?`;
   }
 
-  if (p.includes('paquete') || p.includes('tv') || p.includes('internet') || p.includes('fibra') || p.includes('surround') || p.includes('cobertura')) {
-    return `📡 **Oferta Comercial Totalplay & Cobertura FTTH**
+  if (p.includes('licitacion') || p.includes('licitación') || p.includes('pemex') || p.includes('cfe') || p.includes('comprasmx') || p.includes('checklist')) {
+    return `🏛️ **Estatus de Licitaciones FSPM & Semáforo Crítico**
 
-• **Doble Play:** Internet de Fibra Óptica simétrica de ultra alta velocidad (hasta 1,000 Mbps) + Telefonía HD.
-• **Triple Play Premium:** Incluye Totalplay TV 4K y experiencia inmersiva de audio Surround Hi-Fi 2026.
-• **Verificación de Cobertura:** Cobertura activa en 87 ciudades y +19.5M de hogares pasados.
-• **Tip para el Vendedor:** Al ofrecer el paquete Triple Play en islas, utiliza la demo interactiva del display inteligente para mostrar el sonido Surround Hi-Fi.`;
+• **Licitación Crítica PEMEX (<36h):** Procedimiento LA-18-T0O para Mantenimiento SPCI ($6.8M). Falta descargar versión actualizada de Opinión SAT 32-D y póliza de garantía antes del 22/08 a las 10:00 AM.
+• **Licitación CFE (3-10 días):** Unidades Móviles Ligeras ($3.4M). Checklist técnico al 85% listo por Alfonso y Edgar.
+• **Licitación ASA (>10 días):** Mantenimiento de vehículos CREI aeroportuarios ($2.1M). En etapa de análisis de bases.`;
   }
 
-  if (p.includes('trafico') || p.includes('tráfico') || p.includes('isla') || p.includes('corner') || p.includes('vision') || p.includes('cámara')) {
-    return `👁️ **Computer Vision & Tráfico en Punto de Venta Totalplay**
+  if (p.includes('cotizacion') || p.includes('cotización') || p.includes('propuesta') || p.includes('monto') || p.includes('precio')) {
+    return `📄 **Control de Cotizaciones FSPM ($8.45M en propuesta)**
 
-• **Tráfico Físico Detectado:** 14,250 visitantes registrados frente a las islas en las últimas 24 horas.
-• **Tasa de Atracción:** 28.4% de los transeúntes se detienen interactuando con las pantallas.
-• **Permanencia Promedio:** 3.8 minutos por visitante.
-• **Oportunidad M2C:** Las islas en Plaza Carso y Santa Fe muestran el mayor rendimiento de conversión cuando el Asesor en Pantalla inicia la interacción.`;
+• **FSPM-2026-0183 (CFE):** Unidades Móviles FireAde por $890,000 MXN (+IVA: $1,032,400 MXN). Estado: Enviada. Próximo seguimiento: 22/08.
+• **FSPM-2026-0180 (PEMEX):** Sistemas CAFS por $4,500,000 MXN. Estado: Negociación técnica con superintendente Roberto Silva.
+• **Alerta de Seguimiento:** La cotización FSPM-2026-0178 (CFE - Concentrado FireAde $2.1M) acumula 7 días sin contacto registrado.`;
   }
 
-  return `🤖 **Asistente Totalplay MAYIA [${moduleContext || 'M2C Retail'}]**
+  if (p.includes('fireade') || p.includes('cafs') || p.includes('spci') || p.includes('unidad') || p.includes('producto') || p.includes('extintor')) {
+    return `🔥 **Soluciones y Equipamiento Contra Incendio FSPM**
 
-He analizado tu consulta *" ${promptText} "* en la plataforma de Totalplay.
+• **Unidades Móviles FireAde:** Carrocerías 4x4 ligeras de primera respuesta con dosificación de concentrado ecológico 2000 (Certificaciones UL/NFPA).
+• **Sistemas CAFS:** Inyección de aire comprimido para espuma de alta densidad en tanques y plataformas marinas.
+• **Mantenimiento SPCI:** Cobertura de bombas diésel/eléctricas, cuartos de control, rociadores y sistemas de diluvio.`;
+  }
 
-• **Diagnóstico:** El sistema M2C opera con normalidad conectando los 112+ puntos de venta físicos con el CRM y la App Totalplay.
-• **Acción Sugerida:** ¿Deseas consultar métricas de atracción por formato de tienda o revisar el copiloto de cierres comerciales?`;
+  return `🤖 **Asistente FSPM MAYIA [${moduleContext || 'Gestión Comercial'}]**
+
+He analizado tu consulta sobre *" ${promptText} "* en la plataforma de FSPM.
+
+• **Pipeline Total:** $24.8M activos distribuidos en 41 oportunidades y 8 licitaciones públicas/privadas.
+• **Acción Recomendada:** ¿Deseas que revise el checklist documental de alguna licitación o prefieres registrar un nuevo seguimiento comercial?`;
 }
 
 export async function sendLLMMessage(

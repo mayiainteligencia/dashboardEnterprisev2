@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
+import { X, Send, Mic, MicOff, Sparkles, Bot } from 'lucide-react';
 import { brandingConfig, type TemaBesco } from '../../../config/branding';
 import { BrainCanvas } from './BrainCanvas';
 import { useAIChat } from '../../../context/AIChatContext';
@@ -11,14 +11,24 @@ type ChatMessage = {
   time: string;
 };
 
-// ── Navegación por voz (front-only, sin backend) ──────────
+// ── Navegación por voz (front-only, sin latencia) ──────────
 const normalizar = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-const NAV_VERBOS = ['ve al', 've a', 'ir al', 'ir a', 'entra al', 'entra a', 'llevame a', 'vamos a', 'muestrame', 'muestra', 'abre', 'abrir', 'ir'];
+const NAV_VERBOS = ['ve al', 've a', 'ir al', 'ir a', 'entra al', 'entra a', 'llevame a', 'vamos a', 'muestrame', 'muestra', 'abre', 'abrir', 'ir', 'ver'];
+
 // Devuelve el id de sección si el texto es un comando "ve a X", o null.
 const matchSeccion = (texto: string, secciones: { id: string; titulo: string }[]): string | null => {
   const t = normalizar(texto);
   if (!NAV_VERBOS.some(v => t.includes(v))) return null;
   if (/(dashboard|inicio|principal|home|general)/.test(t)) return 'dashboard';
+  if (/(cliente|empresa|dependencia|cfe|pemex)/.test(t)) return 'clientes';
+  if (/(contacto|decisor|directorio|telefono|persona)/.test(t)) return 'contactos';
+  if (/(oportunidad|pipeline|kanban|negocio)/.test(t)) return 'oportunidades';
+  if (/(cotizacion|cotizaciones|propuesta|precio)/.test(t)) return 'cotizaciones';
+  if (/(licitacion|licitaciones|concurso|comprasmx)/.test(t)) return 'licitaciones';
+  if (/(actividad|actividades|tarea|llamada|seguimiento)/.test(t)) return 'actividades';
+  if (/(documento|drive|carpeta|archivo|repositorio)/.test(t)) return 'documentos';
+  if (/(direccion|reporte|director|gerente|kpi)/.test(t)) return 'direccion';
+
   let best: { id: string; score: number } | null = null;
   for (const s of secciones) {
     const palabras = normalizar(s.titulo).split(/\s+/).filter(w => w.length > 3);
@@ -37,33 +47,26 @@ interface HeroCardProps {
 export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones = [] }) => {
   const { colores, ia, empresa } = brandingConfig;
   const { messages: globalMessages, loading: globalLoading, sendMessage: sendGlobalLLMMessage } = useAIChat();
-  const acc = tema ? tema.acento : '#374151';
-  const accDark = tema ? tema.acentoOscuro : '#1F2937';
+  const acc = tema ? tema.acento : colores.primario;
+  const accDark = tema ? tema.acentoOscuro : colores.primarioOscuro;
   const sobre = tema ? tema.sobreAcento : '#ffffff';
   const [isHovered, setIsHovered] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      role: 'assistant',
-      content: `¡Hola! Soy ${ia.nombre}, tu asistente de ${empresa.nombre}. ¿En qué puedo ayudarte?`,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    },
-  ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const endRef = useRef<HTMLDivElement | null>(null);
   const recognitionRef = useRef<any>(null);
-  // Refs para que el reconocimiento (creado una sola vez) siempre lea lo último
   const listeningRef = useRef(false);
   const seccionesRef = useRef(secciones);
   const onNavigateRef = useRef(onNavigate);
+
   useEffect(() => { listeningRef.current = isListening; }, [isListening]);
   useEffect(() => { seccionesRef.current = secciones; onNavigateRef.current = onNavigate; }, [secciones, onNavigate]);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, loading]);
+  }, [globalMessages, globalLoading]);
 
   // Inicializar Web Speech API
   useEffect(() => {
@@ -88,7 +91,6 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         }
 
         const currentText = finalTranscript || interimTranscript;
-        console.log('[voz] transcripción:', currentText, finalTranscript ? '(final)' : '(parcial)');
 
         // Navegación por voz (front-only): "ve a <sección>" → navega, sin backend
         if (finalTranscript) {
@@ -130,9 +132,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
           // Enviar el mensaje después de un pequeño delay
           setTimeout(() => {
             if (cleanedText.trim()) {
-              // Simular el envío
-              const messageToSend = cleanedText;
-              sendMessageWithText(messageToSend);
+              sendMessageWithText(cleanedText);
             }
           }, 300);
         } else {
@@ -140,19 +140,12 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         }
       };
 
-      recognitionRef.current.onstart = () => console.log('[voz] iniciado, escuchando…');
-      recognitionRef.current.onaudiostart = () => console.log('[voz] micrófono capturando audio');
-      recognitionRef.current.onsoundstart = () => console.log('[voz] hay sonido');
-      recognitionRef.current.onspeechstart = () => console.log('[voz] detectó voz');
-      recognitionRef.current.onspeechend = () => console.log('[voz] fin de voz');
-      recognitionRef.current.onnomatch = () => console.log('[voz] no coincidió');
       recognitionRef.current.onerror = (event: any) => {
         console.error('[voz] error:', event.error);
         setIsListening(false);
       };
 
       recognitionRef.current.onend = () => {
-        console.log('[voz] terminó; reiniciar?', listeningRef.current);
         if (listeningRef.current) {
           try { recognitionRef.current.start(); } catch { /* ya iniciado */ }
         }
@@ -169,15 +162,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
   const handleMicClick = () => {
     setShowModal(true);
     if (!recognitionRef.current) {
-      alert('Tu navegador no soporta reconocimiento de voz. Usa Chrome o Edge.');
+      alert('Tu navegador no soporta reconocimiento de voz. Usa Google Chrome o Edge.');
       return;
     }
     setInput('');
-    listeningRef.current = true;   // sincrónico: evita que onend reinicie fuera de tiempo
+    listeningRef.current = true;
     setIsListening(true);
-    // abort() resetea cualquier sesión previa colgada antes de arrancar de nuevo
     try { recognitionRef.current.abort(); } catch { /* nada */ }
-    // SpeechRecognition pide su propio permiso de micrófono; no llamamos getUserMedia aparte
     setTimeout(() => {
       try {
         recognitionRef.current.start();
@@ -199,7 +190,6 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
     } else {
       try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
-        
         setIsListening(true);
         setInput('');
         
@@ -207,8 +197,6 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
           try {
             recognitionRef.current.start();
           } catch (error) {
-            console.error('Error al iniciar:', error);
-            // Si ya está iniciado, reiniciar
             recognitionRef.current.stop();
             setTimeout(() => {
               recognitionRef.current.start();
@@ -217,7 +205,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         }
       } catch (error) {
         console.error('Error de permisos:', error);
-        alert('Por favor permite el acceso al micrófono');
+        alert('Por favor permite el acceso al micrófono en el navegador');
       }
     }
   };
@@ -230,7 +218,6 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
   const sendMessageWithText = async (messageText: string) => {
     if (!messageText.trim() || globalLoading) return;
 
-    // Modo navegación por voz: intenta navegar si se detecta una sección
     if (onNavigate && secciones.length) {
       const destino = matchSeccion(messageText, secciones);
       if (destino) {
@@ -246,7 +233,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
 
   const handleCloseModal = () => {
     setShowModal(false);
-    listeningRef.current = false;   // sincrónico: corta el auto-reinicio de onend
+    listeningRef.current = false;
     setIsListening(false);
     if (recognitionRef.current) {
       try { recognitionRef.current.abort(); } catch { /* nada */ }
@@ -261,20 +248,21 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{
-          background: `linear-gradient(135deg, ${acc}20 0%, ${accDark}20 100%)`,
+          background: `linear-gradient(135deg, rgba(211, 47, 47, 0.08) 0%, rgba(15, 23, 42, 0.06) 100%)`,
           backdropFilter: 'blur(20px)',
           borderRadius: '24px',
-          padding: '18px',
-          border: `2px solid ${acc}40`,
+          padding: '20px 24px',
+          border: `2px solid rgba(211, 47, 47, 0.25)`,
           position: 'relative',
           overflow: 'hidden',
-          minHeight: '160px',
+          minHeight: '170px',
           cursor: 'pointer',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           textAlign: 'center',
+          boxShadow: '0 8px 30px rgba(211, 47, 47, 0.08)',
         }}
       >
         {/* Resplandor de fondo */}
@@ -292,90 +280,71 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
               left: '50%',
               top: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '700px',
-              height: '700px',
-              opacity: isHovered ? 0.7 : 0,
+              width: '650px',
+              height: '650px',
+              opacity: isHovered ? 0.35 : 0.15,
               transition: 'opacity 700ms ease-in-out',
-              filter: 'blur(100px)',
+              filter: 'blur(90px)',
               background: acc,
               borderRadius: '50%',
             }}
           />
         </div>
 
-        {/* Animated gradient blobs */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '-20%',
-            right: '-10%',
-            width: '400px',
-            height: '400px',
-            background: `radial-gradient(circle, ${acc}40 0%, transparent 70%)`,
-            filter: 'blur(60px)',
-            animation: 'float 6s ease-in-out infinite',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            bottom: '-20%',
-            left: '-10%',
-            width: '350px',
-            height: '350px',
-            background: `radial-gradient(circle, ${accDark}40 0%, transparent 70%)`,
-            filter: 'blur(60px)',
-            animation: 'float 8s ease-in-out infinite reverse',
-            pointerEvents: 'none',
-            zIndex: 0,
-          }}
-        />
-
-        {/* Contenido principal con z-index más alto */}
+        {/* Contenido principal */}
         <div style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           {/* Núcleo IA 3D animado */}
-          <div style={{ width: '240px', marginBottom: '8px' }}>
-            <BrainCanvas accent={acc} height={200} />
+          <div style={{ width: '220px', marginBottom: '6px' }}>
+            <BrainCanvas accent={acc} height={180} />
           </div>
 
           {/* Title */}
           <h2
             style={{
-              fontSize: '19px',
-              fontWeight: '700',
+              fontSize: '20px',
+              fontWeight: '800',
               color: acc,
               marginBottom: '6px',
-              letterSpacing: '-0.4px',
+              letterSpacing: '-0.3px',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
             }}
           >
+            <Sparkles size={20} color={acc} />
             Asistente Inteligente {empresa.nombre}
           </h2>
 
           {/* Instrucción condensada */}
           <p
             style={{
-              fontSize: '11.5px',
+              fontSize: '12.5px',
               color: colores.textoMedio,
-              margin: '0 0 12px 0',
-              maxWidth: '320px',
+              margin: '0 0 10px 0',
+              maxWidth: '380px',
               lineHeight: 1.4,
             }}
           >
             Pulsa para hablar con tu asesor IA · di <strong style={{ color: acc, fontStyle: 'normal' }}>"MAYIA"</strong> para enviar
           </p>
-        </div>
 
-        <style>
-          {`
-            @keyframes float {
-              0%, 100% { transform: translate(0, 0) rotate(0deg); }
-              33% { transform: translate(30px, -20px) rotate(5deg); }
-              66% { transform: translate(-20px, 20px) rotate(-5deg); }
-            }
-          `}
-        </style>
+          {/* Badge de estado en vivo */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            padding: '4px 12px',
+            borderRadius: '999px',
+            backgroundColor: 'rgba(211, 47, 47, 0.1)',
+            border: '1px solid rgba(211, 47, 47, 0.2)',
+            fontSize: '11px',
+            color: acc,
+            fontWeight: '600',
+          }}>
+            <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981' }} />
+            Copilot Comercial &amp; Licitaciones Activo
+          </div>
+        </div>
       </div>
 
       {/* Modal de Chat */}
@@ -387,7 +356,8 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.6)',
+            backgroundColor: 'rgba(15, 23, 42, 0.7)',
+            backdropFilter: 'blur(8px)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -402,24 +372,25 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
         >
           <div
             style={{
-              width: '90%',
-              maxWidth: '600px',
-              height: '80vh',
-              maxHeight: '700px',
+              width: '92%',
+              maxWidth: '640px',
+              height: '82vh',
+              maxHeight: '720px',
               backgroundColor: colores.fondoSecundario,
               borderRadius: '24px',
-              boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)',
+              boxShadow: '0 25px 70px rgba(0, 0, 0, 0.4)',
               display: 'flex',
               flexDirection: 'column',
               overflow: 'hidden',
               animation: 'slideUp 0.3s ease',
+              border: `1px solid ${colores.borde}`,
             }}
           >
-            {/* Header */}
+            {/* Header del Modal */}
             <div
               style={{
-                padding: '24px',
-                background: `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)`,
+                padding: '20px 24px',
+                background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 100%)`,
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
@@ -428,23 +399,24 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <div
                   style={{
-                    width: '48px',
-                    height: '48px',
-                    borderRadius: '50%',
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '14px',
                     backgroundColor: 'rgba(255, 255, 255, 0.2)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
                 >
-                  <Sparkles size={24} color={sobre} />
+                  <Bot size={26} color="#FFFFFF" />
                 </div>
                 <div>
-                  <div style={{ fontWeight: '600', color: sobre, fontSize: '18px' }}>
-                    {ia.nombre}
+                  <div style={{ fontWeight: '700', color: '#FFFFFF', fontSize: '18px' }}>
+                    {ia.nombre} · Asesor IA FSPM
                   </div>
-                  <div style={{ fontSize: '13px', color: 'rgba(255, 255, 255, 0.8)' }}>
-                    {isListening ? 'Escuchando...' : 'Asesor IA'}
+                  <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.85)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: isListening ? '#F59E0B' : '#10B981' }} />
+                    {isListening ? 'Escuchando tu voz...' : 'Sistemas Contra Incendio, Licitaciones & CRM'}
                   </div>
                 </div>
               </div>
@@ -452,7 +424,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
               <button
                 onClick={handleCloseModal}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.2)',
+                  background: 'rgba(255, 255, 255, 0.15)',
                   border: 'none',
                   borderRadius: '12px',
                   padding: '8px',
@@ -462,19 +434,19 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                   justifyContent: 'center',
                 }}
               >
-                <X size={24} color={sobre} />
+                <X size={22} color="#FFFFFF" />
               </button>
             </div>
 
-            {/* Mensajes */}
+            {/* Lista de Mensajes */}
             <div
               style={{
                 flex: 1,
                 overflowY: 'auto',
-                padding: '24px',
+                padding: '20px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '16px',
+                gap: '14px',
                 backgroundColor: colores.fondoPrincipal,
               }}
             >
@@ -485,19 +457,19 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                     display: 'flex',
                     gap: '12px',
                     alignSelf: m.role === 'user' ? 'flex-end' : 'flex-start',
-                    maxWidth: '75%',
-                    animation: 'fadeIn 0.3s ease',
+                    maxWidth: '82%',
+                    flexDirection: m.role === 'user' ? 'row-reverse' : 'row',
                   }}
                 >
                   {m.role === 'assistant' && (
                     <div
                       style={{
-                        width: '36px',
-                        height: '36px',
-                        borderRadius: '50%',
-                        background: `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)`,
-                        color: sobre,
-                        fontSize: '14px',
+                        width: '34px',
+                        height: '34px',
+                        borderRadius: '10px',
+                        background: `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 100%)`,
+                        color: '#FFFFFF',
+                        fontSize: '12px',
                         fontWeight: 'bold',
                         display: 'flex',
                         alignItems: 'center',
@@ -512,29 +484,31 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                   <div>
                     <div
                       style={{
-                        backgroundColor: m.role === 'user' ? acc : colores.fondoTerciario,
-                        background: m.role === 'user' ? `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)` : colores.fondoTerciario,
-                        color: m.role === 'user' ? sobre : colores.textoClaro,
-                        padding: '14px 18px',
-                        borderRadius: m.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                        boxShadow: '0 2px 12px rgba(0, 0, 0, 0.1)',
+                        backgroundColor: m.role === 'user' ? colores.primario : colores.fondoTerciario,
+                        background: m.role === 'user' ? `linear-gradient(135deg, ${colores.primario} 0%, ${colores.primarioOscuro} 100%)` : colores.fondoTerciario,
+                        color: m.role === 'user' ? '#FFFFFF' : colores.textoClaro,
+                        padding: '12px 16px',
+                        borderRadius: m.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.05)',
+                        border: m.role === 'user' ? 'none' : `1px solid ${colores.borde}`,
                       }}
                     >
                       {m.content ? (
-                        <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={acc} />
+                        <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={colores.primario} />
                       ) : (
-                        globalLoading && m.role === 'assistant' ? 'Generando respuesta...' : ''
+                        globalLoading && m.role === 'assistant' ? 'MAYIA analizando consulta...' : ''
                       )}
                     </div>
                     <div
                       style={{
                         fontSize: '11px',
                         color: colores.textoMedio,
-                        marginTop: '6px',
+                        marginTop: '4px',
                         textAlign: m.role === 'user' ? 'right' : 'left',
+                        padding: '0 4px',
                       }}
                     >
-                      {m.timestamp}
+                      {m.timestamp} {m.moduleContext ? `• ${m.moduleContext}` : ''}
                     </div>
                   </div>
                 </div>
@@ -544,11 +518,11 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div
                     style={{
-                      width: '36px',
-                      height: '36px',
-                      borderRadius: '50%',
-                      background: `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)`,
-                      color: sobre,
+                      width: '34px',
+                      height: '34px',
+                      borderRadius: '10px',
+                      background: colores.primario,
+                      color: '#FFFFFF',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -560,15 +534,13 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                   <div
                     style={{
                       backgroundColor: colores.fondoTerciario,
-                      padding: '14px 18px',
-                      borderRadius: '18px 18px 18px 4px',
+                      padding: '12px 16px',
+                      borderRadius: '16px 16px 16px 4px',
                       display: 'flex',
                       gap: '6px',
                     }}
                   >
-                    <div className="typing-dot" />
-                    <div className="typing-dot" style={{ animationDelay: '0.2s' }} />
-                    <div className="typing-dot" style={{ animationDelay: '0.4s' }} />
+                    <span style={{ fontSize: '13px', color: colores.textoMedio }}>MAYIA procesando datos FSPM...</span>
                   </div>
                 </div>
               )}
@@ -576,54 +548,65 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
               <div ref={endRef} />
             </div>
 
-            {/* Input */}
+            {/* Input por voz y texto */}
             <div
               style={{
-                padding: '20px 24px',
+                padding: '16px 20px',
                 backgroundColor: colores.fondoSecundario,
                 borderTop: `1px solid ${colores.borde}`,
                 display: 'flex',
-                gap: '12px',
+                gap: '10px',
                 alignItems: 'center',
               }}
             >
               <button
                 onClick={toggleListening}
+                title={isListening ? 'Detener micrófono' : 'Hablar por micrófono'}
+                className={isListening ? 'pulse-red' : 'fspm-btn'}
                 style={{
                   width: '48px',
                   height: '48px',
-                  borderRadius: '50%',
+                  borderRadius: '14px',
                   border: 'none',
                   background: isListening
-                    ? `linear-gradient(135deg, ${colores.peligro} 0%, ${colores.advertencia} 100%)`
-                    : `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)`,
-                  color: sobre,
+                    ? `linear-gradient(135deg, ${colores.peligro} 0%, #B91C1C 100%)`
+                    : `linear-gradient(135deg, ${colores.primario} 0%, ${colores.secundario} 100%)`,
+                  color: '#FFFFFF',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  transition: 'all 0.2s',
-                  animation: isListening ? 'pulse 1.5s infinite' : 'none',
+                  transition: 'all 0.25s',
+                  boxShadow: isListening ? '0 0 20px rgba(211, 47, 47, 0.6)' : '0 4px 12px rgba(211, 47, 47, 0.3)',
                 }}
               >
-                {isListening ? <MicOff size={24} /> : <Mic size={24} />}
+                {isListening ? (
+                  <div className="voice-eq">
+                    <div className="voice-bar" />
+                    <div className="voice-bar" />
+                    <div className="voice-bar" />
+                    <div className="voice-bar" />
+                  </div>
+                ) : (
+                  <Mic size={22} />
+                )}
               </button>
 
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder={isListening ? 'Escuchando... (Di "MAYIA" para enviar)' : 'Escribe o habla...'}
+                placeholder={isListening ? 'Escuchando... Di "MAYIA" o una orden de navegación' : 'Pregunta sobre clientes, licitaciones o di "ve a cotizaciones"...'}
                 disabled={loading}
                 style={{
                   flex: 1,
-                  padding: '14px 18px',
-                  borderRadius: '14px',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
                   border: `1px solid ${colores.borde}`,
                   backgroundColor: colores.fondoPrincipal,
                   color: colores.textoClaro,
                   outline: 'none',
-                  fontSize: '15px',
+                  fontSize: '14px',
                 }}
               />
 
@@ -631,60 +614,24 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                 onClick={sendMessage}
                 disabled={loading || !input.trim()}
                 style={{
-                  padding: '14px 20px',
-                  borderRadius: '14px',
+                  padding: '12px 18px',
+                  borderRadius: '12px',
                   border: 'none',
-                  background: loading || !input.trim() ? colores.fondoTerciario : `linear-gradient(135deg, ${acc} 0%, ${accDark} 100%)`,
-                  color: loading || !input.trim() ? colores.textoMedio : sobre,
+                  background: loading || !input.trim() ? colores.fondoTerciario : colores.primario,
+                  color: loading || !input.trim() ? colores.textoMedio : '#FFFFFF',
                   cursor: loading || !input.trim() ? 'not-allowed' : 'pointer',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  fontWeight: '600',
+                  gap: '6px',
                   transition: 'all 0.2s',
                 }}
               >
-                <Send size={20} />
+                <Send size={18} />
               </button>
             </div>
           </div>
-
-          <style>
-            {`
-              @keyframes fadeIn {
-                from { opacity: 0; }
-                to { opacity: 1; }
-              }
-
-              @keyframes slideUp {
-                from {
-                  opacity: 0;
-                  transform: translateY(30px);
-                }
-                to {
-                  opacity: 1;
-                  transform: translateY(0);
-                }
-              }
-
-              @keyframes pulse {
-                0%, 100% { box-shadow: 0 0 0 0 ${colores.peligro}40; }
-                50% { box-shadow: 0 0 0 20px ${colores.peligro}00; }
-              }
-
-              .typing-dot {
-                width: 8px;
-                height: 8px;
-                border-radius: 50%;
-                background-color: ${colores.textoMedio};
-                animation: typing 1.4s infinite;
-              }
-
-              @keyframes typing {
-                0%, 60%, 100% { transform: translateY(0); }
-                30% { transform: translateY(-10px); }
-              }
-            `}
-          </style>
         </div>
       )}
     </>

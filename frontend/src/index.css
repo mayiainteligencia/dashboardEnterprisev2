@@ -13,6 +13,8 @@ html, body, #root {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #F8FAFC;
+  color: #0F172A;
 }
 
 /* ── Scrollbar styling ── */
@@ -22,256 +24,213 @@ html, body, #root {
 }
 .no-scrollbar::-webkit-scrollbar { display: none; width: 0; height: 0; }
 
-.styled-scroll { scrollbar-width: thin; scrollbar-color: #D1C4D6 transparent; }
-.styled-scroll::-webkit-scrollbar { width: 5px; }
+.styled-scroll { scrollbar-width: thin; scrollbar-color: #CBD5E1 transparent; }
+.styled-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
 .styled-scroll::-webkit-scrollbar-track { background: transparent; }
-.styled-scroll::-webkit-scrollbar-thumb { background: #D1C4D6; border-radius: 999px; }
-
-/* ── Grid layouts ── */
-.row2 { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr); gap: 22px; }
-.row2-rev { display: grid; grid-template-columns: minmax(240px, 1fr) minmax(0, 1.6fr); gap: 22px; }
-@media (max-width: 880px) { .row2, .row2-rev { grid-template-columns: 1fr; } }
-.row-map { display: grid; grid-template-columns: 1fr 240px; gap: 20px; align-items: start; }
-@media (max-width: 880px) { .row-map { grid-template-columns: 1fr; } }
+.styled-scroll::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 999px; }
+.styled-scroll::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
 
 button { font-family: inherit; }
 
 /* ═══════════════════════════════════════
-   KEYFRAME ANIMATIONS
+   PREMIUM KEYFRAME ANIMATIONS (FSPM CRM)
 ═══════════════════════════════════════ */
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideInUp {
-  from { opacity: 0; transform: translateY(24px); }
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-20px); }
+  from { opacity: 0; transform: translateX(-24px); }
   to   { opacity: 1; transform: translateX(0); }
 }
 
-@keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.94); }
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleUp {
+  from { opacity: 0; transform: scale(0.95); }
   to   { opacity: 1; transform: scale(1); }
 }
 
-@keyframes shimmer {
+@keyframes popIn {
+  0%   { opacity: 0; transform: scale(0.92); }
+  70%  { opacity: 1; transform: scale(1.02); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes floatSmooth {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%      { transform: translateY(-6px) rotate(1deg); }
+}
+
+@keyframes flamePulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(211, 47, 47, 0.2);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes pulseGlowRed {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(211, 47, 47, 0);
+  }
+}
+
+@keyframes pulseGlowAmber {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(217, 119, 6, 0);
+  }
+}
+
+@keyframes pulseGlowGreen {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+@keyframes shimmerLight {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
 
-@keyframes pulse-ring {
-  0%   { transform: scale(1); opacity: 0.8; }
-  60%  { transform: scale(1.5); opacity: 0; }
-  100% { transform: scale(1.5); opacity: 0; }
-}
-
-@keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(166, 28, 92, 0.3); }
-  50%       { box-shadow: 0 0 0 8px rgba(166, 28, 92, 0); }
-}
-
-@keyframes glowPulseGreen {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(187, 191, 65, 0.35); }
-  50%       { box-shadow: 0 0 0 8px rgba(187, 191, 65, 0); }
-}
-
-@keyframes blink {
-  0%, 80%, 100% { opacity: 0; }
-  40%           { opacity: 1; }
-}
-
-@keyframes waveFlow {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-@keyframes heartbeat {
-  0%, 100% { transform: scale(1); }
-  14%       { transform: scale(1.12); }
-  28%       { transform: scale(1); }
-  42%       { transform: scale(1.08); }
-  70%       { transform: scale(1); }
-}
-
-@keyframes bellShake {
-  0%, 100% { transform: rotate(0deg); }
-  15%       { transform: rotate(15deg); }
-  30%       { transform: rotate(-13deg); }
-  45%       { transform: rotate(11deg); }
-  60%       { transform: rotate(-9deg); }
-  75%       { transform: rotate(7deg); }
-  90%       { transform: rotate(-5deg); }
-}
-
-@keyframes progressFill {
-  from { width: 0%; }
-}
-
-@keyframes dashOffset {
-  from { stroke-dashoffset: 251; }
-}
-
-@keyframes countUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes barGrow {
-  from { height: 0%; transform-origin: bottom; }
-}
-
-@keyframes funnelFill {
-  from { opacity: 0; transform: scaleX(0); transform-origin: left; }
-  to   { opacity: 1; transform: scaleX(1); }
-}
-
-@keyframes tickerScroll {
-  0%   { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+@keyframes waveBar {
+  0%, 100% { transform: scaleY(0.4); }
+  50%      { transform: scaleY(1); }
 }
 
 /* ═══════════════════════════════════════
-   REUSABLE CLASSES
+   ANIMATION UTILITY CLASSES
 ═══════════════════════════════════════ */
 
-.animate-slide-up   { animation: slideInUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.animate-fade-scale { animation: fadeInScale 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
-.animate-slide-left { animation: slideInLeft 0.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.animate-fade-in    { animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-up    { animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-down  { animation: fadeDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-left { animation: slideInLeft 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-right{ animation: slideInRight 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-scale-up   { animation: scaleUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-pop        { animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.animate-float      { animation: floatSmooth 4s ease-in-out infinite; }
 
-.delay-1 { animation-delay: 0.05s; }
-.delay-2 { animation-delay: 0.10s; }
-.delay-3 { animation-delay: 0.15s; }
-.delay-4 { animation-delay: 0.20s; }
-.delay-5 { animation-delay: 0.25s; }
-.delay-6 { animation-delay: 0.30s; }
-.delay-7 { animation-delay: 0.35s; }
-.delay-8 { animation-delay: 0.40s; }
-.delay-9 { animation-delay: 0.45s; }
-.delay-10 { animation-delay: 0.50s; }
+/* Stagger Delays */
+.delay-1 { animation-delay: 0.04s; }
+.delay-2 { animation-delay: 0.08s; }
+.delay-3 { animation-delay: 0.12s; }
+.delay-4 { animation-delay: 0.16s; }
+.delay-5 { animation-delay: 0.20s; }
+.delay-6 { animation-delay: 0.24s; }
+.delay-7 { animation-delay: 0.28s; }
+.delay-8 { animation-delay: 0.32s; }
 
-.card-hover {
-  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+/* ═══════════════════════════════════════
+   INTERACTIVE CARD HOVER & SHADOW EFFECTS
+═══════════════════════════════════════ */
+
+.fspm-card {
+  transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.26s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.2s ease;
 }
-.card-hover:hover {
-  transform: translateY(-4px) scale(1.005);
+.fspm-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
 }
 
-.gradient-text {
-  background: linear-gradient(135deg, #A61C5C, #D9933D);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.fspm-card-interactive {
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.2s ease,
+              background-color 0.2s ease;
+  cursor: pointer;
+}
+.fspm-card-interactive:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 14px 32px rgba(211, 47, 47, 0.12);
+  border-color: #F87171 !important;
 }
 
-.gradient-text-cool {
-  background: linear-gradient(135deg, #732D67, #A61C5C);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.fspm-btn {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.18s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.18s ease;
+}
+.fspm-btn:hover {
+  transform: translateY(-1.5px);
+  filter: brightness(1.05);
+}
+.fspm-btn:active {
+  transform: translateY(0.5px) scale(0.98);
 }
 
-.shimmer-bg {
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+/* ═══════════════════════════════════════
+   LIVE PULSES & BADGES
+═══════════════════════════════════════ */
+
+.pulse-red {
+  animation: pulseGlowRed 2s infinite;
+}
+
+.pulse-amber {
+  animation: pulseGlowAmber 2.2s infinite;
+}
+
+.pulse-green {
+  animation: pulseGlowGreen 2.4s infinite;
+}
+
+.flame-badge-glow {
+  animation: flamePulse 3s ease-in-out infinite;
+}
+
+.shimmer-badge {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.35) 50%, rgba(255,255,255,0) 100%);
   background-size: 200% 100%;
-  animation: shimmer 2.5s infinite linear;
+  animation: shimmerLight 3s infinite linear;
 }
 
-.badge-pulse {
-  animation: glowPulse 2s infinite;
+/* ═══════════════════════════════════════
+   VOICE MIC EQUALIZER WAVE
+═══════════════════════════════════════ */
+.voice-eq {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
 }
-
-.badge-pulse-green {
-  animation: glowPulseGreen 2s infinite;
-}
-
-.progress-bar-animated {
-  animation: progressFill 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.live-dot {
-  position: relative;
-  display: inline-block;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background-color: #A61C5C;
-}
-.live-dot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background-color: #A61C5C;
-  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-.live-dot-green {
-  background-color: #5B8F20;
-}
-.live-dot-green::after {
-  background-color: #5B8F20;
-}
-
-.live-dot-amber {
-  background-color: #D9933D;
-}
-.live-dot-amber::after {
-  background-color: #D9933D;
-}
-
-.bell-shake {
-  animation: bellShake 1s ease both;
-}
-
-.heartbeat-icon {
-  animation: heartbeat 1.5s ease infinite;
-}
-
-.spin-slow {
-  animation: spin 8s linear infinite;
-}
-
-/* ── Typing dots ── */
-.typing-dots span {
-  display: inline-block;
-  width: 6px; height: 6px;
-  margin: 0 2px;
-  background: #A61C5C;
-  border-radius: 50%;
-  animation: blink 1.4s infinite both;
-}
-.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
-/* ── Equalizer bars ── */
-.eq-bars { display: flex; align-items: flex-end; gap: 3px; height: 20px; }
-.eq-bar {
-  width: 4px;
+.voice-bar {
+  width: 3px;
+  height: 100%;
+  background-color: #FFFFFF;
   border-radius: 2px;
-  background: #BBBF41;
-  animation: barGrow 0.8s ease infinite alternate;
+  animation: waveBar 0.8s ease-in-out infinite alternate;
 }
-.eq-bar:nth-child(1) { animation-duration: 0.6s; }
-.eq-bar:nth-child(2) { animation-duration: 0.8s; animation-delay: 0.1s; }
-.eq-bar:nth-child(3) { animation-duration: 0.5s; animation-delay: 0.2s; }
-.eq-bar:nth-child(4) { animation-duration: 0.7s; animation-delay: 0.05s; }
-
-/* ── Ticker ── */
-.ticker-wrapper { overflow: hidden; white-space: nowrap; }
-.ticker-content { display: inline-block; animation: tickerScroll 30s linear infinite; }
-
-/* ── SVG Ring progress ── */
-.ring-progress { transition: stroke-dashoffset 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+.voice-bar:nth-child(1) { animation-delay: 0.0s; }
+.voice-bar:nth-child(2) { animation-delay: 0.2s; }
+.voice-bar:nth-child(3) { animation-delay: 0.4s; }
+.voice-bar:nth-child(4) { animation-delay: 0.1s; }

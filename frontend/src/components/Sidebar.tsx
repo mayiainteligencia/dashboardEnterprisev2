@@ -1,10 +1,31 @@
 import React, { useState } from 'react';
-import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi, Smartphone } from 'lucide-react';
+import {
+  LayoutDashboard,
+  Building2,
+  Users,
+  Briefcase,
+  FileText,
+  Landmark,
+  CheckSquare,
+  FolderGit2,
+  TrendingUp,
+  Flame,
+  Wifi,
+  ShieldCheck
+} from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { MODULOS_TOTALPLAY } from '../totalplay/totalplayData';
+import { MODULOS_FSPM } from '../fspm/fspmData';
 
 const iconMap: Record<string, any> = {
-  Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Smartphone,
+  LayoutDashboard,
+  Building2,
+  Users,
+  Briefcase,
+  FileText,
+  Landmark,
+  CheckSquare,
+  FolderGit2,
+  TrendingUp,
 };
 
 interface SidebarProps {
@@ -17,28 +38,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
   const { colores } = brandingConfig;
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  const totalAlerts = MODULOS_TOTALPLAY.reduce((acc, m) => acc + m.alertas, 0);
+  const totalAlerts = MODULOS_FSPM.reduce((acc, m) => acc + m.alertas, 0);
 
   const categorias = [
     {
-      titulo: 'INTELIGENCIA COMERCIAL',
-      color: '#A61C5C',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial' && m.id !== 'vista-gerente-movil')
+      titulo: 'GESTIÓN COMERCIAL',
+      color: '#D32F2F',
+      items: MODULOS_FSPM.filter(m => m.categoria === 'comercial' && m.id !== 'dashboard')
     },
     {
-      titulo: 'OPERACIONES M2C',
-      color: '#732D67',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones' && m.id !== 'vista-gerente-movil')
+      titulo: 'LICITACIONES & GOBIERNO',
+      color: '#D97706',
+      items: MODULOS_FSPM.filter(m => m.categoria === 'licitaciones')
     },
     {
-      titulo: 'EXPERIENCIA & DISPLAYS',
-      color: '#D9933D',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia' && m.id !== 'vista-gerente-movil')
+      titulo: 'OPERACIONES & SEGUIMIENTO',
+      color: '#10B981',
+      items: MODULOS_FSPM.filter(m => m.categoria === 'operacion')
     },
     {
-      titulo: 'TECNOLOGÍA & CRM',
-      color: '#73B1BF',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia' && m.id !== 'vista-gerente-movil')
+      titulo: 'REPOSITORIO & DIRECCIÓN',
+      color: '#0F172A',
+      items: MODULOS_FSPM.filter(m => m.categoria === 'gestion')
     }
   ];
 
@@ -47,7 +68,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       style={{
         width: '250px',
         height: '100vh',
-        backgroundColor: '#FDFAFB',
+        backgroundColor: '#FFFFFF',
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -55,52 +76,75 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         position: 'relative',
       }}
     >
-      {/* Subtle gradient overlay */}
-      <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'linear-gradient(180deg, rgba(115,177,191,0.05) 0%, rgba(255,255,255,0) 40%)',
-        zIndex: 0
-      }} />
-
-      {/* ── Logo Header ── */}
-      <div style={{
-        padding: '16px 18px',
-        flexShrink: 0,
-        borderBottom: `1px solid ${colores.borde}`,
-        position: 'relative', zIndex: 1,
-        background: '#FFFFFF',
-      }}>
+      {/* ── Logo & Header FSPM (Genérico) ── */}
+      <div
+        style={{
+          padding: '18px 20px',
+          flexShrink: 0,
+          borderBottom: `1px solid ${colores.borde}`,
+          position: 'relative',
+          zIndex: 1,
+          backgroundColor: '#FFFFFF',
+        }}
+      >
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <img
-            src="/assets/logosNativos/TotalPlay.png"
-            alt="Totalplay Logo"
-            style={{ height: '36px', objectFit: 'contain' }}
-          />
+          <div
+            style={{
+              width: '38px',
+              height: '38px',
+              borderRadius: '12px',
+              background: 'linear-gradient(135deg, #D32F2F 0%, #9A0007 100%)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 14px rgba(211, 47, 47, 0.35)',
+              color: '#FFFFFF',
+            }}
+          >
+            <Flame size={22} />
+          </div>
           <div>
-            <div style={{ fontSize: '10px', color: '#73B1BF', fontWeight: '800', letterSpacing: '0.05em' }}>
-              Plataforma M2C
+            <div style={{ fontSize: '16px', fontWeight: '900', color: '#0F172A', letterSpacing: '-0.3px', lineHeight: 1.1 }}>
+              FSPM CRM
+            </div>
+            <div style={{ fontSize: '10px', color: '#D32F2F', fontWeight: '800', letterSpacing: '0.05em' }}>
+              PROTECCIÓN CONTRA INCENDIO
             </div>
           </div>
+
           {totalAlerts > 0 && (
-            <div className="badge-pulse" style={{
-              marginLeft: 'auto',
-              backgroundColor: '#A61C5C', color: '#FFFFFF',
-              fontSize: '10px', fontWeight: '900',
-              width: '20px', height: '20px', borderRadius: '50%',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
+            <div
+              title={`${totalAlerts} alertas operativas activas`}
+              style={{
+                marginLeft: 'auto',
+                backgroundColor: '#D32F2F',
+                color: '#FFFFFF',
+                fontSize: '10px',
+                fontWeight: '900',
+                width: '20px',
+                height: '20px',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               {totalAlerts}
             </div>
           )}
         </div>
       </div>
 
-      {/* ── Navigation ── */}
+      {/* ── Navegación ── */}
       <nav
         className="styled-scroll"
         style={{
-          flex: '1 1 0', minHeight: 0, overflowY: 'auto',
-          padding: '16px 10px 20px 10px', position: 'relative', zIndex: 1,
+          flex: '1 1 0',
+          minHeight: 0,
+          overflowY: 'auto',
+          padding: '16px 12px 20px 12px',
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* Dashboard principal */}
@@ -108,18 +152,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
           <button
             onClick={() => onSectionChange('dashboard')}
             style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '10px 12px', borderRadius: '12px', border: 'none', cursor: 'pointer',
-              backgroundColor: activeSection === 'dashboard' ? '#73B1BF' : 'transparent',
+              width: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '10px 12px',
+              borderRadius: '12px',
+              border: 'none',
+              cursor: 'pointer',
+              backgroundColor: activeSection === 'dashboard' ? '#D32F2F' : 'transparent',
               color: activeSection === 'dashboard' ? '#FFFFFF' : colores.textoClaro,
-              transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
+              transition: 'all 0.2s',
               textAlign: 'left',
-              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(115,177,191,0.35)' : 'none',
+              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(211, 47, 47, 0.35)' : 'none',
             }}
             onMouseEnter={e => {
               if (activeSection !== 'dashboard') {
-                e.currentTarget.style.backgroundColor = '#EAF5F7';
-                e.currentTarget.style.color = '#73B1BF';
+                e.currentTarget.style.backgroundColor = '#FEE2E2';
+                e.currentTarget.style.color = '#D32F2F';
               }
             }}
             onMouseLeave={e => {
@@ -129,37 +179,49 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               }
             }}
           >
-            <div style={{
-              width: '30px', height: '30px', borderRadius: '9px', flexShrink: 0,
-              backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#E6F4F6',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#73B1BF'} />
+            <div
+              style={{
+                width: '30px',
+                height: '30px',
+                borderRadius: '8px',
+                flexShrink: 0,
+                backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#FEE2E2',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#D32F2F'} />
             </div>
-            <span style={{ fontSize: '13px', fontWeight: '700', flex: 1 }}>
-              Dashboard Totalplay
+            <span style={{ fontSize: '13px', fontWeight: '800', flex: 1 }}>
+              Dashboard FSPM
             </span>
-            {activeSection === 'dashboard' && (
-              <div style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.6)' }} />
-            )}
           </button>
         </div>
 
-        {/* Category groups */}
+        {/* Categorías de módulos */}
         {categorias.map((cat, cIdx) => (
-          <div key={cIdx} style={{ marginBottom: '20px' }}>
-            <div style={{
-              fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
-              letterSpacing: '0.08em', color: cat.color,
-              marginBottom: '8px', paddingLeft: '10px',
-              display: 'flex', alignItems: 'center', gap: '6px'
-            }}>
-              <div style={{ width: '16px', height: '2px', backgroundColor: cat.color, borderRadius: '1px', flexShrink: 0 }} />
+          <div key={cIdx} style={{ marginBottom: '18px' }}>
+            <div
+              style={{
+                fontSize: '9.5px',
+                fontWeight: 900,
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                color: cat.color,
+                marginBottom: '8px',
+                paddingLeft: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '6px',
+              }}
+            >
+              <div style={{ width: '12px', height: '2px', backgroundColor: cat.color, borderRadius: '1px' }} />
               {cat.titulo}
             </div>
 
             {cat.items.map((item) => {
-              const IconComp = iconMap[item.iconoName] || Activity;
+              const IconComp = iconMap[item.iconoName] || Briefcase;
               const isActive = activeSection === item.id;
               const itemColor = cat.color;
 
@@ -170,37 +232,60 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                   onMouseEnter={() => setHoveredItem(item.id)}
                   onMouseLeave={() => setHoveredItem(null)}
                   style={{
-                    width: '100%', display: 'flex', alignItems: 'center', gap: '9px',
-                    padding: '8px 12px', borderRadius: '10px', marginBottom: '2px',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '9px',
+                    padding: '8px 12px',
+                    borderRadius: '10px',
+                    marginBottom: '2px',
                     backgroundColor: isActive ? itemColor : hoveredItem === item.id ? `${itemColor}12` : 'transparent',
                     color: isActive ? '#FFFFFF' : hoveredItem === item.id ? itemColor : colores.textoClaro,
-                    border: 'none', cursor: 'pointer', textAlign: 'left',
-                    transition: 'all 0.18s cubic-bezier(0.22, 1, 0.36, 1)',
+                    border: 'none',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.18s',
                     boxShadow: isActive ? `0 3px 10px ${itemColor}40` : 'none',
-                    position: 'relative',
                   }}
                 >
-                  <div style={{
-                    width: '28px', height: '28px', borderRadius: '8px', flexShrink: 0,
-                    backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : `${itemColor}15`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    transition: 'all 0.18s',
-                  }}>
+                  <div
+                    style={{
+                      width: '28px',
+                      height: '28px',
+                      borderRadius: '8px',
+                      flexShrink: 0,
+                      backgroundColor: isActive ? 'rgba(255,255,255,0.2)' : `${itemColor}15`,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
                     <IconComp size={14} color={isActive ? '#FFFFFF' : itemColor} />
                   </div>
-                  <span style={{
-                    fontSize: '12.5px', fontWeight: isActive ? '700' : '500',
-                    flex: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                  }}>
+                  <span
+                    style={{
+                      fontSize: '12.5px',
+                      fontWeight: isActive ? '800' : '600',
+                      flex: 1,
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
                     {item.titulo}
                   </span>
                   {item.alertas > 0 && (
-                    <span style={{
-                      backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}20`,
-                      color: isActive ? '#FFFFFF' : itemColor,
-                      fontSize: '10px', fontWeight: '800',
-                      padding: '1px 6px', borderRadius: '8px', flexShrink: 0,
-                    }}>
+                    <span
+                      style={{
+                        backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : `${itemColor}20`,
+                        color: isActive ? '#FFFFFF' : itemColor,
+                        fontSize: '10px',
+                        fontWeight: '900',
+                        padding: '1px 6px',
+                        borderRadius: '8px',
+                        flexShrink: 0,
+                      }}
+                    >
                       {item.alertas}
                     </span>
                   )}
@@ -209,77 +294,34 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             })}
           </div>
         ))}
-
-        {/* ── OPCIÓN ESPECIAL AL FINAL DEL SIDEBAR ── */}
-        <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: `1px dashed ${colores.borde}` }}>
-          <div style={{
-            fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
-            letterSpacing: '0.08em', color: '#A61C5C',
-            marginBottom: '8px', paddingLeft: '8px',
-            display: 'flex', alignItems: 'center', gap: '6px'
-          }}>
-            <div style={{ width: '12px', height: '2px', backgroundColor: '#A61C5C', borderRadius: '1px', flexShrink: 0 }} />
-            OPCIÓN ESPECIAL
-          </div>
-
-          <button
-            onClick={() => onSectionChange('vista-gerente-movil')}
-            onMouseEnter={() => setHoveredItem('vista-gerente-movil')}
-            onMouseLeave={() => setHoveredItem(null)}
-            style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
-              padding: '10px 12px', borderRadius: '14px', cursor: 'pointer',
-              background: activeSection === 'vista-gerente-movil'
-                ? 'linear-gradient(135deg, #A61C5C 0%, #732D67 100%)'
-                : hoveredItem === 'vista-gerente-movil' ? '#FCE7F1' : '#FFF1F7',
-              color: activeSection === 'vista-gerente-movil' ? '#FFFFFF' : '#A61C5C',
-              border: `1.5px solid ${activeSection === 'vista-gerente-movil' ? '#A61C5C' : '#F5B8D0'}`,
-              boxShadow: activeSection === 'vista-gerente-movil'
-                ? '0 6px 20px rgba(166,28,92,0.35)'
-                : '0 2px 8px rgba(166,28,92,0.08)',
-              transition: 'all 0.22s cubic-bezier(0.22, 1, 0.36, 1)',
-              textAlign: 'left'
-            }}
-          >
-            <div style={{
-              width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0,
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <Smartphone size={16} color="#FFFFFF" />
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: '12.5px', fontWeight: '900', lineHeight: 1.2 }}>
-                Vista Móvil Gerente
-              </div>
-              <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: '700' }}>
-                Copiloto &amp; Monitoreo
-              </div>
-            </div>
-            <span style={{
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
-              color: '#FFFFFF', fontSize: '9px', fontWeight: '900',
-              padding: '2px 7px', borderRadius: '10px', flexShrink: 0
-            }}>
-              PRO
-            </span>
-          </button>
-        </div>
       </nav>
 
-      {/* ── Bottom Status Bar ── */}
-      <div style={{
-        padding: '12px 16px',
-        borderTop: `1px solid ${colores.borde}`,
-        backgroundColor: '#FFFFFF',
-        flexShrink: 0, zIndex: 1, position: 'relative',
-        display: 'flex', alignItems: 'center', gap: '8px',
-      }}>
-        <Wifi size={14} color="#5B8F20" />
-        <span style={{ fontSize: '11px', fontWeight: '600', color: '#5B8F20' }}>
-          Sistema en línea
+      {/* ── Status Bar Inferior ── */}
+      <div
+        style={{
+          padding: '12px 16px',
+          borderTop: `1px solid ${colores.borde}`,
+          backgroundColor: '#FFFFFF',
+          flexShrink: 0,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+        }}
+      >
+        <Wifi size={14} color="#10B981" />
+        <span style={{ fontSize: '11px', fontWeight: '700', color: '#059669' }}>
+          Workspace Conectado
         </span>
-        <span className="live-dot live-dot-green" style={{ width: '7px', height: '7px', marginLeft: 'auto' }} />
+        <span
+          style={{
+            width: '7px',
+            height: '7px',
+            borderRadius: '50%',
+            backgroundColor: '#10B981',
+            marginLeft: 'auto',
+            boxShadow: '0 0 8px #10B981',
+          }}
+        />
       </div>
     </div>
   );

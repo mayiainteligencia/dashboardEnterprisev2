@@ -1,119 +1,130 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "TOTALPLAY",
-    razonSocial: "Total Play Telecomunicaciones, S.A.P.I. de C.V.",
-    grupo: "Grupo Salinas",
-    eslogan: "Transformación Inteligente M2C · Puntos de Venta",
-    logo: "/assets/logosNativos/TotalPlay.png",
+    nombre: "FSPM",
+    razonSocial: "Fire Safety & Protection Management, S.A. de C.V.",
+    grupo: "FSPM Soluciones Contra Incendio",
+    eslogan: "CRM Comercial, Licitaciones & Protección Contra Incendio",
+    logo: "", // Usaremos iconos vectoriales temáticos genéricos
   },
 
   colores: {
-    // ── Paleta oficial Totalplay (5 colores de igual relevancia) ──
-    magenta:  "#A61C5C",   // Rosa/Magenta fuerte
-    purpura:  "#732D67",   // Púrpura oscuro
-    celeste:  "#73B1BF",   // Azul-turquesa (NUEVO)
-    lima:     "#BBBF41",   // Olivo/Lima
-    ambar:    "#D9933D",   // Ámbar/Naranja
-
+    // ── Paleta oficial FSPM (Protección Contra Incendio, Seguridad Industrial y Gobierno) ──
+    fuegoPrimario:   "#D32F2F",   // Rojo Carmín / Fuego Industrial
+    fuegoOscuro:     "#9A0007",   // Rojo Oscuro / Alerta Crítica
+    fuegoClaro:      "#FF6659",   // Rojo Suave / Resaltado
+    
+    azulMarino:      "#0F172A",   // Azul Marino Profundo (Corporativo / Gobierno)
+    azulOperativo:   "#0284C7",   // Azul Operativo / SPCI
+    azulSuave:       "#E0F2FE",   // Fondo Azul Claro
+    
+    ambarAlerta:     "#D97706",   // Ámbar Licitaciones / Plazos 3-10 días
+    ambarSuave:      "#FEF3C7",   // Fondo Ámbar
+    
+    esmeraldaGanado: "#10B981",   // Verde Esmeralda / Negocios Ganados / OK
+    esmeraldaSuave:  "#D1FAE5",   // Fondo Verde
+    
     // ── Roles de color en la UI ──
-    // El primario principal cambia a turquesa para reducir dominancia morada
-    primario:       "#73B1BF",   // Turquesa Totalplay → encabezados, nav activa
-    primarioOscuro: "#4E848F",   // Turquesa oscuro
-    primarioClaro:  "#A3D0D9",   // Turquesa claro
+    primario:       "#D32F2F",   // Rojo FSPM
+    primarioOscuro: "#9A0007",
+    primarioClaro:  "#FFCDD2",
+    
+    secundario:     "#0F172A",   // Azul Marino
+    secundarioOscuro: "#020617",
+    
+    acento:         "#D97706",   // Ámbar / Licitaciones
+    acentoOscuro:   "#B45309",
+    
+    peligro:        "#D32F2F",   // Rojo para seguimientos vencidos / <72h
+    advertencia:    "#D97706",   // Ámbar
+    exito:          "#10B981",   // Verde para ganados / checklist completo
 
-    secundario:     "#A61C5C",   // Magenta → badges, CTA, alertas
-    acento:         "#D9933D",   // Ámbar → acciones secundarias / highlights
-    acentoOscuro:   "#A36618",   // Ámbar oscuro
-
-    peligro:     "#A61C5C",   // Magenta para errores críticos
-    advertencia: "#D9933D",   // Ámbar para advertencias
-    exito:       "#BBBF41",   // Lima para éxitos / OK
-
-    // ── Fondos (Blanco puro como requerido) ──
+    // ── Fondos (Limpio y profesional) ──
     fondoPrincipal:  "#FFFFFF",
-    fondoSecundario: "#F8F9FA",
-    fondoTerciario:  "#F1F3F5",
+    fondoSecundario: "#F8FAFC",
+    fondoTerciario:  "#F1F5F9",
     fondoClaro:      "#FFFFFF",
 
     // ── Textos ──
-    textoClaro:    "#1A1A1A",
-    textoMedio:    "#4A4A4A",
-    textoOscuro:   "#777777",
+    textoClaro:    "#0F172A",
+    textoMedio:    "#475569",
+    textoOscuro:   "#94A3B8",
     textoEnOscuro: "#FFFFFF",
 
     // ── Bordes ──
     borde:      "#E2E8F0",
-    bordeHover: "#73B1BF",   // Turquesa en hover
+    bordeHover: "#D32F2F",
 
     // ── Gradientes ──
-    gradientePrimario:   "linear-gradient(135deg, #73B1BF 0%, #4E848F 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #A61C5C 0%, #732D67 100%)",
-    gradienteAcento:     "linear-gradient(135deg, #D9933D 0%, #BBBF41 100%)",
+    gradientePrimario:   "linear-gradient(135deg, #D32F2F 0%, #9A0007 100%)",
+    gradienteSecundario: "linear-gradient(135deg, #0F172A 0%, #1E293B 100%)",
+    gradienteAcento:     "linear-gradient(135deg, #D97706 0%, #F59E0B 100%)",
+    gradienteExito:      "linear-gradient(135deg, #10B981 0%, #059669 100%)",
 
     // ── Glass / Sombras ──
     fondoGlass:    "rgba(255, 255, 255, 0.95)",
-    sombra:        "0 2px 8px rgba(0, 0, 0, 0.04)",
-    sombraMedia:   "0 8px 20px rgba(115, 177, 191, 0.12)",
-    sombraGrande:  "0 16px 32px rgba(115, 177, 191, 0.18)",
+    sombra:        "0 2px 8px rgba(0, 0, 0, 0.05)",
+    sombraMedia:   "0 8px 24px rgba(211, 47, 47, 0.10)",
+    sombraGrande:  "0 16px 36px rgba(15, 23, 42, 0.12)",
   },
 
   metricas: {
-    hogaresPasados: "19M+",
-    suscriptores: "5.5M",
-    puntosVenta: 112,
-    ciudades: 87,
-    fibraOpticaKm: "164,000 km",
-    arpuPromedio: "$588",
-    empleados: 5500,
+    pipelineActivo: "$24.8M",
+    oportunidadesActivas: 41,
+    cotizacionesAbiertas: 23,
+    licitacionesActivas: 8,
+    seguimientosVencidos: 6,
+    actividadesSemana: 17,
+    ganadosMes: "$3.4M",
+    perdidosMes: "$1.2M",
   },
 
   ia: {
     nombre: "MAYIA",
-    modelo: "Gemini 3.5 Flash",
+    modelo: "Gemini 2.5 Flash",
     habilitado: true,
-    empresaCliente: "Totalplay Telecomunicaciones",
+    empresaCliente: "FSPM (Fire Safety & Protection Management)",
   },
 
-  // ── Temas por sección distribuidos entre los 5 colores ──
+  // ── Temas por módulo ──
   temas: {
     admin: {
-      nombre: "Operación de Tiendas e Islas",
-      acento:       "#73B1BF",   // Turquesa
-      acentoOscuro: "#4E848F",
-      acentoSuave:  "#EAF5F7",
+      nombre: "Gestión Comercial & Licitaciones FSPM",
+      acento:       "#D32F2F",   // Rojo FSPM
+      acentoOscuro: "#9A0007",
+      acentoSuave:  "#FEE2E2",
       sobreAcento:  "#FFFFFF",
     },
     cliente: {
-      nombre: "Atención al Cliente Residencial",
-      acento:       "#BBBF41",   // Lima
-      acentoOscuro: "#8B8F26",
-      acentoSuave:  "#F7F8E2",
-      sobreAcento:  "#1A1A1A",
-    },
-    compras: {
-      nombre: "Ventas y Contratación",
-      acento:       "#A61C5C",   // Magenta
-      acentoOscuro: "#751240",
-      acentoSuave:  "#FCE7F1",
+      nombre: "Portal Clientes & Dependencias",
+      acento:       "#0284C7",   // Azul
+      acentoOscuro: "#0369A1",
+      acentoSuave:  "#E0F2FE",
       sobreAcento:  "#FFFFFF",
     },
-    flotillas: {
-      nombre: "Infraestructura y Cobertura",
-      acento:       "#D9933D",   // Ámbar
-      acentoOscuro: "#A36618",
-      acentoSuave:  "#FDF4E7",
+    licitaciones: {
+      nombre: "Licitaciones & Procedimientos",
+      acento:       "#D97706",   // Ámbar
+      acentoOscuro: "#B45309",
+      acentoSuave:  "#FEF3C7",
       sobreAcento:  "#FFFFFF",
     },
-    tecnologia: {
-      nombre: "Tecnología y Datos",
-      acento:       "#732D67",   // Púrpura
-      acentoOscuro: "#4A1B43",
-      acentoSuave:  "#F5E8F3",
+    operaciones: {
+      nombre: "Sistemas Contra Incendio & SPCI",
+      acento:       "#10B981",   // Verde
+      acentoOscuro: "#059669",
+      acentoSuave:  "#D1FAE5",
+      sobreAcento:  "#FFFFFF",
+    },
+    documentos: {
+      nombre: "Google Drive & Repositorio",
+      acento:       "#0F172A",   // Marino
+      acentoOscuro: "#020617",
+      acentoSuave:  "#F1F5F9",
       sobreAcento:  "#FFFFFF",
     },
   },
 };
 
 export type TemaBesco = typeof brandingConfig.temas.admin;
-export type TemaTotalplay = typeof brandingConfig.temas.admin;
+export type TemaFspm = typeof brandingConfig.temas.admin;
 export type BrandingConfig = typeof brandingConfig;

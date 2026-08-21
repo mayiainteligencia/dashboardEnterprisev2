@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-import { TotalplayDashboard } from './totalplay/TotalplayDashboard';
-import { ComputerVisionModule } from './components/modules/totalplay/ComputerVisionModule';
-import { CopilotoVendedorModule } from './components/modules/totalplay/CopilotoVendedorModule';
-import { DisplaysInteligentesModule } from './components/modules/totalplay/DisplaysInteligentesModule';
-import { AuditoriaVisualModule } from './components/modules/totalplay/AuditoriaVisualModule';
-import { GobiernoDatosModule } from './components/modules/totalplay/GobiernoDatosModule';
-import { AcademiaMayiaModule } from './components/modules/totalplay/AcademiaMayiaModule';
-import { DisenioFabricacionModule } from './components/modules/totalplay/DisenioFabricacionModule';
-import { OperacionAdministradaModule } from './components/modules/totalplay/OperacionAdministradaModule';
-import { DiscoveryRetailModule } from './components/modules/totalplay/DiscoveryRetailModule';
-import { VistaGerenteMovilModule } from './components/modules/totalplay/VistaGerenteMovilModule';
+import { FspmDashboard } from './fspm/FspmDashboard';
+import { ClientesModule } from './components/modules/fspm/ClientesModule';
+import { ContactosModule } from './components/modules/fspm/ContactosModule';
+import { OportunidadesModule } from './components/modules/fspm/OportunidadesModule';
+import { CotizacionesModule } from './components/modules/fspm/CotizacionesModule';
+import { LicitacionesModule } from './components/modules/fspm/LicitacionesModule';
+import { ActividadesModule } from './components/modules/fspm/ActividadesModule';
+import { DocumentosDriveModule } from './components/modules/fspm/DocumentosDriveModule';
+import { DireccionReportesModule } from './components/modules/fspm/DireccionReportesModule';
 import { AsistenteIAChat } from './components/modules/AsistenteIAChat';
-import { MODULOS_TOTALPLAY } from './totalplay/totalplayData';
+import { MODULOS_FSPM } from './fspm/fspmData';
 import { brandingConfig } from './config/branding';
 import { AIChatProvider, useAIChat } from './context/AIChatContext';
 
@@ -31,7 +29,6 @@ function AppInner() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [drawerOpen, setDrawerOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { colores } = brandingConfig;
   const { setActiveSectionContext } = useAIChat();
 
   const selectSection = (s: string) => {
@@ -40,9 +37,9 @@ function AppInner() {
   };
 
   const getTitulo = () => {
-    if (activeSection === 'dashboard') return 'Totalplay · Puntos Inteligentes M2C';
-    const mod = MODULOS_TOTALPLAY.find(m => m.id === activeSection);
-    return mod ? mod.titulo : 'Totalplay Telecomunicaciones';
+    if (activeSection === 'dashboard') return 'FSPM · CRM Comercial & Licitaciones';
+    const mod = MODULOS_FSPM.find(m => m.id === activeSection);
+    return mod ? mod.titulo : 'FSPM Fire Safety & Protection Management';
   };
 
   useEffect(() => {
@@ -52,32 +49,28 @@ function AppInner() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
-        return <TotalplayDashboard onSelectModulo={selectSection} />;
-      case 'vista-gerente-movil':
-        return <VistaGerenteMovilModule />;
-      case 'computer-vision':
-        return <ComputerVisionModule />;
-      case 'asesor-inteligente':
+        return <FspmDashboard onSelectModulo={selectSection} />;
+      case 'clientes':
+        return <ClientesModule />;
+      case 'contactos':
+        return <ContactosModule />;
+      case 'oportunidades':
+        return <OportunidadesModule />;
+      case 'cotizaciones':
+        return <CotizacionesModule />;
+      case 'licitaciones':
+        return <LicitacionesModule />;
+      case 'actividades':
+        return <ActividadesModule />;
+      case 'documentos':
+        return <DocumentosDriveModule />;
+      case 'direccion':
+        return <DireccionReportesModule />;
       case 'asistente-ia-chat':
+      case 'asesor-inteligente':
         return <AsistenteIAChat />;
-      case 'copiloto-vendedor':
-        return <CopilotoVendedorModule />;
-      case 'displays-inteligentes':
-        return <DisplaysInteligentesModule />;
-      case 'auditoria-visual':
-        return <AuditoriaVisualModule />;
-      case 'gobierno-datos-crm':
-        return <GobiernoDatosModule />;
-      case 'academia-mayia':
-        return <AcademiaMayiaModule />;
-      case 'diseño-fabricacion':
-        return <DisenioFabricacionModule />;
-      case 'operacion-administrada':
-        return <OperacionAdministradaModule />;
-      case 'discovery-retail':
-        return <DiscoveryRetailModule />;
       default:
-        return <TotalplayDashboard onSelectModulo={selectSection} />;
+        return <FspmDashboard onSelectModulo={selectSection} />;
     }
   };
 
@@ -88,7 +81,7 @@ function AppInner() {
         width: '100vw',
         height: '100vh',
         overflow: 'hidden',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
       }}
     >
       {/* SIDEBAR — Fijo en escritorio */}
@@ -100,9 +93,24 @@ function AppInner() {
 
       {/* SIDEBAR — Drawer en móvil */}
       {isMobile && drawerOpen && (
-        <div onClick={() => setDrawerOpen(false)}
-          style={{ position: 'fixed', inset: 0, zIndex: 3000, background: 'rgba(0,0,0,0.45)', display: 'flex' }}>
-          <div onClick={e => e.stopPropagation()} style={{ width: '250px', height: '100%', boxShadow: '0 0 40px rgba(0,0,0,0.3)' }}>
+        <div
+          onClick={() => setDrawerOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 3000,
+            background: 'rgba(15, 23, 42, 0.5)',
+            display: 'flex',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: '250px',
+              height: '100%',
+              boxShadow: '0 0 40px rgba(0,0,0,0.3)',
+            }}
+          >
             <Sidebar activeSection={activeSection} onSectionChange={selectSection} />
           </div>
         </div>
@@ -110,15 +118,23 @@ function AppInner() {
 
       {/* CONTENIDO PRINCIPAL */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Header con colores e identidad Totalplay */}
+        {/* Header con identidad FSPM */}
         <Header
           title={getTitulo()}
           onMenu={isMobile ? () => setDrawerOpen(true) : undefined}
           modo="admin"
         />
 
-        {/* ÁREA DE TRABAJO EN FONDO BLANCO */}
-        <div className="no-scrollbar" style={{ flex: 1, overflow: 'auto', padding: 'clamp(14px, 3vw, 24px)', backgroundColor: '#FFFFFF' }}>
+        {/* ÁREA DE TRABAJO EN FONDO BLANCO / LIMPIO */}
+        <div
+          className="no-scrollbar"
+          style={{
+            flex: 1,
+            overflow: 'auto',
+            padding: 'clamp(14px, 2.5vw, 24px)',
+            backgroundColor: '#F8FAFC',
+          }}
+        >
           {renderContent()}
         </div>
       </div>

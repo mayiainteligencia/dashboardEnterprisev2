@@ -24,7 +24,7 @@ const INITIAL_MESSAGES: LLMMessage[] = [
   {
     id: 'welcome-1',
     role: 'assistant',
-    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Corporativa de Totalplay. Estoy conectada en tiempo real con todos los módulos operacionales M2C (Computer Vision, Displays Inteligentes, Copiloto de Ventas y Gobierno de Datos). ¿En qué proceso te puedo asistir hoy?',
+    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Comercial y Operativa de **FSPM** (Fire Safety & Protection Management). Estoy conectada en tiempo real con tu catálogo de sistemas contra incendio (FireAde, CAFS, SPCI), licitaciones públicas/privadas (PEMEX, CFE, ASA), cotizaciones y Google Workspace. ¿En qué oportunidad o procedimiento te puedo asistir hoy?',
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   }
 ];
@@ -32,15 +32,9 @@ const INITIAL_MESSAGES: LLMMessage[] = [
 export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<LLMMessage[]>(() => {
     try {
-      const saved = localStorage.getItem('MAYIA_CHAT_HISTORY');
+      const saved = localStorage.getItem('MAYIA_CHAT_HISTORY_FSPM');
       if (saved) {
-        const parsed = JSON.parse(saved);
-        // Clean any legacy BESCO occurrences in saved chat history
-        const cleaned = parsed.map((m: LLMMessage) => ({
-          ...m,
-          content: m.content.replace(/BESCO/gi, 'Totalplay')
-        }));
-        return cleaned;
+        return JSON.parse(saved);
       }
     } catch (e) {
       console.warn('Error reading saved chat history:', e);
@@ -50,14 +44,14 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const [loading, setLoading] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [activeSectionTitle, setActiveSectionTitle] = useState('Dashboard Enterprise');
+  const [activeSectionTitle, setActiveSectionTitle] = useState('Dashboard FSPM');
   const [config, setConfigState] = useState<LLMConfig>(getStoredLLMConfig());
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
     try {
-      localStorage.setItem('MAYIA_CHAT_HISTORY', JSON.stringify(messages));
+      localStorage.setItem('MAYIA_CHAT_HISTORY_FSPM', JSON.stringify(messages));
     } catch (e) {
       console.warn('Error saving chat history:', e);
     }
@@ -111,7 +105,7 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     } catch (err: any) {
       setMessages(prev => prev.map(m => m.id === assistantId ? {
         ...m,
-        content: `⚠️ No fue posible procesar la consulta con el LLM: ${err.message || 'Error de conexión'}. Verifica tu conexión o configura una API Key de Gemini.`
+        content: `⚠️ No fue posible procesar la consulta con el LLM: ${err.message || 'Error de conexión'}.`
       } : m));
     } finally {
       setLoading(false);

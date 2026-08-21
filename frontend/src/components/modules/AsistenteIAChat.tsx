@@ -30,10 +30,10 @@ export const AsistenteIAChat: React.FC = () => {
   };
 
   const quickPrompts = [
-    `Verificar cobertura FTTH Totalplay`,
-    'Comparar paquetes Doble Play vs Triple Play',
-    'Sugerencias del Copiloto para elevar ARPU',
-    'Métricas de atracción y permanencia en islas'
+    'Estatus de licitación PEMEX (<36h)',
+    'Resumen de cotizaciones abiertas ($8.45M)',
+    'Checklist de entrega para CFE',
+    'Ventajas de concentrado ecológico FireAde 2000'
   ];
 
   return (
@@ -49,7 +49,7 @@ export const AsistenteIAChat: React.FC = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Header del Chat en Dashboard */}
+      {/* Header del Chat */}
       <div
         style={{
           padding: '16px 20px',
@@ -78,7 +78,7 @@ export const AsistenteIAChat: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: colores.textoClaro }}>
-                {ia.nombre} · Asistente IA Corporativo
+                {ia.nombre} · Asesor IA FSPM
               </h3>
               <span
                 style={{
@@ -187,7 +187,7 @@ export const AsistenteIAChat: React.FC = () => {
                 {m.content ? (
                   <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={colores.primario} />
                 ) : (
-                  loading && m.role === 'assistant' ? 'MAYIA está procesando la consulta...' : ''
+                  loading && m.role === 'assistant' ? 'MAYIA está procesando la consulta FSPM...' : ''
                 )}
               </div>
             </div>
