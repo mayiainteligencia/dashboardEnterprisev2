@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Globe as GlobeIcon, MapPin, ShieldAlert, Radio, Building2, Activity, MousePointerClick } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { GuardianGlobe } from '../modules/dashboardModules/guardian/GuardianGlobe';
@@ -34,6 +35,7 @@ export const GlobalAlerts: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="Global Alerts" descripcion="Mapa mundial de amenazas — clic en un punto para ver el detalle" icon={<GlobeIcon size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="globalAlerts" compacto={isMobile} />
 
       <Panel style={{ background: colores.fondoClaro }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '13px', color: colores.textoMedio, marginBottom: '14px' }}>

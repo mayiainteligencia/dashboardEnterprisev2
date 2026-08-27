@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Vault, Lock, ScanEye, ArrowRight, ArrowLeft, CheckCircle2, UserPlus } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, AgentesPanel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { GuardianButton } from '../modules/dashboardModules/guardian/GuardianCard';
@@ -19,6 +20,7 @@ export const IdentityVault: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="Identity Vault" descripcion="Almacenamiento cifrado de embeddings biométricos" icon={<Vault size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="vault" compacto={isMobile} />
 
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '16px' }}>
         <Panel><Stat label="Perfiles almacenados" valor={String(vaultStats.perfiles)} /></Panel>

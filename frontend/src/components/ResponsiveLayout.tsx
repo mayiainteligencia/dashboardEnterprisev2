@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Menu, X, LayoutDashboard, TrendingUp, Shield,
-  Code2, GraduationCap, ChevronRight, Radio
+  Menu, X, LayoutDashboard, ChevronRight,
+  Scale, Microscope, Vault, Store, Gavel, Globe
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
 
@@ -14,12 +14,15 @@ interface ResponsiveLayoutProps {
   children: React.ReactNode;
 }
 
+// Mismo menú que el sidebar de escritorio: sólo secciones Guardian.
 const menuItems = [
-  { id: 'dashboard',      nombre: 'Dashboard General', icono: LayoutDashboard },
-  { id: 'monitor',     nombre: 'Monitor de Medios',         icono: Radio      },
-  { id: 'ciberseguridad', nombre: 'CiberSeguridad',     icono: Shield          },
-  { id: 'playground',     nombre: 'Playground',         icono: Code2           },
-  { id: 'academia',       nombre: 'Academia',            icono: GraduationCap   },
+  { id: 'dashboard',    nombre: 'Dashboard Guardian',    icono: LayoutDashboard },
+  { id: 'legal',        nombre: 'Legal & IP Division',   icono: Scale           },
+  { id: 'forensics',    nombre: 'AI Forensics',          icono: Microscope      },
+  { id: 'vault',        nombre: 'Identity Vault',        icono: Vault           },
+  { id: 'marketplace',  nombre: 'Licensing Marketplace', icono: Store           },
+  { id: 'enforcement',  nombre: 'Enforcement Engine',    icono: Gavel           },
+  { id: 'globalAlerts', nombre: 'Global Alerts',         icono: Globe           },
 ];
 
 export const ResponsiveLayout: React.FC<ResponsiveLayoutProps> = ({

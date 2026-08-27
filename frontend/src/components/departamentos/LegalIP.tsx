@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Scale, ArrowRight, CheckCircle2, Loader2, FilePlus } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, AgentesPanel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { GuardianButton } from '../modules/dashboardModules/guardian/GuardianCard';
@@ -24,6 +25,7 @@ export const LegalIP: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="Legal & IP Division" descripcion="Registro híbrido, contratos IA y enforcement legal" icon={<Scale size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="legal" compacto={isMobile} />
 
       <Panel titulo="Pipeline del proceso legal">
         <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '8px' }}>

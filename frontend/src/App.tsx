@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ResponsiveLayout } from './components/ResponsiveLayout';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
@@ -22,6 +22,8 @@ import { EnforcementEngine } from './components/departamentos/EnforcementEngine'
 import { GlobalAlerts } from './components/departamentos/GlobalAlerts';
 
 import { MonitorMedios } from './components/MonitorMedios';
+import { AgentToasts } from './components/agents/AgentToasts';
+import { setSeccionActiva } from './agents/agentBus';
 import { brandingConfig } from './config/branding';
 
 
@@ -30,6 +32,9 @@ import './responsive.css';
 function App() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const { colores } = brandingConfig;
+
+  // Los agentes emiten sobre la sección visible.
+  useEffect(() => { setSeccionActiva(activeSection); }, [activeSection]);
 
   const getTitulo = () => {
     const titulos: Record<string, string> = {
@@ -96,6 +101,7 @@ function App() {
       <div style={{ flex: 1, overflow: 'auto', backgroundColor: colores.fondoPrincipal }}>
         {renderContent()}
       </div>
+      <AgentToasts />
     </ResponsiveLayout>
   );
 }

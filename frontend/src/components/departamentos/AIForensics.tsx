@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Microscope, Upload, Loader2, CheckCircle2, ScanFace } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, AgentesPanel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { GuardianButton } from '../modules/dashboardModules/guardian/GuardianCard';
@@ -30,6 +31,7 @@ export const AIForensics: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="AI Forensics Division" descripcion="Detección sintética profunda — IA vs IA" icon={<Microscope size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="forensics" compacto={isMobile} />
 
       <Panel titulo="Análisis recientes">
         <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fill, minmax(${isMobile ? '140px' : '170px'}, 1fr))`, gap: '12px' }}>

@@ -1,15 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Bell,
-  AlertTriangle,
-  CheckCircle,
-  Info,
+  ShieldAlert,
+  ShieldCheck,
+  ShieldQuestion,
+  Check,
   X,
   Bot,
   CalendarDays,
   Sparkles,
+  BarChart3,
+  Users,
+  TriangleAlert,
+  TrendingUp,
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
+import { useEventosAgentes, resolverEvento, marcarTodoLeido, marcarLeido } from '../agents/agentBus';
+import type { EventoAgente, Severidad } from '../agents/agentBus';
 import { AsistenteIAChat } from './modules/AsistenteIAChat';
 import type { AsistenteIAChatHandle } from './modules/AsistenteIAChat';
 
@@ -17,35 +24,18 @@ interface HeaderProps {
   title: string;
 }
 
-interface Notification {
-  id: number;
-  tipo: 'alerta' | 'exito' | 'info' | 'urgente';
-  titulo: string;
-  mensaje: string;
-  tiempo: string;
-  leida: boolean;
-}
-
-const notificacionesEstaticas: Notification[] = [
-  { id: 1, tipo: 'urgente', titulo: 'Guanajuato: Quiebre Inminente · Antibióticos',        mensaje: 'Zona Norte en riesgo crítico. Stock vs demanda proyectada +34.7%. Acción inmediata requerida.',          tiempo: 'Hace 2 horas',  leida: false },
-  { id: 2, tipo: 'alerta',  titulo: 'Guanajuato: Alertas Epidemiológicas Activas',         mensaje: 'Influenza A +18.6% en 8 zonas y COVID-19 +12.3% en 6 zonas. CDMX con índice de riesgo: 92.',           tiempo: 'Hace 15 min',   leida: false },
-  { id: 3, tipo: 'alerta',  titulo: 'Guanajuato: Riesgo de Desabasto Nacional',       mensaje: '38 alertas activas hoy. 7.4% riesgo desabasto y 156 SKUs críticos de 24,390 monitoreados.',            tiempo: 'Hace 30 min',   leida: false },
-  { id: 4, tipo: 'exito',   titulo: 'Guanajuato: Reabastecimiento Completado · CDMX',       mensaje: 'Operación de reabastecimiento finalizada. Cobertura promedio actual: 92.6% en inventario disponible.',  tiempo: 'Hace 4 horas',  leida: true  },
-  { id: 5, tipo: 'info',    titulo: 'Guanajuato: Sobrestock Detectado · Vitaminas',     mensaje: 'Vitaminas Occidente con variación -3.2%. Cluster Alérgica tendencia -6% — nivel de riesgo bajo.',      tiempo: 'Hace 6 horas',  leida: true  },
-];
-
 const sugerencias = [
-  { icono: '📊', texto: '¿Cuál es el KPI más bajo este mes?' },
-  { icono: '👥', texto: '¿Cuántos empleados están activos hoy?' },
-  { icono: '⚠️', texto: 'Muéstrame las alertas críticas' },
-  { icono: '📈', texto: '¿Cómo van las ventas este trimestre?' },
+  { Icono: BarChart3,     texto: '¿Qué detectaron los agentes hoy?' },
+  { Icono: Users,         texto: '¿Qué clientes están en riesgo?' },
+  { Icono: TriangleAlert, texto: 'Muéstrame las alertas críticas' },
+  { Icono: TrendingUp,    texto: '¿Cómo va la tasa de takedowns?' },
 ];
 
 export const Header: React.FC<HeaderProps> = ({ title }) => {
   const { colores, empresa } = brandingConfig;
 
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
-  const [notificaciones, setNotificaciones] = useState<Notification[]>(notificacionesEstaticas);
+  const notificaciones = useEventosAgentes();
   const notifRef = useRef<HTMLDivElement>(null);
 
   const [chatAbierto, setChatAbierto] = useState(false);
@@ -73,22 +63,18 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const notificacionesNoLeidas = notificaciones.filter(n => !n.leida).length;
+  const notificacionesNoLeidas = notificaciones.filter(n => !n.leido).length;
 
-  const getIconoPorTipo = (tipo: Notification['tipo']) => {
-    switch (tipo) {
-      case 'alerta':  return <AlertTriangle size={16} color="#F59E0B" />;
-      case 'exito':   return <CheckCircle   size={16} color="#10B981" />;
-      case 'urgente': return <AlertTriangle size={16} color="#EF4444" />;
-      case 'info':    return <Info          size={16} color="#3B82F6" />;
-    }
+  const colorSeveridad = (s: Severidad) =>
+    s === 'critica' ? colores.peligro : s === 'alta' ? colores.advertencia : s === 'media' ? colores.acento : colores.exito;
+
+  const getIconoPorSeveridad = (ev: EventoAgente) => {
+    const c = colorSeveridad(ev.severidad);
+    if (ev.resuelto)               return <ShieldCheck    size={16} color={colores.exito} />;
+    if (ev.severidad === 'baja')   return <ShieldCheck    size={16} color={c} />;
+    if (ev.severidad === 'media')  return <ShieldQuestion size={16} color={c} />;
+    return <ShieldAlert size={16} color={c} />;
   };
-
-  const marcarComoLeida = (id: number) =>
-    setNotificaciones(notificaciones.map(n => n.id === id ? { ...n, leida: true } : n));
-
-  const marcarTodasComoLeidas = () =>
-    setNotificaciones(notificaciones.map(n => ({ ...n, leida: true })));
 
   return (
     <>
@@ -204,10 +190,10 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                   Sugerencias
                 </p>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                  {sugerencias.map((s, i) => (
+                  {sugerencias.map(({ Icono, texto }, i) => (
                     <button
                       key={i}
-                      onClick={() => chatRef.current?.sendExternal(s.texto)}
+                      onClick={() => chatRef.current?.sendExternal(texto)}
                       style={{
                         display: 'flex', alignItems: 'center', gap: '6px',
                         padding: '5px 12px',
@@ -223,8 +209,8 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                       onMouseEnter={e => (e.currentTarget.style.backgroundColor = colores.fondoSecundario)}
                       onMouseLeave={e => (e.currentTarget.style.backgroundColor = colores.fondoTerciario)}
                     >
-                      <span>{s.icono}</span>
-                      <span>{s.texto}</span>
+                      <Icono size={13} color={colores.textoMedio} />
+                      <span>{texto}</span>
                     </button>
                   ))}
                 </div>
@@ -302,7 +288,7 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                     <p style={{ margin: '2px 0 0', fontSize: '12px', color: colores.textoMedio }}>{notificacionesNoLeidas} sin leer</p>
                   </div>
                   {notificacionesNoLeidas > 0 && (
-                    <button onClick={marcarTodasComoLeidas}
+                    <button onClick={marcarTodoLeido}
                       style={{ background: 'none', border: 'none', color: colores.primario, fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
                       Marcar todas
                     </button>
@@ -310,30 +296,64 @@ export const Header: React.FC<HeaderProps> = ({ title }) => {
                 </div>
 
                 <div style={{ maxHeight: '380px', overflowY: 'auto' }}>
+                  {notificaciones.length === 0 && (
+                    <div style={{ padding: '28px 18px', textAlign: 'center', fontSize: '12px', color: colores.textoMedio }}>
+                      Los agentes están vigilando. Sin eventos por ahora.
+                    </div>
+                  )}
                   {notificaciones.map(notif => (
                     <div
                       key={notif.id}
-                      onClick={() => marcarComoLeida(notif.id)}
+                      onClick={() => marcarLeido(notif.id)}
                       style={{
                         padding: '14px 18px', borderBottom: `1px solid ${colores.borde}`,
-                        backgroundColor: notif.leida ? 'transparent' : colores.fondoTerciario + '44',
+                        backgroundColor: notif.leido ? 'transparent' : colores.fondoTerciario + '44',
                         cursor: 'pointer', transition: 'background-color 0.15s', display: 'flex', gap: '10px',
                       }}
                       onMouseEnter={e => (e.currentTarget.style.backgroundColor = colores.fondoTerciario)}
-                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = notif.leida ? 'transparent' : colores.fondoTerciario + '44')}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = notif.leido ? 'transparent' : colores.fondoTerciario + '44')}
                     >
-                      <div style={{ flexShrink: 0, marginTop: '2px' }}>{getIconoPorTipo(notif.tipo)}</div>
+                      <div style={{ flexShrink: 0, marginTop: '2px' }}>{getIconoPorSeveridad(notif)}</div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '3px' }}>
-                          <h4 style={{ margin: 0, fontSize: '13px', fontWeight: notif.leida ? '500' : '700', color: colores.textoClaro }}>
-                            {notif.titulo}
-                          </h4>
-                          {!notif.leida && (
-                            <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: colores.primario, flexShrink: 0, marginLeft: '8px', marginTop: '4px' }} />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '3px' }}>
+                          <Bot size={11} color={colores.textoOscuro} />
+                          <span style={{ fontSize: '10px', fontWeight: 600, color: colores.textoOscuro }}>{notif.agente}</span>
+                          <span style={{ marginLeft: 'auto', fontSize: '10px', color: colores.textoOscuro, fontFamily: 'monospace' }}>{notif.hora}</span>
+                          {!notif.leido && (
+                            <div style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: colorSeveridad(notif.severidad), flexShrink: 0 }} />
                           )}
                         </div>
-                        <p style={{ margin: '2px 0', fontSize: '12px', color: colores.textoMedio, lineHeight: '1.4' }}>{notif.mensaje}</p>
-                        <span style={{ fontSize: '11px', color: colores.textoOscuro }}>{notif.tiempo}</span>
+                        <h4 style={{ margin: 0, fontSize: '13px', fontWeight: notif.leido ? '500' : '700', color: colores.textoClaro }}>
+                          {notif.titulo}
+                        </h4>
+                        <p style={{ margin: '3px 0 0', fontSize: '12px', color: colores.textoMedio, lineHeight: '1.4' }}>{notif.detalle}</p>
+
+                        {notif.resuelto ? (
+                          <div style={{
+                            marginTop: '8px', display: 'flex', alignItems: 'center', gap: '6px',
+                            fontSize: '11.5px', fontWeight: 600, color: colores.exito,
+                          }}>
+                            <Check size={13} /> {notif.resuelto}
+                          </div>
+                        ) : (
+                          <div style={{ marginTop: '9px', display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                            {notif.acciones.map((a, i) => (
+                              <button
+                                key={a.id}
+                                onClick={e => { e.stopPropagation(); resolverEvento(notif.id, a); }}
+                                style={{
+                                  padding: '5px 10px', borderRadius: '8px', cursor: 'pointer',
+                                  fontSize: '11.5px', fontWeight: 600,
+                                  border: `1px solid ${i === 0 ? colorSeveridad(notif.severidad) : colores.borde}`,
+                                  background: i === 0 ? colorSeveridad(notif.severidad) : 'transparent',
+                                  color: i === 0 ? colores.textoEnOscuro : colores.textoMedio,
+                                }}
+                              >
+                                {a.label}
+                              </button>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}

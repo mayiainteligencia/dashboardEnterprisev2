@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import { Gavel, FileWarning, Stamp, Send, Loader2, CheckCircle2 } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, AgentesPanel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { casosEnforcement, takedownsPorPlataforma, agentesIA } from '../../mock/guardianMockData';
@@ -28,6 +29,7 @@ export const EnforcementEngine: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="Enforcement Engine" descripcion="Tablero operativo de takedowns" icon={<Gavel size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="enforcement" compacto={isMobile} />
 
       <Panel titulo={`Cola de casos activos (${casosEnforcement.length})`}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Store, Mic, Image as ImageIcon, Box, BadgeCheck, Loader2, CheckCircle2 } from 'lucide-react';
 import { brandingConfig } from '../../config/branding';
+import { AgentActivityStrip } from '../agents/AgentActivityStrip';
 import { VistaHeader, Panel, AgentesPanel, useIsMobile } from './guardianViewKit';
 import { GuardianModal } from '../modules/dashboardModules/guardian/GuardianModal';
 import { GuardianButton } from '../modules/dashboardModules/guardian/GuardianCard';
@@ -36,6 +37,7 @@ export const LicensingMarketplace: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: isMobile ? '16px' : '0' }}>
       <VistaHeader titulo="Licensing Marketplace" descripcion="Identidades licenciables con contrato IA" icon={<Store size={26} color={colores.textoEnOscuro} />} />
+      <AgentActivityStrip seccion="marketplace" compacto={isMobile} />
 
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         {(['Todos', 'Voz', 'Imagen', 'Avatar 3D'] as const).map((t) => (

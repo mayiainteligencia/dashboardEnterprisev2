@@ -17,6 +17,7 @@ import { SystemConfigModule } from './modules/dashboardModules/guardian/SystemCo
 import { EcosystemFooter } from './modules/dashboardModules/guardian/EcosystemFooter';
 import { GuardianGlobe } from './modules/dashboardModules/guardian/GuardianGlobe';
 import { Globe as GlobeIcon } from 'lucide-react';
+import { AgentActivityStrip } from './agents/AgentActivityStrip';
 
 interface DashboardProps {
   onSectionChange?: (section: string) => void;
@@ -56,6 +57,11 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSectionChange }) => {
             <img src="/assets/logosNativos/flai.png" alt="FLAI"
               style={{ height: '34px', objectFit: 'contain' }} />
           </div>
+        </div>
+
+        {/* ── Agentes trabajando en esta vista ── */}
+        <div style={{ margin: '20px 0 24px' }}>
+          <AgentActivityStrip seccion="dashboard" compacto={isMobile} />
         </div>
 
         {/* ── Fila Hero (INTOCABLE): HeroCard centrado, mismo span/posición ── */}
