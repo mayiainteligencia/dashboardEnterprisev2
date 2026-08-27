@@ -110,7 +110,8 @@ export const MonitorMedios = () => {
   };
 
   const conectarWS = (sesionId: string) => {
-    const ws = new WebSocket(`ws://localhost:8001/ws/${sesionId}`);
+    const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+    const ws = new WebSocket(`${proto}://${location.host}/ws/${sesionId}`);
     ws.onmessage = (e) => {
       const alerta: Testigo = JSON.parse(e.data);
       setTestigos(prev => [alerta, ...prev]);

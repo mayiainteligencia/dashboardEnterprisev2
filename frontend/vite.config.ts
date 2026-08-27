@@ -5,7 +5,14 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    // ponytail: abierto para tuneles (cloudflared/vscode). Cerrar si se expone permanente.
+    allowedHosts: true,
     proxy: {
+      // websocket de monitorsol
+      '/ws': {
+        target: 'http://localhost:8001',
+        ws: true,
+      },
       // monitor = servicio Python (monitorsol) en :8001, expone /monitor/*
       '/api/monitor': {
         target: 'http://localhost:8001',
