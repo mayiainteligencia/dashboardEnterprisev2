@@ -20,14 +20,14 @@ const matchSeccion = (texto: string, secciones: { id: string; titulo: string }[]
   const t = normalizar(texto);
   if (!NAV_VERBOS.some(v => t.includes(v))) return null;
   if (/(dashboard|inicio|principal|home|general)/.test(t)) return 'dashboard';
-  if (/(cliente|empresa|dependencia|cfe|pemex)/.test(t)) return 'clientes';
-  if (/(contacto|decisor|directorio|telefono|persona)/.test(t)) return 'contactos';
-  if (/(oportunidad|pipeline|kanban|negocio)/.test(t)) return 'oportunidades';
-  if (/(cotizacion|cotizaciones|propuesta|precio)/.test(t)) return 'cotizaciones';
-  if (/(licitacion|licitaciones|concurso|comprasmx)/.test(t)) return 'licitaciones';
-  if (/(actividad|actividades|tarea|llamada|seguimiento)/.test(t)) return 'actividades';
-  if (/(documento|drive|carpeta|archivo|repositorio)/.test(t)) return 'documentos';
-  if (/(direccion|reporte|director|gerente|kpi)/.test(t)) return 'direccion';
+  if (/(tanque|tanques|telemetria|telemetría|sensor|fuga|combustible|bomba|bombas)/.test(t)) return 'tanques-telemetria';
+  if (/(precio|precios|dinamico|dinámico|totem|tótem|competencia|margen)/.test(t)) return 'precios-dinamicos';
+  if (/(seguridad|vms|camara|cámara|alpr|placa|matricula|matrícula|pista)/.test(t)) return 'seguridad-vms';
+  if (/(suministro|compra|pipa|odoo|erp|tienda|estante|retail)/.test(t)) return 'cadena-suministro';
+  if (/(flota|flotas|b2b|corporativo|odometro|odómetro|churn)/.test(t)) return 'flotas-corporativas';
+  if (/(fidelizacion|fidelización|lealtad|pago|app|casillero|locker)/.test(t)) return 'fidelizacion-pagos';
+  if (/(energia|energía|solar|bateria|batería|ev|cargador|sostenibilidad|bano|baño)/.test(t)) return 'hub-energia';
+  if (/(mantenimiento|sdi|gemelo|digital|edge|servidor|hardware)/.test(t)) return 'mantenimiento-sdi';
 
   let best: { id: string; score: number } | null = null;
   for (const s of secciones) {
@@ -335,14 +335,14 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
             gap: '6px',
             padding: '4px 12px',
             borderRadius: '999px',
-            backgroundColor: 'rgba(211, 47, 47, 0.1)',
-            border: '1px solid rgba(211, 47, 47, 0.2)',
+            backgroundColor: `${acc}15`,
+            border: `1px solid ${acc}40`,
             fontSize: '11px',
             color: acc,
             fontWeight: '600',
           }}>
             <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#10B981' }} />
-            Copilot Comercial &amp; Licitaciones Activo
+            Copilot Gas Station Inteligente 4.0 Activo
           </div>
         </div>
       </div>
@@ -412,11 +412,11 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                 </div>
                 <div>
                   <div style={{ fontWeight: '700', color: '#FFFFFF', fontSize: '18px' }}>
-                    {ia.nombre} · Asesor IA FSPM
+                    {ia.nombre} · Asesor IA Gas Station
                   </div>
                   <div style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.85)', display: 'flex', alignItems: 'center', gap: '6px' }}>
                     <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: isListening ? '#F59E0B' : '#10B981' }} />
-                    {isListening ? 'Escuchando tu voz...' : 'Sistemas Contra Incendio, Licitaciones & CRM'}
+                    {isListening ? 'Escuchando tu voz...' : 'Telemetría IoT, Precios Dinámicos & Flotas'}
                   </div>
                 </div>
               </div>
@@ -540,7 +540,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                       gap: '6px',
                     }}
                   >
-                    <span style={{ fontSize: '13px', color: colores.textoMedio }}>MAYIA procesando datos FSPM...</span>
+                    <span style={{ fontSize: '13px', color: colores.textoMedio }}>MAYIA procesando datos Gas Station...</span>
                   </div>
                 </div>
               )}
@@ -577,7 +577,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                   alignItems: 'center',
                   justifyContent: 'center',
                   transition: 'all 0.25s',
-                  boxShadow: isListening ? '0 0 20px rgba(211, 47, 47, 0.6)' : '0 4px 12px rgba(211, 47, 47, 0.3)',
+                  boxShadow: isListening ? '0 0 20px rgba(5, 150, 105, 0.6)' : '0 4px 12px rgba(5, 150, 105, 0.3)',
                 }}
               >
                 {isListening ? (
@@ -596,7 +596,7 @@ export const HeroCard: React.FC<HeroCardProps> = ({ tema, onNavigate, secciones 
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
-                placeholder={isListening ? 'Escuchando... Di "MAYIA" o una orden de navegación' : 'Pregunta sobre clientes, licitaciones o di "ve a cotizaciones"...'}
+                placeholder={isListening ? 'Escuchando... Di "MAYIA" o una orden de navegación' : 'Pregunta sobre tanques, precios o di "ve a seguridad"...'}
                 disabled={loading}
                 style={{
                   flex: 1,

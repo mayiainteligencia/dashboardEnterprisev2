@@ -7,7 +7,7 @@ import {
   CheckCircle,
   X,
   Lock,
-  Flame,
+  Fuel,
   ShieldCheck,
   Building2,
   Clock
@@ -26,7 +26,7 @@ export interface Notif {
 }
 
 const colorSeveridad = {
-  critico: '#D32F2F',
+  critico: '#DC2626',
   warning: '#D97706',
   ok: '#10B981'
 };
@@ -34,24 +34,24 @@ const colorSeveridad = {
 const defaultNotifs: Notif[] = [
   {
     id: 1,
-    titulo: 'Licitación PEMEX < 36 Horas',
-    texto: 'Faltan 36h para presentar propuesta en ComprasMX (LA-18-T0O).',
-    tiempo: '5 min',
+    titulo: 'ALPR: Vehículo en Lista Negra',
+    texto: 'Dodge Neon (XYZ-6660) detectado en pista. Bomba #8 bloqueada de inmediato.',
+    tiempo: '8 min',
     severidad: 'critico',
     leida: false
   },
   {
     id: 2,
-    titulo: 'Cotización CFE Sin Seguimiento',
-    texto: 'FSPM-2026-0178 lleva 7 días sin registrar nueva acción.',
-    tiempo: '20 min',
+    titulo: 'Reabastecimiento Diésel en Tránsito',
+    texto: 'Pipa #108 (40,000L Diésel UBA) llega en 35 min vía Odoo ERP.',
+    tiempo: '25 min',
     severidad: 'warning',
     leida: false
   },
   {
     id: 3,
-    titulo: 'Orden de Compra Ternium Ganada',
-    texto: 'Se confirmó cierre de rociadores por $3.2M MXN.',
+    titulo: 'Tótem Precios Dinámicos Actualizado',
+    texto: 'Ajuste de +$0.12/L en Magna aplicado con éxito por Agente IA.',
     tiempo: '1 hora',
     severidad: 'ok',
     leida: false
@@ -68,7 +68,6 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', onCliente, onAdmin }) => {
   const { colores, empresa, temas } = brandingConfig;
-  const tema = temas.admin;
   const [notificacionesAbiertas, setNotificacionesAbiertas] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notif[]>(defaultNotifs);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -166,7 +165,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
       {/* Asistente IA tipo buscador */}
       <AsistenteBuscador modo={modo} />
 
-      {/* CENTRO - Branding FSPM */}
+      {/* CENTRO - Branding Gas Station Inteligente */}
       <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '10px' }}>
         <div style={{
           display: 'flex',
@@ -178,12 +177,12 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
           color: '#FFFFFF',
           boxShadow: '0 2px 8px rgba(15,23,42,0.15)'
         }}>
-          <Flame size={16} color="#FF6659" />
+          <Fuel size={16} color="#10B981" />
           <span style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.04em' }}>
-            FSPM FIRE SAFETY
+            GAS STATION INTELIGENTE
           </span>
           <span style={{ fontSize: '10px', fontWeight: '800', color: '#10B981', backgroundColor: 'rgba(16,185,129,0.2)', padding: '1px 6px', borderRadius: '6px' }}>
-            CRM
+            IoT 4.0
           </span>
         </div>
       </div>
@@ -206,11 +205,11 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
                 display: 'flex',
                 alignItems: 'center',
                 gap: '5px',
-                background: modo === 'admin' ? colores.primario : 'transparent',
+                background: modo === 'admin' ? '#059669' : 'transparent',
                 color: modo === 'admin' ? '#FFFFFF' : colores.textoMedio
               }}
             >
-              <Lock size={12} /> Comercial
+              <Lock size={12} /> Operación
             </button>
             <button
               onClick={onCliente}
@@ -226,7 +225,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
                 color: modo === 'cliente' ? '#FFFFFF' : colores.textoMedio
               }}
             >
-              Clientes
+              Flotas B2B
             </button>
           </div>
         )}
@@ -259,7 +258,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
                   minWidth: '18px',
                   height: '18px',
                   borderRadius: '10px',
-                  backgroundColor: '#D32F2F',
+                  backgroundColor: '#DC2626',
                   border: `2px solid #FFFFFF`,
                   display: 'flex',
                   alignItems: 'center',
@@ -304,10 +303,10 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
               >
                 <div>
                   <h3 style={{ margin: 0, fontSize: '15px', fontWeight: '800', color: colores.textoClaro }}>
-                    Alertas FSPM
+                    Alertas de la Estación
                   </h3>
                   <p style={{ margin: '2px 0 0 0', fontSize: '11px', color: colores.textoMedio }}>
-                    {notificacionesNoLeidas} alertas pendientes
+                    {notificacionesNoLeidas} alertas operativas pendientes
                   </p>
                 </div>
                 {notificacionesNoLeidas > 0 && (
@@ -316,7 +315,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
                     style={{
                       background: 'none',
                       border: 'none',
-                      color: colores.primario,
+                      color: '#059669',
                       fontSize: '11px',
                       fontWeight: '700',
                       cursor: 'pointer',
@@ -365,13 +364,13 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
           )}
         </div>
 
-        {/* Perfil FSPM */}
+        {/* Perfil Gas Station */}
         <button 
           style={{
             width: '38px',
             height: '38px',
             borderRadius: '50%',
-            backgroundColor: '#0F172A',
+            backgroundColor: '#059669',
             border: 'none',
             color: '#FFFFFF',
             fontWeight: '800',
@@ -379,10 +378,10 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            boxShadow: '0 2px 8px rgba(15,23,42,0.25)',
+            boxShadow: '0 2px 8px rgba(5,150,105,0.25)',
           }}
         >
-          FS
+          GS
         </button>
       </div>
     </header>

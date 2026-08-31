@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-import { FspmDashboard } from './fspm/FspmDashboard';
-import { ClientesModule } from './components/modules/fspm/ClientesModule';
-import { ContactosModule } from './components/modules/fspm/ContactosModule';
-import { OportunidadesModule } from './components/modules/fspm/OportunidadesModule';
-import { CotizacionesModule } from './components/modules/fspm/CotizacionesModule';
-import { LicitacionesModule } from './components/modules/fspm/LicitacionesModule';
-import { ActividadesModule } from './components/modules/fspm/ActividadesModule';
-import { DocumentosDriveModule } from './components/modules/fspm/DocumentosDriveModule';
-import { DireccionReportesModule } from './components/modules/fspm/DireccionReportesModule';
+import { GasStationDashboard } from './gasStation/GasStationDashboard';
+import { TanquesTelemetriaModule } from './components/modules/gasStation/TanquesTelemetriaModule';
+import { PreciosDinamicosModule } from './components/modules/gasStation/PreciosDinamicosModule';
+import { SeguridadVmsModule } from './components/modules/gasStation/SeguridadVmsModule';
+import { CadenaSuministroOdooModule } from './components/modules/gasStation/CadenaSuministroOdooModule';
+import { FlotasCorporativasModule } from './components/modules/gasStation/FlotasCorporativasModule';
+import { FidelizacionPagosModule } from './components/modules/gasStation/FidelizacionPagosModule';
+import { HubEnergiaSostenibilidadModule } from './components/modules/gasStation/HubEnergiaSostenibilidadModule';
+import { MantenimientoSdiGemeloModule } from './components/modules/gasStation/MantenimientoSdiGemeloModule';
 import { AsistenteIAChat } from './components/modules/AsistenteIAChat';
-import { MODULOS_FSPM } from './fspm/fspmData';
+import { MODULOS_GAS_STATION } from './gasStation/gasStationData';
 import { brandingConfig } from './config/branding';
 import { AIChatProvider, useAIChat } from './context/AIChatContext';
 
@@ -37,9 +37,9 @@ function AppInner() {
   };
 
   const getTitulo = () => {
-    if (activeSection === 'dashboard') return 'FSPM · CRM Comercial & Licitaciones';
-    const mod = MODULOS_FSPM.find(m => m.id === activeSection);
-    return mod ? mod.titulo : 'FSPM Fire Safety & Protection Management';
+    if (activeSection === 'dashboard') return 'Gas Station Inteligente · Panel Principal';
+    const mod = MODULOS_GAS_STATION.find(m => m.id === activeSection);
+    return mod ? `${mod.titulo}` : 'Gas Station Inteligente';
   };
 
   useEffect(() => {
@@ -49,28 +49,28 @@ function AppInner() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
-        return <FspmDashboard onSelectModulo={selectSection} />;
-      case 'clientes':
-        return <ClientesModule />;
-      case 'contactos':
-        return <ContactosModule />;
-      case 'oportunidades':
-        return <OportunidadesModule />;
-      case 'cotizaciones':
-        return <CotizacionesModule />;
-      case 'licitaciones':
-        return <LicitacionesModule />;
-      case 'actividades':
-        return <ActividadesModule />;
-      case 'documentos':
-        return <DocumentosDriveModule />;
-      case 'direccion':
-        return <DireccionReportesModule />;
+        return <GasStationDashboard onSelectModulo={selectSection} />;
+      case 'tanques-telemetria':
+        return <TanquesTelemetriaModule />;
+      case 'precios-dinamicos':
+        return <PreciosDinamicosModule />;
+      case 'seguridad-vms':
+        return <SeguridadVmsModule />;
+      case 'cadena-suministro':
+        return <CadenaSuministroOdooModule />;
+      case 'flotas-corporativas':
+        return <FlotasCorporativasModule />;
+      case 'fidelizacion-pagos':
+        return <FidelizacionPagosModule />;
+      case 'hub-energia':
+        return <HubEnergiaSostenibilidadModule />;
+      case 'mantenimiento-sdi':
+        return <MantenimientoSdiGemeloModule />;
       case 'asistente-ia-chat':
       case 'asesor-inteligente':
         return <AsistenteIAChat />;
       default:
-        return <FspmDashboard onSelectModulo={selectSection} />;
+        return <GasStationDashboard onSelectModulo={selectSection} />;
     }
   };
 
@@ -118,14 +118,14 @@ function AppInner() {
 
       {/* CONTENIDO PRINCIPAL */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Header con identidad FSPM */}
+        {/* Header con identidad Gas Station Inteligente */}
         <Header
           title={getTitulo()}
           onMenu={isMobile ? () => setDrawerOpen(true) : undefined}
           modo="admin"
         />
 
-        {/* ÁREA DE TRABAJO EN FONDO BLANCO / LIMPIO */}
+        {/* ÁREA DE TRABAJO */}
         <div
           className="no-scrollbar"
           style={{

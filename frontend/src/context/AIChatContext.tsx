@@ -24,7 +24,7 @@ const INITIAL_MESSAGES: LLMMessage[] = [
   {
     id: 'welcome-1',
     role: 'assistant',
-    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Comercial y Operativa de **FSPM** (Fire Safety & Protection Management). Estoy conectada en tiempo real con tu catálogo de sistemas contra incendio (FireAde, CAFS, SPCI), licitaciones públicas/privadas (PEMEX, CFE, ASA), cotizaciones y Google Workspace. ¿En qué oportunidad o procedimiento te puedo asistir hoy?',
+    content: '¡Hola! Soy **MAYIA**, el Copiloto Inteligente de **Gas Station Inteligente**. Estoy conectada en tiempo real con la telemetría de tanques, motor de precios dinámicos, cámaras ALPR, compras Odoo ERP, flotas B2B y el Hub solar/EV. ¿En qué aspecto operativo te puedo asistir hoy?',
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   }
 ];
@@ -32,7 +32,7 @@ const INITIAL_MESSAGES: LLMMessage[] = [
 export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [messages, setMessages] = useState<LLMMessage[]>(() => {
     try {
-      const saved = localStorage.getItem('MAYIA_CHAT_HISTORY_FSPM');
+      const saved = localStorage.getItem('MAYIA_CHAT_HISTORY_GAS_STATION');
       if (saved) {
         return JSON.parse(saved);
       }
@@ -44,14 +44,14 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
   const [loading, setLoading] = useState(false);
   const [activeSection, setActiveSection] = useState('dashboard');
-  const [activeSectionTitle, setActiveSectionTitle] = useState('Dashboard FSPM');
+  const [activeSectionTitle, setActiveSectionTitle] = useState('Dashboard General');
   const [config, setConfigState] = useState<LLMConfig>(getStoredLLMConfig());
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   useEffect(() => {
     try {
-      localStorage.setItem('MAYIA_CHAT_HISTORY_FSPM', JSON.stringify(messages));
+      localStorage.setItem('MAYIA_CHAT_HISTORY_GAS_STATION', JSON.stringify(messages));
     } catch (e) {
       console.warn('Error saving chat history:', e);
     }

@@ -5,157 +5,66 @@ export async function buscarContextoEnDB(mensaje, departamento) {
     const mensajeLower = mensaje.toLowerCase();
     let resultados = [];
 
-    // Buscar servicios de MAYIA
-    if (mensajeLower.includes('servicio') || mensajeLower.includes('solución') || mensajeLower.includes('ia')) {
-      const [servicios] = await pool.query(
-        `SELECT s.nombre, s.descripcion, s.precio, d.nombre as departamento 
-         FROM servicios s 
-         JOIN departamentos d ON s.departamento_id = d.id 
-         WHERE s.disponible = ? 
-         LIMIT 10`,
-        [true]
-      );
-      if (servicios.length > 0) {
-        resultados.push({ tipo: 'servicios', datos: servicios });
-      }
+    // 1. Buscar en Tanques y Combustibles
+    if (mensajeLower.includes('tanque') || mensajeLower.includes('litro') || mensajeLower.includes('volumen') || mensajeLower.includes('combustible') || mensajeLower.includes('magna') || mensajeLower.includes('diesel') || mensajeLower.includes('premium')) {
+      resultados.push({
+        tipo: 'tanques',
+        datos: [
+          { tanque: 'TK-01 Magna 87', capacidad: 50000, volumen: 38400, porcentaje: 76.8, temp: 21.4, presion: '2.3 PSI' },
+          { tanque: 'TK-02 Premium 91', capacidad: 40000, volumen: 29800, porcentaje: 74.5, temp: 21.8, presion: '2.1 PSI' },
+          { tanque: 'TK-03 Diésel UBA', capacidad: 50000, volumen: 42100, porcentaje: 84.2, temp: 20.9, presion: '2.4 PSI' },
+          { tanque: 'TK-04 GNR Biogás', capacidad: 20000, volumen: 16500, porcentaje: 82.5, temp: 19.5, presion: '18.5 bar' },
+        ]
+      });
     }
 
-    // Buscar cursos de Academia
-    if (mensajeLower.includes('curso') || mensajeLower.includes('capacitación') || mensajeLower.includes('academia')) {
-      const [cursos] = await pool.query(
-        `SELECT titulo, descripcion, duracion_horas, nivel, categoria 
-         FROM cursos_academia 
-         WHERE disponible = ? 
-         LIMIT 10`,
-        [true]
-      );
-      if (cursos.length > 0) {
-        resultados.push({ tipo: 'cursos', datos: cursos });
-      }
+    // 2. Buscar en Precios Dinámicos & Tótem
+    if (mensajeLower.includes('precio') || mensajeLower.includes('totem') || mensajeLower.includes('tótem') || mensajeLower.includes('competencia') || mensajeLower.includes('margen')) {
+      resultados.push({
+        tipo: 'precios',
+        datos: [
+          { producto: 'Magna 87', actual: 23.89, sugeridoIA: 24.05, competenciaProm: 24.18, margen: 2.79 },
+          { producto: 'Premium 91', actual: 25.99, sugeridoIA: 26.15, competenciaProm: 26.32, margen: 3.19 },
+          { producto: 'Diésel UBA', actual: 25.40, sugeridoIA: 25.40, competenciaProm: 25.68, margen: 2.75 },
+          { producto: 'GNR Biogás', actual: 14.50, sugeridoIA: 14.50, competenciaProm: 15.20, margen: 3.30 },
+        ]
+      });
     }
 
-    // Buscar servicios corporativos (Grid 3x3)
-    if (mensajeLower.includes('centro de datos') || mensajeLower.includes('nube') || 
-        mensajeLower.includes('edgenet') || mensajeLower.includes('flai')) {
-      const [corporativos] = await pool.query(
-        `SELECT nombre, descripcion, categoria 
-         FROM servicios_corporativos 
-         WHERE disponible = ? 
-         ORDER BY posicion`,
-        [true]
-      );
-      if (corporativos.length > 0) {
-        resultados.push({ tipo: 'servicios_corporativos', datos: corporativos });
-      }
+    // 3. Buscar en Seguridad ALPR & VMS
+    if (mensajeLower.includes('seguridad') || mensajeLower.includes('alpr') || mensajeLower.includes('camara') || mensajeLower.includes('cámara') || mensajeLower.includes('placa') || mensajeLower.includes('fuga') || mensajeLower.includes('lista negra')) {
+      resultados.push({
+        tipo: 'seguridad',
+        datos: [
+          { evento: 'Bloqueo Bomba #8', motivo: 'Matrícula XYZ-6660 en Lista Negra', tiempo: '0.4s reacción' },
+          { evento: 'Aforo Pistas', tiempoEspera: '2.4 min promedio', camarasActivas: '4 HD Edge NPU' }
+        ]
+      });
     }
 
-    // Buscar por departamento específico
-    if (departamento && departamento !== 'general') {
-      const [serviciosDept] = await pool.query(
-        `SELECT s.nombre, s.descripcion, s.precio 
-         FROM servicios s 
-         JOIN departamentos d ON s.departamento_id = d.id 
-         WHERE d.nombre LIKE ? AND s.disponible = ?`,
-        [`%${departamento}%`, true]
-      );
-      if (serviciosDept.length > 0) {
-        resultados.push({ tipo: 'servicios_departamento', datos: serviciosDept });
-      }
+    // 4. Buscar en Flotas B2B & Odoo ERP
+    if (mensajeLower.includes('flota') || mensajeLower.includes('b2b') || mensajeLower.includes('odoo') || mensajeLower.includes('pipa') || mensajeLower.includes('odometro') || mensajeLower.includes('factura')) {
+      resultados.push({
+        tipo: 'flotas',
+        datos: [
+          { empresa: 'Transportes Castores', consumoMes: '$1,820,000 MXN', odometroSync: '99.4%' },
+          { empresa: 'DHL Express México', consumoMes: '$1,140,000 MXN', odometroSync: '98.9%' },
+          { empresa: 'Bimbo Distribución', consumoMes: '$940,000 MXN', odometroSync: '99.8%' },
+          { ordenPipa: 'PO-2026-0894 Tuxpan (40,000L Diésel)', estado: 'En tránsito (ETA 35 min)' }
+        ]
+      });
     }
 
-    // Buscar información de Totalplay
-    if (mensajeLower.includes('totalplay') || mensajeLower.includes('empresa') || mensajeLower.includes('cobertura') || mensajeLower.includes('isla') || mensajeLower.includes('paquete')) {
-      try {
-        const [info] = await pool.query(
-          `SELECT empresa, descripcion, industria, fundacion, pais 
-           FROM info_empresa 
-           WHERE empresa = ?`,
-          ['Totalplay']
-        );
-        if (info && info.length > 0) {
-          resultados.push({ tipo: 'empresa', datos: info });
-        }
-      } catch (err) {
-        // Mock fallback en caso de no tener DB SQL activa
-        resultados.push({
-          tipo: 'empresa',
-          datos: [{ empresa: 'Totalplay', descripcion: 'Telecomunicaciones y fibra óptica FTTH' }]
-        });
-      }
-    }
-
-    // ========== DATOS DEMO ORIGINALES (con SQL parametrizado) ==========
-
-    // Buscar en Recursos Humanos
-    if (mensajeLower.includes('empleado') || mensajeLower.includes('personal') || departamento === 'rh') {
-      const [empleados] = await pool.query(
-        `SELECT nombre, puesto, departamento, status 
-         FROM empleados 
-         WHERE status = ? 
-         LIMIT ?`,
-        ['activo', 10]
-      );
-      if (empleados.length > 0) {
-        resultados.push({ tipo: 'empleados', datos: empleados });
-      }
-    }
-
-    // Buscar en Finanzas
-    if (mensajeLower.includes('presupuesto') || mensajeLower.includes('finanzas') || mensajeLower.includes('gasto') || departamento === 'finanzas') {
-      const [presupuestos] = await pool.query(
-        `SELECT departamento, categoria, monto_asignado, monto_gastado, periodo 
-         FROM presupuestos 
-         ORDER BY departamento 
-         LIMIT ?`,
-        [10]
-      );
-      if (presupuestos.length > 0) {
-        resultados.push({ tipo: 'presupuestos', datos: presupuestos });
-      }
-    }
-
-    // Buscar en Ventas
-    if (mensajeLower.includes('venta') || mensajeLower.includes('cliente') || mensajeLower.includes('ingreso') || departamento === 'ventas') {
-      const [ventas] = await pool.query(
-        `SELECT cliente, producto, monto, vendedor, status 
-         FROM ventas 
-         WHERE status IN (?, ?) 
-         ORDER BY fecha DESC 
-         LIMIT ?`,
-        ['cerrada', 'en-proceso', 10]
-      );
-      if (ventas.length > 0) {
-        resultados.push({ tipo: 'ventas', datos: ventas });
-      }
-    }
-
-    // Buscar en Inventario
-    if (mensajeLower.includes('inventario') || mensajeLower.includes('producto') || mensajeLower.includes('stock') || departamento === 'operaciones') {
-      const [inventario] = await pool.query(
-        `SELECT producto, categoria, cantidad, ubicacion, precio_unitario 
-         FROM inventario 
-         WHERE cantidad > ? 
-         LIMIT ?`,
-        [0, 10]
-      );
-      if (inventario.length > 0) {
-        resultados.push({ tipo: 'inventario', datos: inventario });
-      }
-    }
-
-    // Buscar en Tickets TI
-    if (mensajeLower.includes('ticket') || mensajeLower.includes('soporte') || mensajeLower.includes('ti') || departamento === 'ti') {
-      const [tickets] = await pool.query(
-        `SELECT titulo, prioridad, status, reportado_por, asignado_a 
-         FROM tickets_ti 
-         WHERE status != ? 
-         ORDER BY fecha_creacion DESC 
-         LIMIT ?`,
-        ['resuelto', 5]
-      );
-      if (tickets.length > 0) {
-        resultados.push({ tipo: 'tickets', datos: tickets });
-      }
+    // 5. Buscar en Hub de Energía & EV
+    if (mensajeLower.includes('solar') || mensajeLower.includes('energia') || mensajeLower.includes('energía') || mensajeLower.includes('ev') || mensajeLower.includes('cargador') || mensajeLower.includes('bateria') || mensajeLower.includes('batería')) {
+      resultados.push({
+        tipo: 'energia',
+        datos: [
+          { generacionSolar: '48.5 kW/h', autoconsumo: '72%' },
+          { bateriaBESS: '102 kWh (85% carga)', respaldo: 'Activo' },
+          { cargadoresEV: '3 de 4 ocupados', potenciaTotal: '540 kW (Ultra 350kW)' }
+        ]
+      });
     }
 
     return resultados.length > 0 ? resultados : null;
@@ -166,65 +75,4 @@ export async function buscarContextoEnDB(mensaje, departamento) {
   }
 }
 
-// Función para buscar un servicio específico por nombre
-export async function buscarServicioPorNombre(nombre) {
-  try {
-    const [servicio] = await pool.query(
-      `SELECT s.*, d.nombre as departamento_nombre 
-       FROM servicios s 
-       JOIN departamentos d ON s.departamento_id = d.id 
-       WHERE s.nombre LIKE ? AND s.disponible = ?`,
-      [`%${nombre}%`, true]
-    );
-    return servicio.length > 0 ? servicio[0] : null;
-  } catch (error) {
-    console.error('❌ Error buscando servicio:', error);
-    return null;
-  }
-}
-
-// Función para buscar cursos por nivel o categoría
-export async function buscarCursos(filtros = {}) {
-  try {
-    let query = 'SELECT * FROM cursos_academia WHERE disponible = ?';
-    let params = [true];
-
-    if (filtros.nivel) {
-      query += ' AND nivel = ?';
-      params.push(filtros.nivel);
-    }
-
-    if (filtros.categoria) {
-      query += ' AND categoria = ?';
-      params.push(filtros.categoria);
-    }
-
-    query += ' ORDER BY titulo LIMIT ?';
-    params.push(filtros.limit || 10);
-
-    const [cursos] = await pool.query(query, params);
-    return cursos;
-  } catch (error) {
-    console.error('❌ Error buscando cursos:', error);
-    return [];
-  }
-}
-
-// Función para obtener estadísticas de servicios
-export async function obtenerEstadisticasServicios() {
-  try {
-    const [stats] = await pool.query(
-      `SELECT 
-        COUNT(*) as total_servicios,
-        COUNT(DISTINCT departamento_id) as total_departamentos,
-        SUM(CASE WHEN precio IS NOT NULL THEN 1 ELSE 0 END) as servicios_con_precio
-       FROM servicios 
-       WHERE disponible = ?`,
-      [true]
-    );
-    return stats[0];
-  } catch (error) {
-    console.error('❌ Error obteniendo estadísticas:', error);
-    return null;
-  }
-}
+export default { buscarContextoEnDB };

@@ -1,63 +1,59 @@
 // config/empresaConfig.js
-// Configuración de la empresa cliente actual de la plataforma MAYIA: FSPM (Fire Safety & Protection Management)
+// Configuración de la empresa cliente actual de la plataforma MAYIA: Gas Station Inteligente
 
 export const EMPRESA_CONFIG = {
   // Información básica
-  nombre: 'FSPM',
-  nombreCompleto: 'Fire Safety & Protection Management, S.A. de C.V.',
-  grupoEmpresarial: 'FSPM Soluciones Contra Incendio',
-  directorGeneral: 'Dirección General FSPM',
-  industria: 'Seguridad Industrial, Sistemas Contra Incendio & Licitaciones',
-  fundacion: 2015,
+  nombre: 'Gas Station Inteligente',
+  nombreCompleto: 'Estación de Servicio Inteligente 4.0, S.A. de C.V.',
+  grupoEmpresarial: 'Red Gas Station Inteligente',
+  directorGeneral: 'Dirección General de Operaciones',
+  industria: 'Estaciones de Servicio Inteligentes, Telemetría IoT & Combustibles',
+  fundacion: 2022,
   pais: 'México',
-  slogan: 'CRM Comercial, Licitaciones & Protección Contra Incendio',
+  slogan: 'Telemetría IoT, Precios Dinámicos & Automatización IA',
 
   // Descripción corporativa
-  descripcion: 'Empresa mexicana líder en ingeniería, suministro y mantenimiento de sistemas de protección contra incendio (SPCI), unidades móviles de intervención rápida FireAde, sistemas CAFS de espuma comprimida, rociadores y consultoría en licitaciones públicas y privadas para dependencias clave como PEMEX, CFE, ASA, gobiernos y sector industrial.',
+  descripcion: 'Ecosistema integral para gasolineras inteligentes 4.0: monitoreo de tanques 3D en tiempo real, detección de fugas por IA, trazabilidad blockchain, motor de precios dinámicos, seguridad VMS con ALPR, integración ERP Odoo, telemática de flotas B2B, fidelización móvil, cargadores EV ultrarrápidos y gemelos digitales con mantenimiento predictivo.',
 
-  // Datos operativos del CRM FSPM
+  // Datos operativos
   operaciones: {
-    pipelineActivo: '$24.8M MXN',
-    oportunidadesActivas: 41,
-    cotizacionesAbiertas: '$8.45M MXN (23 cotizaciones)',
-    licitacionesActivas: '$14.8M MXN (8 procedimientos)',
-    ventasGanadasMes: '$3.4M MXN',
-    tasaConversion: '73.9%',
-    lineasNegocio: [
-      'Unidades Móviles FireAde 4x4',
-      'Sistemas CAFS (Compressed Air Foam Systems)',
-      'Mantenimiento Integral SPCI a Redes y Bombas',
-      'Agente Extintor Ecológico FireAde 2000',
-      'Pólizas de Servicio CREI para Aeropuertos (ASA)'
-    ]
+    volumenDespachadoHoy: '48,250 L',
+    ventasTotalesDia: '$1,124,500 MXN',
+    bombasOperativas: '8 / 8 dispensarios',
+    capacidadTotalTanques: '160,000 L',
+    vehiculosAtendidos: '1,240 vehículos',
+    eficienciaSolar: '94.2%',
+    tiempoPromedioEspera: '2.4 min',
+    margenPromedioLitro: '$2.85 MXN',
+    modulosActivos: 8
   },
 
   // Marcas del portafolio
   marcas: [
-    'FSPM Fire Safety',
-    'FireAde 2000',
-    'CAFS Protection Systems',
-    'SPCI Pro Maintenance',
-    'MAYIA FSPM Copilot'
+    'Gas Station Inteligente',
+    'Magna Ultra 87',
+    'Premium Pro 91',
+    'EcoDiésel Max',
+    'GNR BioGas',
+    'MAYIA Fuel Copilot'
   ],
 
-  // Clientes estratégicos
+  // Clientes y flotas estratégicas
   clientesPrincipales: [
-    'CFE (Comisión Federal de Electricidad)',
-    'PEMEX (Petróleos Mexicanos)',
-    'ASA (Aeropuertos y Servicios Auxiliares)',
-    'Protección Civil CDMX (SGIRPC)',
-    'Ternium México',
-    'Grupo México',
-    'ASIPONA Veracruz'
+    'Flotilla Logística FEMSA',
+    'Transportes Castores',
+    'Bimbo Distribución',
+    'DHL Express México',
+    'Flota Municipal y Patrullas',
+    'Uber / Didi Fleet Hub'
   ],
 
   // Contactos corporativos
   contacto: {
-    sitioWeb: 'https://www.fspm.mx',
-    atencionCliente: '+52 55 5229 0000',
-    whatsapp: '+52 55 1234 5678',
-    plataforma: 'Google Workspace + AppSheet FSPM CRM',
+    sitioWeb: 'https://www.gasstationinteligente.mx',
+    atencionCliente: '+52 55 5500 4000',
+    whatsapp: '+52 55 9988 7766',
+    plataforma: 'IoT Cloud + Edge SDI + Odoo ERP',
   }
 };
 
@@ -67,7 +63,7 @@ export function getEmpresaInfo(campo) {
 
 export function getDescripcionContextual() {
   const { nombreCompleto, slogan, operaciones } = EMPRESA_CONFIG;
-  return `${nombreCompleto} ("${slogan}") gestiona un pipeline comercial de ${operaciones.pipelineActivo} y ${operaciones.licitacionesActivas} en licitaciones activas en México con soporte de IA MAYIA.`;
+  return `${nombreCompleto} ("${slogan}") opera con telemetría IoT de ${operaciones.capacidadTotalTanques} en tanques, ${operaciones.bombasOperativas} y optimización con IA agéntica MAYIA.`;
 }
 
 export default EMPRESA_CONFIG;

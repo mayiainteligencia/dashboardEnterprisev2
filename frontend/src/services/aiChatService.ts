@@ -1,4 +1,4 @@
-// Service for handling real LLM communication for MAYIA AI Assistant - FSPM CRM
+// Service for handling real LLM communication for MAYIA AI Assistant - Gas Station Inteligente
 
 export interface LLMMessage {
   id: string;
@@ -14,7 +14,7 @@ export interface LLMConfig {
   modelName: string;
 }
 
-const STORAGE_KEY = 'MAYIA_LLM_CONFIG_FSPM';
+const STORAGE_KEY = 'MAYIA_LLM_CONFIG_GAS_STATION';
 
 export function getStoredLLMConfig(): LLMConfig {
   try {
@@ -37,33 +37,28 @@ export function saveLLMConfig(config: LLMConfig) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
 }
 
-// FSPM System Prompt and Knowledge Base (Fire Safety & Protection Management)
-const SYSTEM_PROMPT = `Eres MAYIA, el Asistente Inteligente y Copiloto Comercial de FSPM (Fire Safety & Protection Management).
+// Gas Station Inteligente System Prompt and Knowledge Base
+const SYSTEM_PROMPT = `Eres MAYIA, el Copiloto de Inteligencia Artificial y Asistente Operativo de la "Gas Station Inteligente".
 
 # TU ROL
-Asistir en tiempo real a ejecutivos comerciales (Fernanda Reza, Alfonso, Luis Gerardo, Edgar), directores y gerentes de FSPM.
-Proporcionas análisis del pipeline comercial ($24.8M), control de cotizaciones externas (FSPM-2026-XXXX), seguimiento documental de licitaciones públicas/privadas (PEMEX, CFE, ASA, ASIPONA), asesoría técnica sobre productos contra incendio (FireAde 2000, Unidades Móviles, Sistemas CAFS, Mantenimiento SPCI) y estructura de Google Drive.
+Asistir en tiempo real a operadores de estación, despachadores, gerentes de turno, directores de operaciones y administradores de flotas corporativas.
+Proporcionas información inmediata, análisis predictivo y control sobre los 8 módulos del ecosistema:
 
-# CATÁLOGO DE PRODUCTOS & SERVICIOS FSPM
-1. **Unidades Móviles FireAde**: Vehículos ligeros de intervención rápida 4x4 equipados con sistemas de espuma y polvo químico.
-2. **Sistemas CAFS (Compressed Air Foam Systems)**: Alta capacidad de supresión para plataformas marinas, minería e industria pesada.
-3. **Mantenimiento SPCI**: Pólizas integrales a redes de hidrantes, rociadores, bombas contra incendio y vehículos CREI aeroportuarios.
-4. **Agente Extintor FireAde 2000**: Concentrado ecológico biodegradable con certificaciones UL y NFPA.
-5. **Monitores y Rociadores**: Para muelles de hidrocarburos, subestaciones eléctricas y naves industriales.
-
-# CARTERA CLAVE Y LICITACIONES (AGOSTO 2026)
-- **CFE**: Equipamiento de unidades móviles ($890k) y concentrado FireAde ($2.1M). Contacto: Ing. Juan Pérez / Lic. Claudia Morales.
-- **PEMEX**: Licitación SPCI en complejos procesadores ($6.8M) con fecha crítica <36h y sistemas CAFS ($4.5M). Resp: Luis Gerardo.
-- **ASA**: Mantenimiento preventivo a vehículos de rescate CREI ($1.8M / $2.1M). Resp: Alfonso.
-- **Ternium**: Modernización de rociadores ganada ($3.2M). Resp: Edgar.
-- **Protección Civil CDMX & Grupo México**: Unidades ligeras 4x4 y sistemas para minería.
+1. **Módulo 1: Monitoreo de Tanques y Telemetría IoT**: Capacidad de 160,000L en 4 tanques subterráneos (Magna 87, Premium 91, Diésel UBA, GNR Biogás), sondas TLS-450 Plus, detección de microfugas acústicas con IA, flujo de bombas (L/min) y cadena de custodia Blockchain.
+2. **Módulo 2: Motor de Precios Dinámicos & Agentes IA**: Ajustes en tiempo real según tráfico, clima y competencia circundante (Shell, BP, Pemex, Mobil en 5km), sincronización con Tótem LED y acciones agénticas autónomas.
+3. **Módulo 3: Seguridad Inteligente, VMS & Control de Pistas**: Cámaras Edge AI, lectura de matrículas ALPR, detección de farderos/fugas sin pagar con bloqueo inmediato de dispensarios, y optimización de tiempos de espera en pista (2.4 min promedio).
+4. **Módulo 4: Cadena de Suministro e Inventario Retail (Odoo ERP)**: Reabastecimiento automático de pipas (20k/40k L), estantes inteligentes IoT en tienda de conveniencia con sensores de peso, y catálogo de productos hiperlocales.
+5. **Módulo 5: Gestión de Clientes Corporativos y Flotas (OSS/BSS)**: 28 flotas activas (Castores, DHL, Bimbo, Patrullas), validación telemática de odómetro vs litros cargados, facturación electrónica CFDI 4.0 conciliada y detección de riesgo de abandono (Churn).
+6. **Módulo 6: Experiencia del Cliente, Fidelización y Pagos Digitales**: 18,450 usuarios activos en App móvil, pagos sin fricción (ALPR Pay, Just Walk Out, In-Car Pay), casilleros Click & Collect y conserje por voz en isla.
+7. **Módulo 7: Hub de Energía, Sostenibilidad y Electromovilidad**: Marquesinas solares fotovoltaicas (48.5 kW), banco de baterías BESS (102 kWh), 4 cargadores EV ultrarrápidos (150kW - 350kW CCS2/NACS) y BMS de climatización/iluminación.
+8. **Módulo 8: Mantenimiento Predictivo, SDI y Gemelos Digitales**: Gemelo digital 3D interactivo, salud de bombas Wayne/Gilbarco, análisis de vibraciones RUL, 2 nodos Edge SDI locales con failover Fibra/5G y 100% uptime.
 
 # REGLA DE ORO OPERATIVA
-Ninguna oportunidad activa puede quedarse sin próxima acción con fecha compromiso.
+Garantizar la máxima seguridad operativa, precisión en el dispensado, rentabilidad de margen por litro y experiencia sin fricción para los clientes.
 
 # INSTRUCCIONES DE RESPUESTA
-1. Respuestas concisas, profesionales y estructuradas con viñetas claras.
-2. Orientadas a la conversión comercial, licitaciones y protección contra incendio.
+1. Respuestas concisas, ejecutivas y estructuradas con viñetas claras.
+2. Orientadas a la operación de la estación, telemetría y eficiencia energética.
 3. Adapta las respuestas al módulo activo en pantalla.`;
 
 async function callDirectGeminiAPI(
@@ -82,7 +77,7 @@ async function callDirectGeminiAPI(
 
   contents.push({
     role: 'user',
-    parts: [{ text: `[MÓDULO ACTIVO EN CRM FSPM: ${moduleContext}]\n\n${promptText}` }]
+    parts: [{ text: `[MÓDULO ACTIVO EN GAS STATION INTELIGENTE: ${moduleContext}]\n\n${promptText}` }]
   });
 
   const response = await fetch(url, {
@@ -117,7 +112,7 @@ async function callBackendAPI(promptText: string, moduleContext: string): Promis
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       mensaje: promptText,
-      departamento: moduleContext || 'FSPM General',
+      departamento: moduleContext || 'Gas Station General',
     }),
   });
 
@@ -134,41 +129,56 @@ function generateSmartContextualResponse(promptText: string, moduleContext: stri
   const p = promptText.toLowerCase();
 
   if (p.includes('hola') || p.includes('buenos') || p.includes('saludos') || p.includes('quién eres') || p.includes('quien eres')) {
-    return `¡Hola! Soy **MAYIA**, la Inteligencia Artificial Comercial y de Licitaciones de **FSPM** (Fire Safety & Protection Management).
+    return `¡Hola! Soy **MAYIA**, el Copiloto Inteligente de **Gas Station Inteligente**.
 
-Actualmente te encuentras en el módulo de **${moduleContext || 'Dashboard General FSPM'}**. Puedo ayudarte a verificar el estatus de las licitaciones (PEMEX, CFE, ASA), consultar cotizaciones abiertas ($8.45M), revisar el checklist documental o dar seguimiento a oportunidades en el pipeline. ¿En qué te asesoro hoy?`;
+Actualmente estás en el módulo de **${moduleContext || 'Dashboard General'}**. Puedo ayudarte a verificar niveles de tanques en tiempo real (126,800L almacenados), estado de precios y competencia en tótem, alertas de matrículas ALPR, órdenes de pipas Odoo o el balance solar/EV. ¿Qué deseas consultar?`;
   }
 
-  if (p.includes('licitacion') || p.includes('licitación') || p.includes('pemex') || p.includes('cfe') || p.includes('comprasmx') || p.includes('checklist')) {
-    return `🏛️ **Estatus de Licitaciones FSPM & Semáforo Crítico**
+  if (p.includes('tanque') || p.includes('nivel') || p.includes('fuga') || p.includes('litro') || p.includes('combustible') || p.includes('bomba')) {
+    return `⛽ **Telemetría de Tanques & Bombas en Tiempo Real**
 
-• **Licitación Crítica PEMEX (<36h):** Procedimiento LA-18-T0O para Mantenimiento SPCI ($6.8M). Falta descargar versión actualizada de Opinión SAT 32-D y póliza de garantía antes del 22/08 a las 10:00 AM.
-• **Licitación CFE (3-10 días):** Unidades Móviles Ligeras ($3.4M). Checklist técnico al 85% listo por Alfonso y Edgar.
-• **Licitación ASA (>10 días):** Mantenimiento de vehículos CREI aeroportuarios ($2.1M). En etapa de análisis de bases.`;
+• **Capacidad Almacenada:** 126,800 L de 160,000 L (79.2% Lleno).
+• **Magna 87:** 38,400 L (76.8%) · 3.8 días de autonomía.
+• **Premium 91:** 29,800 L (74.5%) · 4.2 días de autonomía.
+• **Diésel UBA:** 42,100 L (84.2%) · 5.1 días de autonomía.
+• **GNR Biogás:** 16,500 L (82.5%) · 18.5 bar.
+• **Detección de Fugas IA:** 0.00% fuga acústica, vacío intersticial en -18.2 InHg (Hermético).
+• **Bombas:** 8 dispensarios activos despachando a un flujo promedio de 38.4 L/min.`;
   }
 
-  if (p.includes('cotizacion') || p.includes('cotización') || p.includes('propuesta') || p.includes('monto') || p.includes('precio')) {
-    return `📄 **Control de Cotizaciones FSPM ($8.45M en propuesta)**
+  if (p.includes('precio') || p.includes('competencia') || p.includes('totem') || p.includes('tótem') || p.includes('margen')) {
+    return `📈 **Motor de Precios Dinámicos & IA**
 
-• **FSPM-2026-0183 (CFE):** Unidades Móviles FireAde por $890,000 MXN (+IVA: $1,032,400 MXN). Estado: Enviada. Próximo seguimiento: 22/08.
-• **FSPM-2026-0180 (PEMEX):** Sistemas CAFS por $4,500,000 MXN. Estado: Negociación técnica con superintendente Roberto Silva.
-• **Alerta de Seguimiento:** La cotización FSPM-2026-0178 (CFE - Concentrado FireAde $2.1M) acumula 7 días sin contacto registrado.`;
+• **Precios Actuales:** Magna: $23.89/L | Premium: $25.99/L | Diésel: $25.40/L | GNR: $14.50/L.
+• **Sugerencia IA:** +$0.12/L en Magna para capturar margen de hora pico (17:00 a 20:00).
+• **Radar Competencia (5 km):** Promedio de zona Magna en $24.18/L. Tenemos una ventaja de $0.29/L con respecto a Shell Circuito ($24.25/L).
+• **Tótem Digital LED:** Sincronizado vía MQTT.`;
   }
 
-  if (p.includes('fireade') || p.includes('cafs') || p.includes('spci') || p.includes('unidad') || p.includes('producto') || p.includes('extintor')) {
-    return `🔥 **Soluciones y Equipamiento Contra Incendio FSPM**
+  if (p.includes('seguridad') || p.includes('alpr') || p.includes('camara') || p.includes('cámara') || p.includes('placa') || p.includes('fuga sin pagar') || p.includes('lista negra')) {
+    return `🛡️ **Seguridad VMS & Reconocimiento ALPR**
 
-• **Unidades Móviles FireAde:** Carrocerías 4x4 ligeras de primera respuesta con dosificación de concentrado ecológico 2000 (Certificaciones UL/NFPA).
-• **Sistemas CAFS:** Inyección de aire comprimido para espuma de alta densidad en tanques y plataformas marinas.
-• **Mantenimiento SPCI:** Cobertura de bombas diésel/eléctricas, cuartos de control, rociadores y sistemas de diluvio.`;
+• **Lecturas ALPR Hoy:** 1,240 vehículos procesados (99.4% precisión).
+• **Alerta Reciente:** Matrícula **XYZ-6660 (Dodge Neon Gris)** detectada con antecedente de fuga sin pagar en otra sucursal. La Bomba #8 fue **bloqueada automáticamente en 0.4s**.
+• **Tiempos de Espera:** 2.4 min promedio en pista. Señalización digital activa dirigiendo vehículos hacia Bomba #2 libre.`;
   }
 
-  return `🤖 **Asistente FSPM MAYIA [${moduleContext || 'Gestión Comercial'}]**
+  if (p.includes('ev') || p.includes('solar') || p.includes('energia') || p.includes('energía') || p.includes('bateria') || p.includes('batería') || p.includes('cargador')) {
+    return `⚡ **Hub de Energía, Sostenibilidad & Electromovilidad**
 
-He analizado tu consulta sobre *" ${promptText} "* en la plataforma de FSPM.
+• **Generación Solar Marquesinas:** 48.5 kW/h (72% de autoconsumo directo).
+• **Banco de Baterías BESS:** 85% de carga (102 kWh disponibles).
+• **Postes EV Ultrarrápidos:** 3 de 4 postes ocupados suministrando 540 kW de potencia continua (CCS2 / Tesla NACS).
+• **Consumo de Red CFE:** Reducido a solo 14.2 kW gracias a la microred inteligente.`;
+  }
 
-• **Pipeline Total:** $24.8M activos distribuidos en 41 oportunidades y 8 licitaciones públicas/privadas.
-• **Acción Recomendada:** ¿Deseas que revise el checklist documental de alguna licitación o prefieres registrar un nuevo seguimiento comercial?`;
+  return `🤖 **Copiloto MAYIA [${moduleContext || 'Gas Station Inteligente'}]**
+
+He analizado tu consulta sobre *" ${promptText} "*.
+
+• **Estatus Operativo:** 8 módulos funcionando al 100% de disponibilidad.
+• **Despacho del Día:** 48,250 L ($1,124,500 MXN) con 1,240 vehículos atendidos.
+• ¿Deseas que te lleve a algún módulo específico o necesitas ejecutar una acción operativa?`;
 }
 
 export async function sendLLMMessage(

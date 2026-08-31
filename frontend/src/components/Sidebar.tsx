@@ -1,31 +1,29 @@
 import React, { useState } from 'react';
 import {
   LayoutDashboard,
-  Building2,
-  Users,
-  Briefcase,
-  FileText,
-  Landmark,
-  CheckSquare,
-  FolderGit2,
+  Fuel,
   TrendingUp,
-  Flame,
+  ShieldCheck,
+  Store,
+  Truck,
+  CreditCard,
+  Zap,
+  Cpu,
   Wifi,
-  ShieldCheck
+  Activity
 } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { MODULOS_FSPM } from '../fspm/fspmData';
+import { MODULOS_GAS_STATION } from '../gasStation/gasStationData';
 
 const iconMap: Record<string, any> = {
-  LayoutDashboard,
-  Building2,
-  Users,
-  Briefcase,
-  FileText,
-  Landmark,
-  CheckSquare,
-  FolderGit2,
+  Fuel,
   TrendingUp,
+  ShieldCheck,
+  Store,
+  Truck,
+  CreditCard,
+  Zap,
+  Cpu,
 };
 
 interface SidebarProps {
@@ -38,28 +36,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
   const { colores } = brandingConfig;
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  const totalAlerts = MODULOS_FSPM.reduce((acc, m) => acc + m.alertas, 0);
+  const totalAlerts = MODULOS_GAS_STATION.reduce((acc, m) => acc + m.alertas, 0);
 
   const categorias = [
     {
-      titulo: 'GESTIÓN COMERCIAL',
-      color: '#D32F2F',
-      items: MODULOS_FSPM.filter(m => m.categoria === 'comercial' && m.id !== 'dashboard')
+      titulo: 'TELEMETRÍA & COMBUSTIBLE',
+      color: '#0284C7',
+      items: MODULOS_GAS_STATION.filter(m => m.categoria === 'combustible')
     },
     {
-      titulo: 'LICITACIONES & GOBIERNO',
-      color: '#D97706',
-      items: MODULOS_FSPM.filter(m => m.categoria === 'licitaciones')
+      titulo: 'SEGURIDAD & RETAIL',
+      color: '#DC2626',
+      items: MODULOS_GAS_STATION.filter(m => m.categoria === 'seguridad_retail')
     },
     {
-      titulo: 'OPERACIONES & SEGUIMIENTO',
-      color: '#10B981',
-      items: MODULOS_FSPM.filter(m => m.categoria === 'operacion')
+      titulo: 'B2B & EXPERIENCIA',
+      color: '#7C3AED',
+      items: MODULOS_GAS_STATION.filter(m => m.categoria === 'b2b_clientes')
     },
     {
-      titulo: 'REPOSITORIO & DIRECCIÓN',
-      color: '#0F172A',
-      items: MODULOS_FSPM.filter(m => m.categoria === 'gestion')
+      titulo: 'INFRAESTRUCTURA & TI',
+      color: '#059669',
+      items: MODULOS_GAS_STATION.filter(m => m.categoria === 'infraestructura')
     }
   ];
 
@@ -76,7 +74,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         position: 'relative',
       }}
     >
-      {/* ── Logo & Header FSPM (Genérico) ── */}
+      {/* ── Logo & Header Gas Station Inteligente (Icono Genérico Fuel) ── */}
       <div
         style={{
           padding: '18px 20px',
@@ -93,22 +91,22 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               width: '38px',
               height: '38px',
               borderRadius: '12px',
-              background: 'linear-gradient(135deg, #D32F2F 0%, #9A0007 100%)',
+              background: 'linear-gradient(135deg, #059669 0%, #065F46 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(211, 47, 47, 0.35)',
+              boxShadow: '0 4px 14px rgba(5, 150, 105, 0.35)',
               color: '#FFFFFF',
             }}
           >
-            <Flame size={22} />
+            <Fuel size={22} />
           </div>
           <div>
-            <div style={{ fontSize: '16px', fontWeight: '900', color: '#0F172A', letterSpacing: '-0.3px', lineHeight: 1.1 }}>
-              FSPM CRM
+            <div style={{ fontSize: '15px', fontWeight: '900', color: '#0F172A', letterSpacing: '-0.3px', lineHeight: 1.1 }}>
+              Gas Station
             </div>
-            <div style={{ fontSize: '10px', color: '#D32F2F', fontWeight: '800', letterSpacing: '0.05em' }}>
-              PROTECCIÓN CONTRA INCENDIO
+            <div style={{ fontSize: '10px', color: '#059669', fontWeight: '800', letterSpacing: '0.05em' }}>
+              INTELIGENTE 4.0
             </div>
           </div>
 
@@ -117,7 +115,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               title={`${totalAlerts} alertas operativas activas`}
               style={{
                 marginLeft: 'auto',
-                backgroundColor: '#D32F2F',
+                backgroundColor: '#DC2626',
                 color: '#FFFFFF',
                 fontSize: '10px',
                 fontWeight: '900',
@@ -160,16 +158,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               borderRadius: '12px',
               border: 'none',
               cursor: 'pointer',
-              backgroundColor: activeSection === 'dashboard' ? '#D32F2F' : 'transparent',
+              backgroundColor: activeSection === 'dashboard' ? '#059669' : 'transparent',
               color: activeSection === 'dashboard' ? '#FFFFFF' : colores.textoClaro,
               transition: 'all 0.2s',
               textAlign: 'left',
-              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(211, 47, 47, 0.35)' : 'none',
+              boxShadow: activeSection === 'dashboard' ? '0 4px 14px rgba(5, 150, 105, 0.35)' : 'none',
             }}
             onMouseEnter={e => {
               if (activeSection !== 'dashboard') {
-                e.currentTarget.style.backgroundColor = '#FEE2E2';
-                e.currentTarget.style.color = '#D32F2F';
+                e.currentTarget.style.backgroundColor = '#D1FAE5';
+                e.currentTarget.style.color = '#059669';
               }
             }}
             onMouseLeave={e => {
@@ -185,16 +183,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                 height: '30px',
                 borderRadius: '8px',
                 flexShrink: 0,
-                backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#FEE2E2',
+                backgroundColor: activeSection === 'dashboard' ? 'rgba(255,255,255,0.2)' : '#D1FAE5',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#D32F2F'} />
+              <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#059669'} />
             </div>
             <span style={{ fontSize: '13px', fontWeight: '800', flex: 1 }}>
-              Dashboard FSPM
+              Dashboard General
             </span>
           </button>
         </div>
@@ -221,9 +219,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
             </div>
 
             {cat.items.map((item) => {
-              const IconComp = iconMap[item.iconoName] || Briefcase;
+              const IconComp = iconMap[item.iconoName] || Fuel;
               const isActive = activeSection === item.id;
-              const itemColor = cat.color;
+              const itemColor = item.color || cat.color;
 
               return (
                 <button
@@ -264,7 +262,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                   </div>
                   <span
                     style={{
-                      fontSize: '12.5px',
+                      fontSize: '12px',
                       fontWeight: isActive ? '800' : '600',
                       flex: 1,
                       whiteSpace: 'nowrap',
@@ -272,7 +270,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {item.titulo}
+                    M{item.numero}: {item.titulo.split(' ')[0]} {item.titulo.split(' ')[1] || ''}
                   </span>
                   {item.alertas > 0 && (
                     <span
@@ -310,7 +308,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       >
         <Wifi size={14} color="#10B981" />
         <span style={{ fontSize: '11px', fontWeight: '700', color: '#059669' }}>
-          Workspace Conectado
+          Estación Conectada IoT
         </span>
         <span
           style={{

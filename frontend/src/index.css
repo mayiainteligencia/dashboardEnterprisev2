@@ -33,8 +33,265 @@ html, body, #root {
 button { font-family: inherit; }
 
 /* ═══════════════════════════════════════
-   PREMIUM KEYFRAME ANIMATIONS (FSPM CRM)
+   PREMIUM KEYFRAME ANIMATIONS — Gas Station Inteligente
 ═══════════════════════════════════════ */
+
+/* Liquid fill animation for tanks */
+@keyframes liquidFill {
+  0%   { transform: scaleY(0); opacity: 0; }
+  100% { transform: scaleY(1); opacity: 1; }
+}
+
+/* Wave motion for liquid surface */
+@keyframes waveSurface {
+  0%   { border-radius: 50% 50% 0 0 / 20% 20% 0 0; }
+  50%  { border-radius: 40% 60% 0 0 / 15% 25% 0 0; }
+  100% { border-radius: 50% 50% 0 0 / 20% 20% 0 0; }
+}
+
+/* Neon glow pulse for critical values */
+@keyframes neonGlow {
+  0%, 100% { text-shadow: 0 0 8px currentColor, 0 0 16px currentColor; }
+  50%       { text-shadow: 0 0 16px currentColor, 0 0 32px currentColor, 0 0 48px currentColor; }
+}
+
+/* Counter number roll-up */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Scanning beam for security/ALPR */
+@keyframes scanBeam {
+  0%   { top: 0%; opacity: 1; }
+  90%  { top: 90%; opacity: 1; }
+  100% { top: 90%; opacity: 0; }
+}
+
+/* Radar sweep */
+@keyframes radarSweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Orbiting dots */
+@keyframes orbit {
+  from { transform: rotate(0deg) translateX(18px); }
+  to   { transform: rotate(360deg) translateX(18px); }
+}
+
+/* Gradient shimmer on card hover */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Ticker scroll for price display */
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Ping for live indicators */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* Glow border rotate */
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(5, 150, 105, 0.4), inset 0 0 8px rgba(5, 150, 105, 0.1); }
+  50%       { box-shadow: 0 0 20px rgba(5, 150, 105, 0.7), inset 0 0 16px rgba(5, 150, 105, 0.2); }
+}
+
+/* Slide-in from bottom (page load) */
+@keyframes slideUpCard {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Horizontal progress bar fill */
+@keyframes barFill {
+  from { width: 0%; }
+  to   { width: var(--fill-w, 100%); }
+}
+
+/* Rotate spin for loading indicators */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Blink for alerts */
+@keyframes alertBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* Number odometer-style roll */
+@keyframes numberRoll {
+  0%   { clip-path: inset(0 0 100% 0); opacity: 0; }
+  100% { clip-path: inset(0 0 0% 0); opacity: 1; }
+}
+
+/* ═══════════════════════════════════════
+   GAS STATION — UTILITY ANIMATION CLASSES
+═══════════════════════════════════════ */
+
+.animate-liquid-fill  { animation: liquidFill 1.2s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.animate-wave-surface { animation: waveSurface 2s ease-in-out infinite; }
+.animate-neon-glow    { animation: neonGlow 2.5s ease-in-out infinite; }
+.animate-count-up     { animation: countUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-scan         { animation: scanBeam 2.5s ease-in-out infinite; }
+.animate-radar        { animation: radarSweep 4s linear infinite; }
+.animate-orbit        { animation: orbit 3s linear infinite; }
+.animate-gradient-bg  { animation: gradientShift 5s ease infinite; background-size: 200% 200%; }
+.animate-ping         { animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.animate-border-glow  { animation: borderGlow 2.5s ease-in-out infinite; }
+.animate-slide-up-card{ animation: slideUpCard 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-bar-fill     { animation: barFill 1.4s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.animate-spin-slow    { animation: spinSlow 8s linear infinite; }
+.animate-alert-blink  { animation: alertBlink 1.2s ease-in-out infinite; }
+.animate-number-roll  { animation: numberRoll 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Stagger delay classes extended */
+.delay-0  { animation-delay: 0.00s; }
+.delay-1  { animation-delay: 0.08s; }
+.delay-2  { animation-delay: 0.16s; }
+.delay-3  { animation-delay: 0.24s; }
+.delay-4  { animation-delay: 0.32s; }
+.delay-5  { animation-delay: 0.40s; }
+.delay-6  { animation-delay: 0.48s; }
+.delay-7  { animation-delay: 0.56s; }
+.delay-8  { animation-delay: 0.64s; }
+
+/* ═══════════════════════════════════════
+   GAS STATION — COMPONENT STYLES
+═══════════════════════════════════════ */
+
+/* Glassmorphism card */
+.gs-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Dark glass card */
+.gs-glass-dark {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Interactive module card */
+.gs-module-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease;
+}
+.gs-module-card:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 18px 40px rgba(5, 150, 105, 0.14);
+  border-color: #059669 !important;
+}
+
+/* Fuel level tank styles */
+.gs-tank-body {
+  border-radius: 8px 8px 24px 24px;
+  overflow: hidden;
+  position: relative;
+}
+
+.gs-tank-liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transition: height 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gs-tank-liquid::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -50%;
+  right: -50%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: waveSurface 2.5s ease-in-out infinite;
+}
+
+/* Live indicator dot */
+.gs-live-dot {
+  position: relative;
+}
+.gs-live-dot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: inherit;
+  animation: ping 1.8s ease-in-out infinite;
+}
+
+/* KPI stat cell */
+.gs-kpi-cell {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.gs-kpi-cell:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+/* Scrolling ticker */
+.gs-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 20s linear infinite;
+}
+.gs-ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Status badge pulse */
+.gs-badge-ok    { background: #D1FAE5; color: #065F46; border: 1px solid #6EE7B7; }
+.gs-badge-warn  { background: #FEF3C7; color: #92400E; border: 1px solid #FCD34D; animation: pulseGlowAmber 2.2s infinite; }
+.gs-badge-crit  { background: #FEE2E2; color: #991B1B; border: 1px solid #FCA5A5; animation: pulseGlowRed 2s infinite; }
+
+/* Sector arc for gauges */
+.gs-gauge-arc {
+  transition: stroke-dasharray 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark metric card */
+.gs-dark-metric {
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 18px;
+  color: white;
+  transition: transform 0.24s ease, box-shadow 0.24s ease;
+}
+.gs-dark-metric:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(0,0,0,0.25);
+}
+
+/* Gradient text helper */
+.gs-gradient-text {
+  background: linear-gradient(90deg, #059669, #0284C7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth number display */
+.gs-number {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
 
 @keyframes fadeIn {
   from { opacity: 0; }

@@ -30,10 +30,10 @@ export const AsistenteIAChat: React.FC = () => {
   };
 
   const quickPrompts = [
-    'Estatus de licitación PEMEX (<36h)',
-    'Resumen de cotizaciones abiertas ($8.45M)',
-    'Checklist de entrega para CFE',
-    'Ventajas de concentrado ecológico FireAde 2000'
+    'Nivel y autonomía de tanques',
+    'Sugerencia de precios dinámicos IA',
+    'Alertas de seguridad ALPR y pistas',
+    'Balance solar y postes EV (kW/h)'
   ];
 
   return (
@@ -78,7 +78,7 @@ export const AsistenteIAChat: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <h3 style={{ margin: 0, fontSize: 16, fontWeight: 700, color: colores.textoClaro }}>
-                {ia.nombre} · Asesor IA FSPM
+                {ia.nombre} · Asesor IA Gas Station
               </h3>
               <span
                 style={{
@@ -187,7 +187,7 @@ export const AsistenteIAChat: React.FC = () => {
                 {m.content ? (
                   <MarkdownRenderer content={m.content} isUser={m.role === 'user'} accentColor={colores.primario} />
                 ) : (
-                  loading && m.role === 'assistant' ? 'MAYIA está procesando la consulta FSPM...' : ''
+                  loading && m.role === 'assistant' ? 'MAYIA está procesando los datos de la gasolinera...' : ''
                 )}
               </div>
             </div>
