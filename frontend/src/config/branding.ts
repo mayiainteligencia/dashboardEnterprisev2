@@ -100,56 +100,56 @@ export const brandingConfig = {
       sobreAcento:  "#FFFFFF",
     },
     tanques: {
-      nombre: "Módulo 1: Tanques & Telemetría IoT",
+      nombre: "Tanques & Telemetría IoT",
       acento:       "#0284C7",   // Azul Hidrocarburos
       acentoOscuro: "#0369A1",
       acentoSuave:  "#E0F2FE",
       sobreAcento:  "#FFFFFF",
     },
     precios: {
-      nombre: "Módulo 2: Precios Dinámicos & IA",
+      nombre: "Precios Dinámicos & IA",
       acento:       "#D97706",   // Ámbar Comercial
       acentoOscuro: "#B45309",
       acentoSuave:  "#FEF3C7",
       sobreAcento:  "#FFFFFF",
     },
     seguridad: {
-      nombre: "Módulo 3: Seguridad VMS & ALPR",
+      nombre: "Seguridad VMS & ALPR",
       acento:       "#DC2626",   // Rojo Seguridad
       acentoOscuro: "#991B1B",
       acentoSuave:  "#FEE2E2",
       sobreAcento:  "#FFFFFF",
     },
     suministro: {
-      nombre: "Módulo 4: Cadena de Suministro Odoo",
+      nombre: "Cadena de Suministro Odoo",
       acento:       "#7C3AED",   // Morado ERP / Retail
       acentoOscuro: "#5B21B6",
       acentoSuave:  "#EDE9FE",
       sobreAcento:  "#FFFFFF",
     },
     flotas: {
-      nombre: "Módulo 5: Flotas B2B & Telemática",
+      nombre: "Flotas B2B & Telemática",
       acento:       "#0F172A",   // Azul Marino Corporativo
       acentoOscuro: "#020617",
       acentoSuave:  "#F1F5F9",
       sobreAcento:  "#FFFFFF",
     },
     fidelizacion: {
-      nombre: "Módulo 6: Fidelización & Pagos Digitales",
+      nombre: "Fidelización & Pagos Digitales",
       acento:       "#EC4899",   // Rosa / Experiencia
       acentoOscuro: "#BE185D",
       acentoSuave:  "#FCE7F3",
       sobreAcento:  "#FFFFFF",
     },
     energia: {
-      nombre: "Módulo 7: Hub de Energía & EV",
+      nombre: "Hub de Energía & EV",
       acento:       "#10B981",   // Verde Solar
       acentoOscuro: "#047857",
       acentoSuave:  "#D1FAE5",
       sobreAcento:  "#FFFFFF",
     },
     mantenimiento: {
-      nombre: "Módulo 8: Mantenimiento & Gemelos 3D",
+      nombre: "Mantenimiento & Gemelos 3D",
       acento:       "#2563EB",   // Azul SDI / Tecnología
       acentoOscuro: "#1D4ED8",
       acentoSuave:  "#DBEAFE",

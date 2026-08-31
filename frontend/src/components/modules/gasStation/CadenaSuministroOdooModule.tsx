@@ -83,7 +83,7 @@ export const CadenaSuministroOdooModule: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '900', letterSpacing: '-0.5px' }} className="gs-gradient-text">
-                Módulo 4: Cadena de Suministro Odoo
+                Cadena de Suministro & Inventario Odoo
               </h1>
               <span className="shimmer-badge" style={{
                 fontSize: '11px', fontWeight: '800', padding: '4px 12px', borderRadius: '999px',

@@ -94,7 +94,7 @@ MAYIA: "El motor de precios dinámicos sugiere un ajuste de +$0.12/L en Magna du
 Usuario: "¿Hay alguna alerta de seguridad o ALPR?"
 MAYIA: "Se registró 1 evento crítico: la cámara ALPR detectó la matrícula XYZ-6660 con historial de fuga sin pagar en otra sucursal, lo que activó el bloqueo automático de la Bomba #8 en 0.4 segundos."
 
-Módulo actual: ${departamento || 'General'}
+Sección actual: ${departamento || 'General'}
 `;
 
   if (contexto && contexto.length > 0) {

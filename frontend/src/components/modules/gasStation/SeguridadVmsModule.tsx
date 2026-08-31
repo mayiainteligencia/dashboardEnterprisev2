@@ -101,7 +101,7 @@ export const SeguridadVmsModule: React.FC = () => {
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
               <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '900', letterSpacing: '-0.4px', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
-                Módulo 3: Seguridad Inteligente & VMS
+                Seguridad Inteligente, VMS & Control de Pistas
               </h1>
               <span
                 className="animate-alert-blink"

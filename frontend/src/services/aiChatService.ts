@@ -77,7 +77,7 @@ async function callDirectGeminiAPI(
 
   contents.push({
     role: 'user',
-    parts: [{ text: `[MÓDULO ACTIVO EN GAS STATION INTELIGENTE: ${moduleContext}]\n\n${promptText}` }]
+    parts: [{ text: `[SECCIÓN ACTIVA EN GAS STATION INTELIGENTE: ${moduleContext}]\n\n${promptText}` }]
   });
 
   const response = await fetch(url, {

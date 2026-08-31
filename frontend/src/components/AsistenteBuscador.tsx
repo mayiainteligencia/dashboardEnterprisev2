@@ -94,7 +94,7 @@ export const AsistenteBuscador: React.FC<{ modo?: Modo }> = ({ modo = 'admin' })
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleSend()}
           onFocus={() => setIsChatOpen(true)}
-          placeholder={`Pregúntale a ${ia.nombre} (Módulo: ${activeSectionTitle})…`}
+          placeholder={`Pregúntale a ${ia.nombre} (${activeSectionTitle})…`}
           style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: '13px', color: colores.textoClaro }}
         />
 

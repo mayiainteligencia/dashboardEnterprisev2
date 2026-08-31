@@ -157,16 +157,16 @@ export const GasStationDashboard: React.FC<GasStationDashboardProps> = ({ onSele
         </div>
       </div>
 
-      {/* ── 3. SCORECARD INTERACTIVO DE LOS 8 MÓDULOS DE LA GAS STATION ── */}
+      {/* ── 3. SCORECARD INTERACTIVO DE LAS ÁREAS DE LA GAS STATION ── */}
       <div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
           <h2 style={{ margin: 0, fontSize: '18px', fontWeight: '800', color: colores.textoClaro, display: 'flex', alignItems: 'center', gap: '8px' }}>
             <BarChart3 size={20} color={colores.primario} />
-            Módulos Operativos de la Estación Inteligente
+            Sistemas Operativos de la Estación Inteligente
           </h2>
           <span style={{ fontSize: '12px', color: colores.textoMedio, fontWeight: '600', display: 'flex', alignItems: 'center', gap: '6px' }}>
             <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10B981', display: 'inline-block' }} />
-            8 Módulos Conectados en Tiempo Real
+            8 Sistemas Conectados en Tiempo Real
           </span>
         </div>
 
@@ -225,7 +225,7 @@ export const GasStationDashboard: React.FC<GasStationDashboardProps> = ({ onSele
                       <IconComp size={20} />
                     </div>
                     <span style={{ fontSize: '10.5px', fontWeight: '800', color: mod.color, backgroundColor: `${mod.color}15`, padding: '2px 8px', borderRadius: '6px' }}>
-                      MÓDULO {mod.numero}
+                      {mod.categoria === 'combustible' ? 'COMBUSTIBLE' : mod.categoria === 'seguridad_retail' ? 'SEGURIDAD & RETAIL' : mod.categoria === 'b2b_clientes' ? 'B2B & FLOTAS' : 'INFRAESTRUCTURA'}
                     </span>
                   </div>
 

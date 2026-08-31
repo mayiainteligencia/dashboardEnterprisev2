@@ -239,7 +239,7 @@ export const AsistenteIAChat: React.FC = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-          placeholder={`Escribe tu consulta para ${ia.nombre} (Módulo: ${activeSectionTitle})…`}
+          placeholder={`Escribe tu consulta para ${ia.nombre} (${activeSectionTitle})…`}
           style={{
             flex: 1,
             padding: '12px 18px',
