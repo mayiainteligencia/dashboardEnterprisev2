@@ -10,14 +10,14 @@ import {
 const geoUrl =
   "https://raw.githubusercontent.com/deldersveld/topojson/master/countries/mexico/mexico-states.json";
 
-// Hubs logísticos de Totalplay en México
-const totalplayHubs = [
-  { name: "CDMX - Central Hub", coords: [-99.1332, 19.4326] as [number, number], color: "#DC2626", units: 142 },
-  { name: "Monterrey - CEDIS Norte", coords: [-100.3161, 25.6866] as [number, number], color: "#1E40AF", units: 88 },
-  { name: "Guadalajara - Hub Occidente", coords: [-103.3496, 20.6597] as [number, number], color: "#10B981", units: 64 },
-  { name: "Querétaro - Hub Bajío", coords: [-100.3899, 20.5888] as [number, number], color: "#F59E0B", units: 45 },
-  { name: "Puebla - Hub Oriente", coords: [-98.2063, 19.0414] as [number, number], color: "#8B5CF6", units: 32 },
-  { name: "Tijuana - Hub Noroeste", coords: [-117.0382, 32.5149] as [number, number], color: "#EC4899", units: 16 },
+// Hubs logísticos y de red izzi en México
+const izziHubs = [
+  { name: "CDMX - Central Hub", coords: [-99.1332, 19.4326] as [number, number], color: "#E3067A", units: 142 },
+  { name: "Monterrey - CEDIS Norte", coords: [-100.3161, 25.6866] as [number, number], color: "#0090D0", units: 88 },
+  { name: "Guadalajara - Hub Occidente", coords: [-103.3496, 20.6597] as [number, number], color: "#FF6C07", units: 64 },
+  { name: "Querétaro - Hub Bajío", coords: [-100.3899, 20.5888] as [number, number], color: "#53267E", units: 45 },
+  { name: "Puebla - Hub Oriente", coords: [-98.2063, 19.0414] as [number, number], color: "#0090D0", units: 32 },
+  { name: "Tijuana - Hub Noroeste", coords: [-117.0382, 32.5149] as [number, number], color: "#E3067A", units: 16 },
 ];
 
 const MapaMexico = () => {
@@ -46,7 +46,7 @@ const MapaMexico = () => {
                     setTooltip({
                       show: true,
                       name,
-                      details: "Estado monitoreado por telemetría Totalplay",
+                      details: "Estado monitoreado por telemetría izzi",
                       x: clientX,
                       y: clientY,
                     });
@@ -63,7 +63,7 @@ const MapaMexico = () => {
                       transition: "fill 0.2s ease",
                     },
                     hover: {
-                      fill: "#1E40AF",
+                      fill: "#E3067A",
                       outline: "none",
                       cursor: "pointer",
                     },
@@ -78,8 +78,8 @@ const MapaMexico = () => {
           }
         </Geographies>
 
-        {/* Marcadores Totalplay */}
-        {totalplayHubs.map((hub) => (
+        {/* Marcadores izzi */}
+        {izziHubs.map((hub) => (
           <Marker
             key={hub.name}
             coordinates={hub.coords}

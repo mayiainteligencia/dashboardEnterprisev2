@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { UserCheck, Sparkles, Target, Zap, CheckCircle2, MessageSquare, TrendingUp, DollarSign } from 'lucide-react';
+import React, { useState } from 'react';
+import { UserCheck, Sparkles, Zap, CheckCircle2, MessageSquare, TrendingUp, DollarSign } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
 const { colores } = brandingConfig;
@@ -44,7 +44,7 @@ function ConversionRing({ value, color, label }: { value: number; color: string;
       <svg width="72" height="72" viewBox="0 0 72 72">
         <circle cx="36" cy="36" r={r} fill="none" stroke={`${color}20`} strokeWidth="6" />
         <circle
-          cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth="6"
+          cx={sizeSafe(36)} cy={sizeSafe(36)} r={r} fill="none" stroke={color} strokeWidth="6"
           strokeDasharray={circ} strokeDashoffset={offset}
           strokeLinecap="round"
           transform="rotate(-90 36 36)"
@@ -57,6 +57,8 @@ function ConversionRing({ value, color, label }: { value: number; color: string;
   );
 }
 
+function sizeSafe(val: number) { return val; }
+
 export const CopilotoVendedorModule: React.FC = () => {
   const [selectedObjecion, setSelectedObjecion] = useState<string>('precio');
   const [animating, setAnimating] = useState(false);
@@ -64,33 +66,33 @@ export const CopilotoVendedorModule: React.FC = () => {
   const objeciones = [
     {
       id: 'precio',
-      titulo: 'El cliente dice que el precio es alto en comparación con la competencia',
-      respuestaIA: 'Destaca que Totalplay incluye Fibra Óptica simétrica real hasta el hogar (no cobre degradado) y que con Totalplay TV incluye el sistema de Sonido Hi-Fi Surround sin costo extra de equipamiento.',
-      paqueteSugerido: 'Triple Play 150 Mbps + Sound Hi-Fi',
-      arpuEstimado: '$749 MXN/mes',
-      arpuNum: 749,
-      arpu7d: [680, 700, 710, 720, 735, 742, 749],
-      convRate: 74,
+      titulo: 'El cliente dice que el precio es alto en comparación con otras compañías',
+      respuestaIA: 'Enfatiza que izzi ofrece el mejor costo-beneficio del mercado: navegación de alta velocidad simétrica, izzi tv+ con las mejores apps de streaming integradas (ViX+, Netflix o Max) y telefonía ilimitada.',
+      paqueteSugerido: 'izzi Triple Play 100 Mbps + izzi tv+',
+      arpuEstimado: '$670 MXN/mes',
+      arpuNum: 670,
+      arpu7d: [620, 635, 645, 650, 660, 665, 670],
+      convRate: 78,
     },
     {
       id: 'cobertura',
-      titulo: 'El cliente pregunta si su colonia tiene disponibilidad inmediata',
-      respuestaIA: 'Pídele su Código Postal. Recuerda que Totalplay cuenta con más de 164,000 km de fibra óptica en 87 ciudades. Si hay cobertura, la instalación se agenda en menos de 24 horas.',
-      paqueteSugerido: 'Doble Play 100 Mbps',
-      arpuEstimado: '$599 MXN/mes',
-      arpuNum: 599,
-      arpu7d: [540, 555, 565, 580, 588, 595, 599],
-      convRate: 68,
+      titulo: 'El cliente pregunta si su colonia tiene cobertura de red y fibra izzi',
+      respuestaIA: 'Pídele su Código Postal y colonia. Recuerda que izzi cuenta con más de 140,000 km de red híbrida y fibra óptica en más de 60 ciudades. Si hay cobertura, la instalación es express sin costo de suscripción.',
+      paqueteSugerido: 'izzi Doble Play 80 Mbps',
+      arpuEstimado: '$510 MXN/mes',
+      arpuNum: 510,
+      arpu7d: [480, 490, 495, 500, 505, 508, 510],
+      convRate: 72,
     },
     {
       id: 'tv',
       titulo: 'El cliente solo busca internet pero tiene familia en casa',
-      respuestaIA: 'Argumenta el valor de Totalplay TV como ecosistema integrado que incluye todas las apps de streaming en un solo control remoto y sonido envolvente.',
-      paqueteSugerido: 'Triple Play Premium 300 Mbps',
-      arpuEstimado: '$999 MXN/mes',
-      arpuNum: 999,
-      arpu7d: [900, 930, 950, 965, 980, 992, 999],
-      convRate: 81,
+      respuestaIA: 'Explica el valor integral de izzi tv+: acceso a más de 100 canales HD, control remoto inteligente y la opción de portar líneas a izzi móvil con gigas ilimitados a tarifa preferencial.',
+      paqueteSugerido: 'Combo izzi 200 Mbps + izzi tv+ & Móvil',
+      arpuEstimado: '$890 MXN/mes',
+      arpuNum: 890,
+      arpu7d: [820, 840, 855, 870, 880, 885, 890],
+      convRate: 84,
     },
   ];
 
@@ -105,10 +107,10 @@ export const CopilotoVendedorModule: React.FC = () => {
   const objActual = objeciones.find(o => o.id === selectedObjecion) || objeciones[0];
 
   const globalKpis = [
-    { label: 'Asesores Activos', valor: '340', color: '#A61C5C', icon: UserCheck },
-    { label: 'Cierres Asistidos', valor: '74%', color: '#732D67', icon: CheckCircle2 },
-    { label: 'ARPU Prom.', valor: '$612', color: '#D9933D', icon: DollarSign },
-    { label: 'Upsell Logrado', valor: '28%', color: '#BBBF41', icon: TrendingUp },
+    { label: 'Asesores Activos', valor: '420', color: '#E3067A', icon: UserCheck },
+    { label: 'Cierres Asistidos', valor: '78%', color: '#0090D0', icon: CheckCircle2 },
+    { label: 'ARPU Prom.', valor: '$585', color: '#FF6C07', icon: DollarSign },
+    { label: 'Upsell Logrado', valor: '32%', color: '#10B981', icon: TrendingUp },
   ];
 
   return (
@@ -118,16 +120,16 @@ export const CopilotoVendedorModule: React.FC = () => {
         <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.primario, margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '40px', height: '40px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #D9933D22, #D9933D11)',
+            background: 'linear-gradient(135deg, #FF6C0722, #FF6C0711)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #D9933D30'
+            border: '1px solid #FF6C0730'
           }}>
-            <UserCheck size={20} color="#D9933D" />
+            <UserCheck size={20} color="#FF6C07" />
           </div>
-          Copiloto del Vendedor Totalplay
+          Copiloto del Vendedor izzi
         </h2>
         <p style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '6px', lineHeight: 1.5 }}>
-          Asistente inteligente en tiempo real para apoyar a ejecutivos comerciales en cierre de contratos y elevación de ARPU.
+          Asistente inteligente en tiempo real para apoyar a ejecutivos comerciales en sucursales izzi en argumentación, cierre y elevación de ARPU.
         </p>
       </div>
 
@@ -165,7 +167,7 @@ export const CopilotoVendedorModule: React.FC = () => {
             fontSize: '14px', fontWeight: '800', color: colores.primario, marginBottom: '16px',
             display: 'flex', alignItems: 'center', gap: '8px', margin: '0 0 16px 0'
           }}>
-            <MessageSquare size={16} color="#A61C5C" /> Objeciones y Escenarios Frecuentes
+            <MessageSquare size={16} color="#E3067A" /> Objeciones y Escenarios Frecuentes
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {objeciones.map(o => (
@@ -175,10 +177,10 @@ export const CopilotoVendedorModule: React.FC = () => {
                 className="card-hover"
                 style={{
                   padding: '14px 16px', borderRadius: '12px', cursor: 'pointer',
-                  border: selectedObjecion === o.id ? `2px solid #D9933D` : `1px solid ${colores.borde}`,
-                  backgroundColor: selectedObjecion === o.id ? '#FDF4E7' : '#FAFAFA',
+                  border: selectedObjecion === o.id ? `2px solid #FF6C07` : `1px solid ${colores.borde}`,
+                  backgroundColor: selectedObjecion === o.id ? '#FFF0E6' : '#FAFAFA',
                   transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)',
-                  boxShadow: selectedObjecion === o.id ? '0 4px 14px rgba(217,147,61,0.2)' : 'none',
+                  boxShadow: selectedObjecion === o.id ? '0 4px 14px rgba(255,108,7,0.2)' : 'none',
                 }}
               >
                 <div style={{
@@ -186,11 +188,11 @@ export const CopilotoVendedorModule: React.FC = () => {
                 }}>
                   <div style={{
                     width: '24px', height: '24px', borderRadius: '6px', flexShrink: 0,
-                    backgroundColor: selectedObjecion === o.id ? '#D9933D' : '#F0EDE8',
+                    backgroundColor: selectedObjecion === o.id ? '#FF6C07' : '#F0EDE8',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     marginTop: '1px', transition: 'all 0.2s',
                   }}>
-                    <Zap size={12} color={selectedObjecion === o.id ? '#FFFFFF' : '#D9933D'} />
+                    <Zap size={12} color={selectedObjecion === o.id ? '#FFFFFF' : '#FF6C07'} />
                   </div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: colores.textoClaro, lineHeight: 1.4 }}>{o.titulo}</div>
                 </div>
@@ -209,13 +211,13 @@ export const CopilotoVendedorModule: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <div style={{
               width: '32px', height: '32px', borderRadius: '10px',
-              background: 'linear-gradient(135deg, #D9933D, #C07A28)',
+              background: 'linear-gradient(135deg, #FF6C07, #E3067A)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <Sparkles size={16} color="#FFFFFF" />
             </div>
             <div>
-              <div style={{ fontSize: '13px', fontWeight: '800', color: '#D9933D' }}>MAYIA Copilot</div>
+              <div style={{ fontSize: '13px', fontWeight: '800', color: '#FF6C07' }}>MAYIA Copilot izzi</div>
               <div style={{ fontSize: '10px', color: colores.textoMedio, fontWeight: '500' }}>Argumento recomendado en tiempo real</div>
             </div>
           </div>
@@ -225,7 +227,7 @@ export const CopilotoVendedorModule: React.FC = () => {
             style={{
               fontSize: '13.5px', color: colores.textoClaro, lineHeight: 1.65,
               backgroundColor: '#FFFBF5', padding: '16px',
-              borderRadius: '12px', borderLeft: '4px solid #D9933D',
+              borderRadius: '12px', borderLeft: '4px solid #FF6C07',
               opacity: animating ? 0 : 1, transform: animating ? 'translateY(6px)' : 'translateY(0)',
               transition: 'opacity 0.25s, transform 0.25s',
               fontStyle: 'italic'
@@ -236,17 +238,17 @@ export const CopilotoVendedorModule: React.FC = () => {
 
           {/* Package + ARPU row */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
-            <div style={{ backgroundColor: '#F5E8F3', padding: '14px', borderRadius: '12px', border: '1px solid #E5C8E0' }}>
-              <div style={{ fontSize: '10px', color: '#732D67', fontWeight: '800', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ backgroundColor: '#E6F4FB', padding: '14px', borderRadius: '12px', border: '1px solid #BCE3F7' }}>
+              <div style={{ fontSize: '10px', color: '#0090D0', fontWeight: '800', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 Paquete Recomendado
               </div>
               <div style={{ fontSize: '12.5px', fontWeight: '700', color: colores.textoClaro }}>{objActual.paqueteSugerido}</div>
             </div>
-            <div style={{ backgroundColor: '#FDF4E7', padding: '14px', borderRadius: '12px', border: '1px solid #F0D5A0' }}>
-              <div style={{ fontSize: '10px', color: '#D9933D', fontWeight: '800', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            <div style={{ backgroundColor: '#FFF0E6', padding: '14px', borderRadius: '12px', border: '1px solid #FCD3B8' }}>
+              <div style={{ fontSize: '10px', color: '#FF6C07', fontWeight: '800', marginBottom: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                 ARPU Estimado
               </div>
-              <div style={{ fontSize: '18px', fontWeight: '900', color: '#D9933D' }}>{objActual.arpuEstimado}</div>
+              <div style={{ fontSize: '18px', fontWeight: '900', color: '#FF6C07' }}>{objActual.arpuEstimado}</div>
             </div>
           </div>
 
@@ -254,9 +256,9 @@ export const CopilotoVendedorModule: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', paddingTop: '14px', borderTop: `1px solid ${colores.borde}` }}>
             <div style={{ flex: 1 }}>
               <div style={{ fontSize: '10px', color: colores.textoMedio, fontWeight: '600', marginBottom: '6px' }}>ARPU Últimos 7 Días</div>
-              <Sparkline data={objActual.arpu7d} color="#D9933D" width={120} height={36} />
+              <Sparkline data={objActual.arpu7d} color="#FF6C07" width={120} height={36} />
             </div>
-            <ConversionRing value={objActual.convRate} color="#732D67" label="Tasa de Cierre" />
+            <ConversionRing value={objActual.convRate} color="#0090D0" label="Tasa de Cierre" />
           </div>
         </div>
       </div>

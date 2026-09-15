@@ -1,4 +1,4 @@
-// Service for handling real LLM communication for MAYIA AI Assistant - Totalplay
+// Service for handling real LLM communication for MAYIA AI Assistant - izzi
 
 export interface LLMMessage {
   id: string;
@@ -37,30 +37,30 @@ export function saveLLMConfig(config: LLMConfig) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
 }
 
-// Totalplay System Prompt and Knowledge Base (M2C Powered by MAYIA + Retail Innova)
-const SYSTEM_PROMPT = `Eres MAYIA, la plataforma de Inteligencia Artificial M2C para Totalplay Telecomunicaciones (Grupo Salinas).
+// izzi System Prompt and Knowledge Base (M2C Powered by MAYIA + Retail Innova)
+const SYSTEM_PROMPT = `Eres MAYIA, la plataforma de Inteligencia Artificial M2C para izzi Telecomunicaciones (Grupo Televisa).
 
 # TU ROL
-Asistir en tiempo real a ejecutivos comerciales, gerentes de retail, supervisores de tienda y clientes de Totalplay.
-Proporcionas análisis de tráfico en puntos de venta, recomendaciones de paquetes (Doble Play, Triple Play, Totalplay TV, Sonido Hi-Fi Surround), apoyo al vendedor en cierre de ventas (Copiloto), verificación de cobertura FTTH y scorecards ejecutivos M2C.
+Asistir en tiempo real a ejecutivos comerciales, gerentes de retail, supervisores de tienda y clientes de izzi.
+Proporcionas análisis de tráfico en Centros de Atención izzi, recomendaciones de paquetes (izzi residencial, izzi tv+, izzi móvil, combos con streaming y telefonía ilimitada), apoyo al vendedor en cierre de ventas (Copiloto), verificación de cobertura HFC/FTTH y scorecards ejecutivos M2C.
 
-# DATOS GENERALES DE TOTALPLAY (1T26)
-- Red FTTH nacional con +164,000 km de fibra óptica en 87 ciudades.
-- +19.5 millones de hogares pasados y 5.55 millones de suscriptores (incluyendo 67,856 PyMEs).
-- 112+ Puntos de Venta (Islas Mall, Corners Autoservicio, Tiendas Premium).
+# DATOS GENERALES DE IZZI
+- Red de telecomunicaciones nacional con fibra y cable coaxial en más de 60 ciudades principales de México.
+- +15 millones de hogares pasados y más de 6.2 millones de suscriptores (residencial y negocios).
+- 120+ Centros de Atención izzi, módulos express en centros comerciales y corners de autoservicio.
 - Solución M2C: Transformación de puntos físicos con Computer Vision anónimo, asesores interactivos y analítica de conversión en tiempo real.
 
-# MÓDULOS DEL PROSPECTO TOTALPLAY (SOLUTION MAP)
-1. **Discovery IA Retail**: Medición de arquitectura de KPIs y madurez de punto de venta.
-2. **Computer Vision Comercial**: Conteo de tráfico anónimo, permanencia, tasa de atracción y mapa de interacción.
-3. **Asesor Inteligente Totalplay**: Tótem/Pantalla para resolver dudas, consultar cobertura y capturar leads consentidos.
-4. **Copiloto del Vendedor**: Asistencia en tiempo real para el ejecutivo comercial en argumentación y cierre.
-5. **Displays Inteligentes**: Exhibidores dinámicos e inmersivos (Totalplay TV & Audio Hi-Fi Surround).
-6. **Auditoría Visual IA**: Control de calidad y estandarización de islas y exhibidores a nivel nacional.
-7. **Gobierno de Datos & CRM**: Atribución omnicanal de visitas en punto físico a contratación e instalación.
-8. **Academia MAYIA**: Capacitación continua y adopción para la fuerza de ventas.
-9. **Diseño y Fabricación Retail Innova**: Renovación de islas, corners y displays inteligentes.
-10. **Operación Administrada**: Monitoreo de sensores, salud de pantallas y scorecards ejecutivos.
+# MÓDULOS DEL PROSPECTO IZZI (SOLUTION MAP)
+1. **Discovery IA Retail**: Medición de arquitectura de KPIs y madurez de centros de atención.
+2. **Computer Vision Comercial**: Conteo de tráfico anónimo, permanencia, tasa de atracción y mapa de interacción en sucursales izzi.
+3. **Asesor Inteligente izzi**: Tótem/Pantalla interactiva para resolver dudas, consultar cobertura y capturar leads consentidos.
+4. **Copiloto del Vendedor**: Asistencia en tiempo real para el ejecutivo comercial en argumentación y cierre frente a la competencia.
+5. **Displays Inteligentes**: Exhibidores dinámicos e inmersivos (experiencia izzi tv+ interactiva y demos izzi móvil).
+6. **Auditoría Visual IA**: Control de calidad y estandarización de módulos y centros de atención a nivel nacional.
+7. **Gobierno de Datos & CRM**: Atribución omnicanal de visitas en punto físico a contratación en App izzi o sucursal.
+8. **Academia MAYIA**: Capacitación continua y adopción para la fuerza de ventas izzi.
+9. **Diseño y Fabricación Retail Innova**: Renovación de módulos de venta, stands de centros comerciales y displays.
+10. **Operación Administrada**: Monitoreo de sensores IoT, salud de pantallas y scorecards ejecutivos.
 
 # INSTRUCCIONES DE RESPUESTA
 1. Respuestas concisas, profesionales, estructuradas y enfocadas a la conversión comercial y productividad en tiendas.
@@ -118,7 +118,7 @@ async function callBackendAPI(promptText: string, moduleContext: string): Promis
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       mensaje: promptText,
-      departamento: moduleContext || 'Totalplay General',
+      departamento: moduleContext || 'izzi General',
     }),
   });
 
@@ -135,34 +135,35 @@ function generateSmartContextualResponse(promptText: string, moduleContext: stri
   const p = promptText.toLowerCase();
 
   if (p.includes('hola') || p.includes('buenos') || p.includes('saludos') || p.includes('quién eres') || p.includes('quien eres')) {
-    return `¡Hola! Soy MAYIA, la Inteligencia Artificial Corporativa de Totalplay.
+    return `¡Hola! Soy MAYIA, la Inteligencia Artificial Corporativa de izzi.
 
-Actualmente estás explorando el módulo de **${moduleContext || 'Puntos Inteligentes Totalplay'}**. Puedo ayudarte a verificar la cobertura por código postal, analizar el tráfico de visitantes en islas comerciales, configurar paquetes con Totalplay Surround o consultar el copiloto de ventas. ¿En qué te ayudo hoy?`;
+Actualmente estás explorando el módulo de **${moduleContext || 'Puntos Inteligentes izzi'}**. Puedo ayudarte a verificar la cobertura por código postal, analizar el tráfico de visitantes en sucursales izzi, configurar paquetes de izzi residencial con izzi tv+ o consultar el copiloto de ventas. ¿En qué te ayudo hoy?`;
   }
 
-  if (p.includes('paquete') || p.includes('tv') || p.includes('internet') || p.includes('fibra') || p.includes('surround') || p.includes('cobertura')) {
-    return `📡 **Oferta Comercial Totalplay & Cobertura FTTH**
+  if (p.includes('paquete') || p.includes('tv') || p.includes('internet') || p.includes('fibra') || p.includes('móvil') || p.includes('movil') || p.includes('cobertura')) {
+    return `📡 **Oferta Comercial izzi & Cobertura Nacional**
 
-• **Doble Play:** Internet de Fibra Óptica simétrica de ultra alta velocidad (hasta 1,000 Mbps) + Telefonía HD.
-• **Triple Play Premium:** Incluye Totalplay TV 4K y experiencia inmersiva de audio Surround Hi-Fi 2026.
-• **Verificación de Cobertura:** Cobertura activa en 87 ciudades y +19.5M de hogares pasados.
-• **Tip para el Vendedor:** Al ofrecer el paquete Triple Play en islas, utiliza la demo interactiva del display inteligente para mostrar el sonido Surround Hi-Fi.`;
+• **izzi Residencial:** Internet de alta velocidad simétrica/híbrida (desde 60 hasta 1,000 Mbps) + Telefonía ilimitada.
+• **izzi tv+ Streaming:** Plataforma con más de 200 canales, apps integradas (ViX Premium, Disney+, Max) y control por voz.
+• **izzi móvil:** Telefonía celular con datos ilimitados y roaming en EE.UU. y Canadá a precio preferencial.
+• **Verificación de Cobertura:** Cobertura activa en más de 60 ciudades principales y +15M de hogares pasados.
+• **Tip para el Vendedor:** Al ofrecer izzi residencial con izzi tv+ en tienda, utiliza el display interactivo para demostrar la integración de streaming y control por voz.`;
   }
 
-  if (p.includes('trafico') || p.includes('tráfico') || p.includes('isla') || p.includes('corner') || p.includes('vision') || p.includes('cámara')) {
-    return `👁️ **Computer Vision & Tráfico en Punto de Venta Totalplay**
+  if (p.includes('trafico') || p.includes('tráfico') || p.includes('isla') || p.includes('sucursal') || p.includes('corner') || p.includes('vision') || p.includes('cámara')) {
+    return `👁️ **Computer Vision & Tráfico en Punto de Venta izzi**
 
-• **Tráfico Físico Detectado:** 14,250 visitantes registrados frente a las islas en las últimas 24 horas.
+• **Tráfico Físico Detectado:** 14,250 visitantes registrados frente a módulos y Centros de Atención izzi en las últimas 24 horas.
 • **Tasa de Atracción:** 28.4% de los transeúntes se detienen interactuando con las pantallas.
 • **Permanencia Promedio:** 3.8 minutos por visitante.
-• **Oportunidad M2C:** Las islas en Plaza Carso y Santa Fe muestran el mayor rendimiento de conversión cuando el Asesor en Pantalla inicia la interacción.`;
+• **Oportunidad M2C:** Los Centros de Atención en CDMX, Monterrey y Guadalajara muestran el mayor rendimiento de conversión cuando el Asesor en Pantalla inicia la interacción.`;
   }
 
-  return `🤖 **Asistente Totalplay MAYIA [${moduleContext || 'M2C Retail'}]**
+  return `🤖 **Asistente izzi MAYIA [${moduleContext || 'M2C Retail'}]**
 
-He analizado tu consulta *" ${promptText} "* en la plataforma de Totalplay.
+He analizado tu consulta *" ${promptText} "* en la plataforma de izzi.
 
-• **Diagnóstico:** El sistema M2C opera con normalidad conectando los 112+ puntos de venta físicos con el CRM y la App Totalplay.
+• **Diagnóstico:** El sistema M2C opera con normalidad conectando los 120+ Centros de Atención y módulos con el CRM y la App izzi.
 • **Acción Sugerida:** ¿Deseas consultar métricas de atracción por formato de tienda o revisar el copiloto de cierres comerciales?`;
 }
 

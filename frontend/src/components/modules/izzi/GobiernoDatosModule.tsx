@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Database, Link, ArrowRight, ShieldCheck, TrendingDown, Users, DollarSign } from 'lucide-react';
+import { Database, Link, ArrowRight, ShieldCheck, TrendingDown, Users } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
 const { colores } = brandingConfig;
@@ -34,26 +34,26 @@ export const GobiernoDatosModule: React.FC = () => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setTimeout(() => setMounted(true), 200); }, []);
 
-  const trafico    = useCountUp(14250, 1400, 200);
-  const interaccion = useCountUp(4047,  1200, 350);
-  const leads      = useCountUp(685,   1100, 500);
-  const contratos  = useCountUp(312,   1000, 650);
-  const activos    = useCountUp(293,    900, 800);
+  const trafico     = useCountUp(16840, 1400, 200);
+  const interaccion = useCountUp(5280,  1200, 350);
+  const leads       = useCountUp(890,   1100, 500);
+  const contratos   = useCountUp(410,   1000, 650);
+  const activos     = useCountUp(385,    900, 800);
 
   const embudo: FunnelStage[] = [
-    { etapa: 'Impresión Visual (Tráfico Frente a Isla)', cantidad: trafico.toLocaleString(), conv: '100%', num: 14250, color: '#732D67', icon: Users },
-    { etapa: 'Interacción Consentida (Tótem / Display)', cantidad: interaccion.toLocaleString(), conv: '28.4%', num: 4047, color: '#A61C5C', icon: Link },
-    { etapa: 'Lead Calificado (Consulta Cobertura FTTH)', cantidad: leads.toLocaleString(), conv: '4.8%', num: 685, color: '#D9933D', icon: ShieldCheck },
-    { etapa: 'Contrato Firmado (CRM Sincronizado)', cantidad: contratos.toLocaleString(), conv: '2.19%', num: 312, color: '#BBBF41', icon: Database },
-    { etapa: 'Instalación & Activación App Totalplay', cantidad: activos.toLocaleString(), conv: '2.05%', num: 293, color: '#5B8F20', icon: TrendingDown },
+    { etapa: 'Impresión Visual (Tráfico Frente a Sucursal/Isla)', cantidad: trafico.toLocaleString(), conv: '100%', num: 16840, color: '#53267E', icon: Users },
+    { etapa: 'Interacción Consentida (Tótem / Display izzi tv+)', cantidad: interaccion.toLocaleString(), conv: '31.3%', num: 5280, color: '#E3067A', icon: Link },
+    { etapa: 'Lead Calificado (Consulta Cobertura Red izzi)', cantidad: leads.toLocaleString(), conv: '5.2%', num: 890, color: '#0090D0', icon: ShieldCheck },
+    { etapa: 'Contrato Firmado (CRM Sincronizado)', cantidad: contratos.toLocaleString(), conv: '2.43%', num: 410, color: '#FF6C07', icon: Database },
+    { etapa: 'Instalación & Activación App izzi', cantidad: activos.toLocaleString(), conv: '2.28%', num: 385, color: '#10B981', icon: TrendingDown },
   ];
 
   const maxNum = embudo[0].num;
 
   const kpis = [
-    { label: 'Conv. Lead→Instalación', valor: '42.8%', delta: '+6.2%', color: '#732D67' },
-    { label: 'Leads Sincronizados CRM', valor: '100%', delta: 'OK', color: '#5B8F20' },
-    { label: 'Costo Adquisición (CAC)', valor: '−18%', delta: 'Mejora', color: '#A61C5C' },
+    { label: 'Conv. Lead→Instalación', valor: '45.6%', delta: '+7.4%', color: '#E3067A' },
+    { label: 'Leads Sincronizados CRM', valor: '100%', delta: 'OK', color: '#10B981' },
+    { label: 'Costo Adquisición (CAC)', valor: '−22%', delta: 'Mejora', color: '#0090D0' },
   ];
 
   return (
@@ -63,16 +63,16 @@ export const GobiernoDatosModule: React.FC = () => {
         <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.primario, margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '40px', height: '40px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #732D6722, #732D6711)',
+            background: 'linear-gradient(135deg, #0090D022, #0090D011)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #732D6730'
+            border: '1px solid #0090D030'
           }}>
-            <Database size={20} color="#732D67" />
+            <Database size={20} color="#0090D0" />
           </div>
-          Gobierno de Datos & Atribución CRM
+          Gobierno de Datos & Atribución CRM izzi
         </h2>
         <p style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '6px', lineHeight: 1.5 }}>
-          Trazabilidad omnicanal segura y consentida desde el punto físico hasta la activación del servicio.
+          Trazabilidad omnicanal segura y consentida desde el punto físico hasta la activación del servicio izzi.
         </p>
       </div>
 
@@ -88,7 +88,7 @@ export const GobiernoDatosModule: React.FC = () => {
           }}>
             <div style={{ fontSize: '10px', fontWeight: '600', color: colores.textoMedio }}>{k.label}</div>
             <div style={{ fontSize: '22px', fontWeight: '900', color: k.color }}>{k.valor}</div>
-            <div style={{ fontSize: '11px', fontWeight: '700', color: '#5B8F20', backgroundColor: '#EEF6E7', padding: '2px 7px', borderRadius: '6px', alignSelf: 'flex-start' }}>
+            <div style={{ fontSize: '11px', fontWeight: '700', color: '#10B981', backgroundColor: '#EEF6E7', padding: '2px 7px', borderRadius: '6px', alignSelf: 'flex-start' }}>
               {k.delta}
             </div>
           </div>
@@ -101,7 +101,7 @@ export const GobiernoDatosModule: React.FC = () => {
         borderRadius: '16px', padding: '22px', boxShadow: '0 4px 16px rgba(0,0,0,0.04)'
       }}>
         <h3 style={{ fontSize: '15px', fontWeight: '800', color: colores.primario, marginBottom: '20px', margin: '0 0 20px 0' }}>
-          Embudo Comercial Omnicanal M2C
+          Embudo Comercial Omnicanal M2C izzi
         </h3>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -133,7 +133,7 @@ export const GobiernoDatosModule: React.FC = () => {
                         <span style={{ fontSize: '16px', fontWeight: '900', color: item.color }}>{item.cantidad}</span>
                         <span style={{
                           fontSize: '11px', fontWeight: '800',
-                          color: '#A61C5C', backgroundColor: '#FCE7F1',
+                          color: '#E3067A', backgroundColor: '#FDEAF2',
                           padding: '2px 7px', borderRadius: '6px'
                         }}>{item.conv}</span>
                       </div>

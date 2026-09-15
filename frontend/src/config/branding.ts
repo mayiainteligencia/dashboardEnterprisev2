@@ -1,33 +1,34 @@
 export const brandingConfig = {
   empresa: {
-    nombre: "TOTALPLAY",
-    razonSocial: "Total Play Telecomunicaciones, S.A.P.I. de C.V.",
-    grupo: "Grupo Salinas",
-    eslogan: "Transformación Inteligente M2C · Puntos de Venta",
-    logo: "/assets/logosNativos/TotalPlay.png",
+    nombre: "IZZI",
+    razonSocial: "Empresas Cablevisión, S.A.B. de C.V.",
+    grupo: "Grupo Televisa",
+    eslogan: "llévatela fácil, llévatela izzi · Puntos de Venta Inteligentes M2C",
+    logo: "/assets/logosEmpresas/izziLogo.webp",
   },
 
   colores: {
-    // ── Paleta oficial Totalplay (5 colores de igual relevancia) ──
-    magenta:  "#A61C5C",   // Rosa/Magenta fuerte
-    purpura:  "#732D67",   // Púrpura oscuro
-    celeste:  "#73B1BF",   // Azul-turquesa (NUEVO)
-    lima:     "#BBBF41",   // Olivo/Lima
-    ambar:    "#D9933D",   // Ámbar/Naranja
+    // ── Paleta oficial izzi (Multicolor dinámico) ──
+    magenta:  "#E3067A",   // Fucsia/Magenta distintivo izzi
+    naranja:  "#FF6C07",   // Naranja enérgico izzi
+    celeste:  "#0090D0",   // Azul / Cyan izzi
+    amarillo: "#FCD116",   // Amarillo izzi
+    purpura:  "#53267E",   // Púrpura profundo izzi
+    lima:     "#10B981",   // Verde estado / éxito
+    ambar:    "#FF6C07",   // Naranja/Ámbar izzi
 
     // ── Roles de color en la UI ──
-    // El primario principal cambia a turquesa para reducir dominancia morada
-    primario:       "#73B1BF",   // Turquesa Totalplay → encabezados, nav activa
-    primarioOscuro: "#4E848F",   // Turquesa oscuro
-    primarioClaro:  "#A3D0D9",   // Turquesa claro
+    primario:       "#E3067A",   // Magenta izzi → encabezados, CTAs
+    primarioOscuro: "#BD0063",   // Magenta oscuro
+    primarioClaro:  "#F94F9F",   // Magenta claro
 
-    secundario:     "#A61C5C",   // Magenta → badges, CTA, alertas
-    acento:         "#D9933D",   // Ámbar → acciones secundarias / highlights
-    acentoOscuro:   "#A36618",   // Ámbar oscuro
+    secundario:     "#0090D0",   // Cyan/Azul izzi → badges, enlaces
+    acento:         "#FF6C07",   // Naranja izzi → acciones secundarias / highlights
+    acentoOscuro:   "#D45200",   // Naranja oscuro
 
-    peligro:     "#A61C5C",   // Magenta para errores críticos
-    advertencia: "#D9933D",   // Ámbar para advertencias
-    exito:       "#BBBF41",   // Lima para éxitos / OK
+    peligro:     "#E3067A",   // Fucsia izzi para errores críticos
+    advertencia: "#FF6C07",   // Naranja para advertencias
+    exito:       "#10B981",   // Verde para éxitos / OK
 
     // ── Fondos (Blanco puro como requerido) ──
     fondoPrincipal:  "#FFFFFF",
@@ -43,77 +44,77 @@ export const brandingConfig = {
 
     // ── Bordes ──
     borde:      "#E2E8F0",
-    bordeHover: "#73B1BF",   // Turquesa en hover
+    bordeHover: "#E3067A",
 
-    // ── Gradientes ──
-    gradientePrimario:   "linear-gradient(135deg, #73B1BF 0%, #4E848F 100%)",
-    gradienteSecundario: "linear-gradient(135deg, #A61C5C 0%, #732D67 100%)",
-    gradienteAcento:     "linear-gradient(135deg, #D9933D 0%, #BBBF41 100%)",
+    // ── Gradientes izzi ──
+    gradientePrimario:   "linear-gradient(135deg, #E3067A 0%, #53267E 100%)",
+    gradienteSecundario: "linear-gradient(90deg, #FF6C07 0%, #0090D0 33%, #E3067A 66%, #FCD116 100%)",
+    gradienteAcento:     "linear-gradient(135deg, #FF6C07 0%, #FCD116 100%)",
 
     // ── Glass / Sombras ──
     fondoGlass:    "rgba(255, 255, 255, 0.95)",
     sombra:        "0 2px 8px rgba(0, 0, 0, 0.04)",
-    sombraMedia:   "0 8px 20px rgba(115, 177, 191, 0.12)",
-    sombraGrande:  "0 16px 32px rgba(115, 177, 191, 0.18)",
+    sombraMedia:   "0 8px 20px rgba(227, 6, 122, 0.12)",
+    sombraGrande:  "0 16px 32px rgba(227, 6, 122, 0.18)",
   },
 
   metricas: {
-    hogaresPasados: "19M+",
-    suscriptores: "5.5M",
-    puntosVenta: 112,
-    ciudades: 87,
-    fibraOpticaKm: "164,000 km",
-    arpuPromedio: "$588",
-    empleados: 5500,
+    hogaresPasados: "15M+",
+    suscriptores: "6.2M",
+    puntosVenta: 120,
+    ciudades: 60,
+    fibraOpticaKm: "140,000 km",
+    arpuPromedio: "$520",
+    empleados: 15000,
   },
 
   ia: {
     nombre: "MAYIA",
     modelo: "Gemini 3.5 Flash",
     habilitado: true,
-    empresaCliente: "Totalplay Telecomunicaciones",
+    empresaCliente: "izzi Telecom (Grupo Televisa)",
   },
 
-  // ── Temas por sección distribuidos entre los 5 colores ──
+  // ── Temas por sección adaptados a la paleta izzi ──
   temas: {
     admin: {
-      nombre: "Operación de Tiendas e Islas",
-      acento:       "#73B1BF",   // Turquesa
-      acentoOscuro: "#4E848F",
-      acentoSuave:  "#EAF5F7",
+      nombre: "Operación de Tiendas e Islas izzi",
+      acento:       "#E3067A",   // Fucsia izzi
+      acentoOscuro: "#BD0063",
+      acentoSuave:  "#FDEAF2",
       sobreAcento:  "#FFFFFF",
     },
     cliente: {
-      nombre: "Atención al Cliente Residencial",
-      acento:       "#BBBF41",   // Lima
-      acentoOscuro: "#8B8F26",
-      acentoSuave:  "#F7F8E2",
-      sobreAcento:  "#1A1A1A",
+      nombre: "Atención a Clientes Residencial",
+      acento:       "#0090D0",   // Azul izzi
+      acentoOscuro: "#0071A4",
+      acentoSuave:  "#E6F4FB",
+      sobreAcento:  "#FFFFFF",
     },
     compras: {
       nombre: "Ventas y Contratación",
-      acento:       "#A61C5C",   // Magenta
-      acentoOscuro: "#751240",
-      acentoSuave:  "#FCE7F1",
+      acento:       "#FF6C07",   // Naranja izzi
+      acentoOscuro: "#CC5400",
+      acentoSuave:  "#FFF0E6",
       sobreAcento:  "#FFFFFF",
     },
     flotillas: {
-      nombre: "Infraestructura y Cobertura",
-      acento:       "#D9933D",   // Ámbar
-      acentoOscuro: "#A36618",
-      acentoSuave:  "#FDF4E7",
+      nombre: "Infraestructura y Red izzi",
+      acento:       "#53267E",   // Púrpura izzi
+      acentoOscuro: "#3D1A5E",
+      acentoSuave:  "#F4EEF9",
       sobreAcento:  "#FFFFFF",
     },
     tecnologia: {
-      nombre: "Tecnología y Datos",
-      acento:       "#732D67",   // Púrpura
-      acentoOscuro: "#4A1B43",
-      acentoSuave:  "#F5E8F3",
+      nombre: "Tecnología, CRM & Plataforma",
+      acento:       "#0090D0",   // Azul izzi
+      acentoOscuro: "#006C9C",
+      acentoSuave:  "#E8F6FC",
       sobreAcento:  "#FFFFFF",
     },
   },
 };
 
-export type TemaBesco = typeof brandingConfig.temas.admin;
-export type TemaTotalplay = typeof brandingConfig.temas.admin;
+export type TemaIzzi = typeof brandingConfig.temas.admin;
+export type TemaBesco = TemaIzzi;
 export type BrandingConfig = typeof brandingConfig;

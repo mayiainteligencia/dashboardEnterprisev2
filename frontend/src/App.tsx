@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Sidebar } from './components/Sidebar';
 import { Header } from './components/Header';
-import { TotalplayDashboard } from './totalplay/TotalplayDashboard';
-import { ComputerVisionModule } from './components/modules/totalplay/ComputerVisionModule';
-import { CopilotoVendedorModule } from './components/modules/totalplay/CopilotoVendedorModule';
-import { DisplaysInteligentesModule } from './components/modules/totalplay/DisplaysInteligentesModule';
-import { AuditoriaVisualModule } from './components/modules/totalplay/AuditoriaVisualModule';
-import { GobiernoDatosModule } from './components/modules/totalplay/GobiernoDatosModule';
-import { AcademiaMayiaModule } from './components/modules/totalplay/AcademiaMayiaModule';
-import { DisenioFabricacionModule } from './components/modules/totalplay/DisenioFabricacionModule';
-import { OperacionAdministradaModule } from './components/modules/totalplay/OperacionAdministradaModule';
-import { DiscoveryRetailModule } from './components/modules/totalplay/DiscoveryRetailModule';
-import { VistaGerenteMovilModule } from './components/modules/totalplay/VistaGerenteMovilModule';
+import { IzziDashboard } from './izzi/IzziDashboard';
+import { ComputerVisionModule } from './components/modules/izzi/ComputerVisionModule';
+import { CopilotoVendedorModule } from './components/modules/izzi/CopilotoVendedorModule';
+import { DisplaysInteligentesModule } from './components/modules/izzi/DisplaysInteligentesModule';
+import { AuditoriaVisualModule } from './components/modules/izzi/AuditoriaVisualModule';
+import { GobiernoDatosModule } from './components/modules/izzi/GobiernoDatosModule';
+import { AcademiaMayiaModule } from './components/modules/izzi/AcademiaMayiaModule';
+import { DisenioFabricacionModule } from './components/modules/izzi/DisenioFabricacionModule';
+import { OperacionAdministradaModule } from './components/modules/izzi/OperacionAdministradaModule';
+import { DiscoveryRetailModule } from './components/modules/izzi/DiscoveryRetailModule';
+import { VistaGerenteMovilModule } from './components/modules/izzi/VistaGerenteMovilModule';
 import { AsistenteIAChat } from './components/modules/AsistenteIAChat';
-import { MODULOS_TOTALPLAY } from './totalplay/totalplayData';
+import { MODULOS_IZZI } from './izzi/izziData';
 import { brandingConfig } from './config/branding';
 import { AIChatProvider, useAIChat } from './context/AIChatContext';
 
@@ -40,9 +40,9 @@ function AppInner() {
   };
 
   const getTitulo = () => {
-    if (activeSection === 'dashboard') return 'Totalplay · Puntos Inteligentes M2C';
-    const mod = MODULOS_TOTALPLAY.find(m => m.id === activeSection);
-    return mod ? mod.titulo : 'Totalplay Telecomunicaciones';
+    if (activeSection === 'dashboard') return 'izzi · Puntos Inteligentes M2C';
+    const mod = MODULOS_IZZI.find(m => m.id === activeSection);
+    return mod ? mod.titulo : 'izzi Telecom';
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function AppInner() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
-        return <TotalplayDashboard onSelectModulo={selectSection} />;
+        return <IzziDashboard onSelectModulo={selectSection} />;
       case 'vista-gerente-movil':
         return <VistaGerenteMovilModule />;
       case 'computer-vision':
@@ -77,7 +77,7 @@ function AppInner() {
       case 'discovery-retail':
         return <DiscoveryRetailModule />;
       default:
-        return <TotalplayDashboard onSelectModulo={selectSection} />;
+        return <IzziDashboard onSelectModulo={selectSection} />;
     }
   };
 
@@ -110,7 +110,7 @@ function AppInner() {
 
       {/* CONTENIDO PRINCIPAL */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', minWidth: 0 }}>
-        {/* Header con colores e identidad Totalplay */}
+        {/* Header con colores e identidad izzi */}
         <Header
           title={getTitulo()}
           onMenu={isMobile ? () => setDrawerOpen(true) : undefined}

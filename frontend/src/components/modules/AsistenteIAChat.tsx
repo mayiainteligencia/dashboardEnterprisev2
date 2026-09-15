@@ -30,10 +30,10 @@ export const AsistenteIAChat: React.FC = () => {
   };
 
   const quickPrompts = [
-    `Verificar cobertura FTTH Totalplay`,
-    'Comparar paquetes Doble Play vs Triple Play',
+    `Verificar cobertura izzi residencial`,
+    'Comparar paquetes izzi con izzi tv+ y móvil',
     'Sugerencias del Copiloto para elevar ARPU',
-    'Métricas de atracción y permanencia en islas'
+    'Métricas de atracción y permanencia en sucursales'
   ];
 
   return (

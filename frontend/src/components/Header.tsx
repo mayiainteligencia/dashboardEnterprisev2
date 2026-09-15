@@ -141,7 +141,7 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
       {/* Asistente IA tipo buscador */}
       <AsistenteBuscador modo={modo} />
 
-      {/* CENTRO - Branding Totalplay */}
+      {/* CENTRO - Branding izzi */}
       <div style={{ textAlign: 'center', display: onMenu ? 'none' : 'flex', alignItems: 'center', gap: '12px' }}>
         <div style={{
           display: 'flex',
@@ -154,11 +154,11 @@ export const Header: React.FC<HeaderProps> = ({ title, onMenu, modo = 'admin', o
           boxShadow: '0 2px 6px rgba(0,0,0,0.04)'
         }}>
           <img
-            src="/assets/logosNativos/TotalPlay.png"
-            alt="Totalplay Logo"
+            src="/assets/logosEmpresas/izziLogo.webp"
+            alt="izzi Logo"
             style={{ height: '26px', objectFit: 'contain' }}
           />
-          <span style={{ fontSize: '11px', fontWeight: '700', color: '#732D67', backgroundColor: '#F5E8F3', padding: '2px 8px', borderRadius: '10px' }}>
+          <span style={{ fontSize: '11px', fontWeight: '700', color: '#E3067A', backgroundColor: '#FDEAF2', padding: '2px 8px', borderRadius: '10px' }}>
             M2C
           </span>
         </div>

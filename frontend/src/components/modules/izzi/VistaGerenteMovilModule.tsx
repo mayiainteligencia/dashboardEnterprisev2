@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import {
-  Smartphone, MapPin, AlertTriangle, CheckCircle2, Wrench, XCircle,
-  TrendingUp, Users, DollarSign, Activity, Bot, Send, ArrowRight,
-  ShieldCheck, RefreshCw, Zap, Maximize2, Minimize2, ChevronRight, Eye, Tv
+  Smartphone, AlertTriangle,
+  TrendingUp, Users, Bot, Send,
+  ShieldCheck, Zap, Maximize2, Minimize2, ChevronRight
 } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
-import { estadosPaths, estadosData, type EstadoInfo } from '../MapaCalorEstados';
+import { estadosPaths, estadosData } from '../MapaCalorEstados';
 
 const { colores } = brandingConfig;
 
@@ -18,8 +18,8 @@ export interface TiendaGerente {
   semaforoVentas: 'Verde' | 'Amarillo' | 'Rojo';
   recomendacionInversion: string;
   genteImpactada: number;
-  roi: number; // Porcentaje ROI
-  plazasMonitoreo: number; // número de sensores/pantallas en tiempo real
+  roi: number;
+  plazasMonitoreo: number;
   ventasMensuales: number;
   coberturaCP: string;
   encargado: string;
@@ -27,7 +27,6 @@ export interface TiendaGerente {
   ySvg: number;
 }
 
-// Bounding boxes estimadas para los estados en el SVG 959x593 para el zoom
 const estadoBounds: Record<string, { x: number; y: number; width: number; height: number }> = {
   MX_AG: { x: 380, y: 345, width: 40, height: 30 },
   MX_BC: { x: 40, y: 40, width: 140, height: 170 },
@@ -63,20 +62,19 @@ const estadoBounds: Record<string, { x: number; y: number; width: number; height
   MX_ZA: { x: 360, y: 270, width: 85, height: 95 },
 };
 
-// Generador determinista de 10+ tiendas por estado para el Gerente de Ventas
 const NOMBRES_FORMATOS = [
-  'Isla Mall Plaza Central',
-  'Corner Autoservicio Soriana',
-  'Tienda Flagship Centro',
-  'Isla Galerías Shopping',
-  'Corner Walmart Express',
-  'Isla Plaza Las Américas',
-  'Tienda Premium Experience',
-  'Corner Chedraui Selecto',
-  'Isla Paseo Comercial',
-  'Corner Liverpool Plaza',
-  'Isla Plaza Real',
-  'Tienda Conectividad FTTH'
+  'Isla Mall Plaza Central izzi',
+  'Centro de Atención izzi Express',
+  'Centro de Atención izzi Flagship',
+  'Isla izzi Galerías Shopping',
+  'Módulo izzi Walmart',
+  'Isla izzi Plaza Las Américas',
+  'Centro de Experiencia izzi',
+  'Módulo izzi Chedraui',
+  'Isla izzi Paseo Comercial',
+  'Corner izzi Plaza',
+  'Isla izzi Plaza Real',
+  'Centro izzi Conectividad'
 ];
 
 const ENCARGADOS = [
@@ -92,12 +90,10 @@ const generateTiendasPorEstado = (): Record<string, TiendaGerente[]> => {
     const bounds = estadoBounds[est.id] || { x: 450, y: 300, width: 100, height: 100 };
     const tiendas: TiendaGerente[] = [];
 
-    // Generar exactamente 10 tiendas por estado
     for (let i = 1; i <= 10; i++) {
       const formatoIndex = (i - 1) % 3;
       const formato = formatoIndex === 0 ? 'Isla Mall' : formatoIndex === 1 ? 'Corner Autoservicio' : 'Tienda Flagship';
 
-      // Distribuir estatus con realismo (Mayoría activas, algunas en reparación o falla)
       let estatus: 'Activa' | 'En Reparación' | 'Inactiva' = 'Activa';
       if (i === 3 && (est.id === 'MX_DF' || est.id === 'MX_JA' || est.id === 'MX_NL' || est.id === 'MX_VE')) {
         estatus = 'En Reparación';
@@ -105,7 +101,6 @@ const generateTiendasPorEstado = (): Record<string, TiendaGerente[]> => {
         estatus = 'Inactiva';
       }
 
-      // Semáforo de ventas y decisión de inversión
       let semaforoVentas: 'Verde' | 'Amarillo' | 'Rojo' = 'Verde';
       let recomendacionInversion = '';
 
@@ -119,21 +114,18 @@ const generateTiendasPorEstado = (): Record<string, TiendaGerente[]> => {
         const randSem = (i * 7 + est.id.charCodeAt(3)) % 10;
         if (randSem > 7) {
           semaforoVentas = 'Rojo';
-          recomendacionInversion = '🚨 NO INVERTIR MÁS DINERO: Bajo retorno (-12%) y caída de tráfico. Reubicar exhibidor a zona de mayor flujo.';
+          recomendacionInversion = '🚨 NO INVERTIR MÁS DINERO: Bajo retorno (-12%) y caída de tráfico. Reubicar módulo a zona de mayor afluencia.';
         } else if (randSem > 4) {
           semaforoVentas = 'Amarillo';
-          recomendacionInversion = '🟡 MANTENER INVERSIÓN: Desempeño estable. Optimizar bucle de pantalla inmersiva y capacitar vendedores.';
+          recomendacionInversion = '🟡 MANTENER INVERSIÓN: Desempeño estable. Optimizar bucle de pantalla izzi tv+ y capacitar vendedores.';
         } else {
           semaforoVentas = 'Verde';
-          recomendacionInversion = '🟢 REINVERTIR DINERO (ALTA PRIORIDAD): Excelente ARPU y ROI (+310%). Invertir en tótem adicional de Audio Surround Hi-Fi.';
+          recomendacionInversion = '🟢 REINVERTIR DINERO (ALTA PRIORIDAD): Excelente ARPU y ROI (+310%). Invertir en display adicional de izzi tv+ y módulo express.';
         }
       }
 
-      // Coordenadas perfectamente centradas en el corazón geográfico del estado
       const centerX = bounds.x + bounds.width / 2;
       const centerY = bounds.y + bounds.height / 2;
-
-      // Distribución en espiral/cluster concentrado en el centro del estado
       const angle = (i - 1) * 0.628 * 2.4 + (est.id.charCodeAt(3) % 5) * 0.2;
       const radiusRatio = 0.26;
       const radiusX = (bounds.width * radiusRatio) * Math.sqrt(i / 10);
@@ -142,9 +134,9 @@ const generateTiendasPorEstado = (): Record<string, TiendaGerente[]> => {
       const xSvg = Math.round(centerX + Math.cos(angle) * radiusX);
       const ySvg = Math.round(centerY + Math.sin(angle) * radiusY);
 
-      const genteImpactada = Math.round(15000 + ((i * 4820 + est.id.charCodeAt(3) * 120) % 45000));
-      const roi = Math.round(140 + ((i * 35 + est.id.charCodeAt(3)) % 220));
-      const ventasMensuales = Math.round(180000 + ((i * 32000 + est.id.charCodeAt(3) * 500) % 450000));
+      const genteImpactada = Math.round(18000 + ((i * 4820 + est.id.charCodeAt(3) * 120) % 45000));
+      const roi = Math.round(160 + ((i * 35 + est.id.charCodeAt(3)) % 220));
+      const ventasMensuales = Math.round(210000 + ((i * 32000 + est.id.charCodeAt(3) * 500) % 450000));
       const plazasMonitoreo = formato === 'Tienda Flagship' ? 6 : formato === 'Isla Mall' ? 4 : 2;
 
       tiendas.push({
@@ -180,21 +172,17 @@ export const VistaGerenteMovilModule: React.FC = () => {
   const [filtroEstatus, setFiltroEstatus] = useState<'Todos' | 'Activa' | 'En Reparación' | 'Inactiva'>('Todos');
   const [filtroSemaforo, setFiltroSemaforo] = useState<'Todos' | 'Verde' | 'Amarillo' | 'Rojo'>('Todos');
 
-  // Base de datos de tiendas
   const todasLasTiendas = useMemo(() => generateTiendasPorEstado(), []);
 
-  // Lista plana de todas las tiendas a cargo del gerente
   const listaTodasTiendas = useMemo(() => {
     return Object.values(todasLasTiendas).flat();
   }, [todasLasTiendas]);
 
-  // Tiendas del estado seleccionado
   const tiendasEstadoActual = useMemo(() => {
     if (!selectedEstadoId) return [];
     return todasLasTiendas[selectedEstadoId] || [];
   }, [selectedEstadoId, todasLasTiendas]);
 
-  // Tiendas filtradas
   const tiendasFiltradas = useMemo(() => {
     return tiendasEstadoActual.filter(t => {
       if (filtroEstatus !== 'Todos' && t.estatus !== filtroEstatus) return false;
@@ -203,7 +191,6 @@ export const VistaGerenteMovilModule: React.FC = () => {
     });
   }, [tiendasEstadoActual, filtroEstatus, filtroSemaforo]);
 
-  // Métricas globales acumuladas
   const totalGenteImpactada = useMemo(() => {
     return listaTodasTiendas.reduce((acc, t) => acc + t.genteImpactada, 0);
   }, [listaTodasTiendas]);
@@ -228,16 +215,15 @@ export const VistaGerenteMovilModule: React.FC = () => {
     return { activas, reparacion, inactivas, total: listaTodasTiendas.length };
   }, [listaTodasTiendas]);
 
-  // Chat del Copiloto Inteligente de Celular
   const [chatMessages, setChatMessages] = useState<Array<{ sender: 'user' | 'copiloto'; text: string; time: string }>>([
     {
       sender: 'copiloto',
-      text: '📱 ¡Hola Gerente de Ventas! Soy tu Copiloto M2C. Estoy monitoreando en tiempo real las 320 sucursales (islas, corners y tiendas) a tu cargo en México.',
+      text: '📱 ¡Hola Gerente de Operaciones! Soy tu Copiloto M2C izzi. Estoy monitoreando en tiempo real las 320 sucursales y puntos de contacto izzi a tu cargo en México.',
       time: '10:00 AM'
     },
     {
       sender: 'copiloto',
-      text: `🚨 Atención: Tienes ${sucursalesFalla.length} sucursales requiriendo atención. En CDMX y Estado de México se registra el ROI más alto (+310%). ¿En qué sucursal deseas tomar acción?`,
+      text: `🚨 Atención: Tienes ${sucursalesFalla.length} sucursales requiriendo atención prioritaria. En CDMX, Nuevo León y Jalisco se registra el ROI más alto (+310%). ¿En qué sucursal deseas tomar acción?`,
       time: '10:01 AM'
     }
   ]);
@@ -256,14 +242,14 @@ export const VistaGerenteMovilModule: React.FC = () => {
       const pLower = prompt.toLowerCase();
 
       if (pLower.includes('falla') || pLower.includes('inactiva') || pLower.includes('rojo')) {
-        reply = `⚠️ Se detectaron ${sucursalesFalla.length} sucursales en semáforo rojo/falla. Destacan: "${sucursalesFalla[0]?.nombre}" (Cierre temporal de sensor) e "${sucursalesFalla[1]?.nombre}". Te recomiendo NO invertir más dinero en ellas hasta corregir la posición del tótem y auditar la atención del personal.`;
+        reply = `⚠️ Se detectaron ${sucursalesFalla.length} sucursales izzi en semáforo rojo/falla. Destacan: "${sucursalesFalla[0]?.nombre}" e "${sucursalesFalla[1]?.nombre}". Te recomiendo NO invertir más dinero en ellas hasta corregir la visualización de izzi tv+ y auditar la atención del personal.`;
       } else if (pLower.includes('invertir') || pLower.includes('dinero') || pLower.includes('recomiend')) {
         const topReinvertir = listaTodasTiendas.filter(t => t.semaforoVentas === 'Verde')[0];
-        reply = `🟢 La sucursal prioritaria para reinversión es "${topReinvertir?.nombre}" (${topReinvertir?.estadoId}). Presenta un ROI de +${topReinvertir?.roi}% y ${topReinvertir?.genteImpactada.toLocaleString()} personas impactadas. Se recomienda instalar 1 tótem inmersivo adicional de Audio Surround Hi-Fi.`;
+        reply = `🟢 La sucursal izzi prioritaria para reinversión es "${topReinvertir?.nombre}" (${topReinvertir?.estadoId}). Presenta un ROI de +${topReinvertir?.roi}% y ${topReinvertir?.genteImpactada.toLocaleString()} personas impactadas. Se recomienda instalar 1 display interactivo adicional.`;
       } else if (pLower.includes('roi') || pLower.includes('retorno') || pLower.includes('impacto')) {
-        reply = `📊 Retorno de Inversión Global: +${roiPromedio}% ROI acumulado. Total de gente impactada: ${totalGenteImpactada.toLocaleString()} personas en 340 plazas de monitoreo activas en vivo.`;
+        reply = `📊 Retorno de Inversión Global izzi: +${roiPromedio}% ROI acumulado. Total de gente impactada: ${totalGenteImpactada.toLocaleString()} personas en ${totalPlazasMonitoreo} sensores activos en vivo.`;
       } else {
-        reply = `🤖 Monitoreando sucursales... En la región seleccionada (${selectedEstadoId || 'Nacional'}) tienes ${tiendasEstadoActual.length} sucursales activas. Puedes hacer clic en cualquier pin del mapa para consultar el semáforo de ventas y la recomendación de inversión.`;
+        reply = `🤖 Monitoreando puntos izzi... En la región seleccionada (${selectedEstadoId || 'Nacional'}) tienes ${tiendasEstadoActual.length} sucursales activas. Puedes hacer clic en cualquier pin del mapa para consultar el semáforo de ventas y la recomendación de inversión.`;
       }
 
       setChatMessages(prev => [
@@ -273,13 +259,11 @@ export const VistaGerenteMovilModule: React.FC = () => {
     }, 600);
   };
 
-  // Cálculo dinámico del viewBox para Zoom SVG
   const currentViewBox = useMemo(() => {
     if (!selectedEstadoId || !estadoBounds[selectedEstadoId]) {
       return '0 0 959 593';
     }
     const b = estadoBounds[selectedEstadoId];
-    // Añadir margen alrededor del estado seleccionado
     const margin = 25;
     const vx = Math.max(0, b.x - margin);
     const vy = Math.max(0, b.y - margin);
@@ -301,7 +285,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
             width: '42px', height: '42px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #A61C5C, #732D67)',
+            background: 'linear-gradient(135deg, #E3067A, #53267E)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF'
           }}>
             <Smartphone size={22} />
@@ -311,7 +295,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
               Copiloto Móvil · Gerente de Ventas
             </h2>
             <div style={{ fontSize: '12px', color: colores.textoMedio, marginTop: '2px' }}>
-              Administración de Islas, Tiendas y Corners en Tiempo Real · Totalplay M2C
+              Administración de Centros, Tiendas e Islas en Tiempo Real · izzi M2C
             </div>
           </div>
         </div>
@@ -323,144 +307,129 @@ export const VistaGerenteMovilModule: React.FC = () => {
             style={{
               padding: '6px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer',
               fontSize: '12px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px',
-              backgroundColor: frameMode === 'smartphone' ? '#A61C5C' : 'transparent',
-              color: frameMode === 'smartphone' ? '#FFF' : colores.textoMedio,
-              boxShadow: frameMode === 'smartphone' ? '0 2px 8px rgba(166,28,92,0.3)' : 'none',
-              transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)'
+              backgroundColor: frameMode === 'smartphone' ? '#FFFFFF' : 'transparent',
+              color: frameMode === 'smartphone' ? '#E3067A' : colores.textoMedio,
+              boxShadow: frameMode === 'smartphone' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none'
             }}
           >
-            <Smartphone size={14} /> Marco Móvil
+            <Smartphone size={14} /> Modo Celular
           </button>
-
           <button
             onClick={() => setFrameMode('expanded')}
             style={{
               padding: '6px 12px', borderRadius: '9px', border: 'none', cursor: 'pointer',
               fontSize: '12px', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '6px',
-              backgroundColor: frameMode === 'expanded' ? '#A61C5C' : 'transparent',
-              color: frameMode === 'expanded' ? '#FFF' : colores.textoMedio,
-              boxShadow: frameMode === 'expanded' ? '0 2px 8px rgba(166,28,92,0.3)' : 'none',
-              transition: 'all 0.2s cubic-bezier(0.22, 1, 0.36, 1)'
+              backgroundColor: frameMode === 'expanded' ? '#FFFFFF' : 'transparent',
+              color: frameMode === 'expanded' ? '#E3067A' : colores.textoMedio,
+              boxShadow: frameMode === 'expanded' ? '0 2px 6px rgba(0,0,0,0.08)' : 'none'
             }}
           >
-            <Maximize2 size={14} /> Vista Full
+            <Maximize2 size={14} /> Modo Pantalla Completa
           </button>
         </div>
       </div>
 
-      {/* ── KPI HIGHLIGHT BANNER (IMPACTO, ROI, PLAZAS MONITOREADAS) ── */}
+      {/* ── BANNER RESUMEN GERENCIAL SUPERIOR ── */}
       <div style={{
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px',
-        marginBottom: '20px'
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '14px', marginBottom: '20px'
       }}>
-        <div style={{
-          backgroundColor: '#FFFFFF', padding: '16px 20px', borderRadius: '16px',
-          border: `1px solid ${colores.borde}`, borderLeft: '5px solid #73B1BF',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
-        }}>
-          <div style={{ fontSize: '11px', fontWeight: '800', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Gente Impactada (Formatos)
+        <div style={{ backgroundColor: '#FFFFFF', padding: '16px', borderRadius: '14px', border: `1px solid ${colores.borde}`, display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#FDEAF2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#E3067A' }}>
+            <Users size={20} />
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: colores.textoClaro, margin: '4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Users size={20} color="#73B1BF" />
-            {totalGenteImpactada.toLocaleString()}
-          </div>
-          <div style={{ fontSize: '11px', color: '#10B981', fontWeight: '700' }}>
-            ↑ +24% vs mes anterior (Tráfico Físico)
+          <div>
+            <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '700' }}>Gente Impactada Total</div>
+            <div style={{ fontSize: '20px', fontWeight: '900', color: colores.textoClaro }}>
+              {totalGenteImpactada.toLocaleString()}
+            </div>
+            <div style={{ fontSize: '10px', color: '#10B981', fontWeight: '800' }}>+28% en 60+ ciudades</div>
           </div>
         </div>
 
-        <div style={{
-          backgroundColor: '#FFFFFF', padding: '16px 20px', borderRadius: '16px',
-          border: `1px solid ${colores.borde}`, borderLeft: '5px solid #10B981',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
-        }}>
-          <div style={{ fontSize: '11px', fontWeight: '800', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Retorno de Inversión (ROI)
+        <div style={{ backgroundColor: '#FFFFFF', padding: '16px', borderRadius: '14px', border: `1px solid ${colores.borde}`, display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#EEF6E7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#10B981' }}>
+            <TrendingUp size={20} />
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: '#10B981', margin: '4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <TrendingUp size={20} color="#10B981" />
-            +{roiPromedio}% ROI
-          </div>
-          <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '600' }}>
-            Rentabilidad promedio nacional M2C
+          <div>
+            <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '700' }}>Retorno de Inversión (ROI)</div>
+            <div style={{ fontSize: '20px', fontWeight: '900', color: '#10B981' }}>
+              +{roiPromedio}%
+            </div>
+            <div style={{ fontSize: '10px', color: '#10B981', fontWeight: '800' }}>Rentabilidad positiva</div>
           </div>
         </div>
 
-        <div style={{
-          backgroundColor: '#FFFFFF', padding: '16px 20px', borderRadius: '16px',
-          border: `1px solid ${colores.borde}`, borderLeft: '5px solid #A61C5C',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
-        }}>
-          <div style={{ fontSize: '11px', fontWeight: '800', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Plazas de Monitoreo Activas
+        <div style={{ backgroundColor: '#FFFFFF', padding: '16px', borderRadius: '14px', border: `1px solid ${colores.borde}`, display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#E6F4FB', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0090D0' }}>
+            <Zap size={20} />
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: '#A61C5C', margin: '4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Activity size={20} color="#A61C5C" />
-            {totalPlazasMonitoreo} plazas
-          </div>
-          <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '600' }}>
-            {conteoEstatus.activas} Activas · {conteoEstatus.reparacion} Reparación · {conteoEstatus.inactivas} Inactivas
+          <div>
+            <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '700' }}>Plazas Monitoreo en Vivo</div>
+            <div style={{ fontSize: '20px', fontWeight: '900', color: '#0090D0' }}>
+              {totalPlazasMonitoreo} sensores
+            </div>
+            <div style={{ fontSize: '10px', color: '#0090D0', fontWeight: '800' }}>{conteoEstatus.activas} sucursales activas</div>
           </div>
         </div>
 
-        <div style={{
-          backgroundColor: '#FFFFFF', padding: '16px 20px', borderRadius: '16px',
-          border: `1px solid ${colores.borde}`, borderLeft: '5px solid #EF4444',
-          boxShadow: '0 2px 10px rgba(0,0,0,0.03)'
-        }}>
-          <div style={{ fontSize: '11px', fontWeight: '800', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Sucursales que Fallan
+        <div style={{ backgroundColor: '#FFFFFF', padding: '16px', borderRadius: '14px', border: `1px solid ${colores.borde}`, display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#FEF2F2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#EF4444' }}>
+            <AlertTriangle size={20} />
           </div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: '#EF4444', margin: '4px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <AlertTriangle size={20} color="#EF4444" />
-            {sucursalesFalla.length} sucursales
-          </div>
-          <div style={{ fontSize: '11px', color: '#EF4444', fontWeight: '700' }}>
-            🚨 Requieren atención del Gerente
+          <div>
+            <div style={{ fontSize: '11px', color: colores.textoMedio, fontWeight: '700' }}>Sucursales en Falla / No Invertir</div>
+            <div style={{ fontSize: '20px', fontWeight: '900', color: '#EF4444' }}>
+              {sucursalesFalla.length}
+            </div>
+            <div style={{ fontSize: '10px', color: '#EF4444', fontWeight: '800' }}>Semáforo rojo activo</div>
           </div>
         </div>
       </div>
 
-      {/* ── CONTENEDOR VISTA MÓVIL (MARCO SMARTPHONE O COMPLETO) ── */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      {/* ── CONTENEDOR PRINCIPAL: CELULAR (FRAME) O EXPANDIDO ── */}
+      <div style={{
+        display: 'flex', justifyContent: 'center', alignItems: 'flex-start',
+        width: '100%', minHeight: '680px'
+      }}>
         <div style={{
           width: frameMode === 'smartphone' ? '390px' : '100%',
-          maxWidth: '100%',
-          transition: 'all 0.3s cubic-bezier(0.22, 1, 0.36, 1)',
-          backgroundColor: '#111827',
-          borderRadius: frameMode === 'smartphone' ? '44px' : '20px',
+          maxWidth: frameMode === 'smartphone' ? '390px' : '1280px',
+          height: frameMode === 'smartphone' ? '800px' : 'auto',
+          backgroundColor: '#000000',
+          borderRadius: frameMode === 'smartphone' ? '46px' : '20px',
           padding: frameMode === 'smartphone' ? '12px' : '0',
-          boxShadow: frameMode === 'smartphone' ? '0 25px 60px rgba(0,0,0,0.4), 0 0 0 10px #2D3748' : '0 4px 20px rgba(0,0,0,0.08)',
-          position: 'relative'
+          boxShadow: frameMode === 'smartphone'
+            ? '0 25px 60px -15px rgba(0, 0, 0, 0.4), 0 0 0 1px #334155, 0 0 0 6px #1E293B'
+            : '0 4px 20px rgba(0,0,0,0.05)',
+          transition: 'all 0.35s cubic-bezier(0.22, 1, 0.36, 1)',
+          display: 'flex', flexDirection: 'column', position: 'relative', overflow: 'hidden'
         }}>
-          {/* SIMULADOR SMARTPHONE - Dynamic Island / Notch */}
+
+          {/* Notch del Celular (solo en modo smartphone) */}
           {frameMode === 'smartphone' && (
             <div style={{
-              width: '120px', height: '26px', backgroundColor: '#000000', borderRadius: '20px',
-              margin: '0 auto 10px auto', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px'
+              position: 'absolute', top: '16px', left: '50%', transform: 'translateX(-50%)',
+              width: '120px', height: '24px', backgroundColor: '#000', borderRadius: '16px', zIndex: 100,
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px'
             }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10B981', boxShadow: '0 0 6px #10B981' }} />
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#1A202C' }} />
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#1E293B' }} />
+              <div style={{ width: '40px', height: '4px', borderRadius: '2px', backgroundColor: '#1E293B' }} />
             </div>
           )}
 
-          {/* APPLICACIÓN INTERNA SMARTPHONE */}
+          {/* Pantalla Interna del Celular / Dashboard */}
           <div style={{
+            width: '100%', height: '100%', minHeight: frameMode === 'expanded' ? '700px' : 'auto',
             backgroundColor: '#FFFFFF',
-            borderRadius: frameMode === 'smartphone' ? '34px' : '20px',
-            overflow: 'hidden',
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: frameMode === 'smartphone' ? '740px' : '650px',
-            maxHeight: frameMode === 'smartphone' ? '820px' : 'none'
+            borderRadius: frameMode === 'smartphone' ? '36px' : '20px',
+            overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative'
           }}>
 
-            {/* APP HEADER BAR */}
+            {/* Barra superior de la app móvil */}
             <div style={{
-              backgroundColor: '#A61C5C', color: '#FFFFFF', padding: '14px 16px',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              boxShadow: '0 4px 12px rgba(166,28,92,0.3)'
+              padding: frameMode === 'smartphone' ? '28px 16px 12px 16px' : '14px 20px',
+              backgroundColor: '#53267E', color: '#FFFFFF',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{
@@ -471,7 +440,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                 </div>
                 <div>
                   <div style={{ fontSize: '13px', fontWeight: '900', letterSpacing: '-0.3px' }}>
-                    Gerente M2C Totalplay
+                    Gerente M2C izzi
                   </div>
                   <div style={{ fontSize: '10px', opacity: 0.9 }}>
                     Monitoreo Móvil en Vivo
@@ -485,179 +454,105 @@ export const VistaGerenteMovilModule: React.FC = () => {
               </div>
             </div>
 
-            {/* BARRA DE NAVEGACIÓN PESTAÑAS MÓVILES */}
+            {/* Selector de Pestañas de la App Móvil */}
             <div style={{
-              display: 'flex', backgroundColor: '#F1F5F9', borderBottom: `1px solid ${colores.borde}`,
-              padding: '6px 8px', gap: '4px'
+              display: 'flex', backgroundColor: '#FFFFFF', borderBottom: `1px solid ${colores.borde}`, padding: '4px'
             }}>
               {[
-                { id: 'mapa', label: '🗺️ Mapa Zoom', badge: tiendasEstadoActual.length },
-                { id: 'copiloto', label: '🤖 Copiloto IA', badge: 'En Vivo' },
-                { id: 'fallas', label: '🚨 Fallas', badge: sucursalesFalla.length },
-                { id: 'metricas', label: '📊 ROI & Impacto', badge: null },
-              ].map(t => {
-                const isActive = activeTab === t.id;
-                return (
-                  <button
-                    key={t.id}
-                    onClick={() => setActiveTab(t.id as any)}
-                    style={{
-                      flex: 1, padding: '9px 4px', border: 'none', borderRadius: '10px', cursor: 'pointer',
-                      fontSize: '11px', fontWeight: '900', textAlign: 'center',
-                      backgroundColor: isActive ? '#A61C5C' : 'transparent',
-                      color: isActive ? '#FFFFFF' : colores.textoMedio,
-                      boxShadow: isActive ? '0 3px 10px rgba(166,28,92,0.3)' : 'none',
-                      transition: 'all 0.22s cubic-bezier(0.22, 1, 0.36, 1)', position: 'relative',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px'
-                    }}
-                  >
-                    <span>{t.label}</span>
-                    {t.badge !== null && (
-                      <span style={{
-                        fontSize: '9px', fontWeight: '900',
-                        backgroundColor: isActive ? 'rgba(255,255,255,0.25)' : '#E2E8F0',
-                        color: isActive ? '#FFFFFF' : colores.textoMedio,
-                        padding: '1px 6px', borderRadius: '10px', flexShrink: 0
-                      }}>
-                        {t.badge}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
+                { id: 'mapa', label: '🗺️ Mapa', count: tiendasEstadoActual.length },
+                { id: 'copiloto', label: '🤖 Copiloto IA', badge: 'Activo' },
+                { id: 'fallas', label: '🚨 Fallas', count: sucursalesFalla.length, alert: true },
+                { id: 'metricas', label: '📊 ROI & Red' }
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as any)}
+                  style={{
+                    flex: 1, padding: '8px 4px', border: 'none', cursor: 'pointer',
+                    fontSize: '11px', fontWeight: activeTab === tab.id ? '900' : '600',
+                    color: activeTab === tab.id ? '#E3067A' : colores.textoMedio,
+                    borderBottom: activeTab === tab.id ? '2px solid #E3067A' : 'none',
+                    backgroundColor: 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px'
+                  }}
+                >
+                  <span>{tab.label}</span>
+                  {tab.count !== undefined && (
+                    <span style={{
+                      fontSize: '9px', padding: '1px 5px', borderRadius: '10px',
+                      backgroundColor: tab.alert ? '#FEE2E2' : '#F1F5F9',
+                      color: tab.alert ? '#EF4444' : colores.textoMedio,
+                      fontWeight: '800'
+                    }}>
+                      {tab.count}
+                    </span>
+                  )}
+                </button>
+              ))}
             </div>
 
-            {/* ── PESTAÑA 1: MAPA ZOOM CON 10+ TIENDAS POR ESTADO ── */}
+            {/* ── PESTAÑA 1: MAPA CON ZOOM Y PINS EN VIVO ── */}
             {activeTab === 'mapa' && (
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#FFFFFF' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
-                {/* BARRA SUPERIOR DE SELECTOR DE ESTADO ESTILIZADA */}
+                {/* Filtros rápidos sobre el mapa */}
+                <div style={{ padding: '8px 12px', backgroundColor: '#F8FAFC', borderBottom: `1px solid ${colores.borde}`, display: 'flex', gap: '6px', alignItems: 'center', overflowX: 'auto' }}>
+                  <select
+                    value={selectedEstadoId || ''}
+                    onChange={e => {
+                      setSelectedEstadoId(e.target.value);
+                      setSelectedTienda(null);
+                    }}
+                    style={{ padding: '5px 8px', borderRadius: '8px', fontSize: '11px', fontWeight: '800', border: `1px solid ${colores.borde}`, outline: 'none' }}
+                  >
+                    {estadosPaths.map(est => (
+                      <option key={est.id} value={est.id}>
+                        {estadosData[est.id]?.nombre || est.label} ({todasLasTiendas[est.id]?.length || 0} tiendas)
+                      </option>
+                    ))}
+                  </select>
+
+                  <button
+                    onClick={() => {
+                      setSelectedEstadoId(null);
+                      setSelectedTienda(null);
+                    }}
+                    style={{ padding: '5px 8px', borderRadius: '8px', border: `1px solid ${colores.borde}`, backgroundColor: !selectedEstadoId ? '#E3067A' : '#FFF', color: !selectedEstadoId ? '#FFF' : '#333', fontSize: '11px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                  >
+                    Ver Todo México
+                  </button>
+                </div>
+
+                {/* VISOR MAPA SVG CON ZOOM */}
                 <div style={{
-                  padding: '10px 14px', backgroundColor: '#F8FAFC', borderBottom: `1px solid ${colores.borde}`,
-                  display: 'flex', gap: '8px', alignItems: 'center'
+                  position: 'relative', width: '100%', height: frameMode === 'smartphone' ? '300px' : '450px',
+                  backgroundColor: '#0F172A', overflow: 'hidden'
                 }}>
-                  <div style={{ width: '30px', height: '30px', borderRadius: '8px', backgroundColor: '#FCE7F1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <MapPin size={16} color="#A61C5C" />
-                  </div>
-
-                  <div style={{ flex: 1, position: 'relative' }}>
-                    <select
-                      value={selectedEstadoId || ''}
-                      onChange={(e) => {
-                        setSelectedEstadoId(e.target.value || null);
-                        setSelectedTienda(null);
-                      }}
-                      style={{
-                        width: '100%', padding: '8px 12px', borderRadius: '10px',
-                        border: '1.5px solid #A61C5C40',
-                        fontSize: '12px', fontWeight: '800', color: colores.textoClaro, backgroundColor: '#FFFFFF',
-                        outline: 'none', cursor: 'pointer', appearance: 'none',
-                        boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
-                        transition: 'all 0.2s'
-                      }}
-                    >
-                      <option value="">🇲🇽 República Mexicana (Vista General)</option>
-                      {estadosPaths.map(e => (
-                        <option key={e.id} value={e.id}>
-                          {e.label} (10 sucursales a cargo)
-                        </option>
-                      ))}
-                    </select>
-                    <div style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', fontSize: '10px', color: '#A61C5C' }}>
-                      ▼
-                    </div>
-                  </div>
-
-                  {selectedEstadoId && (
-                    <button
-                      onClick={() => { setSelectedEstadoId(null); setSelectedTienda(null); }}
-                      style={{
-                        padding: '8px 10px', borderRadius: '10px', border: '1px solid #FECDD3',
-                        background: '#FFF1F2', color: '#E11D48', fontSize: '11px', fontWeight: '800',
-                        cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px',
-                        boxShadow: '0 2px 6px rgba(225,29,72,0.15)', transition: 'all 0.2s'
-                      }}
-                    >
-                      <RefreshCw size={12} /> Reset
-                    </button>
-                  )}
-                </div>
-
-                {/* FILTROS DE SUCURSAL CON ESTILO DE CHIPS PÍLDORA */}
-                <div className="no-scrollbar" style={{ padding: '8px 14px', display: 'flex', gap: '8px', overflowX: 'auto', borderBottom: `1px solid ${colores.borde}`, backgroundColor: '#FFFFFF', alignItems: 'center' }}>
-                  <span style={{ fontSize: '10px', fontWeight: '900', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>Estatus:</span>
-                  {(['Todos', 'Activa', 'En Reparación', 'Inactiva'] as const).map(est => (
-                    <button
-                      key={est}
-                      onClick={() => setFiltroEstatus(est)}
-                      style={{
-                        padding: '4px 10px', borderRadius: '20px', border: 'none', fontSize: '10.5px', fontWeight: '800', cursor: 'pointer',
-                        whiteSpace: 'nowrap', transition: 'all 0.2s', flexShrink: 0,
-                        backgroundColor: filtroEstatus === est ? '#A61C5C' : '#F1F5F9',
-                        color: filtroEstatus === est ? '#FFF' : colores.textoMedio,
-                        boxShadow: filtroEstatus === est ? '0 2px 8px rgba(166,28,92,0.25)' : 'none'
-                      }}
-                    >
-                      {est === 'Activa' ? '🟢 Activas' : est === 'En Reparación' ? '🟠 Reparación' : est === 'Inactiva' ? '🔴 Inactivas' : 'Todas'}
-                    </button>
-                  ))}
-
-                  <div style={{ width: '1px', height: '16px', backgroundColor: colores.borde, margin: '0 2px', flexShrink: 0 }} />
-
-                  <span style={{ fontSize: '10px', fontWeight: '900', color: colores.textoMedio, textTransform: 'uppercase', letterSpacing: '0.05em', flexShrink: 0 }}>Inversión:</span>
-                  {(['Todos', 'Verde', 'Amarillo', 'Rojo'] as const).map(sem => (
-                    <button
-                      key={sem}
-                      onClick={() => setFiltroSemaforo(sem)}
-                      style={{
-                        padding: '4px 10px', borderRadius: '20px', border: 'none', fontSize: '10.5px', fontWeight: '800', cursor: 'pointer',
-                        whiteSpace: 'nowrap', transition: 'all 0.2s', flexShrink: 0,
-                        backgroundColor: filtroSemaforo === sem ? (sem === 'Verde' ? '#10B981' : sem === 'Amarillo' ? '#D9933D' : sem === 'Rojo' ? '#EF4444' : '#475569') : '#F1F5F9',
-                        color: filtroSemaforo === sem ? '#FFF' : colores.textoMedio,
-                        boxShadow: filtroSemaforo === sem ? '0 2px 8px rgba(0,0,0,0.15)' : 'none'
-                      }}
-                    >
-                      {sem === 'Verde' ? '🟢 Invertir' : sem === 'Amarillo' ? '🟡 Mantener' : sem === 'Rojo' ? '🔴 No Invertir' : 'Todos'}
-                    </button>
-                  ))}
-                </div>
-
-                {/* SVG MAPA ZOOM INTERACTIVO */}
-                <div style={{ flex: 1, position: 'relative', overflow: 'hidden', backgroundColor: '#0F172A', minHeight: '260px' }}>
-                  <div style={{ position: 'absolute', top: 10, left: 10, zIndex: 10, backgroundColor: 'rgba(15,23,42,0.85)', color: '#FFF', padding: '4px 10px', borderRadius: '8px', fontSize: '10px', fontWeight: '800', backdropFilter: 'blur(4px)' }}>
-                    {selectedEstadoId ? `📍 Zoom en: ${estadosData[selectedEstadoId]?.nombre} (${tiendasFiltradas.length} sucursales)` : '🇲🇽 Toca un estado para zoom & tiendas'}
-                  </div>
-
                   <svg
                     viewBox={currentViewBox}
-                    style={{ width: '100%', height: '100%', cursor: 'pointer', transition: 'all 0.5s ease-in-out' }}
+                    style={{ width: '100%', height: '100%', transition: 'all 0.5s cubic-bezier(0.22, 1, 0.36, 1)' }}
                   >
-                    {/* Render de los 32 estados de la república */}
-                    {estadosPaths.map(({ id, path, label }) => {
-                      const isSelected = selectedEstadoId === id;
+                    {estadosPaths.map(est => {
+                      const isSelected = est.id === selectedEstadoId;
                       return (
                         <path
-                          key={id}
-                          d={path}
-                          fill={isSelected ? '#1E293B' : '#334155'}
-                          stroke={isSelected ? '#A61C5C' : '#475569'}
-                          strokeWidth={isSelected ? '2' : '0.8'}
-                          style={{
-                            transition: 'all 0.3s ease',
-                            opacity: selectedEstadoId && !isSelected ? 0.4 : 1
-                          }}
+                          key={est.id}
+                          d={est.path}
+                          fill={isSelected ? '#E3067A' : '#1E293B'}
+                          stroke={isSelected ? '#FCD116' : '#334155'}
+                          strokeWidth={isSelected ? 1.8 : 0.8}
                           onClick={() => {
-                            setSelectedEstadoId(id);
+                            setSelectedEstadoId(est.id);
                             setSelectedTienda(null);
                           }}
+                          style={{ cursor: 'pointer', transition: 'fill 0.2s' }}
                         />
                       );
                     })}
 
-                    {/* Render de los pines de las 10+ tiendas del estado seleccionado */}
-                    {tiendasFiltradas.map((t) => {
-                      const isPinSelected = selectedTienda?.id === t.id;
-                      const pinColor = t.estatus === 'Activa' ? (t.semaforoVentas === 'Verde' ? '#10B981' : t.semaforoVentas === 'Amarillo' ? '#F59E0B' : '#EF4444') : t.estatus === 'En Reparación' ? '#F97316' : '#EF4444';
+                    {/* Renderizar pines de tiendas */}
+                    {tiendasFiltradas.map(t => {
+                      const isSelected = selectedTienda?.id === t.id;
+                      const pinColor = t.estatus === 'Inactiva' ? '#EF4444' : t.estatus === 'En Reparación' ? '#F59E0B' : t.semaforoVentas === 'Verde' ? '#10B981' : t.semaforoVentas === 'Amarillo' ? '#F59E0B' : '#EF4444';
 
                       return (
                         <g
@@ -669,33 +564,8 @@ export const VistaGerenteMovilModule: React.FC = () => {
                           }}
                           style={{ cursor: 'pointer' }}
                         >
-                          {/* Pulso dinámico para tiendas en falla o verde */}
-                          <circle
-                            r={isPinSelected ? 7 : 4}
-                            fill={pinColor}
-                            opacity={0.35}
-                            style={{ animation: 'pulsePin 1.8s infinite' }}
-                          />
-                          <circle
-                            r={isPinSelected ? 3.8 : 2.4}
-                            fill={pinColor}
-                            stroke="#FFFFFF"
-                            strokeWidth="0.8"
-                          />
-                          {/* Etiqueta flotante con zoom */}
-                          {selectedEstadoId && (
-                            <text
-                              x="0"
-                              y="-8"
-                              textAnchor="middle"
-                              fill="#FFFFFF"
-                              fontSize="5"
-                              fontWeight="bold"
-                              style={{ pointerEvents: 'none', textShadow: '0 1px 3px rgba(0,0,0,0.9)' }}
-                            >
-                              {t.nombre.split(' ')[0]} {t.nombre.split(' ')[1]}
-                            </text>
-                          )}
+                          <circle r={isSelected ? 10 : 6} fill={pinColor} opacity={0.3} style={{ animation: 'pulsePin 1.5s infinite' }} />
+                          <circle r={isSelected ? 6 : 4} fill={pinColor} stroke="#FFFFFF" strokeWidth={1.5} />
                         </g>
                       );
                     })}
@@ -710,7 +580,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                   </div>
                 </div>
 
-                {/* LISTA / DETALLE DE LA SUCURSAL SELECCIONADA CON SEMÁFORO DE INVERSIÓN */}
+                {/* DETALLE DE LA SUCURSAL SELECCIONADA */}
                 <div className="styled-scroll" style={{ flex: 1, padding: '12px', overflowY: 'auto', backgroundColor: '#F8FAFC' }}>
                   {selectedTienda ? (
                     <div style={{
@@ -722,8 +592,8 @@ export const VistaGerenteMovilModule: React.FC = () => {
                         <div>
                           <span style={{
                             fontSize: '10px', fontWeight: '900', padding: '2px 8px', borderRadius: '6px',
-                            backgroundColor: selectedTienda.formato === 'Isla Mall' ? '#E0F2FE' : selectedTienda.formato === 'Corner Autoservicio' ? '#FEF3C7' : '#FCE7F1',
-                            color: selectedTienda.formato === 'Isla Mall' ? '#0369A1' : selectedTienda.formato === 'Corner Autoservicio' ? '#B45309' : '#A61C5C',
+                            backgroundColor: selectedTienda.formato === 'Isla Mall' ? '#E6F4FB' : selectedTienda.formato === 'Corner Autoservicio' ? '#FEF3C7' : '#FDEAF2',
+                            color: selectedTienda.formato === 'Isla Mall' ? '#0090D0' : selectedTienda.formato === 'Corner Autoservicio' ? '#B45309' : '#E3067A',
                           }}>
                             {selectedTienda.formato}
                           </span>
@@ -759,7 +629,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                         </div>
                       </div>
 
-                      {/* METRICAS ESPECÍFICAS DE LA TIENDA */}
+                      {/* MÉTRICAS ESPECÍFICAS DE LA TIENDA */}
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
                         <div style={{ backgroundColor: '#F8FAFC', padding: '8px', borderRadius: '8px', textAlign: 'center' }}>
                           <div style={{ fontSize: '10px', color: colores.textoMedio }}>Gente Impactada</div>
@@ -777,7 +647,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
 
                         <div style={{ backgroundColor: '#F8FAFC', padding: '8px', borderRadius: '8px', textAlign: 'center' }}>
                           <div style={{ fontSize: '10px', color: colores.textoMedio }}>Plazas Monitoreo</div>
-                          <div style={{ fontSize: '13px', fontWeight: '900', color: '#A61C5C' }}>
+                          <div style={{ fontSize: '13px', fontWeight: '900', color: '#E3067A' }}>
                             {selectedTienda.plazasMonitoreo} sensores
                           </div>
                         </div>
@@ -787,7 +657,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                   ) : (
                     <div>
                       <div style={{ fontSize: '12px', fontWeight: '800', color: colores.textoClaro, marginBottom: '8px' }}>
-                        Tiendas a tu cargo en {estadosData[selectedEstadoId || 'MX_DF']?.nombre} ({tiendasFiltradas.length}):
+                        Puntos izzi a tu cargo en {estadosData[selectedEstadoId || 'MX_DF']?.nombre} ({tiendasFiltradas.length}):
                       </div>
 
                       {tiendasFiltradas.map(t => (
@@ -829,12 +699,12 @@ export const VistaGerenteMovilModule: React.FC = () => {
             {activeTab === 'copiloto' && (
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', backgroundColor: '#F8FAFC' }}>
                 <div style={{ padding: '10px 14px', backgroundColor: '#FFFFFF', borderBottom: `1px solid ${colores.borde}`, display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#A61C5C', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF' }}>
+                  <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#E3067A', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FFF' }}>
                     <Bot size={18} />
                   </div>
                   <div>
                     <div style={{ fontSize: '12px', fontWeight: '900', color: colores.textoClaro }}>
-                      Copiloto Inteligente M2C
+                      Copiloto Inteligente M2C izzi
                     </div>
                     <div style={{ fontSize: '10px', color: '#10B981', fontWeight: '700' }}>
                       ● Asistente activo en celular
@@ -850,7 +720,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                       style={{
                         alignSelf: msg.sender === 'user' ? 'flex-end' : 'flex-start',
                         maxWidth: '85%',
-                        backgroundColor: msg.sender === 'user' ? '#A61C5C' : '#FFFFFF',
+                        backgroundColor: msg.sender === 'user' ? '#E3067A' : '#FFFFFF',
                         color: msg.sender === 'user' ? '#FFFFFF' : colores.textoClaro,
                         padding: '10px 14px',
                         borderRadius: msg.sender === 'user' ? '14px 14px 2px 14px' : '14px 14px 14px 2px',
@@ -895,7 +765,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                     value={inputChat}
                     onChange={e => setInputChat(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && handleSendChat()}
-                    placeholder="Haz una consulta a tu Copiloto Gerente..."
+                    placeholder="Haz una consulta a tu Copiloto Gerente izzi..."
                     style={{
                       flex: 1, padding: '8px 12px', borderRadius: '20px', border: `1px solid ${colores.borde}`,
                       fontSize: '12px', outline: 'none'
@@ -904,7 +774,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
                   <button
                     onClick={() => handleSendChat()}
                     style={{
-                      width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#A61C5C',
+                      width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#E3067A',
                       border: 'none', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center',
                       cursor: 'pointer'
                     }}
@@ -920,7 +790,7 @@ export const VistaGerenteMovilModule: React.FC = () => {
               <div className="styled-scroll" style={{ flex: 1, padding: '12px', overflowY: 'auto', backgroundColor: '#F8FAFC' }}>
                 <div style={{ backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', padding: '12px', borderRadius: '12px', marginBottom: '12px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '900', color: '#B91C1C', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                    <AlertTriangle size={16} /> Monitoreo de Sucursales con Falla o Alerta
+                    <AlertTriangle size={16} /> Monitoreo de Sucursales izzi con Falla o Alerta
                   </div>
                   <div style={{ fontSize: '11px', color: '#7F1D1D', marginTop: '4px' }}>
                     El Copiloto IA recomienda revisar de inmediato los sensores de visión y la atención al cliente en estos puntos.
@@ -953,13 +823,13 @@ export const VistaGerenteMovilModule: React.FC = () => {
               <div className="styled-scroll" style={{ flex: 1, padding: '12px', overflowY: 'auto', backgroundColor: '#F8FAFC' }}>
                 <div style={{ backgroundColor: '#FFFFFF', padding: '14px', borderRadius: '12px', border: `1px solid ${colores.borde}`, marginBottom: '12px' }}>
                   <h4 style={{ fontSize: '13px', fontWeight: '900', color: colores.textoClaro, margin: '0 0 10px 0' }}>
-                    Desempeño por Formato Comercial
+                    Desempeño por Formato Comercial izzi
                   </h4>
 
                   {[
-                    { nombre: 'Islas Mall (4x3m)', cantidad: 48, roi: '+310%', personas: '2.1M', color: '#A61C5C' },
-                    { nombre: 'Corners Autoservicio', cantidad: 42, roi: '+240%', personas: '1.8M', color: '#D9933D' },
-                    { nombre: 'Tiendas Premium', cantidad: 22, roi: '+295%', personas: '950K', color: '#73B1BF' },
+                    { nombre: 'Islas Mall (4x3m)', cantidad: 54, roi: '+310%', personas: '2.4M', color: '#E3067A' },
+                    { nombre: 'Centros de Atención izzi', cantidad: 46, roi: '+340%', personas: '2.1M', color: '#0090D0' },
+                    { nombre: 'Módulos Express', cantidad: 20, roi: '+265%', personas: '900K', color: '#FF6C07' },
                   ].map((f, idx) => (
                     <div key={idx} style={{ padding: '8px 0', borderBottom: idx < 2 ? `1px solid ${colores.borde}` : 'none', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div>

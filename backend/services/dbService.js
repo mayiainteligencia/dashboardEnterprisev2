@@ -63,14 +63,14 @@ export async function buscarContextoEnDB(mensaje, departamento) {
       }
     }
 
-    // Buscar información de Totalplay
-    if (mensajeLower.includes('totalplay') || mensajeLower.includes('empresa') || mensajeLower.includes('cobertura') || mensajeLower.includes('isla') || mensajeLower.includes('paquete')) {
+    // Buscar información de izzi
+    if (mensajeLower.includes('izzi') || mensajeLower.includes('empresa') || mensajeLower.includes('cobertura') || mensajeLower.includes('sucursal') || mensajeLower.includes('paquete')) {
       try {
         const [info] = await pool.query(
           `SELECT empresa, descripcion, industria, fundacion, pais 
            FROM info_empresa 
            WHERE empresa = ?`,
-          ['Totalplay']
+          ['izzi']
         );
         if (info && info.length > 0) {
           resultados.push({ tipo: 'empresa', datos: info });
@@ -79,7 +79,7 @@ export async function buscarContextoEnDB(mensaje, departamento) {
         // Mock fallback en caso de no tener DB SQL activa
         resultados.push({
           tipo: 'empresa',
-          datos: [{ empresa: 'Totalplay', descripcion: 'Telecomunicaciones y fibra óptica FTTH' }]
+          datos: [{ empresa: 'izzi', descripcion: 'Telecomunicaciones, internet de alta velocidad, izzi tv+ e izzi móvil' }]
         });
       }
     }

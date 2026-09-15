@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Camera, CheckCircle, AlertTriangle, RefreshCw, ShieldCheck, X, TrendingUp } from 'lucide-react';
+import { Camera, CheckCircle, AlertTriangle } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
 const { colores } = brandingConfig;
@@ -37,19 +37,19 @@ export const AuditoriaVisualModule: React.FC = () => {
 
   const fotos = [
     {
-      punto: 'Isla 1 - Santa Fe', fecha: 'Hoy 09:15 AM', estado: 'Conforme', score: 98,
-      imagen: 'Isla limpia, displays encendidos y exhibición oficial Sound Hi-Fi.', color: '#5B8F20',
-      items: ['Planograma ✓', 'Iluminación ✓', 'Sound Display ✓', 'Limpieza ✓']
+      punto: 'Isla 1 - Plaza Santa Fe CDMX', fecha: 'Hoy 09:15 AM', estado: 'Conforme', score: 98,
+      imagen: 'Isla limpia, displays encendidos y exhibición oficial izzi tv+.', color: '#10B981',
+      items: ['Planograma ✓', 'Iluminación ✓', 'Display izzi tv+ ✓', 'Limpieza ✓']
     },
     {
-      punto: 'Corner 2 - Soriana Coyoacán', fecha: 'Hoy 09:45 AM', estado: 'Desviación', score: 82,
-      imagen: 'Iluminación decorativa apagada. Requiere reinicio de pastilla eléctrica.', color: '#D9933D',
-      items: ['Planograma ✓', 'Iluminación ✗', 'Sound Display ✓', 'Limpieza ✓']
+      punto: 'Centro izzi Galerías Monterrey', fecha: 'Hoy 09:45 AM', estado: 'Desviación', score: 82,
+      imagen: 'Iluminación decorativa en tótem apagada. Requiere reinicio de pastilla eléctrica.', color: '#FF6C07',
+      items: ['Planograma ✓', 'Iluminación ✗', 'Display izzi tv+ ✓', 'Limpieza ✓']
     },
     {
-      punto: 'Tienda Perisur', fecha: 'Hoy 08:30 AM', estado: 'Conforme', score: 100,
-      imagen: 'Planograma y limpieza al 100% de cumplimiento.', color: '#5B8F20',
-      items: ['Planograma ✓', 'Iluminación ✓', 'Sound Display ✓', 'Limpieza ✓']
+      punto: 'Centro de Atención izzi Perisur', fecha: 'Hoy 08:30 AM', estado: 'Conforme', score: 100,
+      imagen: 'Planograma y módulos de atención al 100% de cumplimiento con imagen izzi.', color: '#10B981',
+      items: ['Planograma ✓', 'Iluminación ✓', 'Display izzi tv+ ✓', 'Limpieza ✓']
     },
   ];
 
@@ -63,28 +63,28 @@ export const AuditoriaVisualModule: React.FC = () => {
         <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.primario, margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '40px', height: '40px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #A61C5C22, #A61C5C11)',
+            background: 'linear-gradient(135deg, #E3067A22, #E3067A11)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #A61C5C30'
+            border: '1px solid #E3067A30'
           }}>
-            <Camera size={20} color="#A61C5C" />
+            <Camera size={20} color="#E3067A" />
           </div>
-          Auditoría Visual IA Totalplay
+          Auditoría Visual IA izzi
         </h2>
         <p style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '6px', lineHeight: 1.5 }}>
-          Verificación automatizada por visión artificial para estandarizar la ejecución física en 112+ puntos de venta a nivel nacional.
+          Verificación automatizada por visión artificial para estandarizar la ejecución física en 120+ puntos de venta a nivel nacional.
         </p>
       </div>
 
       {/* Global score banner */}
       <div className="animate-slide-up delay-1" style={{
         display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: '24px', alignItems: 'center',
-        backgroundColor: '#F9F5FA', border: `1px solid #E5D5E0`,
+        backgroundColor: '#FDF7FA', border: `1px solid #F8D8E6`,
         borderRadius: '16px', padding: '20px 24px', marginBottom: '24px'
       }}>
-        <ScoreRing score={globalScore} color="#A61C5C" size={76} />
+        <ScoreRing score={globalScore} color="#E3067A" size={76} />
         <div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: colores.textoClaro }}>Cumplimiento Global Nacional</div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: colores.textoClaro }}>Cumplimiento Global Nacional izzi</div>
           <div style={{ fontSize: '12px', color: colores.textoMedio, lineHeight: 1.5, marginTop: '4px' }}>
             {conforme} de {fotos.length} puntos auditados en conformidad hoy
           </div>
@@ -92,7 +92,7 @@ export const AuditoriaVisualModule: React.FC = () => {
           <div style={{ marginTop: '10px', backgroundColor: '#E8E0EA', borderRadius: '99px', height: '6px', overflow: 'hidden', maxWidth: '220px' }}>
             <div style={{
               width: mounted ? `${globalScore}%` : '0%',
-              height: '100%', backgroundColor: '#A61C5C',
+              height: '100%', backgroundColor: '#E3067A',
               borderRadius: '99px',
               transition: 'width 1.4s cubic-bezier(0.22, 1, 0.36, 1)'
             }} />
@@ -100,11 +100,11 @@ export const AuditoriaVisualModule: React.FC = () => {
         </div>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '10px', fontWeight: '700', color: colores.textoMedio, marginBottom: '4px' }}>Conformes</div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: '#5B8F20' }}>{conforme}/{fotos.length}</div>
+          <div style={{ fontSize: '24px', fontWeight: '900', color: '#10B981' }}>{conforme}/{fotos.length}</div>
         </div>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '10px', fontWeight: '700', color: colores.textoMedio, marginBottom: '4px' }}>Desviaciones</div>
-          <div style={{ fontSize: '24px', fontWeight: '900', color: '#D9933D' }}>{fotos.length - conforme}</div>
+          <div style={{ fontSize: '24px', fontWeight: '900', color: '#FF6C07' }}>{fotos.length - conforme}</div>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export const AuditoriaVisualModule: React.FC = () => {
               <span style={{
                 display: 'inline-flex', alignItems: 'center', gap: '5px',
                 padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: '700',
-                backgroundColor: f.color === '#5B8F20' ? '#EEF6E7' : '#FDF4E7',
+                backgroundColor: f.color === '#10B981' ? '#EEF6E7' : '#FFF0E6',
                 color: f.color,
                 marginBottom: '12px'
               }}>
@@ -162,7 +162,7 @@ export const AuditoriaVisualModule: React.FC = () => {
                 {f.items.map((item, ii) => (
                   <div key={ii} style={{
                     fontSize: '11px', fontWeight: '500',
-                    color: item.includes('✓') ? '#5B8F20' : '#D9933D',
+                    color: item.includes('✓') ? '#10B981' : '#FF6C07',
                     display: 'flex', alignItems: 'center', gap: '4px'
                   }}>
                     {item}

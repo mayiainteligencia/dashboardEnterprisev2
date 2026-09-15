@@ -24,7 +24,7 @@ const INITIAL_MESSAGES: LLMMessage[] = [
   {
     id: 'welcome-1',
     role: 'assistant',
-    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Corporativa de Totalplay. Estoy conectada en tiempo real con todos los módulos operacionales M2C (Computer Vision, Displays Inteligentes, Copiloto de Ventas y Gobierno de Datos). ¿En qué proceso te puedo asistir hoy?',
+    content: '¡Hola! Soy **MAYIA**, la Inteligencia Artificial Corporativa de izzi. Estoy conectada en tiempo real con todos los módulos operacionales M2C (Computer Vision, Displays Inteligentes, Copiloto de Ventas y Gobierno de Datos). ¿En qué proceso te puedo asistir hoy?',
     timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
   }
 ];
@@ -35,10 +35,10 @@ export const AIChatProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       const saved = localStorage.getItem('MAYIA_CHAT_HISTORY');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Clean any legacy BESCO occurrences in saved chat history
+        // Clean any legacy BESCO or Totalplay occurrences in saved chat history
         const cleaned = parsed.map((m: LLMMessage) => ({
           ...m,
-          content: m.content.replace(/BESCO/gi, 'Totalplay')
+          content: m.content.replace(/BESCO/gi, 'izzi').replace(/Totalplay/gi, 'izzi')
         }));
         return cleaned;
       }

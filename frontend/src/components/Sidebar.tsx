@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LayoutDashboard, Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Wifi, Smartphone } from 'lucide-react';
 import { brandingConfig } from '../config/branding';
-import { MODULOS_TOTALPLAY } from '../totalplay/totalplayData';
+import { MODULOS_IZZI } from '../izzi/izziData';
 
 const iconMap: Record<string, any> = {
   Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass, Smartphone,
@@ -17,28 +17,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
   const { colores } = brandingConfig;
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  const totalAlerts = MODULOS_TOTALPLAY.reduce((acc, m) => acc + m.alertas, 0);
+  const totalAlerts = MODULOS_IZZI.reduce((acc, m) => acc + m.alertas, 0);
 
   const categorias = [
     {
       titulo: 'INTELIGENCIA COMERCIAL',
-      color: '#A61C5C',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'comercial' && m.id !== 'vista-gerente-movil')
+      color: '#E3067A',
+      items: MODULOS_IZZI.filter(m => m.categoria === 'comercial' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'OPERACIONES M2C',
-      color: '#732D67',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'operaciones' && m.id !== 'vista-gerente-movil')
+      color: '#53267E',
+      items: MODULOS_IZZI.filter(m => m.categoria === 'operaciones' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'EXPERIENCIA & DISPLAYS',
-      color: '#D9933D',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'experiencia' && m.id !== 'vista-gerente-movil')
+      color: '#FF6C07',
+      items: MODULOS_IZZI.filter(m => m.categoria === 'experiencia' && m.id !== 'vista-gerente-movil')
     },
     {
       titulo: 'TECNOLOGÍA & CRM',
-      color: '#73B1BF',
-      items: MODULOS_TOTALPLAY.filter(m => m.categoria === 'tecnologia' && m.id !== 'vista-gerente-movil')
+      color: '#0090D0',
+      items: MODULOS_IZZI.filter(m => m.categoria === 'tecnologia' && m.id !== 'vista-gerente-movil')
     }
   ];
 
@@ -58,7 +58,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       {/* Subtle gradient overlay */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'linear-gradient(180deg, rgba(115,177,191,0.05) 0%, rgba(255,255,255,0) 40%)',
+        background: 'linear-gradient(180deg, rgba(227,6,122,0.05) 0%, rgba(255,255,255,0) 40%)',
         zIndex: 0
       }} />
 
@@ -72,19 +72,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <img
-            src="/assets/logosNativos/TotalPlay.png"
-            alt="Totalplay Logo"
+            src="/assets/logosEmpresas/izziLogo.webp"
+            alt="izzi Logo"
             style={{ height: '36px', objectFit: 'contain' }}
           />
           <div>
-            <div style={{ fontSize: '10px', color: '#73B1BF', fontWeight: '800', letterSpacing: '0.05em' }}>
+            <div style={{ fontSize: '10px', color: '#E3067A', fontWeight: '800', letterSpacing: '0.05em' }}>
               Plataforma M2C
             </div>
           </div>
           {totalAlerts > 0 && (
             <div className="badge-pulse" style={{
               marginLeft: 'auto',
-              backgroundColor: '#A61C5C', color: '#FFFFFF',
+              backgroundColor: '#E3067A', color: '#FFFFFF',
               fontSize: '10px', fontWeight: '900',
               width: '20px', height: '20px', borderRadius: '50%',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -137,7 +137,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               <LayoutDashboard size={16} color={activeSection === 'dashboard' ? '#FFFFFF' : '#73B1BF'} />
             </div>
             <span style={{ fontSize: '13px', fontWeight: '700', flex: 1 }}>
-              Dashboard Totalplay
+              Dashboard izzi
             </span>
             {activeSection === 'dashboard' && (
               <div style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.6)' }} />
@@ -214,11 +214,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
         <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: `1px dashed ${colores.borde}` }}>
           <div style={{
             fontSize: '9.5px', fontWeight: 900, textTransform: 'uppercase',
-            letterSpacing: '0.08em', color: '#A61C5C',
+            letterSpacing: '0.08em', color: '#E3067A',
             marginBottom: '8px', paddingLeft: '8px',
             display: 'flex', alignItems: 'center', gap: '6px'
           }}>
-            <div style={{ width: '12px', height: '2px', backgroundColor: '#A61C5C', borderRadius: '1px', flexShrink: 0 }} />
+            <div style={{ width: '12px', height: '2px', backgroundColor: '#E3067A', borderRadius: '1px', flexShrink: 0 }} />
             OPCIÓN ESPECIAL
           </div>
 
@@ -230,20 +230,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               width: '100%', display: 'flex', alignItems: 'center', gap: '10px',
               padding: '10px 12px', borderRadius: '14px', cursor: 'pointer',
               background: activeSection === 'vista-gerente-movil'
-                ? 'linear-gradient(135deg, #A61C5C 0%, #732D67 100%)'
-                : hoveredItem === 'vista-gerente-movil' ? '#FCE7F1' : '#FFF1F7',
-              color: activeSection === 'vista-gerente-movil' ? '#FFFFFF' : '#A61C5C',
-              border: `1.5px solid ${activeSection === 'vista-gerente-movil' ? '#A61C5C' : '#F5B8D0'}`,
+                ? 'linear-gradient(135deg, #E3067A 0%, #53267E 100%)'
+                : hoveredItem === 'vista-gerente-movil' ? '#FDEAF2' : '#FFF5F9',
+              color: activeSection === 'vista-gerente-movil' ? '#FFFFFF' : '#E3067A',
+              border: `1.5px solid ${activeSection === 'vista-gerente-movil' ? '#E3067A' : '#FACADA'}`,
               boxShadow: activeSection === 'vista-gerente-movil'
-                ? '0 6px 20px rgba(166,28,92,0.35)'
-                : '0 2px 8px rgba(166,28,92,0.08)',
+                ? '0 6px 20px rgba(227,6,122,0.35)'
+                : '0 2px 8px rgba(227,6,122,0.08)',
               transition: 'all 0.22s cubic-bezier(0.22, 1, 0.36, 1)',
               textAlign: 'left'
             }}
           >
             <div style={{
               width: '32px', height: '32px', borderRadius: '10px', flexShrink: 0,
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
+              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#E3067A',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}>
               <Smartphone size={16} color="#FFFFFF" />
@@ -257,7 +257,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeSection, onSectionChange
               </div>
             </div>
             <span style={{
-              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#A61C5C',
+              backgroundColor: activeSection === 'vista-gerente-movil' ? 'rgba(255,255,255,0.25)' : '#E3067A',
               color: '#FFFFFF', fontSize: '9px', fontWeight: '900',
               padding: '2px 7px', borderRadius: '10px', flexShrink: 0
             }}>

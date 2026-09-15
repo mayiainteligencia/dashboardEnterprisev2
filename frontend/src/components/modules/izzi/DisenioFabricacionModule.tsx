@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LayoutGrid, Layers, Box, TrendingUp, MapPin, BarChart3, Users } from 'lucide-react';
+import { LayoutGrid, Layers, Box, BarChart3 } from 'lucide-react';
 import { brandingConfig } from '../../../config/branding';
 
 const { colores } = brandingConfig;
@@ -33,31 +33,31 @@ function ARPUBar({ valor, max, color }: { valor: number; max: number; color: str
 }
 
 export const DisenioFabricacionModule: React.FC = () => {
-  const u1 = useCountUp(48, 1200, 200);
-  const u2 = useCountUp(42, 1100, 350);
-  const u3 = useCountUp(22, 1000, 500);
+  const u1 = useCountUp(54, 1200, 200);
+  const u2 = useCountUp(46, 1100, 350);
+  const u3 = useCountUp(20, 1000, 500);
 
   const formatos = [
     {
-      nombre: 'Isla Comercial Mall (4×3m)', unidades: u1, raw: 48,
-      arpuProm: '$642 MXN', arpuNum: 642, atraccion: '31.2%',
-      desc: 'Isla de alto impacto visual con tótem interactivo y espacio Sonido Hi-Fi Surround.',
-      color: '#A61C5C', icon: Box,
-      tags: ['Alto Impacto', 'Sound Hi-Fi', 'Tótem IA'],
+      nombre: 'Isla Comercial Mall (4×3m)', unidades: u1, raw: 54,
+      arpuProm: '$580 MXN', arpuNum: 580, atraccion: '32.4%',
+      desc: 'Isla de alto impacto visual con tótem interactivo y espacio de demostración izzi tv+.',
+      color: '#E3067A', icon: Box,
+      tags: ['Alto Impacto', 'izzi tv+', 'Tótem IA'],
     },
     {
-      nombre: 'Corner Autoservicio (Soriana / Walmart / Chedraui)', unidades: u2, raw: 42,
-      arpuProm: '$588 MXN', arpuNum: 588, atraccion: '26.8%',
-      desc: 'Mobiliario compacto de 2×1.5m optimizado para tráfico constante.',
-      color: '#732D67', icon: Layers,
-      tags: ['Compacto', 'Alto Tráfico', 'Fácil Setup'],
+      nombre: 'Centro de Atención izzi Oficial', unidades: u2, raw: 46,
+      arpuProm: '$640 MXN', arpuNum: 640, atraccion: '35.8%',
+      desc: 'Centro de atención y ventas completo con módulos de servicio, portabilidad izzi móvil y contratación.',
+      color: '#0090D0', icon: LayoutGrid,
+      tags: ['Centro Oficial', 'Atención & Ventas', 'ARPU Alto'],
     },
     {
-      nombre: 'Tienda Flagship Premium', unidades: u3, raw: 22,
-      arpuProm: '$780 MXN', arpuNum: 780, atraccion: '34.5%',
-      desc: 'Centro de experiencia inmersiva con salas de demostración Totalplay TV.',
-      color: '#D9933D', icon: LayoutGrid,
-      tags: ['Flagship', 'Demo Room', 'ARPU Alto'],
+      nombre: 'Módulo Express / Corner', unidades: u3, raw: 20,
+      arpuProm: '$510 MXN', arpuNum: 510, atraccion: '28.2%',
+      desc: 'Mobiliario compacto de 2×1.5m para centros comerciales y tiendas de autoservicio.',
+      color: '#FF6C07', icon: Layers,
+      tags: ['Express', 'Alto Tráfico', 'Fácil Setup'],
     },
   ];
 
@@ -71,16 +71,16 @@ export const DisenioFabricacionModule: React.FC = () => {
         <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.primario, margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '40px', height: '40px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #D9933D22, #D9933D11)',
+            background: 'linear-gradient(135deg, #FF6C0722, #FF6C0711)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #D9933D30'
+            border: '1px solid #FF6C0730'
           }}>
-            <LayoutGrid size={20} color="#D9933D" />
+            <LayoutGrid size={20} color="#FF6C07" />
           </div>
-          Diseños y Mobiliario Retail Innova
+          Diseños y Mobiliario Retail Innova izzi
         </h2>
         <p style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '6px', lineHeight: 1.5 }}>
-          Gestión de formatos físicos de punto de venta y su rendimiento por metro cuadrado.
+          Gestión de formatos físicos de Centros de Atención izzi, islas y corners, evaluando su rendimiento por metro cuadrado.
         </p>
       </div>
 
@@ -88,19 +88,19 @@ export const DisenioFabricacionModule: React.FC = () => {
       <div className="animate-slide-up delay-1" style={{
         display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px'
       }}>
-        <div style={{ backgroundColor: '#FEF0F7', border: '1px solid #F0C0D8', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-          <div style={{ fontSize: '10px', fontWeight: '700', color: '#A61C5C', marginBottom: '4px', textTransform: 'uppercase' }}>Formatos Activos</div>
-          <div style={{ fontSize: '28px', fontWeight: '900', color: '#A61C5C' }}>{totalUnits}</div>
+        <div style={{ backgroundColor: '#FDF7FA', border: '1px solid #F8D8E6', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
+          <div style={{ fontSize: '10px', fontWeight: '700', color: '#E3067A', marginBottom: '4px', textTransform: 'uppercase' }}>Formatos Activos</div>
+          <div style={{ fontSize: '28px', fontWeight: '900', color: '#E3067A' }}>{totalUnits}</div>
           <div style={{ fontSize: '11px', color: colores.textoMedio }}>Puntos Nacionales</div>
         </div>
-        <div style={{ backgroundColor: '#F5E8F3', border: '1px solid #E5C8E0', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-          <div style={{ fontSize: '10px', fontWeight: '700', color: '#732D67', marginBottom: '4px', textTransform: 'uppercase' }}>ARPU Promedio</div>
-          <div style={{ fontSize: '28px', fontWeight: '900', color: '#732D67' }}>$670</div>
+        <div style={{ backgroundColor: '#E6F4FB', border: '1px solid #BCE3F7', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
+          <div style={{ fontSize: '10px', fontWeight: '700', color: '#0090D0', marginBottom: '4px', textTransform: 'uppercase' }}>ARPU Promedio</div>
+          <div style={{ fontSize: '28px', fontWeight: '900', color: '#0090D0' }}>$576</div>
           <div style={{ fontSize: '11px', color: colores.textoMedio }}>MXN / mes</div>
         </div>
-        <div style={{ backgroundColor: '#FDF4E7', border: '1px solid #F0D5A0', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
-          <div style={{ fontSize: '10px', fontWeight: '700', color: '#D9933D', marginBottom: '4px', textTransform: 'uppercase' }}>Atracción Prom.</div>
-          <div style={{ fontSize: '28px', fontWeight: '900', color: '#D9933D' }}>30.8%</div>
+        <div style={{ backgroundColor: '#FFF0E6', border: '1px solid #FCD3B8', borderRadius: '14px', padding: '16px', textAlign: 'center' }}>
+          <div style={{ fontSize: '10px', fontWeight: '700', color: '#FF6C07', marginBottom: '4px', textTransform: 'uppercase' }}>Atracción Prom.</div>
+          <div style={{ fontSize: '28px', fontWeight: '900', color: '#FF6C07' }}>32.1%</div>
           <div style={{ fontSize: '11px', color: colores.textoMedio }}>Stop Rate Media</div>
         </div>
       </div>
@@ -111,7 +111,7 @@ export const DisenioFabricacionModule: React.FC = () => {
         borderRadius: '14px', padding: '18px 20px', marginBottom: '24px'
       }}>
         <div style={{ fontSize: '13px', fontWeight: '800', color: colores.primario, marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <BarChart3 size={15} color="#732D67" /> Comparativo ARPU por Formato
+          <BarChart3 size={15} color="#E3067A" /> Comparativo ARPU por Formato
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {formatos.map((f, i) => (

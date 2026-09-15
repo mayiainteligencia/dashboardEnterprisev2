@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send, Mic, MicOff, Sparkles } from 'lucide-react';
-import { brandingConfig, type TemaBesco } from '../../../config/branding';
+import { brandingConfig, type TemaIzzi } from '../../../config/branding';
 import { BrainCanvas } from './BrainCanvas';
 import { useAIChat } from '../../../context/AIChatContext';
 import { MarkdownRenderer } from '../../common/MarkdownRenderer';
@@ -29,7 +29,7 @@ const matchSeccion = (texto: string, secciones: { id: string; titulo: string }[]
 };
 
 interface HeroCardProps {
-  tema?: TemaBesco;
+  tema?: TemaIzzi;
   onNavigate?: (id: string) => void;
   secciones?: { id: string; titulo: string }[];
 }

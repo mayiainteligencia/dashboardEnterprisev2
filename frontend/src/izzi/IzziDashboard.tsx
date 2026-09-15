@@ -1,14 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HeroCard } from '../components/modules/dashboardModules/Herocard';
-import { MODULOS_TOTALPLAY, ALERTAS_TOTALPLAY, type ModuloTotalplay } from './totalplayData';
+import { MODULOS_IZZI, ALERTAS_IZZI, type ModuloIzzi } from './izziData';
 import { brandingConfig } from '../config/branding';
 import {
   Eye, Bot, UserCheck, Tv, Camera, Database,
-  GraduationCap, LayoutGrid, Activity, Compass, AlertCircle, ArrowRight,
-  TrendingUp, Zap, Radio
+  GraduationCap, LayoutGrid, Activity, Compass, AlertCircle, ArrowRight
 } from 'lucide-react';
 
-const { colores, temas, empresa, metricas } = brandingConfig;
+const { colores, temas } = brandingConfig;
 
 const iconMap: Record<string, any> = {
   Eye, Bot, UserCheck, Tv, Camera, Database, GraduationCap, LayoutGrid, Activity, Compass,
@@ -47,12 +46,12 @@ function MetricBanner({ label, value, suffix = '' }: { label: string; value: num
   );
 }
 
-interface TotalplayDashboardProps {
+interface IzziDashboardProps {
   onSelectModulo: (moduloId: string) => void;
 }
 
-export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelectModulo }) => {
-  const [tick, setTick] = useState(0);
+export const IzziDashboard: React.FC<IzziDashboardProps> = ({ onSelectModulo }) => {
+  const [, setTick] = useState(0);
 
   // Force re-render for live feel (every 5s)
   useEffect(() => {
@@ -61,14 +60,14 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
   }, []);
 
   const gravityColor = (g: string) =>
-    g === 'critica' ? '#A61C5C' : g === 'advertencia' ? '#D9933D' : '#732D67';
+    g === 'critica' ? '#E3067A' : g === 'advertencia' ? '#FF6C07' : '#0090D0';
 
   return (
     <div style={{ backgroundColor: '#FFFFFF', padding: '24px', minHeight: '100%', borderRadius: '18px' }}>
 
       {/* ── TICKER BAR ── */}
       <div style={{
-        background: 'linear-gradient(90deg, #A61C5C, #732D67, #73B1BF, #BBBF41, #D9933D, #73B1BF, #732D67, #A61C5C)',
+        background: 'linear-gradient(90deg, #FF6C07, #0090D0, #E3067A, #FCD116, #53267E, #FF6C07)',
         backgroundSize: '300% 100%',
         borderRadius: '10px',
         padding: '8px 0',
@@ -78,7 +77,7 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
       }}>
         <div className="ticker-wrapper">
           <span className="ticker-content" style={{ color: '#FFFFFF', fontSize: '12px', fontWeight: '700', letterSpacing: '0.08em' }}>
-            &nbsp;&nbsp;&nbsp;&nbsp;● TOTALPLAY M2C EN VIVO &nbsp;·&nbsp; 112 PUNTOS MONITOREADOS &nbsp;·&nbsp; 14,250 VISITAS 24H &nbsp;·&nbsp; FIBRA ÓPTICA 19.5M+ HOGARES &nbsp;·&nbsp; 87 CIUDADES ACTIVAS &nbsp;·&nbsp; ARPU PROMEDIO $642 MXN &nbsp;·&nbsp; DISPONIBILIDAD DE SENSORES 99.4% &nbsp;·&nbsp; ● TOTALPLAY M2C EN VIVO &nbsp;·&nbsp; 112 PUNTOS MONITOREADOS &nbsp;·&nbsp; 14,250 VISITAS 24H &nbsp;·&nbsp; FIBRA ÓPTICA 19.5M+ HOGARES &nbsp;·&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;● IZZI M2C EN VIVO &nbsp;·&nbsp; 120 PUNTOS MONITOREADOS &nbsp;·&nbsp; 16,840 VISITAS 24H &nbsp;·&nbsp; RED HÍBRIDA &amp; FIBRA 15M+ HOGARES &nbsp;·&nbsp; 60+ CIUDADES ACTIVAS &nbsp;·&nbsp; ARPU PROMEDIO $520 MXN &nbsp;·&nbsp; DISPONIBILIDAD DE SENSORES 99.7% &nbsp;·&nbsp; ● IZZI M2C EN VIVO &nbsp;·&nbsp; 120 PUNTOS MONITOREADOS &nbsp;·&nbsp; 16,840 VISITAS 24H &nbsp;·&nbsp; RED HÍBRIDA &amp; FIBRA 15M+ HOGARES &nbsp;·&nbsp;
           </span>
         </div>
       </div>
@@ -87,7 +86,7 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
       <div
         className="animate-slide-up"
         style={{
-          background: 'linear-gradient(135deg, #732D67 0%, #A61C5C 40%, #73B1BF 100%)',
+          background: 'linear-gradient(135deg, #53267E 0%, #E3067A 50%, #0090D0 100%)',
           borderRadius: '20px',
           padding: '28px 32px',
           color: '#FFFFFF',
@@ -95,7 +94,7 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          boxShadow: '0 12px 40px rgba(166, 28, 92, 0.25)',
+          boxShadow: '0 12px 40px rgba(227, 6, 122, 0.25)',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -104,17 +103,17 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
         <div style={{
           position: 'absolute', right: '-60px', top: '-60px',
           width: '240px', height: '240px', borderRadius: '50%',
-          background: 'rgba(255,255,255,0.05)', pointerEvents: 'none'
+          background: 'rgba(255,255,255,0.06)', pointerEvents: 'none'
         }} />
         <div style={{
           position: 'absolute', right: '80px', bottom: '-80px',
           width: '180px', height: '180px', borderRadius: '50%',
-          background: 'rgba(217,147,61,0.15)', pointerEvents: 'none'
+          background: 'rgba(255,108,7,0.18)', pointerEvents: 'none'
         }} />
         <div style={{
           position: 'absolute', left: '40%', top: '-30px',
           width: '120px', height: '120px', borderRadius: '50%',
-          background: 'rgba(255,255,255,0.04)', pointerEvents: 'none'
+          background: 'rgba(255,255,255,0.05)', pointerEvents: 'none'
         }} />
         {/* Shimmer overlay */}
         <div className="shimmer-bg" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} />
@@ -126,13 +125,13 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
             display: 'flex', alignItems: 'center', gap: '8px'
           }}>
             <span className="live-dot" style={{ width: '7px', height: '7px' }} />
-            Centro de Control M2C · Grupo Salinas
+            Centro de Control M2C · Grupo Televisa
           </div>
           <h1 style={{ fontSize: '28px', fontWeight: '900', margin: '0 0 6px 0', letterSpacing: '-0.5px' }}>
-            ¡Bienvenido a Totalplay!
+            ¡Bienvenido a izzi!
           </h1>
           <p style={{ fontSize: '14px', margin: 0, opacity: 0.9, maxWidth: '600px', lineHeight: 1.5 }}>
-            Plataforma Inteligente de Transformación de Puntos de Venta · Islas, Corners y Displays · powered by <strong>MAYIA &amp; Retail Innova</strong>
+            Plataforma Inteligente de Transformación de Puntos de Venta · Centros de Atención, Islas y Corners · powered by <strong>MAYIA &amp; Retail Innova</strong>
           </p>
         </div>
 
@@ -146,15 +145,15 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
           flexShrink: 0
         }}>
           <div style={{ padding: '0 20px', textAlign: 'center' }}>
-            <MetricBanner label="Cobertura FTTH" value={195} suffix="00+" />
+            <MetricBanner label="Hogares Pasados" value={15} suffix="M+" />
           </div>
           <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '4px 0' }} />
           <div style={{ padding: '0 20px', textAlign: 'center' }}>
-            <MetricBanner label="Suscriptores" value={55} suffix="00,000+" />
+            <MetricBanner label="Suscriptores" value={6} suffix=".2M+" />
           </div>
           <div style={{ width: '1px', backgroundColor: 'rgba(255,255,255,0.2)', margin: '4px 0' }} />
           <div style={{ padding: '0 20px', textAlign: 'center' }}>
-            <MetricBanner label="Puntos Activos" value={112} suffix="" />
+            <MetricBanner label="Puntos Activos" value={120} suffix="" />
           </div>
         </div>
       </div>
@@ -165,7 +164,7 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
           <HeroCard
             tema={temas.admin}
             onNavigate={(id) => onSelectModulo(id)}
-            secciones={MODULOS_TOTALPLAY.map(m => ({ id: m.id, titulo: m.titulo }))}
+            secciones={MODULOS_IZZI.map(m => ({ id: m.id, titulo: m.titulo }))}
           />
         </div>
       </div>
@@ -177,23 +176,23 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
             fontSize: '17px', fontWeight: '800', color: colores.textoClaro,
             margin: 0, display: 'flex', alignItems: 'center', gap: '10px'
           }}>
-            <AlertCircle size={20} color="#A61C5C" />
-            Alertas del Sistema M2C
+            <AlertCircle size={20} color="#E3067A" />
+            Alertas del Sistema M2C izzi
           </h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span className="live-dot" style={{ width: '8px', height: '8px' }} />
             <span style={{ fontSize: '12px', fontWeight: '600', color: colores.textoMedio }}>
-              {ALERTAS_TOTALPLAY.length} eventos en vivo
+              {ALERTAS_IZZI.length} eventos en vivo
             </span>
           </div>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '14px' }}>
-          {ALERTAS_TOTALPLAY.map((al, idx) => (
+          {ALERTAS_IZZI.map((al, idx) => (
             <div
               key={al.id}
               onClick={() => onSelectModulo(al.moduloId)}
-              className={`card-hover animate-slide-up`}
+              className="card-hover animate-slide-up"
               style={{
                 animationDelay: `${0.05 * idx + 0.3}s`,
                 backgroundColor: '#FFFFFF',
@@ -246,20 +245,19 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
       <div className="animate-slide-up delay-4">
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <h3 style={{ fontSize: '18px', fontWeight: '800', color: colores.textoClaro, margin: 0 }}>
-            Módulos de Inteligencia Comercial &amp; Operativa
+            Módulos de Inteligencia Comercial &amp; Operativa izzi
           </h3>
           <span style={{
-            backgroundColor: '#FCE7F1', color: '#A61C5C',
+            backgroundColor: '#FDEAF2', color: '#E3067A',
             fontSize: '11px', fontWeight: '800', padding: '3px 10px', borderRadius: '20px'
           }}>
-            {MODULOS_TOTALPLAY.length} módulos activos
+            {MODULOS_IZZI.length} módulos activos
           </span>
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(310px, 1fr))', gap: '20px' }}>
-          {MODULOS_TOTALPLAY.map((modulo: ModuloTotalplay, idx: number) => {
+          {MODULOS_IZZI.map((modulo: ModuloIzzi, idx: number) => {
             const IconoComp = iconMap[modulo.iconoName] || Activity;
-            const maxKpiVal = modulo.kpis[0]?.valor || '0';
             const delayClass = `delay-${Math.min(idx + 1, 10)}`;
 
             return (
@@ -311,10 +309,10 @@ export const TotalplayDashboard: React.FC<TotalplayDashboardProps> = ({ onSelect
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '5px' }}>
                       {modulo.alertas > 0 && (
                         <span className="badge-pulse" style={{
-                          backgroundColor: '#FCE7F1', color: '#A61C5C',
+                          backgroundColor: '#FDEAF2', color: '#E3067A',
                           fontSize: '11px', fontWeight: '800',
                           padding: '3px 9px', borderRadius: '12px',
-                          border: '1px solid #F5B8D0',
+                          border: '1px solid #FACADA',
                         }}>
                           {modulo.alertas} alerta{modulo.alertas > 1 ? 's' : ''}
                         </span>

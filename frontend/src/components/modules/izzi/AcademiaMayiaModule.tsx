@@ -44,8 +44,8 @@ function StarRating({ value, max = 10 }: { value: number; max?: number }) {
         <Star
           key={i}
           size={14}
-          color={i < Math.floor(filled) ? '#D9933D' : '#E0E0E0'}
-          fill={i < Math.floor(filled) ? '#D9933D' : 'none'}
+          color={i < Math.floor(filled) ? '#FF6C07' : '#E0E0E0'}
+          fill={i < Math.floor(filled) ? '#FF6C07' : 'none'}
         />
       ))}
     </div>
@@ -58,18 +58,18 @@ export const AcademiaMayiaModule: React.FC = () => {
 
   const cursos = [
     {
-      titulo: 'Técnicas de Cierre para Totalplay Surround & Triple Play',
-      horas: '10h', estado: 'Completado por 340 ejecutivos', progreso: 100, color: '#5B8F20',
+      titulo: 'Técnicas de Cierre para izzi tv+, izzi móvil & Triple Play',
+      horas: '10h', estado: 'Completado por 420 ejecutivos', progreso: 100, color: '#10B981',
       icon: CheckCircle2, badge: 'Completado'
     },
     {
-      titulo: 'Uso Efectivo del Copiloto IA en Atención de Tienda',
-      horas: '6h', estado: 'En curso (280 ejecutivos)', progreso: 75, color: '#732D67',
+      titulo: 'Uso Efectivo del Copiloto IA en Centros de Atención izzi',
+      horas: '6h', estado: 'En curso (350 ejecutivos)', progreso: 82, color: '#53267E',
       icon: Clock, badge: 'En Curso'
     },
     {
-      titulo: 'Verificación y Calificación de Cobertura FTTH',
-      horas: '4h', estado: 'Obligatorio (410 ejecutivos)', progreso: 90, color: '#A61C5C',
+      titulo: 'Verificación de Cobertura y Configuración de Paquetes izzi',
+      horas: '4h', estado: 'Obligatorio (520 ejecutivos)', progreso: 94, color: '#E3067A',
       icon: Award, badge: 'Obligatorio'
     },
   ];
@@ -77,9 +77,9 @@ export const AcademiaMayiaModule: React.FC = () => {
   const globalPct = Math.round(cursos.reduce((a, c) => a + c.progreso, 0) / cursos.length);
 
   const stats = [
-    { label: 'Vendedores Certificados', valor: '410', color: '#A61C5C', icon: Users },
-    { label: 'Cursos Completados', valor: '1,280', color: '#732D67', icon: BookOpen },
-    { label: 'Calificación Prom.', valor: '9.4/10', color: '#D9933D', icon: Star },
+    { label: 'Vendedores Certificados', valor: '520', color: '#E3067A', icon: Users },
+    { label: 'Cursos Completados', valor: '1,640', color: '#53267E', icon: BookOpen },
+    { label: 'Calificación Prom.', valor: '9.6/10', color: '#FF6C07', icon: Star },
   ];
 
   return (
@@ -89,34 +89,34 @@ export const AcademiaMayiaModule: React.FC = () => {
         <h2 style={{ fontSize: '22px', fontWeight: '800', color: colores.primario, margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div style={{
             width: '40px', height: '40px', borderRadius: '12px',
-            background: 'linear-gradient(135deg, #BBBF4122, #BBBF4111)',
+            background: 'linear-gradient(135deg, #E3067A22, #E3067A11)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            border: '1px solid #BBBF4130'
+            border: '1px solid #E3067A30'
           }}>
-            <GraduationCap size={20} color="#8B8F26" />
+            <GraduationCap size={20} color="#E3067A" />
           </div>
-          Academia MAYIA Totalplay
+          Academia MAYIA izzi
         </h2>
         <p style={{ fontSize: '13px', color: colores.textoMedio, marginTop: '6px', lineHeight: 1.5 }}>
-          Capacitación continua en técnicas comerciales, ecosistema Totalplay TV y herramientas de IA para vendedores.
+          Capacitación continua en técnicas comerciales, ecosistema izzi tv+, izzi móvil y herramientas de IA para vendedores.
         </p>
       </div>
 
       {/* Stats + Ring */}
       <div className="animate-slide-up delay-1" style={{
         display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '24px',
-        backgroundColor: '#F9F5FA', border: '1px solid #E5D5E0',
+        backgroundColor: '#FDF7FA', border: '1px solid #F8D8E6',
         borderRadius: '16px', padding: '20px 24px', marginBottom: '24px',
         alignItems: 'center'
       }}>
-        <RingChart pct={globalPct} color="#BBBF41" size={88} label="Avance Global" />
+        <RingChart pct={globalPct} color="#0090D0" size={88} label="Avance Global" />
         <div>
           <div style={{ fontSize: '13px', fontWeight: '700', color: colores.textoClaro, marginBottom: '4px' }}>
             Progreso Promedio de la Academia
           </div>
           <div style={{ display: 'flex', gap: '6px', alignItems: 'center', marginBottom: '12px' }}>
-            <StarRating value={9.4} />
-            <span style={{ fontSize: '12px', fontWeight: '700', color: '#D9933D' }}>9.4 / 10</span>
+            <StarRating value={9.6} />
+            <span style={{ fontSize: '12px', fontWeight: '700', color: '#FF6C07' }}>9.6 / 10</span>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
             {stats.map((s, i) => {
