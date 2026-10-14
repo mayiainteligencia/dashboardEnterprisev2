@@ -11,6 +11,7 @@ import {
   UserPlus,
   Store,
   Radar,
+  Cpu,
 } from 'lucide-react';
 
 import { brandingConfig } from '../config/branding';
@@ -22,6 +23,7 @@ interface SidebarProps {
 
 const menuItems = [
   { id: 'dashboard', nombre: 'Dashboard General', icono: LayoutDashboard },
+  { id: 'gemelo', nombre: 'Gemelo Digital · Escenarios', icono: Cpu },
   { id: 'comercial', nombre: 'Inteligencia Comercial', icono: TrendingUp },
   { id: 'leads', nombre: 'Leads', icono: UserPlus },
   { id: 'operacion', nombre: 'Operación', icono: Store },

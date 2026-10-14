@@ -1,0 +1,2551 @@
+{
+ "aviso": "Datos simulados de ejemplo",
+ "corridas": 10,
+ "casos": 2000,
+ "ejes": {
+  "aprobacion_h": [
+   0,
+   48,
+   24,
+   12
+  ],
+  "tasa_delta": [
+   -2,
+   0,
+   2,
+   4
+  ],
+  "vendedores": [
+   6,
+   8,
+   10,
+   12
+  ]
+ },
+ "escenarios": [
+  {
+   "id": "base",
+   "nombre": "Base",
+   "resultado": {
+    "ventas": {
+     "media": 345.3,
+     "min": 314.0,
+     "max": 388.0
+    },
+    "monto": {
+     "media": 173580136.0,
+     "min": 159396880.0,
+     "max": 195313360.0
+    },
+    "morosidad": {
+     "media": 5.893077601615488,
+     "min": 4.132231404958677,
+     "max": 7.82122905027933
+    },
+    "utilizacion": {
+     "media": 79.767622323744,
+     "min": 76.9710831627431,
+     "max": 83.2211590589179
+    },
+    "aband_credito": {
+     "media": 95.1,
+     "min": 85.0,
+     "max": 110.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "id": "a",
+   "nombre": "a) Aprobación en 24 h",
+   "resultado": {
+    "ventas": {
+     "media": 374.8,
+     "min": 346.0,
+     "max": 393.0
+    },
+    "monto": {
+     "media": 188407176.0,
+     "min": 173827360.0,
+     "max": 201281840.0
+    },
+    "morosidad": {
+     "media": 6.692043887785391,
+     "min": 4.8517520215633425,
+     "max": 9.669211195928753
+    },
+    "utilizacion": {
+     "media": 80.74341070205898,
+     "min": 74.48875525023172,
+     "max": 86.65219852671585
+    },
+    "aband_credito": {
+     "media": 48.6,
+     "min": 35.0,
+     "max": 61.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "id": "b",
+   "nombre": "b) Tasa +2 puntos",
+   "resultado": {
+    "ventas": {
+     "media": 322.8,
+     "min": 288.0,
+     "max": 340.0
+    },
+    "monto": {
+     "media": 161918136.0,
+     "min": 143210640.0,
+     "max": 172244880.0
+    },
+    "morosidad": {
+     "media": 6.9427807443809275,
+     "min": 4.658385093167702,
+     "max": 9.904153354632587
+    },
+    "utilizacion": {
+     "media": 78.03194345873321,
+     "min": 73.00616896864729,
+     "max": 81.67995072751282
+    },
+    "aband_credito": {
+     "media": 83.7,
+     "min": 72.0,
+     "max": 97.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "id": "c",
+   "nombre": "c) +2 vendedores",
+   "resultado": {
+    "ventas": {
+     "media": 341.3,
+     "min": 320.0,
+     "max": 360.0
+    },
+    "monto": {
+     "media": 170735992.0,
+     "min": 158347920.0,
+     "max": 179143440.0
+    },
+    "morosidad": {
+     "media": 6.374660694215228,
+     "min": 4.1420118343195265,
+     "max": 8.571428571428571
+    },
+    "utilizacion": {
+     "media": 64.32382078438054,
+     "min": 60.96518301317621,
+     "max": 67.26557826044744
+    },
+    "aband_credito": {
+     "media": 98.8,
+     "min": 89.0,
+     "max": 112.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  }
+ ],
+ "malla": [
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": -2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 296.9,
+     "min": 281.0,
+     "max": 306.0
+    },
+    "monto": {
+     "media": 148999224.0,
+     "min": 141149120.0,
+     "max": 155194480.0
+    },
+    "morosidad": {
+     "media": 4.902413905572663,
+     "min": 2.9411764705882355,
+     "max": 7.540983606557377
+    },
+    "utilizacion": {
+     "media": 91.3892142574151,
+     "min": 81.90493210342494,
+     "max": 94.45900768306491
+    },
+    "aband_credito": {
+     "media": 79.2,
+     "min": 68.0,
+     "max": 85.0
+    },
+    "aband_vendedor": {
+     "media": 208.7,
+     "min": 141.0,
+     "max": 287.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": -2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 363.2,
+     "min": 333.0,
+     "max": 394.0
+    },
+    "monto": {
+     "media": 182336408.0,
+     "min": 168590240.0,
+     "max": 197318240.0
+    },
+    "morosidad": {
+     "media": 6.284664559994594,
+     "min": 4.664723032069971,
+     "max": 8.121827411167512
+    },
+    "utilizacion": {
+     "media": 80.91258297850459,
+     "min": 76.44713807451916,
+     "max": 84.56206141148348
+    },
+    "aband_credito": {
+     "media": 104.1,
+     "min": 85.0,
+     "max": 120.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": -2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 363.5,
+     "min": 340.0,
+     "max": 396.0
+    },
+    "monto": {
+     "media": 183145344.0,
+     "min": 170929600.0,
+     "max": 197516960.0
+    },
+    "morosidad": {
+     "media": 4.969289242451691,
+     "min": 2.7777777777777777,
+     "max": 6.557377049180328
+    },
+    "utilizacion": {
+     "media": 63.99974604055605,
+     "min": 62.394488696382844,
+     "max": 66.7204163137679
+    },
+    "aband_credito": {
+     "media": 94.4,
+     "min": 76.0,
+     "max": 110.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": -2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 362.9,
+     "min": 334.0,
+     "max": 383.0
+    },
+    "monto": {
+     "media": 182747096.0,
+     "min": 168105440.0,
+     "max": 193605680.0
+    },
+    "morosidad": {
+     "media": 5.863117935675199,
+     "min": 3.943661971830986,
+     "max": 8.683473389355742
+    },
+    "utilizacion": {
+     "media": 54.8280794416743,
+     "min": 50.859585093202284,
+     "max": 57.42395474226511
+    },
+    "aband_credito": {
+     "media": 99.7,
+     "min": 87.0,
+     "max": 112.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 0,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 287.6,
+     "min": 279.0,
+     "max": 296.0
+    },
+    "monto": {
+     "media": 143803840.0,
+     "min": 136570400.0,
+     "max": 148876480.0
+    },
+    "morosidad": {
+     "media": 6.1212751468336855,
+     "min": 4.810996563573883,
+     "max": 7.094594594594595
+    },
+    "utilizacion": {
+     "media": 92.18513409163528,
+     "min": 90.22055422769124,
+     "max": 93.897803564589
+    },
+    "aband_credito": {
+     "media": 80.4,
+     "min": 72.0,
+     "max": 88.0
+    },
+    "aband_vendedor": {
+     "media": 174.7,
+     "min": 144.0,
+     "max": 241.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 0,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 345.3,
+     "min": 314.0,
+     "max": 388.0
+    },
+    "monto": {
+     "media": 173580136.0,
+     "min": 159396880.0,
+     "max": 195313360.0
+    },
+    "morosidad": {
+     "media": 5.893077601615488,
+     "min": 4.132231404958677,
+     "max": 7.82122905027933
+    },
+    "utilizacion": {
+     "media": 79.767622323744,
+     "min": 76.9710831627431,
+     "max": 83.2211590589179
+    },
+    "aband_credito": {
+     "media": 95.1,
+     "min": 85.0,
+     "max": 110.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 0,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 341.3,
+     "min": 320.0,
+     "max": 360.0
+    },
+    "monto": {
+     "media": 170735992.0,
+     "min": 158347920.0,
+     "max": 179143440.0
+    },
+    "morosidad": {
+     "media": 6.374660694215228,
+     "min": 4.1420118343195265,
+     "max": 8.571428571428571
+    },
+    "utilizacion": {
+     "media": 64.32382078438054,
+     "min": 60.96518301317621,
+     "max": 67.26557826044744
+    },
+    "aband_credito": {
+     "media": 98.8,
+     "min": 89.0,
+     "max": 112.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 0,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 342.8,
+     "min": 326.0,
+     "max": 359.0
+    },
+    "monto": {
+     "media": 171798144.0,
+     "min": 165780240.0,
+     "max": 180998960.0
+    },
+    "morosidad": {
+     "media": 6.926773788790868,
+     "min": 4.735376044568246,
+     "max": 10.119047619047619
+    },
+    "utilizacion": {
+     "media": 53.22205938094621,
+     "min": 50.621629366809415,
+     "max": 55.17756015220974
+    },
+    "aband_credito": {
+     "media": 92.1,
+     "min": 74.0,
+     "max": 117.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 269.9,
+     "min": 248.0,
+     "max": 281.0
+    },
+    "monto": {
+     "media": 135294832.0,
+     "min": 123725120.0,
+     "max": 140415760.0
+    },
+    "morosidad": {
+     "media": 6.780286480024948,
+     "min": 4.029304029304029,
+     "max": 10.0
+    },
+    "utilizacion": {
+     "media": 92.13299647463506,
+     "min": 88.42936667106125,
+     "max": 94.57543624431426
+    },
+    "aband_credito": {
+     "media": 80.9,
+     "min": 68.0,
+     "max": 100.0
+    },
+    "aband_vendedor": {
+     "media": 162.7,
+     "min": 118.0,
+     "max": 226.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 322.8,
+     "min": 288.0,
+     "max": 340.0
+    },
+    "monto": {
+     "media": 161918136.0,
+     "min": 143210640.0,
+     "max": 172244880.0
+    },
+    "morosidad": {
+     "media": 6.9427807443809275,
+     "min": 4.658385093167702,
+     "max": 9.904153354632587
+    },
+    "utilizacion": {
+     "media": 78.03194345873321,
+     "min": 73.00616896864729,
+     "max": 81.67995072751282
+    },
+    "aband_credito": {
+     "media": 83.7,
+     "min": 72.0,
+     "max": 97.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 318.8,
+     "min": 295.0,
+     "max": 340.0
+    },
+    "monto": {
+     "media": 161214880.0,
+     "min": 149912080.0,
+     "max": 173274560.0
+    },
+    "morosidad": {
+     "media": 7.208979150902169,
+     "min": 5.2631578947368425,
+     "max": 9.602649006622517
+    },
+    "utilizacion": {
+     "media": 62.89721314382175,
+     "min": 59.578649594259296,
+     "max": 65.74099812347704
+    },
+    "aband_credito": {
+     "media": 92.3,
+     "min": 79.0,
+     "max": 109.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 317.9,
+     "min": 306.0,
+     "max": 336.0
+    },
+    "monto": {
+     "media": 160441120.0,
+     "min": 151052560.0,
+     "max": 169620560.0
+    },
+    "morosidad": {
+     "media": 7.6067805435635565,
+     "min": 4.615384615384615,
+     "max": 9.174311926605505
+    },
+    "utilizacion": {
+     "media": 52.748468510477906,
+     "min": 51.31599121584071,
+     "max": 54.79479884177419
+    },
+    "aband_credito": {
+     "media": 95.4,
+     "min": 76.0,
+     "max": 113.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 4,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 262.5,
+     "min": 246.0,
+     "max": 279.0
+    },
+    "monto": {
+     "media": 131067216.0,
+     "min": 125607040.0,
+     "max": 137298480.0
+    },
+    "morosidad": {
+     "media": 7.940982670507347,
+     "min": 5.839416058394161,
+     "max": 10.18867924528302
+    },
+    "utilizacion": {
+     "media": 91.07265416117845,
+     "min": 88.93035779679393,
+     "max": 93.62143691847616
+    },
+    "aband_credito": {
+     "media": 75.3,
+     "min": 59.0,
+     "max": 85.0
+    },
+    "aband_vendedor": {
+     "media": 110.0,
+     "min": 53.0,
+     "max": 160.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 4,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 295.3,
+     "min": 275.0,
+     "max": 321.0
+    },
+    "monto": {
+     "media": 148229648.0,
+     "min": 137647920.0,
+     "max": 158995520.0
+    },
+    "morosidad": {
+     "media": 7.796715273629379,
+     "min": 4.7272727272727275,
+     "max": 10.280373831775702
+    },
+    "utilizacion": {
+     "media": 75.17167019924565,
+     "min": 70.15639708654768,
+     "max": 80.11020485714299
+    },
+    "aband_credito": {
+     "media": 84.0,
+     "min": 68.0,
+     "max": 90.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 4,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 289.3,
+     "min": 269.0,
+     "max": 319.0
+    },
+    "monto": {
+     "media": 145453160.0,
+     "min": 133815920.0,
+     "max": 161845840.0
+    },
+    "morosidad": {
+     "media": 8.11075671186888,
+     "min": 5.208333333333333,
+     "max": 11.635220125786164
+    },
+    "utilizacion": {
+     "media": 60.00361594064613,
+     "min": 56.3024447163383,
+     "max": 62.44646515668358
+    },
+    "aband_credito": {
+     "media": 80.9,
+     "min": 69.0,
+     "max": 93.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 0,
+   "tasa_delta": 4,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 297.0,
+     "min": 278.0,
+     "max": 309.0
+    },
+    "monto": {
+     "media": 149867000.0,
+     "min": 139795120.0,
+     "max": 156443600.0
+    },
+    "morosidad": {
+     "media": 8.593038621838847,
+     "min": 6.25,
+     "max": 11.151079136690647
+    },
+    "utilizacion": {
+     "media": 51.2457432335681,
+     "min": 46.51661044757748,
+     "max": 54.004254746261495
+    },
+    "aband_credito": {
+     "media": 84.3,
+     "min": 75.0,
+     "max": 97.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": -2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 299.8,
+     "min": 283.0,
+     "max": 307.0
+    },
+    "monto": {
+     "media": 151040232.0,
+     "min": 142663040.0,
+     "max": 155171520.0
+    },
+    "morosidad": {
+     "media": 6.5961758044286185,
+     "min": 5.2117263843648205,
+     "max": 9.120521172638437
+    },
+    "utilizacion": {
+     "media": 89.88880535024964,
+     "min": 86.35398215502916,
+     "max": 93.89856941139666
+    },
+    "aband_credito": {
+     "media": 64.9,
+     "min": 50.0,
+     "max": 75.0
+    },
+    "aband_vendedor": {
+     "media": 203.2,
+     "min": 147.0,
+     "max": 279.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": -2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 380.0,
+     "min": 352.0,
+     "max": 416.0
+    },
+    "monto": {
+     "media": 190239032.0,
+     "min": 176209920.0,
+     "max": 209547440.0
+    },
+    "morosidad": {
+     "media": 5.044291115989372,
+     "min": 3.8461538461538463,
+     "max": 6.561679790026247
+    },
+    "utilizacion": {
+     "media": 81.07247090912482,
+     "min": 77.9395695859367,
+     "max": 83.95196772262634
+    },
+    "aband_credito": {
+     "media": 78.0,
+     "min": 69.0,
+     "max": 91.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": -2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 359.8,
+     "min": 340.0,
+     "max": 391.0
+    },
+    "monto": {
+     "media": 180329760.0,
+     "min": 167994160.0,
+     "max": 196240480.0
+    },
+    "morosidad": {
+     "media": 5.577671075839131,
+     "min": 4.63768115942029,
+     "max": 6.424581005586592
+    },
+    "utilizacion": {
+     "media": 64.2542955275532,
+     "min": 61.799744341865626,
+     "max": 66.61740332646286
+    },
+    "aband_credito": {
+     "media": 77.0,
+     "min": 63.0,
+     "max": 90.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": -2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 366.1,
+     "min": 340.0,
+     "max": 384.0
+    },
+    "monto": {
+     "media": 182985000.0,
+     "min": 166988080.0,
+     "max": 194238400.0
+    },
+    "morosidad": {
+     "media": 5.941999593953419,
+     "min": 3.0555555555555554,
+     "max": 8.823529411764707
+    },
+    "utilizacion": {
+     "media": 52.60704783327272,
+     "min": 46.824840928757176,
+     "max": 55.98178517561875
+    },
+    "aband_credito": {
+     "media": 76.0,
+     "min": 66.0,
+     "max": 87.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 0,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 293.1,
+     "min": 279.0,
+     "max": 304.0
+    },
+    "monto": {
+     "media": 147022768.0,
+     "min": 138062720.0,
+     "max": 155032400.0
+    },
+    "morosidad": {
+     "media": 6.216452015850936,
+     "min": 4.642857142857143,
+     "max": 8.710801393728223
+    },
+    "utilizacion": {
+     "media": 92.38264528195673,
+     "min": 82.39902501329595,
+     "max": 95.1183629006572
+    },
+    "aband_credito": {
+     "media": 64.4,
+     "min": 51.0,
+     "max": 77.0
+    },
+    "aband_vendedor": {
+     "media": 198.7,
+     "min": 144.0,
+     "max": 280.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 0,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 353.7,
+     "min": 332.0,
+     "max": 377.0
+    },
+    "monto": {
+     "media": 176968904.0,
+     "min": 166561360.0,
+     "max": 186647840.0
+    },
+    "morosidad": {
+     "media": 6.361934063656467,
+     "min": 5.633802816901408,
+     "max": 8.474576271186441
+    },
+    "utilizacion": {
+     "media": 79.45669296291052,
+     "min": 73.11584978817257,
+     "max": 82.94236236472616
+    },
+    "aband_credito": {
+     "media": 68.9,
+     "min": 58.0,
+     "max": 79.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 0,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 360.9,
+     "min": 344.0,
+     "max": 377.0
+    },
+    "monto": {
+     "media": 180869872.0,
+     "min": 173618560.0,
+     "max": 188136560.0
+    },
+    "morosidad": {
+     "media": 6.24125598677556,
+     "min": 5.039787798408488,
+     "max": 7.18232044198895
+    },
+    "utilizacion": {
+     "media": 64.54367804959455,
+     "min": 59.31015649257128,
+     "max": 66.9734682487886
+    },
+    "aband_credito": {
+     "media": 77.0,
+     "min": 67.0,
+     "max": 84.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 0,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 348.5,
+     "min": 328.0,
+     "max": 372.0
+    },
+    "monto": {
+     "media": 175123264.0,
+     "min": 163392480.0,
+     "max": 188727040.0
+    },
+    "morosidad": {
+     "media": 6.1437042168832425,
+     "min": 3.988603988603989,
+     "max": 8.241758241758241
+    },
+    "utilizacion": {
+     "media": 53.782815349581355,
+     "min": 50.146878277552325,
+     "max": 55.58760532413265
+    },
+    "aband_credito": {
+     "media": 76.9,
+     "min": 65.0,
+     "max": 88.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 279.4,
+     "min": 266.0,
+     "max": 294.0
+    },
+    "monto": {
+     "media": 140268680.0,
+     "min": 134540720.0,
+     "max": 147913760.0
+    },
+    "morosidad": {
+     "media": 6.960977156584707,
+     "min": 4.593639575971731,
+     "max": 9.386281588447654
+    },
+    "utilizacion": {
+     "media": 93.08066490226453,
+     "min": 87.82855763234713,
+     "max": 95.00709886973537
+    },
+    "aband_credito": {
+     "media": 55.6,
+     "min": 48.0,
+     "max": 68.0
+    },
+    "aband_vendedor": {
+     "media": 167.0,
+     "min": 99.0,
+     "max": 224.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 330.6,
+     "min": 308.0,
+     "max": 348.0
+    },
+    "monto": {
+     "media": 166714656.0,
+     "min": 152993280.0,
+     "max": 176530000.0
+    },
+    "morosidad": {
+     "media": 6.667718844651459,
+     "min": 4.491017964071856,
+     "max": 9.090909090909092
+    },
+    "utilizacion": {
+     "media": 78.87178370581937,
+     "min": 76.57141645151361,
+     "max": 81.64115304683534
+    },
+    "aband_credito": {
+     "media": 71.8,
+     "min": 60.0,
+     "max": 83.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 326.6,
+     "min": 304.0,
+     "max": 348.0
+    },
+    "monto": {
+     "media": 163796064.0,
+     "min": 151720800.0,
+     "max": 173525040.0
+    },
+    "morosidad": {
+     "media": 7.309619858319232,
+     "min": 5.230769230769231,
+     "max": 10.060975609756097
+    },
+    "utilizacion": {
+     "media": 62.41172855157716,
+     "min": 59.508089299790335,
+     "max": 64.15254105649491
+    },
+    "aband_credito": {
+     "media": 70.9,
+     "min": 59.0,
+     "max": 86.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 327.8,
+     "min": 308.0,
+     "max": 358.0
+    },
+    "monto": {
+     "media": 164649128.0,
+     "min": 156787120.0,
+     "max": 177771600.0
+    },
+    "morosidad": {
+     "media": 7.311330042624718,
+     "min": 4.938271604938271,
+     "max": 8.832807570977918
+    },
+    "utilizacion": {
+     "media": 51.868608094183685,
+     "min": 49.51569552175647,
+     "max": 53.47221331294432
+    },
+    "aband_credito": {
+     "media": 71.6,
+     "min": 60.0,
+     "max": 82.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 4,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 259.4,
+     "min": 248.0,
+     "max": 267.0
+    },
+    "monto": {
+     "media": 129913488.0,
+     "min": 125230000.0,
+     "max": 134473680.0
+    },
+    "morosidad": {
+     "media": 8.63773598107523,
+     "min": 6.896551724137931,
+     "max": 12.4031007751938
+    },
+    "utilizacion": {
+     "media": 91.69803395526868,
+     "min": 86.15320408656214,
+     "max": 94.91907400468182
+    },
+    "aband_credito": {
+     "media": 60.9,
+     "min": 53.0,
+     "max": 72.0
+    },
+    "aband_vendedor": {
+     "media": 131.7,
+     "min": 79.0,
+     "max": 206.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 4,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 315.4,
+     "min": 276.0,
+     "max": 356.0
+    },
+    "monto": {
+     "media": 159269464.0,
+     "min": 140498480.0,
+     "max": 179355200.0
+    },
+    "morosidad": {
+     "media": 7.517613305700924,
+     "min": 5.647840531561462,
+     "max": 12.063492063492063
+    },
+    "utilizacion": {
+     "media": 76.71656630386614,
+     "min": 62.82806512523849,
+     "max": 80.19458147573046
+    },
+    "aband_credito": {
+     "media": 64.0,
+     "min": 52.0,
+     "max": 78.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 4,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 291.8,
+     "min": 266.0,
+     "max": 327.0
+    },
+    "monto": {
+     "media": 146226152.0,
+     "min": 134080080.0,
+     "max": 164535200.0
+    },
+    "morosidad": {
+     "media": 6.9710702052777505,
+     "min": 3.7288135593220337,
+     "max": 8.562691131498472
+    },
+    "utilizacion": {
+     "media": 60.7774051492515,
+     "min": 55.43762149816312,
+     "max": 65.28949234514432
+    },
+    "aband_credito": {
+     "media": 64.2,
+     "min": 49.0,
+     "max": 85.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 48,
+   "tasa_delta": 4,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 307.5,
+     "min": 288.0,
+     "max": 327.0
+    },
+    "monto": {
+     "media": 154582352.0,
+     "min": 145555200.0,
+     "max": 162657360.0
+    },
+    "morosidad": {
+     "media": 8.061307723395895,
+     "min": 5.279503105590062,
+     "max": 11.074918566775244
+    },
+    "utilizacion": {
+     "media": 51.66522034197853,
+     "min": 48.89311769944795,
+     "max": 53.401839387280326
+    },
+    "aband_credito": {
+     "media": 63.5,
+     "min": 55.0,
+     "max": 76.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": -2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 309.8,
+     "min": 295.0,
+     "max": 319.0
+    },
+    "monto": {
+     "media": 156287360.0,
+     "min": 145520480.0,
+     "max": 163548960.0
+    },
+    "morosidad": {
+     "media": 6.370773069337854,
+     "min": 2.5396825396825395,
+     "max": 8.474576271186441
+    },
+    "utilizacion": {
+     "media": 92.01538417652873,
+     "min": 85.8158149790755,
+     "max": 94.31910539219724
+    },
+    "aband_credito": {
+     "media": 44.7,
+     "min": 37.0,
+     "max": 54.0
+    },
+    "aband_vendedor": {
+     "media": 219.0,
+     "min": 186.0,
+     "max": 246.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": -2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 391.1,
+     "min": 374.0,
+     "max": 411.0
+    },
+    "monto": {
+     "media": 197087072.0,
+     "min": 188309200.0,
+     "max": 209878400.0
+    },
+    "morosidad": {
+     "media": 5.4517981305598715,
+     "min": 4.176904176904177,
+     "max": 7.751937984496124
+    },
+    "utilizacion": {
+     "media": 80.6433358729088,
+     "min": 77.2104659765634,
+     "max": 85.62118513551812
+    },
+    "aband_credito": {
+     "media": 54.2,
+     "min": 45.0,
+     "max": 64.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": -2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 392.9,
+     "min": 371.0,
+     "max": 422.0
+    },
+    "monto": {
+     "media": 197070696.0,
+     "min": 185708480.0,
+     "max": 210806960.0
+    },
+    "morosidad": {
+     "media": 5.110393545486378,
+     "min": 3.5714285714285716,
+     "max": 6.738544474393531
+    },
+    "utilizacion": {
+     "media": 64.80848021725532,
+     "min": 59.17938489040335,
+     "max": 68.51668731515655
+    },
+    "aband_credito": {
+     "media": 53.9,
+     "min": 40.0,
+     "max": 67.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": -2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 391.5,
+     "min": 358.0,
+     "max": 429.0
+    },
+    "monto": {
+     "media": 197506864.0,
+     "min": 181119680.0,
+     "max": 218232160.0
+    },
+    "morosidad": {
+     "media": 5.869825296309043,
+     "min": 4.662004662004662,
+     "max": 7.945205479452055
+    },
+    "utilizacion": {
+     "media": 55.04021388255062,
+     "min": 51.34749682446884,
+     "max": 58.702583337243475
+    },
+    "aband_credito": {
+     "media": 52.6,
+     "min": 44.0,
+     "max": 60.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 0,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 309.1,
+     "min": 296.0,
+     "max": 324.0
+    },
+    "monto": {
+     "media": 155240936.0,
+     "min": 150420240.0,
+     "max": 161914960.0
+    },
+    "morosidad": {
+     "media": 6.109096241549774,
+     "min": 4.262295081967213,
+     "max": 11.333333333333334
+    },
+    "utilizacion": {
+     "media": 92.47905662740807,
+     "min": 88.99999662304863,
+     "max": 94.27727117999595
+    },
+    "aband_credito": {
+     "media": 38.2,
+     "min": 29.0,
+     "max": 49.0
+    },
+    "aband_vendedor": {
+     "media": 190.1,
+     "min": 174.0,
+     "max": 206.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 0,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 374.8,
+     "min": 346.0,
+     "max": 393.0
+    },
+    "monto": {
+     "media": 188407176.0,
+     "min": 173827360.0,
+     "max": 201281840.0
+    },
+    "morosidad": {
+     "media": 6.692043887785391,
+     "min": 4.8517520215633425,
+     "max": 9.669211195928753
+    },
+    "utilizacion": {
+     "media": 80.74341070205898,
+     "min": 74.48875525023172,
+     "max": 86.65219852671585
+    },
+    "aband_credito": {
+     "media": 48.6,
+     "min": 35.0,
+     "max": 61.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 0,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 371.8,
+     "min": 341.0,
+     "max": 397.0
+    },
+    "monto": {
+     "media": 186407360.0,
+     "min": 169320640.0,
+     "max": 198977440.0
+    },
+    "morosidad": {
+     "media": 6.436312843117065,
+     "min": 3.4759358288770055,
+     "max": 8.59375
+    },
+    "utilizacion": {
+     "media": 64.5780766672089,
+     "min": 59.61381577630776,
+     "max": 67.4807471957324
+    },
+    "aband_credito": {
+     "media": 47.6,
+     "min": 41.0,
+     "max": 55.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 0,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 366.2,
+     "min": 337.0,
+     "max": 401.0
+    },
+    "monto": {
+     "media": 183758880.0,
+     "min": 168246800.0,
+     "max": 200105280.0
+    },
+    "morosidad": {
+     "media": 6.792446185256961,
+     "min": 4.785894206549118,
+     "max": 9.090909090909092
+    },
+    "utilizacion": {
+     "media": 53.65435192567453,
+     "min": 49.766379795926994,
+     "max": 57.33240864632668
+    },
+    "aband_credito": {
+     "media": 51.8,
+     "min": 43.0,
+     "max": 62.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 285.7,
+     "min": 275.0,
+     "max": 297.0
+    },
+    "monto": {
+     "media": 143670344.0,
+     "min": 138366000.0,
+     "max": 149175040.0
+    },
+    "morosidad": {
+     "media": 6.940331302918997,
+     "min": 3.9711191335740073,
+     "max": 11.552346570397113
+    },
+    "utilizacion": {
+     "media": 91.59971541549534,
+     "min": 83.2744647434043,
+     "max": 95.12785384538111
+    },
+    "aband_credito": {
+     "media": 39.8,
+     "min": 32.0,
+     "max": 48.0
+    },
+    "aband_vendedor": {
+     "media": 159.9,
+     "min": 132.0,
+     "max": 202.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 347.1,
+     "min": 320.0,
+     "max": 384.0
+    },
+    "monto": {
+     "media": 174047264.0,
+     "min": 162353120.0,
+     "max": 193002480.0
+    },
+    "morosidad": {
+     "media": 6.919440099593217,
+     "min": 3.857566765578635,
+     "max": 8.588957055214724
+    },
+    "utilizacion": {
+     "media": 78.61130281154772,
+     "min": 70.76591611793194,
+     "max": 82.621304390634
+    },
+    "aband_credito": {
+     "media": 46.7,
+     "min": 37.0,
+     "max": 61.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 345.1,
+     "min": 337.0,
+     "max": 364.0
+    },
+    "monto": {
+     "media": 173197528.0,
+     "min": 168640720.0,
+     "max": 185329440.0
+    },
+    "morosidad": {
+     "media": 6.385307072221828,
+     "min": 3.5608308605341246,
+     "max": 8.875739644970414
+    },
+    "utilizacion": {
+     "media": 63.63178276175385,
+     "min": 60.70342441991451,
+     "max": 65.31208813775032
+    },
+    "aband_credito": {
+     "media": 49.1,
+     "min": 40.0,
+     "max": 60.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 346.6,
+     "min": 319.0,
+     "max": 366.0
+    },
+    "monto": {
+     "media": 173827360.0,
+     "min": 157662720.0,
+     "max": 181753200.0
+    },
+    "morosidad": {
+     "media": 7.682622951650631,
+     "min": 5.198776758409786,
+     "max": 9.329446064139942
+    },
+    "utilizacion": {
+     "media": 52.390188184859504,
+     "min": 49.76573877825257,
+     "max": 55.09049507133386
+    },
+    "aband_credito": {
+     "media": 44.7,
+     "min": 36.0,
+     "max": 51.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 4,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 277.2,
+     "min": 264.0,
+     "max": 292.0
+    },
+    "monto": {
+     "media": 139089344.0,
+     "min": 129646640.0,
+     "max": 147726160.0
+    },
+    "morosidad": {
+     "media": 8.74507267573444,
+     "min": 5.319148936170213,
+     "max": 12.915129151291513
+    },
+    "utilizacion": {
+     "media": 92.20336323835662,
+     "min": 89.4274829584761,
+     "max": 94.60799617622263
+    },
+    "aband_credito": {
+     "media": 38.6,
+     "min": 30.0,
+     "max": 47.0
+    },
+    "aband_vendedor": {
+     "media": 152.0,
+     "min": 114.0,
+     "max": 196.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 4,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 319.7,
+     "min": 300.0,
+     "max": 356.0
+    },
+    "monto": {
+     "media": 161270976.0,
+     "min": 150979040.0,
+     "max": 180363440.0
+    },
+    "morosidad": {
+     "media": 8.37045356274317,
+     "min": 5.357142857142857,
+     "max": 10.153846153846153
+    },
+    "utilizacion": {
+     "media": 76.37832611157164,
+     "min": 69.08503682689071,
+     "max": 81.53832243977588
+    },
+    "aband_credito": {
+     "media": 42.0,
+     "min": 34.0,
+     "max": 56.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 4,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 310.2,
+     "min": 286.0,
+     "max": 333.0
+    },
+    "monto": {
+     "media": 155850928.0,
+     "min": 142837680.0,
+     "max": 168023920.0
+    },
+    "morosidad": {
+     "media": 7.937190423910989,
+     "min": 3.8461538461538463,
+     "max": 11.842105263157896
+    },
+    "utilizacion": {
+     "media": 61.64726217089515,
+     "min": 60.540694321920604,
+     "max": 62.94470367941833
+    },
+    "aband_credito": {
+     "media": 42.2,
+     "min": 32.0,
+     "max": 53.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 24,
+   "tasa_delta": 4,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 321.1,
+     "min": 275.0,
+     "max": 354.0
+    },
+    "monto": {
+     "media": 161629000.0,
+     "min": 139269280.0,
+     "max": 179881280.0
+    },
+    "morosidad": {
+     "media": 6.651699388276275,
+     "min": 5.379746835443038,
+     "max": 9.316770186335404
+    },
+    "utilizacion": {
+     "media": 50.95754230928242,
+     "min": 47.22524338681388,
+     "max": 55.73647143654361
+    },
+    "aband_credito": {
+     "media": 41.0,
+     "min": 34.0,
+     "max": 47.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": -2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 319.5,
+     "min": 304.0,
+     "max": 329.0
+    },
+    "monto": {
+     "media": 160220376.0,
+     "min": 154228640.0,
+     "max": 167048080.0
+    },
+    "morosidad": {
+     "media": 5.180812214672754,
+     "min": 2.960526315789474,
+     "max": 6.349206349206349
+    },
+    "utilizacion": {
+     "media": 92.43381767426366,
+     "min": 90.1955209653052,
+     "max": 94.5164032633256
+    },
+    "aband_credito": {
+     "media": 24.6,
+     "min": 16.0,
+     "max": 35.0
+    },
+    "aband_vendedor": {
+     "media": 211.2,
+     "min": 167.0,
+     "max": 287.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": -2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 402.1,
+     "min": 371.0,
+     "max": 445.0
+    },
+    "monto": {
+     "media": 202855904.0,
+     "min": 186386080.0,
+     "max": 224612720.0
+    },
+    "morosidad": {
+     "media": 5.298329425815355,
+     "min": 3.6231884057971016,
+     "max": 7.281553398058253
+    },
+    "utilizacion": {
+     "media": 83.21261122717878,
+     "min": 79.79985561947922,
+     "max": 88.47427403823765
+    },
+    "aband_credito": {
+     "media": 30.7,
+     "min": 23.0,
+     "max": 36.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": -2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 404.6,
+     "min": 376.0,
+     "max": 429.0
+    },
+    "monto": {
+     "media": 204155664.0,
+     "min": 188382080.0,
+     "max": 218290560.0
+    },
+    "morosidad": {
+     "media": 5.365436302170972,
+     "min": 3.58974358974359,
+     "max": 6.7164179104477615
+    },
+    "utilizacion": {
+     "media": 66.32763337406632,
+     "min": 64.30918269025712,
+     "max": 69.08924869397919
+    },
+    "aband_credito": {
+     "media": 27.6,
+     "min": 21.0,
+     "max": 33.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": -2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 408.5,
+     "min": 379.0,
+     "max": 435.0
+    },
+    "monto": {
+     "media": 204266680.0,
+     "min": 186691760.0,
+     "max": 219003920.0
+    },
+    "morosidad": {
+     "media": 5.515346999387903,
+     "min": 3.6939313984168867,
+     "max": 6.666666666666667
+    },
+    "utilizacion": {
+     "media": 55.57447554323854,
+     "min": 52.30226079376417,
+     "max": 58.283302236425435
+    },
+    "aband_credito": {
+     "media": 30.5,
+     "min": 23.0,
+     "max": 41.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 0,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 309.2,
+     "min": 298.0,
+     "max": 325.0
+    },
+    "monto": {
+     "media": 155320776.0,
+     "min": 147751840.0,
+     "max": 163641680.0
+    },
+    "morosidad": {
+     "media": 6.122564639004024,
+     "min": 3.6923076923076925,
+     "max": 7.792207792207792
+    },
+    "utilizacion": {
+     "media": 92.50268562504229,
+     "min": 84.42256442601906,
+     "max": 94.91553739430081
+    },
+    "aband_credito": {
+     "media": 25.3,
+     "min": 17.0,
+     "max": 39.0
+    },
+    "aband_vendedor": {
+     "media": 207.0,
+     "min": 151.0,
+     "max": 272.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 0,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 396.9,
+     "min": 360.0,
+     "max": 420.0
+    },
+    "monto": {
+     "media": 199321272.0,
+     "min": 179983040.0,
+     "max": 209962480.0
+    },
+    "morosidad": {
+     "media": 5.8070375392480775,
+     "min": 3.5,
+     "max": 7.455012853470437
+    },
+    "utilizacion": {
+     "media": 82.95411948596191,
+     "min": 77.49756971847695,
+     "max": 85.28382231120123
+    },
+    "aband_credito": {
+     "media": 30.3,
+     "min": 25.0,
+     "max": 36.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 0,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 376.8,
+     "min": 349.0,
+     "max": 393.0
+    },
+    "monto": {
+     "media": 189127360.0,
+     "min": 174772480.0,
+     "max": 200349040.0
+    },
+    "morosidad": {
+     "media": 5.481522080280234,
+     "min": 2.638522427440633,
+     "max": 6.868131868131868
+    },
+    "utilizacion": {
+     "media": 64.67127777871099,
+     "min": 58.791050186777,
+     "max": 67.4926048397085
+    },
+    "aband_credito": {
+     "media": 28.3,
+     "min": 24.0,
+     "max": 33.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 0,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 376.9,
+     "min": 328.0,
+     "max": 396.0
+    },
+    "monto": {
+     "media": 189939376.0,
+     "min": 166637440.0,
+     "max": 201473680.0
+    },
+    "morosidad": {
+     "media": 5.993177436061445,
+     "min": 3.896103896103896,
+     "max": 7.957559681697613
+    },
+    "utilizacion": {
+     "media": 52.84710117059726,
+     "min": 46.295015847052284,
+     "max": 55.71762269060062
+    },
+    "aband_credito": {
+     "media": 28.0,
+     "min": 19.0,
+     "max": 42.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 2,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 303.5,
+     "min": 292.0,
+     "max": 316.0
+    },
+    "monto": {
+     "media": 152892040.0,
+     "min": 147595840.0,
+     "max": 162016080.0
+    },
+    "morosidad": {
+     "media": 7.022780296194054,
+     "min": 5.0675675675675675,
+     "max": 9.931506849315069
+    },
+    "utilizacion": {
+     "media": 92.89756246033542,
+     "min": 91.38103799508613,
+     "max": 94.51268201896652
+    },
+    "aband_credito": {
+     "media": 21.7,
+     "min": 12.0,
+     "max": 34.0
+    },
+    "aband_vendedor": {
+     "media": 183.8,
+     "min": 157.0,
+     "max": 223.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 2,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 350.5,
+     "min": 325.0,
+     "max": 373.0
+    },
+    "monto": {
+     "media": 174596920.0,
+     "min": 159717280.0,
+     "max": 188378800.0
+    },
+    "morosidad": {
+     "media": 6.8269936714554245,
+     "min": 4.69208211143695,
+     "max": 9.065934065934066
+    },
+    "utilizacion": {
+     "media": 79.73075167088241,
+     "min": 74.413142772228,
+     "max": 81.40949116009203
+    },
+    "aband_credito": {
+     "media": 24.9,
+     "min": 13.0,
+     "max": 31.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 2,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 354.0,
+     "min": 311.0,
+     "max": 374.0
+    },
+    "monto": {
+     "media": 176911560.0,
+     "min": 154148400.0,
+     "max": 187301840.0
+    },
+    "morosidad": {
+     "media": 6.32315508813281,
+     "min": 4.143646408839779,
+     "max": 8.823529411764707
+    },
+    "utilizacion": {
+     "media": 63.74625650389463,
+     "min": 56.003174137241025,
+     "max": 65.95671200506776
+    },
+    "aband_credito": {
+     "media": 26.8,
+     "min": 17.0,
+     "max": 40.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 2,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 356.9,
+     "min": 339.0,
+     "max": 381.0
+    },
+    "monto": {
+     "media": 179572504.0,
+     "min": 168449680.0,
+     "max": 193708560.0
+    },
+    "morosidad": {
+     "media": 7.527391978633633,
+     "min": 6.489675516224189,
+     "max": 9.090909090909092
+    },
+    "utilizacion": {
+     "media": 52.815467232109526,
+     "min": 50.10027894419445,
+     "max": 54.74964130741403
+    },
+    "aband_credito": {
+     "media": 24.7,
+     "min": 20.0,
+     "max": 30.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 4,
+   "vendedores": 6,
+   "resultado": {
+    "ventas": {
+     "media": 285.7,
+     "min": 262.0,
+     "max": 307.0
+    },
+    "monto": {
+     "media": 144252176.0,
+     "min": 131125360.0,
+     "max": 154204000.0
+    },
+    "morosidad": {
+     "media": 7.957824872690116,
+     "min": 5.882352941176471,
+     "max": 10.305343511450381
+    },
+    "utilizacion": {
+     "media": 90.98098706570019,
+     "min": 82.40685310463088,
+     "max": 94.31903714692676
+    },
+    "aband_credito": {
+     "media": 26.8,
+     "min": 19.0,
+     "max": 34.0
+    },
+    "aband_vendedor": {
+     "media": 127.1,
+     "min": 34.0,
+     "max": 196.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 4,
+   "vendedores": 8,
+   "resultado": {
+    "ventas": {
+     "media": 322.3,
+     "min": 305.0,
+     "max": 347.0
+    },
+    "monto": {
+     "media": 161961848.0,
+     "min": 152927200.0,
+     "max": 178241840.0
+    },
+    "morosidad": {
+     "media": 7.391741404592703,
+     "min": 5.637982195845697,
+     "max": 10.819672131147541
+    },
+    "utilizacion": {
+     "media": 77.55787859615651,
+     "min": 75.70437239229797,
+     "max": 80.51001610467196
+    },
+    "aband_credito": {
+     "media": 24.1,
+     "min": 15.0,
+     "max": 33.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 4,
+   "vendedores": 10,
+   "resultado": {
+    "ventas": {
+     "media": 328.8,
+     "min": 303.0,
+     "max": 353.0
+    },
+    "monto": {
+     "media": 165417296.0,
+     "min": 154665760.0,
+     "max": 177279200.0
+    },
+    "morosidad": {
+     "media": 7.486118944744696,
+     "min": 5.17799352750809,
+     "max": 10.0
+    },
+    "utilizacion": {
+     "media": 62.476222841231575,
+     "min": 59.72714416932156,
+     "max": 65.09198615736169
+    },
+    "aband_credito": {
+     "media": 26.5,
+     "min": 21.0,
+     "max": 33.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  },
+  {
+   "aprobacion_h": 12,
+   "tasa_delta": 4,
+   "vendedores": 12,
+   "resultado": {
+    "ventas": {
+     "media": 328.4,
+     "min": 296.0,
+     "max": 363.0
+    },
+    "monto": {
+     "media": 165301328.0,
+     "min": 148711040.0,
+     "max": 182624880.0
+    },
+    "morosidad": {
+     "media": 7.970187685756078,
+     "min": 5.785123966942149,
+     "max": 9.803921568627452
+    },
+    "utilizacion": {
+     "media": 51.83577697535782,
+     "min": 47.855368571672315,
+     "max": 55.21746747527258
+    },
+    "aband_credito": {
+     "media": 26.1,
+     "min": 22.0,
+     "max": 33.0
+    },
+    "aband_vendedor": {
+     "media": 0.0,
+     "min": 0.0,
+     "max": 0.0
+    }
+   }
+  }
+ ],
+ "validacion": {
+  "log": {
+   "ventas": 349,
+   "monto": 174279360.0,
+   "morosidad": 5.444126074498568
+  },
+  "dif_ventas_pct": -1.0601719197707693,
+  "dif_monto_pct": -0.40120872603617297,
+  "dif_morosidad_pts": 0.44895152711692
+ }
+}

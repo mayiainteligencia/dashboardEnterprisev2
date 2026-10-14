@@ -3,7 +3,7 @@ import { brandingConfig } from '../../config/branding';
 import { useLiveFeed } from '../../context/LiveFeedContext';
 import {
   TrendingUp, UserPlus, Store, Radar, Crown, Target,
-  Megaphone, Users, Package, Repeat, Activity, Zap,
+  Megaphone, Users, Package, Repeat, Activity, Zap, Cpu,
 } from 'lucide-react';
 
 const { colores } = brandingConfig;
@@ -11,6 +11,7 @@ const { colores } = brandingConfig;
 interface NavItem { id: string; label: string; icon: typeof TrendingUp; color: string; description: string; kpi: string; }
 
 const NAV: NavItem[] = [
+  { id: 'gemelo',     label: 'Gemelo Digital',       icon: Cpu,        color: '#CC0000', description: 'Simulador SimPy de escenarios', kpi: '3 variables' },
   { id: 'leads',      label: 'Leads',                icon: UserPlus,   color: '#8B5CF6', description: 'Funnel, canales y proyección', kpi: '9,870 activos' },
   { id: 'operacion',  label: 'Operación',             icon: Store,      color: '#10B981', description: 'Piso, copiloto y financiamiento', kpi: '312 chats hoy' },
   { id: 'influencers',label: 'Radar Influencers',     icon: Radar,      color: '#F59E0B', description: 'Monitoreo de influencia digital', kpi: '24 monitoreados' },

@@ -19,6 +19,7 @@ import {
 import { PaginaLeads } from './components/comercial/PaginaLeads';
 import { PaginaOperacion } from './components/comercial/PaginaOperacion';
 import { PaginaInfluencers } from './components/comercial/PaginaInfluencers';
+import { PaginaGemeloDigital } from './components/comercial/PaginaGemeloDigital';
 import { brandingConfig } from './config/branding';
 import { LiveToast } from './components/LiveToast';
 import { AgentStatusBar } from './components/AgentStatusBar';
@@ -44,6 +45,7 @@ function App() {
   const getTitulo = () => {
     const titulos: Record<string, string> = {
       dashboard: 'Dashboard General',
+      gemelo: 'Gemelo Digital · Escenarios',
       rh: 'Recursos Humanos',
       finanzas: 'Finanzas y Contabilidad',
       operaciones: 'Operaciones',
@@ -70,13 +72,14 @@ function App() {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':   return <Dashboard />;
+      case 'gemelo':      return <PaginaGemeloDigital />;
       case 'rh':          return <RecursosHumanos />;
       case 'finanzas':    return <FinanzasContabilidad />;
       case 'operaciones': return <Operaciones />;
       case 'ventas':      return <VentasMarketing />;
       case 'ti':          return <TecnologiasInformacion />;
       case 'administracion': return <Administracion />;
-      case 'comercial':   return <VistaComercial />;
+      case 'comercial':   return <VistaComercial onNavigate={selectSection} />;
       case 'leads':       return <PaginaLeads />;
       case 'operacion':   return <PaginaOperacion />;
       case 'influencers': return <PaginaInfluencers />;
